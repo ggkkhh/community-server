@@ -27,7 +27,6 @@ public class SysCache {
     private String remark = "";
 
     public SysCache() {
-
     }
 
     public SysCache(String cacheName, String remark) {
