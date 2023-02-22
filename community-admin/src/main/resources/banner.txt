@@ -1,0 +1,3 @@
+Application Version: ${community.version}
+Spring Boot Version: ${spring-boot.version}
+社区管理系统后台启动成功。。。
