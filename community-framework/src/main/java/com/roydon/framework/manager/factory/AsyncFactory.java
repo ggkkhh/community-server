@@ -7,9 +7,9 @@ import com.roydon.common.utils.StringUtils;
 import com.roydon.common.utils.ip.AddressUtils;
 import com.roydon.common.utils.ip.IpUtils;
 import com.roydon.common.utils.spring.SpringUtils;
-import com.roydon.system.domain.SysLogininfor;
+import com.roydon.system.domain.SysLoginInfo;
 import com.roydon.system.domain.SysOperLog;
-import com.roydon.system.service.ISysLogininforService;
+import com.roydon.system.service.ISysLoginInfoService;
 import com.roydon.system.service.ISysOperLogService;
 import eu.bitwalker.useragentutils.UserAgent;
 import org.slf4j.Logger;
@@ -53,7 +53,7 @@ public class AsyncFactory {
                 // 获取客户端浏览器
                 String browser = userAgent.getBrowser().getName();
                 // 封装对象
-                SysLogininfor logininfor = new SysLogininfor();
+                SysLoginInfo logininfor = new SysLoginInfo();
                 logininfor.setUserName(username);
                 logininfor.setIpaddr(ip);
                 logininfor.setLoginLocation(address);
@@ -67,7 +67,7 @@ public class AsyncFactory {
                     logininfor.setStatus(Constants.FAIL);
                 }
                 // 插入数据
-                SpringUtils.getBean(ISysLogininforService.class).insertLogininfor(logininfor);
+                SpringUtils.getBean(ISysLoginInfoService.class).insertLogininfor(logininfor);
             }
         };
     }

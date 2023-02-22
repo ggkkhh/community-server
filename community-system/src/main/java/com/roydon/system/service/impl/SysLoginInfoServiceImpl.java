@@ -1,24 +1,23 @@
 package com.roydon.system.service.impl;
 
-import java.util.List;
-
-import com.roydon.system.domain.SysLogininfor;
-import com.roydon.system.mapper.SysLogininforMapper;
-import com.roydon.system.service.ISysLogininforService;
+import com.roydon.system.domain.SysLoginInfo;
+import com.roydon.system.mapper.SysLoginInfoMapper;
+import com.roydon.system.service.ISysLoginInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * 系统访问日志情况信息 服务层处理
- * 
- * @author ruoyi
+ *
  */
 @Service
-public class SysLogininforServiceImpl implements ISysLogininforService
+public class SysLoginInfoServiceImpl implements ISysLoginInfoService
 {
 
     @Autowired
-    private SysLogininforMapper logininforMapper;
+    private SysLoginInfoMapper loginInfoMapper;
 
     /**
      * 新增系统登录日志
@@ -26,9 +25,9 @@ public class SysLogininforServiceImpl implements ISysLogininforService
      * @param logininfor 访问日志对象
      */
     @Override
-    public void insertLogininfor(SysLogininfor logininfor)
+    public void insertLogininfor(SysLoginInfo logininfor)
     {
-        logininforMapper.insertLogininfor(logininfor);
+        loginInfoMapper.insertLogininfor(logininfor);
     }
 
     /**
@@ -38,9 +37,9 @@ public class SysLogininforServiceImpl implements ISysLogininforService
      * @return 登录记录集合
      */
     @Override
-    public List<SysLogininfor> selectLogininforList(SysLogininfor logininfor)
+    public List<SysLoginInfo> selectLogininforList(SysLoginInfo logininfor)
     {
-        return logininforMapper.selectLogininforList(logininfor);
+        return loginInfoMapper.selectLogininforList(logininfor);
     }
 
     /**
@@ -52,7 +51,7 @@ public class SysLogininforServiceImpl implements ISysLogininforService
     @Override
     public int deleteLogininforByIds(Long[] infoIds)
     {
-        return logininforMapper.deleteLogininforByIds(infoIds);
+        return loginInfoMapper.deleteLogininforByIds(infoIds);
     }
 
     /**
@@ -61,6 +60,6 @@ public class SysLogininforServiceImpl implements ISysLogininforService
     @Override
     public void cleanLogininfor()
     {
-        logininforMapper.cleanLogininfor();
+        loginInfoMapper.cleanLogininfor();
     }
 }
