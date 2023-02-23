@@ -107,11 +107,11 @@ public class SwaggerConfig {
         // 用ApiInfoBuilder进行定制
         return new ApiInfoBuilder()
                 // 设置标题
-                .title("标题：若依管理系统_接口文档")
+                .title("社区管理系统_接口文档")
                 // 描述
-                .description("描述：用于管理集团旗下公司的人员信息,具体包括XXX,XXX模块...")
+                .description("管理参与本项目合作社区的社区信息、人员信息。")
                 // 作者信息
-                .contact(new Contact(adminConfig.getName(), null, null))
+                .contact(new Contact("roydon", "https://www.roydon.top", "3133010060@qq.com"))
                 // 版本
                 .version("版本号:" + adminConfig.getVersion())
                 .build();

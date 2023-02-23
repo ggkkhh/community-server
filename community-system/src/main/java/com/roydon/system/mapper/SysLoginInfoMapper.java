@@ -16,7 +16,7 @@ public interface SysLoginInfoMapper
      * 
      * @param logininfor 访问日志对象
      */
-    public void insertLogininfor(SysLoginInfo logininfor);
+    public void insertLoginInfo(SysLoginInfo logininfor);
 
     /**
      * 查询系统登录日志集合
@@ -24,7 +24,7 @@ public interface SysLoginInfoMapper
      * @param logininfor 访问日志对象
      * @return 登录记录集合
      */
-    public List<SysLoginInfo> selectLogininforList(SysLoginInfo logininfor);
+    public List<SysLoginInfo> selectLoginInfoList(SysLoginInfo logininfor);
 
     /**
      * 批量删除系统登录日志
@@ -32,12 +32,12 @@ public interface SysLoginInfoMapper
      * @param infoIds 需要删除的登录日志ID
      * @return 结果
      */
-    public int deleteLogininforByIds(Long[] infoIds);
+    public int deleteLoginInfoByIds(Long[] infoIds);
 
     /**
      * 清空系统登录日志
      * 
      * @return 结果
      */
-    public int cleanLogininfor();
+    public int cleanLoginInfo();
 }
