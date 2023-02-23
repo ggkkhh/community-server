@@ -11,6 +11,7 @@
         <result property="nickName" column="nick_name"/>
         <result property="email" column="email"/>
         <result property="phonenumber" column="phonenumber"/>
+        <result property="idCard" column="id_card"/>
         <result property="sex" column="sex"/>
         <result property="avatar" column="avatar"/>
         <result property="password" column="password"/>
@@ -54,6 +55,7 @@
                u.email,
                u.avatar,
                u.phonenumber,
+               u.id_card,
                u.password,
                u.sex,
                u.status,
@@ -83,7 +85,8 @@
     </sql>
 
     <select id="selectUserList" parameterType="SysUser" resultMap="SysUserResult">
-        select u.user_id, u.dept_id, u.nick_name, u.user_name, u.email, u.avatar, u.phonenumber, u.sex, u.status,
+        select u.user_id, u.dept_id, u.nick_name, u.user_name, u.email, u.avatar, u.phonenumber,u.id_card, u.sex,
+        u.status,
         u.del_flag, u.login_ip, u.login_date, u.create_by, u.create_time, u.remark, d.dept_name, d.leader from sys_user
         u
         left join sys_dept d on u.dept_id = d.dept_id
@@ -100,6 +103,9 @@
         <if test="phonenumber != null and phonenumber != ''">
             AND u.phonenumber like concat('%', #{phonenumber}, '%')
         </if>
+        <if test="idCard != null and idCard != ''">
+            AND u.id_card like concat('%', #{idCard}, '%')
+        </if>
         <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
             AND date_format(u.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
         </if>
@@ -115,7 +121,7 @@
     </select>
 
     <select id="selectAllocatedList" parameterType="SysUser" resultMap="SysUserResult">
-        select distinct u.user_id, u.dept_id, u.user_name, u.nick_name, u.email, u.phonenumber, u.status, u.create_time
+        select distinct u.user_id, u.dept_id, u.user_name, u.nick_name, u.email, u.phonenumber,u.id_card, u.status, u.create_time
         from sys_user u
         left join sys_dept d on u.dept_id = d.dept_id
         left join sys_user_role ur on u.user_id = ur.user_id
@@ -132,7 +138,7 @@
     </select>
 
     <select id="selectUnallocatedList" parameterType="SysUser" resultMap="SysUserResult">
-        select distinct u.user_id, u.dept_id, u.user_name, u.nick_name, u.email, u.phonenumber, u.status, u.create_time
+        select distinct u.user_id, u.dept_id, u.user_name, u.nick_name, u.email, u.phonenumber,u.id_card, u.status, u.create_time
         from sys_user u
         left join sys_dept d on u.dept_id = d.dept_id
         left join sys_user_role ur on u.user_id = ur.user_id
@@ -182,7 +188,8 @@
     </select>
 
     <select id="getSysUserAmount" resultType="java.lang.Integer">
-        select count(*) from sys_user
+        select count(*)
+        from sys_user
     </select>
 
     <insert id="insertUser" parameterType="SysUser" useGeneratedKeys="true" keyProperty="userId">
@@ -194,6 +201,7 @@
         <if test="email != null and email != ''">email,</if>
         <if test="avatar != null and avatar != ''">avatar,</if>
         <if test="phonenumber != null and phonenumber != ''">phonenumber,</if>
+        <if test="idCard != null and idCard != ''">id_card,</if>
         <if test="sex != null and sex != ''">sex,</if>
         <if test="password != null and password != ''">password,</if>
         <if test="status != null and status != ''">status,</if>
@@ -208,6 +216,7 @@
         <if test="email != null and email != ''">#{email},</if>
         <if test="avatar != null and avatar != ''">#{avatar},</if>
         <if test="phonenumber != null and phonenumber != ''">#{phonenumber},</if>
+        <if test="idCard != null and idCard != ''">#{id_card},</if>
         <if test="sex != null and sex != ''">#{sex},</if>
         <if test="password != null and password != ''">#{password},</if>
         <if test="status != null and status != ''">#{status},</if>
@@ -225,6 +234,7 @@
             <if test="nickName != null and nickName != ''">nick_name = #{nickName},</if>
             <if test="email != null ">email = #{email},</if>
             <if test="phonenumber != null ">phonenumber = #{phonenumber},</if>
+            <if test="idCard != null ">id_card = #{idCard},</if>
             <if test="sex != null and sex != ''">sex = #{sex},</if>
             <if test="avatar != null and avatar != ''">avatar = #{avatar},</if>
             <if test="password != null and password != ''">password = #{password},</if>

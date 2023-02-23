@@ -1,22 +1,22 @@
 package com.roydon.common.core.domain.entity;
 
-import java.util.Date;
-import java.util.List;
-import javax.validation.constraints.*;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import com.roydon.common.annotation.Excel;
 import com.roydon.common.annotation.Excel.ColumnType;
 import com.roydon.common.annotation.Excel.Type;
 import com.roydon.common.annotation.Excels;
 import com.roydon.common.core.domain.BaseEntity;
 import com.roydon.common.xss.Xss;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 用户对象 sys_user
- *
- * @author ruoyi
  */
 public class SysUser extends BaseEntity {
     private static final long serialVersionUID = 1L;
@@ -56,6 +56,13 @@ public class SysUser extends BaseEntity {
      */
     @Excel(name = "手机号码")
     private String phonenumber;
+
+    /**
+     * 身份证号
+     */
+    @Excel(name = "身份证号")
+    private String idCard;
+
 
     /**
      * 用户性别
@@ -197,6 +204,15 @@ public class SysUser extends BaseEntity {
         this.phonenumber = phonenumber;
     }
 
+    @Size(min = 0, max = 18, message = "身份证号码不能超过18个字符")
+    public String getIdCard() {
+        return idCard;
+    }
+
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
+    }
+
     public String getSex() {
         return sex;
     }
@@ -302,6 +318,7 @@ public class SysUser extends BaseEntity {
                 .append("nickName", getNickName())
                 .append("email", getEmail())
                 .append("phonenumber", getPhonenumber())
+                .append("idCard", getIdCard())
                 .append("sex", getSex())
                 .append("avatar", getAvatar())
                 .append("password", getPassword())
