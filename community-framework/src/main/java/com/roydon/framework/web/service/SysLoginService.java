@@ -19,7 +19,6 @@ import com.roydon.framework.manager.factory.AsyncFactory;
 import com.roydon.framework.security.context.AuthenticationContextHolder;
 import com.roydon.system.service.ISysConfigService;
 import com.roydon.system.service.ISysUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -30,24 +29,22 @@ import javax.annotation.Resource;
 
 /**
  * 登录校验方法
- *
- * @author ruoyi
  */
 @Component
 public class SysLoginService {
-    @Autowired
+    @Resource
     private TokenService tokenService;
 
     @Resource
     private AuthenticationManager authenticationManager;
 
-    @Autowired
+    @Resource
     private RedisCache redisCache;
 
-    @Autowired
+    @Resource
     private ISysUserService userService;
 
-    @Autowired
+    @Resource
     private ISysConfigService configService;
 
     /**

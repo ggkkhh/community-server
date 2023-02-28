@@ -13,10 +13,10 @@ import eu.bitwalker.useragentutils.UserAgent;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,8 +24,6 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * token验证处理
- *
- * @author ruoyi
  */
 @Component
 public class TokenService {
@@ -37,7 +35,7 @@ public class TokenService {
     @Value("${token.secret}")
     private String secret;
 
-    // 令牌有效期（默认30分钟）
+    // 令牌有效期
     @Value("${token.expireTime}")
     private int expireTime;
 
@@ -47,7 +45,7 @@ public class TokenService {
 
     private static final Long MILLIS_MINUTE_TEN = 20 * 60 * 1000L;
 
-    @Autowired
+    @Resource
     private RedisCache redisCache;
 
     /**
@@ -112,8 +110,7 @@ public class TokenService {
     /**
      * 验证令牌有效期，相差不足20分钟，自动刷新缓存
      *
-     * @param loginUser
-     * @return 令牌
+     * @param loginUser loginUser
      */
     public void verifyToken(LoginUser loginUser) {
         long expireTime = loginUser.getExpireTime();

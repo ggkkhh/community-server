@@ -22,8 +22,6 @@ import com.roydon.framework.security.filter.JwtAuthenticationTokenFilter;
 
 /**
  * spring security配置
- *
- * @author ruoyi
  */
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -124,7 +122,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * 强散列哈希加密实现
+     * 强散列哈希加密实现: BCryptPasswordEncoder
      */
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {

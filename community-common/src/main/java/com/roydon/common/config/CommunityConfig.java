@@ -5,11 +5,10 @@ import org.springframework.stereotype.Component;
 
 /**
  * 读取项目相关配置
- *
  */
 @Component
 @ConfigurationProperties(prefix = "community")
-public class AdminConfig {
+public class CommunityConfig {
     /**
      * 项目名称
      */
@@ -82,7 +81,7 @@ public class AdminConfig {
     }
 
     public void setProfile(String profile) {
-        AdminConfig.profile = profile;
+        CommunityConfig.profile = profile;
     }
 
     public static boolean isAddressEnabled() {
@@ -90,7 +89,7 @@ public class AdminConfig {
     }
 
     public void setAddressEnabled(boolean addressEnabled) {
-        AdminConfig.addressEnabled = addressEnabled;
+        CommunityConfig.addressEnabled = addressEnabled;
     }
 
     public static String getCaptchaType() {
@@ -98,7 +97,7 @@ public class AdminConfig {
     }
 
     public void setCaptchaType(String captchaType) {
-        AdminConfig.captchaType = captchaType;
+        CommunityConfig.captchaType = captchaType;
     }
 
     /**

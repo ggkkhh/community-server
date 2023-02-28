@@ -9,6 +9,7 @@ import com.roydon.common.utils.poi.ExcelUtil;
 import com.roydon.framework.web.service.SysPasswordService;
 import com.roydon.system.domain.SysLoginInfo;
 import com.roydon.system.service.ISysLoginInfoService;
+import io.swagger.annotations.Api;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ import java.util.List;
 /**
  * 系统访问记录
  */
+@Api("系统访问记录")
 @RestController
 @RequestMapping("/monitor/loginInfo")
 public class SysLoginInfoController extends BaseController {

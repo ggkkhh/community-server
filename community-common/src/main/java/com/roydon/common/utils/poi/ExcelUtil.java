@@ -75,7 +75,7 @@ import com.roydon.common.annotation.Excel;
 import com.roydon.common.annotation.Excel.ColumnType;
 import com.roydon.common.annotation.Excel.Type;
 import com.roydon.common.annotation.Excels;
-import com.roydon.common.config.AdminConfig;
+import com.roydon.common.config.CommunityConfig;
 import com.roydon.common.exception.UtilException;
 import com.roydon.common.utils.DateUtils;
 import com.roydon.common.utils.DictUtils;
@@ -1069,7 +1069,7 @@ public class ExcelUtil<T> {
      * @param filename 文件名称
      */
     public String getAbsoluteFile(String filename) {
-        String downloadPath = AdminConfig.getDownloadPath() + filename;
+        String downloadPath = CommunityConfig.getDownloadPath() + filename;
         File desc = new File(downloadPath);
         if (!desc.getParentFile().exists()) {
             desc.getParentFile().mkdirs();

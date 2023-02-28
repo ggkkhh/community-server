@@ -6,36 +6,34 @@ import com.roydon.common.core.domain.TreeSelect;
 import com.roydon.common.core.domain.entity.SysMenu;
 import com.roydon.common.core.domain.entity.SysRole;
 import com.roydon.common.core.domain.entity.SysUser;
+import com.roydon.common.utils.SecurityUtils;
+import com.roydon.common.utils.StringUtils;
 import com.roydon.system.domain.vo.MetaVo;
 import com.roydon.system.domain.vo.RouterVo;
 import com.roydon.system.mapper.SysMenuMapper;
 import com.roydon.system.mapper.SysRoleMapper;
 import com.roydon.system.mapper.SysRoleMenuMapper;
 import com.roydon.system.service.ISysMenuService;
-import com.roydon.common.utils.SecurityUtils;
-import com.roydon.common.utils.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.*;
 import java.util.stream.Collectors;
 
 /**
  * 菜单 业务层处理
- *
- * @author ruoyi
  */
 @Service
 public class SysMenuServiceImpl implements ISysMenuService {
     public static final String PREMISSION_STRING = "perms[\"{0}\"]";
 
-    @Autowired
+    @Resource
     private SysMenuMapper menuMapper;
 
-    @Autowired
+    @Resource
     private SysRoleMapper roleMapper;
 
-    @Autowired
+    @Resource
     private SysRoleMenuMapper roleMenuMapper;
 
     /**

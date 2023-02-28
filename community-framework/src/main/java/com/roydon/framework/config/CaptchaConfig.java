@@ -11,15 +11,11 @@ import static com.google.code.kaptcha.Constants.*;
 
 /**
  * 验证码配置
- * 
- * @author ruoyi
  */
 @Configuration
-public class CaptchaConfig
-{
+public class CaptchaConfig {
     @Bean(name = "captchaProducer")
-    public DefaultKaptcha getKaptchaBean()
-    {
+    public DefaultKaptcha getKaptchaBean() {
         DefaultKaptcha defaultKaptcha = new DefaultKaptcha();
         Properties properties = new Properties();
         // 是否有边框 默认为true 我们可以自己设置yes，no
@@ -46,8 +42,7 @@ public class CaptchaConfig
     }
 
     @Bean(name = "captchaProducerMath")
-    public DefaultKaptcha getKaptchaBeanMath()
-    {
+    public DefaultKaptcha getKaptchaBeanMath() {
         DefaultKaptcha defaultKaptcha = new DefaultKaptcha();
         Properties properties = new Properties();
         // 是否有边框 默认为true 我们可以自己设置yes，no

@@ -8,15 +8,15 @@ import com.roydon.common.core.domain.entity.SysRole;
 import com.roydon.common.core.domain.entity.SysUser;
 import com.roydon.common.core.text.Convert;
 import com.roydon.common.exception.ServiceException;
-import com.roydon.system.mapper.SysDeptMapper;
-import com.roydon.system.mapper.SysRoleMapper;
-import com.roydon.system.service.ISysDeptService;
 import com.roydon.common.utils.SecurityUtils;
 import com.roydon.common.utils.StringUtils;
 import com.roydon.common.utils.spring.SpringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.roydon.system.mapper.SysDeptMapper;
+import com.roydon.system.mapper.SysRoleMapper;
+import com.roydon.system.service.ISysDeptService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -24,15 +24,13 @@ import java.util.stream.Collectors;
 
 /**
  * 部门管理 服务实现
- *
- * @author ruoyi
  */
 @Service
 public class SysDeptServiceImpl implements ISysDeptService {
-    @Autowired
+    @Resource
     private SysDeptMapper deptMapper;
 
-    @Autowired
+    @Resource
     private SysRoleMapper roleMapper;
 
     /**

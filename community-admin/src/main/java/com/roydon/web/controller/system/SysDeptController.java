@@ -8,23 +8,23 @@ import com.roydon.common.core.domain.entity.SysDept;
 import com.roydon.common.enums.BusinessType;
 import com.roydon.common.utils.StringUtils;
 import com.roydon.system.service.ISysDeptService;
+import io.swagger.annotations.Api;
 import org.apache.commons.lang3.ArrayUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
  * 部门信息
- *
- * @author ruoyi
  */
+@Api("部门信息管理")
 @RestController
 @RequestMapping("/system/dept")
 public class SysDeptController extends BaseController {
-    @Autowired
+    @Resource
     private ISysDeptService deptService;
 
     /**

@@ -1,24 +1,22 @@
 package com.roydon.common.core.redis;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundSetOperations;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
  * spring redis 工具类
- *
- * @author ruoyi
  **/
 @SuppressWarnings(value = {"unchecked", "rawtypes"})
 @Component
 public class RedisCache {
-    @Autowired
+    @Resource
     public RedisTemplate redisTemplate;
 
     /**
@@ -47,7 +45,7 @@ public class RedisCache {
      * 设置有效时间
      *
      * @param key     Redis键
-     * @param timeout 超时时间
+     * @param timeout 超时时间，默认秒为单位
      * @return true=设置成功；false=设置失败
      */
     public boolean expire(final String key, final long timeout) {

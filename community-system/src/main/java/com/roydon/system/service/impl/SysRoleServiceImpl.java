@@ -4,6 +4,10 @@ import com.roydon.common.annotation.DataScope;
 import com.roydon.common.constant.UserConstants;
 import com.roydon.common.core.domain.entity.SysRole;
 import com.roydon.common.core.domain.entity.SysUser;
+import com.roydon.common.exception.ServiceException;
+import com.roydon.common.utils.SecurityUtils;
+import com.roydon.common.utils.StringUtils;
+import com.roydon.common.utils.spring.SpringUtils;
 import com.roydon.system.domain.SysRoleDept;
 import com.roydon.system.domain.SysRoleMenu;
 import com.roydon.system.domain.SysUserRole;
@@ -11,34 +15,28 @@ import com.roydon.system.mapper.SysRoleDeptMapper;
 import com.roydon.system.mapper.SysRoleMapper;
 import com.roydon.system.mapper.SysRoleMenuMapper;
 import com.roydon.system.mapper.SysUserRoleMapper;
-import com.roydon.common.exception.ServiceException;
-import com.roydon.common.utils.SecurityUtils;
-import com.roydon.common.utils.StringUtils;
-import com.roydon.common.utils.spring.SpringUtils;
 import com.roydon.system.service.ISysRoleService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.*;
 
 /**
  * 角色 业务层处理
- *
- * @author ruoyi
  */
 @Service
 public class SysRoleServiceImpl implements ISysRoleService {
-    @Autowired
+    @Resource
     private SysRoleMapper roleMapper;
 
-    @Autowired
+    @Resource
     private SysRoleMenuMapper roleMenuMapper;
 
-    @Autowired
+    @Resource
     private SysUserRoleMapper userRoleMapper;
 
-    @Autowired
+    @Resource
     private SysRoleDeptMapper roleDeptMapper;
 
     /**

@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.roydon.common.utils.StringUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ArrayUtils;
-import com.roydon.common.config.AdminConfig;
+import com.roydon.common.config.CommunityConfig;
 import com.roydon.common.utils.DateUtils;
 import com.roydon.common.utils.uuid.IdUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -74,7 +74,7 @@ public class FileUtils
      */
     public static String writeImportBytes(byte[] data) throws IOException
     {
-        return writeBytes(data, AdminConfig.getImportPath());
+        return writeBytes(data, CommunityConfig.getImportPath());
     }
 
     /**

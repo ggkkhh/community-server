@@ -2,11 +2,8 @@ package com.roydon.common.enums;
 
 /**
  * 数据源
- * 
- * @author ruoyi
  */
-public enum DataSourceType
-{
+public enum DataSourceType {
     /**
      * 主库
      */

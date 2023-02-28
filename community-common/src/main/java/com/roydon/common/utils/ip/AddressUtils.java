@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
-import com.roydon.common.config.AdminConfig;
+import com.roydon.common.config.CommunityConfig;
 import com.roydon.common.constant.Constants;
 import com.roydon.common.utils.StringUtils;
 import com.roydon.common.utils.http.HttpUtils;
@@ -26,7 +26,7 @@ public class AddressUtils {
         if (IpUtils.internalIp(ip)) {
             return "内网IP";
         }
-        if (AdminConfig.isAddressEnabled()) {
+        if (CommunityConfig.isAddressEnabled()) {
             try {
                 String rspStr = HttpUtils.sendGet(IP_URL, "ip=" + ip + "&json=true", Constants.GBK);
                 if (StringUtils.isEmpty(rspStr)) {

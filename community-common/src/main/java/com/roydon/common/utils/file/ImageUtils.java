@@ -11,7 +11,7 @@ import com.roydon.common.utils.StringUtils;
 import org.apache.poi.util.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.roydon.common.config.AdminConfig;
+import com.roydon.common.config.CommunityConfig;
 import com.roydon.common.constant.Constants;
 
 /**
@@ -80,7 +80,7 @@ public class ImageUtils
             else
             {
                 // 本机地址
-                String localPath = AdminConfig.getProfile();
+                String localPath = CommunityConfig.getProfile();
                 String downloadPath = localPath + StringUtils.substringAfter(url, Constants.RESOURCE_PREFIX);
                 in = new FileInputStream(downloadPath);
             }

@@ -1,7 +1,7 @@
 package com.roydon.web.controller.common;
 
 import com.google.code.kaptcha.Producer;
-import com.roydon.common.config.AdminConfig;
+import com.roydon.common.config.CommunityConfig;
 import com.roydon.common.constant.CacheConstants;
 import com.roydon.common.constant.Constants;
 import com.roydon.common.core.domain.AjaxResult;
@@ -9,6 +9,7 @@ import com.roydon.common.core.redis.RedisCache;
 import com.roydon.common.utils.sign.Base64;
 import com.roydon.common.utils.uuid.IdUtils;
 import com.roydon.system.service.ISysConfigService;
+import io.swagger.annotations.Api;
 import org.springframework.util.FastByteArrayOutputStream;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +25,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author roydon
  */
+@Api("验证码操作处理")
 @RestController
 public class CaptchaController {
 
@@ -36,7 +38,7 @@ public class CaptchaController {
     @Resource
     private RedisCache redisCache;
 
-    @Resource(name="sysConfigServiceImpl")
+    @Resource(name = "sysConfigServiceImpl")
     private ISysConfigService sysConfigService;
 
     /**
@@ -59,7 +61,7 @@ public class CaptchaController {
         BufferedImage image = null;
 
         // 生成验证码
-        String captchaType = AdminConfig.getCaptchaType();
+        String captchaType = CommunityConfig.getCaptchaType();
         if ("math".equals(captchaType)) {
             String capText = captchaProducerMath.createText();
             capStr = capText.substring(0, capText.lastIndexOf("@"));

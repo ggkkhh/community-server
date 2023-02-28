@@ -9,29 +9,29 @@ import com.roydon.common.utils.SecurityUtils;
 import com.roydon.framework.web.service.SysLoginService;
 import com.roydon.framework.web.service.SysPermissionService;
 import com.roydon.system.service.ISysMenuService;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Set;
 
 /**
  * 登录验证
- *
- * @author ruoyi
  */
+@Api("登录控制层")
 @RestController
 public class SysLoginController {
-    @Autowired
+    @Resource
     private SysLoginService loginService;
 
-    @Autowired
+    @Resource
     private ISysMenuService menuService;
 
-    @Autowired
+    @Resource
     private SysPermissionService permissionService;
 
     /**

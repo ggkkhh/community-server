@@ -11,6 +11,7 @@ import com.roydon.common.enums.BusinessType;
 import com.roydon.common.utils.StringUtils;
 import com.roydon.system.domain.SysUserOnline;
 import com.roydon.system.service.ISysUserOnlineService;
+import io.swagger.annotations.Api;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,7 @@ import java.util.List;
 /**
  * 在线用户监控
  */
+@Api("在线用户监控")
 @RestController
 @RequestMapping("/monitor/online")
 public class SysUserOnlineController extends BaseController {

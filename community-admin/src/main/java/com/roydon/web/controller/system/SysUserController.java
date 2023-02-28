@@ -16,6 +16,10 @@ import com.roydon.system.service.ISysDeptService;
 import com.roydon.system.service.ISysPostService;
 import com.roydon.system.service.ISysRoleService;
 import com.roydon.system.service.ISysUserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -30,6 +34,7 @@ import java.util.stream.Collectors;
 /**
  * 系统用户控制层
  */
+@Api("用户信息管理")
 @RestController
 @RequestMapping("/system/user")
 public class SysUserController extends BaseController {
@@ -49,6 +54,7 @@ public class SysUserController extends BaseController {
     /**
      * 获取用户列表
      */
+    @ApiOperation("获取用户列表")
     @PreAuthorize("@ss.hasPermi('system:user:list')")
     @GetMapping("/list")
     public TableDataInfo list(SysUser user) {
@@ -86,6 +92,8 @@ public class SysUserController extends BaseController {
     /**
      * 根据用户编号获取详细信息
      */
+    @ApiOperation("根据用户编号获取详细信息")
+    @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "int", paramType = "path", dataTypeClass = Integer.class)
     @PreAuthorize("@ss.hasPermi('system:user:query')")
     @GetMapping(value = {"/", "/{userId}"})
     public AjaxResult getInfo(@PathVariable(value = "userId", required = false) Long userId) {
@@ -106,6 +114,13 @@ public class SysUserController extends BaseController {
     /**
      * 新增用户
      */
+    @ApiOperation("新增用户")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "用户id", dataType = "Integer", dataTypeClass = Integer.class),
+            @ApiImplicitParam(name = "username", value = "用户名称", dataType = "String", dataTypeClass = String.class),
+            @ApiImplicitParam(name = "password", value = "用户密码", dataType = "String", dataTypeClass = String.class),
+            @ApiImplicitParam(name = "mobile", value = "用户手机", dataType = "String", dataTypeClass = String.class)
+    })
     @PreAuthorize("@ss.hasPermi('system:user:add')")
     @Log(title = "用户管理", businessType = BusinessType.INSERT)
     @PostMapping

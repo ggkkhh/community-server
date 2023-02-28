@@ -3,19 +3,17 @@ package com.roydon.system.service.impl;
 import com.roydon.system.domain.SysNotice;
 import com.roydon.system.mapper.SysNoticeMapper;
 import com.roydon.system.service.ISysNoticeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
  * 公告 服务层实现
- *
- * @author ruoyi
  */
 @Service
 public class SysNoticeServiceImpl implements ISysNoticeService {
-    @Autowired
+    @Resource
     private SysNoticeMapper noticeMapper;
 
     /**
