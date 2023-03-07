@@ -8,6 +8,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 public class AdminApplication {
     public static void main(String[] args) {
-        ConfigurableApplicationContext configurableApplicationContext = SpringApplication.run(AdminApplication.class, args);
+        SpringApplication.run(AdminApplication.class, args);
     }
 }
