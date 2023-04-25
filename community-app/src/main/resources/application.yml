@@ -33,12 +33,6 @@ server:
       # Tomcat启动初始化的线程数，默认值10
       min-spare: 100
 
-# 日志配置
-#logging:
-#  level:
-#    com.roydon: debug
-#    org.springframework: warn
-
 # 用户配置
 user:
   password:
@@ -69,15 +63,10 @@ spring:
       enabled: true
   # redis 配置
   redis:
-    # 地址
     host: localhost
-    # 端口，默认为6379
     port: 6379
-    # 数据库索引
-    database: 1
-    # 密码
+    database: 2
     password:
-    # 连接超时时间
     timeout: 10s
     lettuce:
       pool:
