@@ -47,6 +47,7 @@
         <dependency>
             <groupId>com.roydon</groupId>
             <artifactId>community-framework</artifactId>
+            <version>${community.version}</version>
         </dependency>
 
     </dependencies>
