@@ -1,5 +1,6 @@
 package com.roydon.system.service.impl;
 
+import cn.hutool.core.util.PhoneUtil;
 import com.roydon.common.annotation.DataScope;
 import com.roydon.common.constant.UserConstants;
 import com.roydon.common.core.domain.entity.SysRole;
@@ -8,6 +9,8 @@ import com.roydon.common.exception.ServiceException;
 import com.roydon.common.utils.SecurityUtils;
 import com.roydon.common.utils.StringUtils;
 import com.roydon.common.utils.bean.BeanValidators;
+import com.roydon.common.utils.encrypt.IdCardNumUtil;
+import com.roydon.common.utils.encrypt.TelephoneUtil;
 import com.roydon.common.utils.spring.SpringUtils;
 import com.roydon.system.domain.SysPost;
 import com.roydon.system.domain.SysUserPost;
@@ -56,7 +59,7 @@ public class SysUserServiceImpl implements ISysUserService {
     protected Validator validator;
 
     /**
-     * 根据条件分页查询用户列表
+     * 根据条件分页查询用户列表，加密敏感字段
      *
      * @param user 用户信息
      * @return 用户信息集合信息
@@ -64,7 +67,12 @@ public class SysUserServiceImpl implements ISysUserService {
     @Override
     @DataScope(deptAlias = "d", userAlias = "u")
     public List<SysUser> selectUserList(SysUser user) {
-        return userMapper.selectUserList(user);
+        List<SysUser> sysUserList = userMapper.selectUserList(user);
+        List<SysUser> collect = sysUserList.stream().peek(u -> {
+            u.setPhonenumber(TelephoneUtil.replaceSomeCharByAsterisk(u.getPhonenumber()));
+            u.setIdCard(IdCardNumUtil.replaceSomeCharByAsterisk(u.getIdCard()));
+        }).collect(Collectors.toList());
+        return collect;
     }
 
     /**

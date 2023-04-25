@@ -199,6 +199,7 @@
         <module>community-framework</module>
         <module>community-system</module>
         <module>community-common</module>
+        <module>community-app</module>
     </modules>
     <packaging>pom</packaging>
 
