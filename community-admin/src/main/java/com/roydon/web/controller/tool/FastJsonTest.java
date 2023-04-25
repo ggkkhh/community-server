@@ -13,10 +13,9 @@ import java.util.List;
 public class FastJsonTest {
     public static void main(String[] args) {
         String image = "[{\\\"name\\\":\\\"1.jpg\\\",\\\"url\\\":\\\"https://ggzy.guizhou.gov.cn/zhdt/tpxw/202205/W020220531570286566708.jpg\\\"}]";
-        System.out.println("image.replace(\"\\\\\\\"\",\"\\\"\") = " + image.replace("\\\"", "\""));
-
+        System.out.println("image = " + image);
         String jsonStr = image.replace("\\\"", "\"");
-        System.out.println(image);
+        System.out.println("jsonStr = " + jsonStr);
 
         // JSON字符串转Java对象
 //        JSONObject json = JSON.parseObject(image);
