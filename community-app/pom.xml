@@ -2,26 +2,35 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>community-parent</artifactId>
         <groupId>com.roydon</groupId>
+        <artifactId>community-parent</artifactId>
         <version>1.0.0</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
-    <artifactId>community-admin</artifactId>
 
-    <description>
-        web服务入口
-    </description>
+    <artifactId>community-app</artifactId>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
     <dependencies>
-
         <!-- spring-boot-devtools -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional> <!-- 表示依赖不会传递 -->
+        </dependency>
+
+        <!-- 核心模块-->
+        <dependency>
+            <groupId>com.roydon</groupId>
+            <artifactId>community-framework</artifactId>
+            <version>${community.version}</version>
         </dependency>
 
         <!-- swagger3-->
@@ -42,14 +51,6 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
-
-        <!-- 核心模块-->
-        <dependency>
-            <groupId>com.roydon</groupId>
-            <artifactId>community-framework</artifactId>
-            <version>${community.version}</version>
-        </dependency>
-
     </dependencies>
 
     <build>
