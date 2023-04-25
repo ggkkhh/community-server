@@ -34,10 +34,10 @@ server:
       min-spare: 100
 
 # 日志配置
-#logging:
-#  level:
-#    com.roydon: debug
-#    org.springframework: warn
+logging:
+  level:
+    com.roydon: debug
+    org.springframework: warn
 
 # 用户配置
 user:
@@ -96,8 +96,8 @@ token:
   header: Authorization
   # 令牌密钥
   secret: abcdefghijklmnopqrstuvwxyz
-  # 令牌有效期（默认60分钟）
-  expireTime: 60
+  # 令牌有效期（默认三天）
+  expireTime: 4320
 
 # MyBatis配置
 mybatis:
