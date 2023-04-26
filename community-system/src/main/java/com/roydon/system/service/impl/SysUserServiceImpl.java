@@ -1,6 +1,7 @@
 package com.roydon.system.service.impl;
 
-import cn.hutool.core.util.PhoneUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.roydon.common.annotation.DataScope;
 import com.roydon.common.constant.UserConstants;
 import com.roydon.common.core.domain.entity.SysRole;
@@ -34,7 +35,7 @@ import java.util.stream.Collectors;
  * 用户 业务层处理
  */
 @Service
-public class SysUserServiceImpl implements ISysUserService {
+public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements ISysUserService {
     private static final Logger log = LoggerFactory.getLogger(SysUserServiceImpl.class);
 
     @Resource
@@ -494,4 +495,12 @@ public class SysUserServiceImpl implements ISysUserService {
         }
         return successMsg.toString();
     }
+
+    @Override
+    public SysUser checkTelephoneExists(String telephone) {
+        LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysUser::getPhonenumber, telephone);
+        return getOne(queryWrapper);
+    }
+
 }

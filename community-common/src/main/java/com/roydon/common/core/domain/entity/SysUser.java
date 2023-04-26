@@ -73,7 +73,6 @@ public class SysUser extends BaseEntity {
     @Excel(name = "身份证号")
     private String idCard;
 
-
     /**
      * 用户性别
      */

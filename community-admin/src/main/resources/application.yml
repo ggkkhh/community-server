@@ -129,3 +129,10 @@ xss:
   excludes: /system/notice
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
+
+# aliyun配置
+aliyun:
+  sms:
+    accessKeyId: LTAI5tSpJYrm2fawRxgfWncf
+    accessKeySecret: Plo6TQpTC6YzThyI1QHcu53EtKvroX
+    templateCode: SMS_273815229 # 可在aliyun控制台申请

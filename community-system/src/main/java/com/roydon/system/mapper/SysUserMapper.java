@@ -1,5 +1,6 @@
 package com.roydon.system.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.roydon.common.core.domain.entity.SysUser;
 import org.apache.ibatis.annotations.Param;
 
@@ -8,7 +9,7 @@ import java.util.List;
 /**
  * 用户表 数据层
  */
-public interface SysUserMapper {
+public interface SysUserMapper extends BaseMapper<SysUser> {
     /**
      * 根据条件分页查询用户列表
      *
