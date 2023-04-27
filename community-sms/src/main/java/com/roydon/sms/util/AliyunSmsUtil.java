@@ -1,4 +1,4 @@
-package com.roydon.web.controller.tool;
+package com.roydon.sms.util;
 
 import com.aliyuncs.CommonRequest;
 import com.aliyuncs.CommonResponse;
@@ -36,7 +36,7 @@ public class AliyunSmsUtil {
     /**
      * 短信发送返回信息
      */
-    private static final String MESSAGE_OK = "OK";
+    public static final String MESSAGE_OK = "OK";
     /**
      * 阿里云短信服务提供的标识用户
      */

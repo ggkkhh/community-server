@@ -208,6 +208,7 @@
         <module>community-system</module>
         <module>community-common</module>
         <module>community-app</module>
+        <module>community-sms</module>
     </modules>
     <packaging>pom</packaging>
 

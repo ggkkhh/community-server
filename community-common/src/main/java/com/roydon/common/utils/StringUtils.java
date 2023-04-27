@@ -1,15 +1,10 @@
 package com.roydon.common.utils;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import com.roydon.common.constant.Constants;
 import com.roydon.common.core.text.StrFormatter;
 import org.springframework.util.AntPathMatcher;
-import com.roydon.common.constant.Constants;
+
+import java.util.*;
 
 /**
  * 字符串工具类
@@ -295,9 +290,9 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     /**
      * 判断给定的set列表中是否包含数组array 判断给定的数组array中是否包含给定的元素value
      *
-     * @param set   给定的集合
-     * @param array 给定的数组
-     * @return boolean 结果
+     * @param collection  给定的集合
+     * @param array       给定的数组
+     * @return boolean    结果
      */
     public static boolean containsAny(Collection<String> collection, String... array) {
         if (isEmpty(collection) || isEmpty(array)) {

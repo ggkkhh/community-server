@@ -18,7 +18,7 @@ community:
 # 开发环境配置
 server:
   # 服务器的HTTP端口，默认为8080
-  port: 8080
+  port: 7080
   servlet:
     # 应用的访问路径
     context-path: /
@@ -32,12 +32,6 @@ server:
       max: 800
       # Tomcat启动初始化的线程数，默认值10
       min-spare: 100
-
-# 日志配置
-logging:
-  level:
-    com.roydon: debug
-    org.springframework: warn
 
 # 用户配置
 user:
@@ -69,15 +63,10 @@ spring:
       enabled: true
   # redis 配置
   redis:
-    # 地址
     host: localhost
-    # 端口，默认为6379
     port: 6379
-    # 数据库索引
-    database: 1
-    # 密码
+    database: 2
     password:
-    # 连接超时时间
     timeout: 10s
     lettuce:
       pool:
@@ -96,8 +85,8 @@ token:
   header: Authorization
   # 令牌密钥
   secret: abcdefghijklmnopqrstuvwxyz
-  # 令牌有效期（默认三天）
-  expireTime: 4320
+
+  expireTime: 4320 # 令牌有效期（默认三天）
 
 # MyBatis配置
 mybatis:
@@ -130,3 +119,10 @@ xss:
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
 
+
+# aliyun配置
+aliyun:
+  sms:
+    accessKeyId: LTAI5tSpJYrm2fawRxgfWncf
+    accessKeySecret: Plo6TQpTC6YzThyI1QHcu53EtKvroX
+    templateCode: SMS_273815229 # 可在aliyun控制台申请

@@ -1,8 +1,8 @@
-package com.roydon.web.controller.system;
+package com.roydon.sms.controller;
 
 import com.roydon.common.core.domain.AjaxResult;
-import com.roydon.web.controller.tool.AliyunSmsUtil;
-import org.apache.commons.lang.RandomStringUtils;
+import com.roydon.sms.domain.model.AliSmsResponse;
+import com.roydon.sms.service.AliyunSmsService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +16,7 @@ import javax.annotation.Resource;
  * @Description: 阿里云SMS短信发送API
  */
 @RestController
-@RequestMapping("/system")
+@RequestMapping("/sms")
 public class AliyunSmsApiController {
 
     @Resource
@@ -24,6 +24,9 @@ public class AliyunSmsApiController {
 
     @Value("${aliyun.sms.templateCode}")
     private String templateCode;
+
+    @Resource
+    private AliyunSmsService aliyunSmsService;
 
     /**
      * 短信发送
@@ -34,20 +37,11 @@ public class AliyunSmsApiController {
     @GetMapping("/sendCode/{phone}")
     public AjaxResult sendCode(@PathVariable("phone") String phone) {
 
-        String s = AliyunSmsUtil.sendSms(phone, 7, RandomStringUtils.randomNumeric(6));
+        AliSmsResponse aliSmsResponse = aliyunSmsService.sendCode(phone);
+//        String smsCode = redisTemplate.opsForValue().get(CacheConstants.ALIYUN_SMS_KEY + phone);
 
-        return AjaxResult.success(s);
-
-        // 根据手机号从redis中拿验证码
-//        String code = redisTemplate.opsForValue().get(phone);
-//        if (!StringUtils.isEmpty(code)) {
-//            return AjaxResult.success("请勿重复发送", code);
-//        }
-//
-//        // 如果redis 中根据手机号拿不到验证码，则生成6位随机验证码
+        // 如果redis 中根据手机号拿不到验证码，则生成6位随机验证码
 //        code = UUID.randomUUID().toString().substring(0, 6);
-//
-//        // 验证码存入codeMap
 //        Map<String, Object> codeMap = new HashMap<>();
 //        codeMap.put(phone, code);
 //
@@ -61,5 +55,7 @@ public class AliyunSmsApiController {
 //        } else {
 //            return AjaxResult.error("发送失败");
 //        }
+
+        return AjaxResult.success(aliSmsResponse.getMessage());
     }
 }
