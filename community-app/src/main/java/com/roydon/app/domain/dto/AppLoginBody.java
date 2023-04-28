@@ -1,4 +1,4 @@
-package com.roydon.web.domain.dto;
+package com.roydon.app.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

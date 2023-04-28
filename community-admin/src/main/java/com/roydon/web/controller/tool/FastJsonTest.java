@@ -21,7 +21,6 @@ public class FastJsonTest {
 //        JSONObject json = JSON.parseObject(image);
 //        Image i = JSON.toJavaObject(json, Image.class);
 
-        // 打印Java对象
 //        System.out.println(i.toString());
 
         List<Image> personList = JSON.parseArray(jsonStr, Image.class);

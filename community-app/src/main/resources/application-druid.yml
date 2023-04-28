@@ -1,23 +1,18 @@
-# 数据源配置
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
     druid:
-      # 主库数据源
       master:
         url: jdbc:mysql://43.143.33.99:3306/a_community?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
         username: roydon
         password: qwer1234
-      # 从库数据源
       slave:
-        # 从数据源开关/默认关闭
-        enabled: false
+        enabled: false # 从数据源开关/默认关闭
         url:
         username:
         password:
-      # 初始连接数
-      initialSize: 5
+      initialSize: 5 # 初始连接数
       # 最小连接池数量
       minIdle: 10
       # 最大连接池数量
@@ -42,14 +37,12 @@ spring:
         # 设置白名单，不填则允许所有访问
         allow:
         url-pattern: /druid/*
-        # 控制台管理用户名和密码
         login-username: roydon
         login-password: qwer1234
       filter:
         stat:
           enabled: true
-          # 慢SQL记录
-          log-slow-sql: true
+          log-slow-sql: true # 慢SQL记录
           slow-sql-millis: 1000
           merge-sql: true
         wall:

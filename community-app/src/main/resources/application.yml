@@ -63,10 +63,10 @@ spring:
       enabled: true
   # redis 配置
   redis:
-    host: localhost
+    host: 43.143.33.99
     port: 6379
     database: 2
-    password:
+    password: qwer1234
     timeout: 10s
     lettuce:
       pool:

@@ -1,14 +1,12 @@
-package com.roydon.web.controller;
+package com.roydon.app.controller;
 
 import com.roydon.common.constant.Constants;
 import com.roydon.common.core.domain.AjaxResult;
 import com.roydon.common.core.domain.entity.SysUser;
 import com.roydon.common.utils.SecurityUtils;
-import com.roydon.common.utils.encrypt.IdCardNumUtil;
-import com.roydon.common.utils.encrypt.TelephoneUtil;
 import com.roydon.framework.web.service.SysLoginService;
 import com.roydon.framework.web.service.SysPermissionService;
-import com.roydon.web.domain.dto.AppLoginBody;
+import com.roydon.app.domain.dto.AppLoginBody;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,7 +30,7 @@ public class LoginController {
     private SysPermissionService permissionService;
 
     /**
-     * 登录
+     * 登录方法
      *
      * @param appLoginBody 登录信息
      * @return 结果
@@ -40,9 +38,8 @@ public class LoginController {
     @PostMapping("/login")
     public AjaxResult login(@RequestBody AppLoginBody appLoginBody) {
         // 生成令牌
-        String token = loginService.appUPLogin(appLoginBody.getUsername(),
-                appLoginBody.getPassword());
-        return AjaxResult.success().put(Constants.TOKEN, token).put("username", appLoginBody.getUsername());
+        String token = loginService.appUPLogin(appLoginBody.getUsername(), appLoginBody.getPassword());
+        return AjaxResult.success().put(Constants.TOKEN, token);
     }
 
     /**
@@ -50,13 +47,9 @@ public class LoginController {
      *
      * @return 用户信息
      */
-    @GetMapping("/getInfo")
+    @GetMapping("getInfo")
     public AjaxResult getInfo() {
         SysUser user = SecurityUtils.getLoginUser().getUser();
-        String encryptPhone = TelephoneUtil.replaceSomeCharByAsterisk(user.getPhonenumber());
-        user.setPhonenumber(encryptPhone);
-        String encryptIdCardNum = IdCardNumUtil.replaceSomeCharByAsterisk(user.getIdCard());
-        user.setIdCard(encryptIdCardNum);
         // 角色集合
         Set<String> roles = permissionService.getRolePermission(user);
         // 权限集合
@@ -67,7 +60,5 @@ public class LoginController {
         ajax.put("permissions", permissions);
         return ajax;
     }
-
-
 
 }
