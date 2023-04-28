@@ -209,6 +209,7 @@
         <module>community-common</module>
         <module>community-app</module>
         <module>community-sms</module>
+        <module>community-resident</module>
     </modules>
     <packaging>pom</packaging>
 
