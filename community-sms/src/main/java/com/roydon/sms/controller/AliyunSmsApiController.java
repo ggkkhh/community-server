@@ -2,6 +2,7 @@ package com.roydon.sms.controller;
 
 import com.roydon.common.core.domain.AjaxResult;
 import com.roydon.sms.domain.model.AliSmsResponse;
+import com.roydon.sms.domain.model.SmsCode;
 import com.roydon.sms.service.AliyunSmsService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -37,7 +38,7 @@ public class AliyunSmsApiController {
     @GetMapping("/sendCode/{phone}")
     public AjaxResult sendCode(@PathVariable("phone") String phone) {
 
-        AliSmsResponse aliSmsResponse = aliyunSmsService.sendCode(phone);
+        SmsCode smsCode = aliyunSmsService.sendCode(phone);
 //        String smsCode = redisTemplate.opsForValue().get(CacheConstants.ALIYUN_SMS_KEY + phone);
 
         // 如果redis 中根据手机号拿不到验证码，则生成6位随机验证码
@@ -56,6 +57,6 @@ public class AliyunSmsApiController {
 //            return AjaxResult.error("发送失败");
 //        }
 
-        return AjaxResult.success(aliSmsResponse.getMessage());
+        return AjaxResult.success(smsCode.getCode());
     }
 }

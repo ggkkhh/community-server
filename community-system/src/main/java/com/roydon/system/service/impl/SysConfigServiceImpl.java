@@ -1,8 +1,10 @@
 package com.roydon.system.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.roydon.common.annotation.DataSource;
 import com.roydon.common.constant.CacheConstants;
 import com.roydon.common.constant.UserConstants;
+import com.roydon.common.core.domain.entity.SysUser;
 import com.roydon.common.core.redis.RedisCache;
 import com.roydon.common.core.text.Convert;
 import com.roydon.common.enums.DataSourceType;
@@ -10,6 +12,7 @@ import com.roydon.common.exception.ServiceException;
 import com.roydon.common.utils.StringUtils;
 import com.roydon.system.domain.SysConfig;
 import com.roydon.system.mapper.SysConfigMapper;
+import com.roydon.system.mapper.SysUserMapper;
 import com.roydon.system.service.ISysConfigService;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +25,7 @@ import java.util.List;
  * 参数配置 服务层实现
  */
 @Service
-public class SysConfigServiceImpl implements ISysConfigService {
+public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig> implements ISysConfigService {
 
     @Resource
     private SysConfigMapper configMapper;

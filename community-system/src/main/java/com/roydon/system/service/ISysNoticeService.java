@@ -1,5 +1,7 @@
 package com.roydon.system.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.roydon.system.domain.SysConfig;
 import com.roydon.system.domain.SysNotice;
 
 import java.util.List;
@@ -7,7 +9,7 @@ import java.util.List;
 /**
  * 公告 服务层
  */
-public interface ISysNoticeService {
+public interface ISysNoticeService extends IService<SysNotice> {
     /**
      * 查询公告信息
      *

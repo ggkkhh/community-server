@@ -30,8 +30,7 @@ public class StringUtil {
     public final static String COLON = ":";
     protected final static char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
     protected final static String HEX_CHARS = "0123456789abcdefABCDEF";
-    protected final static byte[] HEX_VALUES = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 10, 11, 12, 13,
-            14, 15};
+    protected final static byte[] HEX_VALUES = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 10, 11, 12, 13, 14, 15};
 
     protected final static byte HEX_BYTES[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0,
@@ -47,6 +46,67 @@ public class StringUtil {
             return str;
         }
         return str.replaceAll("\r|\n", "");
+    }
+
+    public static void main(String[] args) {
+
+        System.out.println("isFixedPhone===" + isMobileOrFixedPhone("0321-88889999"));
+        System.out.println("isFixedPhone===" + isMobileOrFixedPhone("031-88889999"));
+        System.out.println("isFixedPhone===" + isMobileOrFixedPhone("03188889"));
+        boolean isUrl = isUrl("www.baidu.com");
+        System.out.println("isUrl===" + isUrl);
+
+        System.out.println("isWordOrNumberLimit818===1" + isWordOrNumberLimit818("03188889d."));
+        System.out.println("isWordOrNumberLimit818===2" + isWordOrNumberLimit818("1234512345"));
+        System.out.println("isWordOrNumberLimit818===3" + isWordOrNumberLimit818("12345123(45)2d"));
+        System.out.println("isWordOrNumberLimit818===4" + isWordOrNumberLimit818("12345123451234512345"));
+        System.out.println("isWordOrNumberLimit818===5" + isWordOrNumberLimit818("123451234512345123"));
+        System.out.println("isWordOrNumberLimit818===6" + isWordOrNumberLimit818("12345123（45）2d"));
+        System.out.println("isWordOrNumberLimit818===7" + isWordOrNumberLimit818("12345123（45,）2d"));
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(System.currentTimeMillis());
+        cal.add(Calendar.HOUR_OF_DAY, 48);
+        long curReceiveDeadline = cal.getTimeInMillis();
+        System.out.println("isWordOrNumberLimit818===" + curReceiveDeadline);
+
+        String res = "ab\r\nc";
+        System.out.println(res);
+        res = res.replace("\r", "");
+        res = res.replace("\n", "");
+        System.out.println(res);
+
+        System.out.println("isNumber===1" + isNumber("111"));
+        System.out.println("isNumber===2" + isNumber("abc"));
+        System.out.println("isNumber===3" + isNumber("aab2111"));
+        System.out.println("isAlphabetOrNumber===4" + isAlphabetAndNumberAndUnderline("aab2d,111"));
+        System.out.println("isAlphabetOrNumber===5" + isAlphabetAndNumberAndUnderline("a"));
+        System.out.println("isAlphabetOrNumber===6" + isAlphabetAndNumberAndUnderline("a_"));
+        System.out.println("isAlphabetOrNumber===7" + isAlphabetAndNumberAndUnderline("a_102"));
+        System.out.println("isAlphabetOrNumber===8" + isAlphabetAndNumberAndUnderline("a__"));
+        System.out.println("isAlphabetOrNumber===9" + isAlphabetAndNumberAndUnderline("a_1"));
+
+        System.out.println(StandardCharsets.UTF_8.name());
+
+        String genRandomChinese = genRandomChinese(5, 10);
+        System.out.println("genRandomChinese = " + genRandomChinese);
+
+        String randomString = genRandomLengthStr(10);
+        System.out.println("Random string is: " + randomString);
+
+    }
+
+    public static String genRandomLengthStr(int length) {
+        String alphabetsInUpperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String alphabetsInLowerCase = "abcdefghijklmnopqrstuvwxyz";
+        String numbers = "0123456789";
+        String allCharacters = alphabetsInLowerCase + alphabetsInUpperCase + numbers;
+        StringBuffer randomString = new StringBuffer();
+        for (int i = 0; i < length; i++) {
+            int randomIndex = (int) (Math.random() * allCharacters.length());
+            randomString.append(allCharacters.charAt(randomIndex));
+        }
+        return randomString.toString();
     }
 
     /**
@@ -1031,49 +1091,6 @@ public class StringUtil {
         str1 = Objects.isNull(str1) ? "" : str1;
         str2 = Objects.isNull(str2) ? "" : str2;
         return str1.equals(str2);
-    }
-
-    public static void main(String[] args) {
-
-        System.out.println("isFixedPhone===" + isMobileOrFixedPhone("0321-88889999"));
-        System.out.println("isFixedPhone===" + isMobileOrFixedPhone("031-88889999"));
-        System.out.println("isFixedPhone===" + isMobileOrFixedPhone("03188889"));
-        boolean isUrl = isUrl("www.baidu.com");
-        System.out.println("isUrl===" + isUrl);
-
-        System.out.println("isWordOrNumberLimit818===1" + isWordOrNumberLimit818("03188889d."));
-        System.out.println("isWordOrNumberLimit818===2" + isWordOrNumberLimit818("1234512345"));
-        System.out.println("isWordOrNumberLimit818===3" + isWordOrNumberLimit818("12345123(45)2d"));
-        System.out.println("isWordOrNumberLimit818===4" + isWordOrNumberLimit818("12345123451234512345"));
-        System.out.println("isWordOrNumberLimit818===5" + isWordOrNumberLimit818("123451234512345123"));
-        System.out.println("isWordOrNumberLimit818===6" + isWordOrNumberLimit818("12345123（45）2d"));
-        System.out.println("isWordOrNumberLimit818===7" + isWordOrNumberLimit818("12345123（45,）2d"));
-
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(System.currentTimeMillis());
-        cal.add(Calendar.HOUR_OF_DAY, 48);
-        long curReceiveDeadline = cal.getTimeInMillis();
-        System.out.println("isWordOrNumberLimit818===" + curReceiveDeadline);
-
-        String res = "ab\r\nc";
-        System.out.println(res);
-        res = res.replace("\r", "");
-        res = res.replace("\n", "");
-        System.out.println(res);
-
-
-        System.out.println("isNumber===1" + isNumber("111"));
-        System.out.println("isNumber===2" + isNumber("abc"));
-        System.out.println("isNumber===3" + isNumber("aab2111"));
-        System.out.println("isAlphabetOrNumber===4" + isAlphabetAndNumberAndUnderline("aab2d,111"));
-        System.out.println("isAlphabetOrNumber===5" + isAlphabetAndNumberAndUnderline("a"));
-        System.out.println("isAlphabetOrNumber===6" + isAlphabetAndNumberAndUnderline("a_"));
-        System.out.println("isAlphabetOrNumber===7" + isAlphabetAndNumberAndUnderline("a_102"));
-        System.out.println("isAlphabetOrNumber===8" + isAlphabetAndNumberAndUnderline("a__"));
-        System.out.println("isAlphabetOrNumber===9" + isAlphabetAndNumberAndUnderline("a_1"));
-
-        System.out.println(StandardCharsets.UTF_8.name());
-
     }
 
     public static String genRandomChinese(int length) {

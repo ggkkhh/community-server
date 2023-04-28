@@ -1,5 +1,6 @@
 package com.roydon.system.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.roydon.common.annotation.DataScope;
 import com.roydon.common.constant.UserConstants;
 import com.roydon.common.core.domain.TreeSelect;
@@ -13,6 +14,7 @@ import com.roydon.common.utils.StringUtils;
 import com.roydon.common.utils.spring.SpringUtils;
 import com.roydon.system.mapper.SysDeptMapper;
 import com.roydon.system.mapper.SysRoleMapper;
+import com.roydon.system.mapper.SysUserMapper;
 import com.roydon.system.service.ISysDeptService;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +28,8 @@ import java.util.stream.Collectors;
  * 部门管理 服务实现
  */
 @Service
-public class SysDeptServiceImpl implements ISysDeptService {
+public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> implements ISysDeptService {
+
     @Resource
     private SysDeptMapper deptMapper;
 

@@ -1,13 +1,15 @@
 package com.roydon.system.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.roydon.common.core.domain.entity.SysDictData;
+import com.roydon.system.domain.SysConfig;
 
 import java.util.List;
 
 /**
  * 字典 业务层
  */
-public interface ISysDictDataService {
+public interface ISysDictDataService extends IService<SysDictData> {
     /**
      * 根据条件分页查询字典数据
      *

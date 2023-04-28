@@ -1,5 +1,6 @@
 package com.roydon.system.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.roydon.common.annotation.DataScope;
 import com.roydon.common.constant.UserConstants;
 import com.roydon.common.core.domain.entity.SysRole;
@@ -11,10 +12,7 @@ import com.roydon.common.utils.spring.SpringUtils;
 import com.roydon.system.domain.SysRoleDept;
 import com.roydon.system.domain.SysRoleMenu;
 import com.roydon.system.domain.SysUserRole;
-import com.roydon.system.mapper.SysRoleDeptMapper;
-import com.roydon.system.mapper.SysRoleMapper;
-import com.roydon.system.mapper.SysRoleMenuMapper;
-import com.roydon.system.mapper.SysUserRoleMapper;
+import com.roydon.system.mapper.*;
 import com.roydon.system.service.ISysRoleService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +24,7 @@ import java.util.*;
  * 角色 业务层处理
  */
 @Service
-public class SysRoleServiceImpl implements ISysRoleService {
+public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> implements ISysRoleService {
     @Resource
     private SysRoleMapper roleMapper;
 

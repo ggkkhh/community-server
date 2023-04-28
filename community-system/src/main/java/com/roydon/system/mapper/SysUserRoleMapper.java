@@ -1,6 +1,8 @@
 package com.roydon.system.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.roydon.system.domain.SysUserRole;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -8,7 +10,8 @@ import java.util.List;
 /**
  * 用户与角色关联表 数据层
  */
-public interface SysUserRoleMapper {
+@Mapper
+public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
     /**
      * 通过用户ID删除用户和角色关联
      *

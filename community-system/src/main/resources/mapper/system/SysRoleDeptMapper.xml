@@ -14,7 +14,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	<select id="selectCountRoleDeptByDeptId" resultType="Integer">
-	    select count(1) from sys_role_dept where dept_id=#{deptId}
+		select count(1)
+		from sys_role_dept
+		where dept_id = #{deptId}
 	</select>
 	
 	<delete id="deleteRoleDept" parameterType="Long">

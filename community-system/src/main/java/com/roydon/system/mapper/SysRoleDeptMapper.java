@@ -1,13 +1,16 @@
 package com.roydon.system.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.roydon.system.domain.SysRoleDept;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 /**
  * 角色与部门关联表 数据层
  */
-public interface SysRoleDeptMapper {
+@Mapper
+public interface SysRoleDeptMapper extends BaseMapper<SysRoleDept> {
     /**
      * 通过角色ID删除角色和部门关联
      *

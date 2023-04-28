@@ -1,6 +1,9 @@
 package com.roydon.system.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.roydon.common.core.domain.entity.SysMenu;
+import com.roydon.system.domain.SysLoginInfo;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -8,7 +11,8 @@ import java.util.List;
 /**
  * 菜单表 数据层
  */
-public interface SysMenuMapper {
+@Mapper
+public interface SysMenuMapper extends BaseMapper<SysMenu> {
     /**
      * 查询系统菜单列表
      *

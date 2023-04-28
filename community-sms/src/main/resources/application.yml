@@ -15,6 +15,12 @@ community:
   # 验证码类型 math 数组计算 char 字符验证
   captchaType: char
 
+# 日志配置
+logging:
+  level:
+    com.roydon: debug
+    org.springframework: warn
+
 # 开发环境配置
 server:
   # 服务器的HTTP端口，默认为8080
@@ -65,7 +71,7 @@ spring:
   redis:
     host: 43.143.33.99
     port: 6379
-    database: 2
+    database: 0
     password: qwer1234
     timeout: 10s
     lettuce:
@@ -89,13 +95,18 @@ token:
   expireTime: 4320 # 令牌有效期（默认三天）
 
 # MyBatis配置
-mybatis:
-  # 搜索指定包别名
-  typeAliasesPackage: com.roydon.**.domain
-  # 配置mapper的扫描，找到所有的mapper.xml映射文件
-  mapperLocations: classpath*:mapper/**/*Mapper.xml
-  # 加载全局的配置文件
-  configLocation: classpath:mybatis/mybatis-config.xml
+#mybatis:
+#  # 搜索指定包别名
+#  typeAliasesPackage: com.roydon.**.domain
+#  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+#  mapperLocations: classpath*:mapper/**/*Mapper.xml
+#  # 加载全局的配置文件
+#  configLocation: classpath:mybatis/mybatis-config.xml
+
+mybatis-plus:
+  type-aliases-package: com.roydon.**.domain
+  mapper-locations: classpath*:mapper/**/*Mapper.xml
+  config-location: classpath:mybatis/mybatis-config.xml
 
 # PageHelper分页插件
 pagehelper:

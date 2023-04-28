@@ -1,6 +1,9 @@
 package com.roydon.system.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.roydon.common.core.domain.entity.SysDept;
+import com.roydon.common.core.domain.entity.SysUser;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -8,7 +11,8 @@ import java.util.List;
 /**
  * 社区管理 数据层
  */
-public interface SysDeptMapper {
+@Mapper
+public interface SysDeptMapper extends BaseMapper<SysDept> {
     /**
      * 查询部门管理数据
      *

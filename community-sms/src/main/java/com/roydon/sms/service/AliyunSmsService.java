@@ -1,6 +1,7 @@
 package com.roydon.sms.service;
 
 import com.roydon.sms.domain.model.AliSmsResponse;
+import com.roydon.sms.domain.model.SmsCode;
 
 /**
  * AlismsService
@@ -16,5 +17,5 @@ public interface AliyunSmsService {
      * @param phone phone
      * @return ali回调返回体封装
      */
-    AliSmsResponse sendCode(String phone);
+    SmsCode sendCode(String phone);
 }

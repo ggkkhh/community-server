@@ -1,5 +1,6 @@
 package com.roydon.system.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.roydon.common.core.domain.entity.SysRole;
 
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 /**
  * 角色表 数据层
  */
-public interface SysRoleMapper {
+public interface SysRoleMapper extends BaseMapper<SysRole> {
     /**
      * 根据条件分页查询角色数据
      *

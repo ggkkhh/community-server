@@ -21,7 +21,7 @@
         <bitwalker.version>1.21</bitwalker.version>
         <swagger.version>3.0.0</swagger.version>
         <kaptcha.version>2.3.2</kaptcha.version>
-        <mybatis-spring-boot.version>2.2.2</mybatis-spring-boot.version>
+<!--        <mybatis-spring-boot.version>2.2.2</mybatis-spring-boot.version>-->
         <mybatis-plus-version>3.5.2</mybatis-plus-version>
         <pagehelper.boot.version>1.4.3</pagehelper.boot.version>
         <fastjson.version>2.0.14</fastjson.version>
@@ -64,11 +64,11 @@
             </dependency>
 
             <!-- SpringBoot集成mybatis框架 -->
-            <dependency>
-                <groupId>org.mybatis.spring.boot</groupId>
-                <artifactId>mybatis-spring-boot-starter</artifactId>
-                <version>${mybatis-spring-boot.version}</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>org.mybatis.spring.boot</groupId>-->
+<!--                <artifactId>mybatis-spring-boot-starter</artifactId>-->
+<!--                <version>${mybatis-spring-boot.version}</version>-->
+<!--            </dependency>-->
 
             <!-- mybatis-plus -->
             <dependency>
