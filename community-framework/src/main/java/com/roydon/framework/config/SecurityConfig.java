@@ -1,9 +1,11 @@
 package com.roydon.framework.config;
 
 import com.roydon.framework.config.properties.PermitAllUrlProperties;
+import com.roydon.framework.config.smsconfig.SmsAuthenticationProvider;
+import com.roydon.framework.config.smsconfig.SmsUserDetailsService;
 import com.roydon.framework.security.handle.AuthenticationEntryPointImpl;
 import com.roydon.framework.security.handle.LogoutSuccessHandlerImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,6 +22,8 @@ import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.filter.CorsFilter;
 import com.roydon.framework.security.filter.JwtAuthenticationTokenFilter;
 
+import javax.annotation.Resource;
+
 /**
  * spring security配置
  */
@@ -28,37 +32,38 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * 自定义用户认证逻辑
      */
-    @Autowired
+    @Resource
+    @Qualifier("userDetailsServiceImpl")
     private UserDetailsService userDetailsService;
 
     /**
      * 认证失败处理类
      */
-    @Autowired
+    @Resource
     private AuthenticationEntryPointImpl unauthorizedHandler;
 
     /**
      * 退出处理类
      */
-    @Autowired
+    @Resource
     private LogoutSuccessHandlerImpl logoutSuccessHandler;
 
     /**
      * token认证过滤器
      */
-    @Autowired
+    @Resource
     private JwtAuthenticationTokenFilter authenticationTokenFilter;
 
     /**
      * 跨域过滤器
      */
-    @Autowired
+    @Resource
     private CorsFilter corsFilter;
 
     /**
      * 允许匿名访问的地址
      */
-    @Autowired
+    @Resource
     private PermitAllUrlProperties permitAllUrl;
 
     /**
@@ -72,6 +77,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+
+//    @Resource
+//    private SmsSecurityConfigurerAdapter smsSecurityConfigurerAdapter;
+    @Resource
+    @Qualifier("smsUserDetailsService")
+    private SmsUserDetailsService smsUserDetailsService;
 
     /**
      * anyRequest          |   匹配所有请求路径
@@ -93,7 +104,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // 注解标记允许匿名访问的url
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = httpSecurity.authorizeRequests();
         permitAllUrl.getUrls().forEach(url -> registry.antMatchers(url).permitAll());
-
+// 添加手机号短信登录
         httpSecurity
                 // CSRF禁用，因为不使用session
                 .csrf().disable()
@@ -104,7 +115,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 过滤请求
                 .authorizeRequests()
                 // 对于登录login 注册register 验证码captchaImage 允许匿名访问
-                .antMatchers("/login", "/register", "/captchaImage").anonymous()
+                .antMatchers("/login", "/register", "/captchaImage", "/smsLogin").anonymous()
                 // 静态资源，可匿名访问
                 .antMatchers(HttpMethod.GET, "/", "/*.html", "/**/*.html", "/**/*.css", "/**/*.js", "/profile/**").permitAll()
                 .antMatchers("/swagger-ui.html",
@@ -113,7 +124,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/druid/**",
                         "/system/qrcode/*",
                         "/sms/**",
-                        "/user/register").permitAll()
+                        "/user/register"
+                ).permitAll()
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated()
                 .and()
@@ -125,6 +137,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // 添加CORS filter
         httpSecurity.addFilterBefore(corsFilter, JwtAuthenticationTokenFilter.class);
         httpSecurity.addFilterBefore(corsFilter, LogoutFilter.class);
+
+
     }
 
     /**
@@ -141,5 +155,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
+        auth.authenticationProvider(new SmsAuthenticationProvider(smsUserDetailsService));
     }
 }

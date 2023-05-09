@@ -58,6 +58,7 @@ public class RegisterController {
         // 生成随机用户名
         user.setUserName(StringUtil.genRandomLengthStr(6));
         user.setNickName(StringUtil.genRandomChinese(6));
+        user.setDeptId(1l);
         // 手机号注册先默认密码是手机短信验证码
         user.setPassword(SecurityUtils.encryptPassword(phoneCode));
         return AjaxResult.success(userService.insertUser(user));

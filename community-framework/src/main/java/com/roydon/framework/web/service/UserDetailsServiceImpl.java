@@ -18,7 +18,7 @@ import javax.annotation.Resource;
 /**
  * 用户验证处理
  */
-@Service
+@Service("userDetailsServiceImpl")
 public class UserDetailsServiceImpl implements UserDetailsService {
     private static final Logger log = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
 

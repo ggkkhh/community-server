@@ -1,5 +1,7 @@
 package com.roydon.common.core.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.roydon.common.annotation.Excel;
 import com.roydon.common.annotation.Excel.ColumnType;
 import com.roydon.common.annotation.Excel.Type;
@@ -21,6 +23,7 @@ import java.util.List;
  * 用户对象 sys_user
  */
 @ApiModel(value = "SysUser", description = "系统用户实体")
+@TableName("sys_user")
 public class SysUser extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
@@ -127,30 +130,35 @@ public class SysUser extends BaseEntity {
             @Excel(name = "部门名称", targetAttr = "deptName", type = Type.EXPORT),
             @Excel(name = "部门负责人", targetAttr = "leader", type = Type.EXPORT)
     })
+    @TableField(exist = false)
     private SysDept dept;
 
     /**
      * 角色对象
      */
     @ApiModelProperty("角色对象")
+    @TableField(exist = false)
     private List<SysRole> roles;
 
     /**
      * 角色组
      */
     @ApiModelProperty("角色组")
+    @TableField(exist = false)
     private Long[] roleIds;
 
     /**
      * 岗位组
      */
     @ApiModelProperty("岗位组")
+    @TableField(exist = false)
     private Long[] postIds;
 
     /**
      * 角色ID
      */
     @ApiModelProperty("角色ID")
+    @TableField(exist = false)
     private Long roleId;
 
     public SysUser() {

@@ -11,6 +11,9 @@ import com.roydon.common.exception.ServiceException;
  * Security 安全服务工具类
  */
 public class SecurityUtils {
+    public static void main(String[] args) {
+
+    }
     /**
      * 用户ID
      **/
