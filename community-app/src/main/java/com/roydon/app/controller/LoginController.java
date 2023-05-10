@@ -54,7 +54,7 @@ public class LoginController {
      * @param smsLoginBody
      * @return 结果
      */
-    @PostMapping("/smsLogin")
+    @PostMapping("/sms-login")
     public AjaxResult smsLogin(@RequestBody SmsLoginBody smsLoginBody) {
         // 生成令牌
         log.info("手机验证码登录：{}",smsLoginBody.getTelephone());

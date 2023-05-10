@@ -42,9 +42,6 @@ public class SysLoginService {
     private AuthenticationManager authenticationManager;
 
     @Resource
-    private SmsAuthenticationProvider smsAuthenticationProvider;
-
-    @Resource
     private RedisCache redisCache;
 
     @Resource
@@ -151,13 +148,16 @@ public class SysLoginService {
             throw new CaptchaException();
         }
         // 获取手机验证码
-        String phoneCode = redisTemplate.opsForValue().get(CacheConstants.ALIYUN_SMS_KEY + telephone);
+        String verifyKey = CacheConstants.ALIYUN_SMS_LOGIN_KEY + telephone;
+        String phoneCode = redisTemplate.opsForValue().get(verifyKey);
         if (StringUtil.isEmpty(phoneCode)) {
             throw new SmsException("验证码已失效");
         }
         if (!phoneCode.equals(code)) {
             throw new SmsException("验证码错误");
         }
+        // 删除key
+        redisTemplate.delete(verifyKey);
         // 通过手机号获取用户
         SysUser userByTelephone = userService.getUserByTelephone(telephone);
         if (StringUtil.isEmpty(userByTelephone)) {
@@ -165,12 +165,11 @@ public class SysLoginService {
         }
         // 用户验证
         Authentication authentication = null;
-        String username = userByTelephone.getUserName();
         try {
             SmsAuthenticationToken authenticationToken = new SmsAuthenticationToken(telephone);
             AuthenticationContextHolder.setContext(authenticationToken);
-            // 该方法会去调用UserDetailsServiceImpl.loadUserByUsername
-            authentication = smsAuthenticationProvider.authenticate(authenticationToken);
+            // 该方法会去调用 SmsUserDetailsService.loadUserByUsername
+            authentication = authenticationManager.authenticate(authenticationToken);
         } catch (Exception e) {
             if (e instanceof BadCredentialsException) {
                 // 异步记录日志

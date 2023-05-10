@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
 /**
- * 查询短信登录信息并封装为UserDetails  这里可以抽取一个抽象类，权限加载和校验租户等逻辑交给父类处理
+ * 查询短信登录信息并封装为 UserDetails 这里可以抽取一个抽象类，权限加载和校验租户等逻辑交给父类处理
  */
 @Service("smsUserDetailsService")
 public class SmsUserDetailsService implements UserDetailsService {
@@ -58,4 +58,5 @@ public class SmsUserDetailsService implements UserDetailsService {
     public UserDetails createLoginUser(SysUser user) {
         return new LoginUser(user.getUserId(), user.getDeptId(), user, permissionService.getMenuPermission(user));
     }
+
 }

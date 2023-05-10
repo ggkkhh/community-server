@@ -37,6 +37,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailsService;
 
     /**
+     * 自定义手机短信登录
+     */
+    @Resource
+    @Qualifier("smsUserDetailsService")
+    private UserDetailsService smsUserDetailsService;
+
+    /**
      * 认证失败处理类
      */
     @Resource
@@ -78,12 +85,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-//    @Resource
-//    private SmsSecurityConfigurerAdapter smsSecurityConfigurerAdapter;
-    @Resource
-    @Qualifier("smsUserDetailsService")
-    private SmsUserDetailsService smsUserDetailsService;
-
     /**
      * anyRequest          |   匹配所有请求路径
      * access              |   SpringEl表达式结果为true时可以访问
@@ -115,7 +116,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 过滤请求
                 .authorizeRequests()
                 // 对于登录login 注册register 验证码captchaImage 允许匿名访问
-                .antMatchers("/login", "/register", "/captchaImage", "/smsLogin").anonymous()
+                .antMatchers("/login", "/register", "/captchaImage", "/sms-login").anonymous()
                 // 静态资源，可匿名访问
                 .antMatchers(HttpMethod.GET, "/", "/*.html", "/**/*.html", "/**/*.css", "/**/*.js", "/profile/**").permitAll()
                 .antMatchers("/swagger-ui.html",
@@ -138,7 +139,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.addFilterBefore(corsFilter, JwtAuthenticationTokenFilter.class);
         httpSecurity.addFilterBefore(corsFilter, LogoutFilter.class);
 
-
     }
 
     /**
@@ -154,7 +154,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
         auth.authenticationProvider(new SmsAuthenticationProvider(smsUserDetailsService));
+        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
 }

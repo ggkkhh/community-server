@@ -32,8 +32,10 @@ public class AliyunSmsServiceImpl implements AliyunSmsService {
 
     @Override
     public SmsCode sendCode(String phone) {
+        // 存入redis的验证码key
+        String captchaKey = CacheConstants.ALIYUN_SMS_LOGIN_KEY + phone;
         // 根据手机号从redis中拿验证码
-        String phoneCode = redisTemplate.opsForValue().get(CacheConstants.ALIYUN_SMS_KEY + phone);
+        String phoneCode = redisTemplate.opsForValue().get(captchaKey);
         if (!StringUtils.isEmpty(phoneCode)) {
             throw new SmsException("请勿重复发送-" + phone);
         }
@@ -49,8 +51,8 @@ public class AliyunSmsServiceImpl implements AliyunSmsService {
         if (!aliSmsResponse.getCode().equals(AliyunSmsUtil.MESSAGE_OK)) {
             throw new SmsException(aliSmsResponse.getMessage());
         }
-        // 将验证码存到 redis
-        redisTemplate.opsForValue().set(CacheConstants.ALIYUN_SMS_KEY + phone, smsCode, SMSCODE_EXPIRE_TIME, TimeUnit.MINUTES);
+        // 将验证码存到 redis ，默认一分钟
+        redisTemplate.opsForValue().set(captchaKey, smsCode, SMSCODE_EXPIRE_TIME, TimeUnit.MINUTES);
         SmsCode sCode = new SmsCode(smsCode, SMSCODE_EXPIRE_TIME);
         return sCode;
     }

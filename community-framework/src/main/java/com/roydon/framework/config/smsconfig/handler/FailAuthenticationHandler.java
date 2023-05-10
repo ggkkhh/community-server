@@ -16,13 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
- 
-/**
- * Author: LiuLin
- * Date: 2022/5/30 10:19
- * Description:
- */
- 
+
 @Component
 public class FailAuthenticationHandler extends SimpleUrlAuthenticationFailureHandler {
  

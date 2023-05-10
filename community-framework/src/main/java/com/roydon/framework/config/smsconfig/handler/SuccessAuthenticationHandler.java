@@ -22,14 +22,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
- 
- 
-/**
- * Author: LiuLin
- * Date: 2022/5/30 10:18
- * Description:
- */
- 
+
 @Component
 public class SuccessAuthenticationHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
@@ -38,8 +31,7 @@ public class SuccessAuthenticationHandler extends SavedRequestAwareAuthenticatio
  
     @Autowired
     private ISysUserService userService;
- 
- 
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws ServletException, IOException {
