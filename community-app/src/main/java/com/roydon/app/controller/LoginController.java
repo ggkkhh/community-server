@@ -1,11 +1,10 @@
 package com.roydon.app.controller;
 
-import com.roydon.app.domain.dto.SmsLoginBody;
 import com.roydon.common.constant.Constants;
 import com.roydon.common.core.domain.AjaxResult;
 import com.roydon.common.core.domain.entity.SysUser;
+import com.roydon.common.core.domain.model.SmsLoginBody;
 import com.roydon.common.utils.SecurityUtils;
-import com.roydon.framework.config.smsconfig.SmsUserDetailsService;
 import com.roydon.framework.web.service.SysLoginService;
 import com.roydon.framework.web.service.SysPermissionService;
 import com.roydon.app.domain.dto.AppLoginBody;
@@ -58,7 +57,7 @@ public class LoginController {
     public AjaxResult smsLogin(@RequestBody SmsLoginBody smsLoginBody) {
         // 生成令牌
         log.info("手机验证码登录：{}",smsLoginBody.getTelephone());
-        String token = loginService.smsLogin(smsLoginBody.getTelephone(), smsLoginBody.getCode());
+        String token = loginService.smsLogin(smsLoginBody.getTelephone(), smsLoginBody.getPhoneCode());
         return AjaxResult.success().put(Constants.TOKEN, token);
     }
 

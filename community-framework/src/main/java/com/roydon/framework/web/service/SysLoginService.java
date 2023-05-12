@@ -136,24 +136,24 @@ public class SysLoginService {
      * 手机验证码登录
      *
      * @param telephone
-     * @param code
+     * @param phoneCode
      * @return
      */
-    public String smsLogin(String telephone, String code) {
+    public String smsLogin(String telephone, String phoneCode) {
         // 未携带手机号或验证码
         if (StringUtil.isEmpty(telephone)) {
             throw new TelePhoneException();
         }
-        if (StringUtil.isEmpty(code)) {
+        if (StringUtil.isEmpty(phoneCode)) {
             throw new CaptchaException();
         }
         // 获取手机验证码
         String verifyKey = CacheConstants.ALIYUN_SMS_LOGIN_KEY + telephone;
-        String phoneCode = redisTemplate.opsForValue().get(verifyKey);
-        if (StringUtil.isEmpty(phoneCode)) {
+        String verifyPhoneCode = redisTemplate.opsForValue().get(verifyKey);
+        if (StringUtil.isEmpty(verifyPhoneCode)) {
             throw new SmsException("验证码已失效");
         }
-        if (!phoneCode.equals(code)) {
+        if (!verifyPhoneCode.equals(phoneCode)) {
             throw new SmsException("验证码错误");
         }
         // 删除key
