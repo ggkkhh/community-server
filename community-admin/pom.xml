@@ -16,6 +16,11 @@
     </description>
 
     <dependencies>
+        <dependency>
+            <groupId>com.roydon</groupId>
+            <artifactId>community-sms</artifactId>
+            <version>1.0.0</version>
+        </dependency>
 
         <!-- spring-boot-devtools -->
         <dependency>

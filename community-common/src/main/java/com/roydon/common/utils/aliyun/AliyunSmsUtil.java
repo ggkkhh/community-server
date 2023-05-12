@@ -1,15 +1,14 @@
-package com.roydon.sms.util;
+package com.roydon.common.utils.aliyun;
 
 import com.aliyuncs.CommonRequest;
 import com.aliyuncs.CommonResponse;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
-import com.aliyuncs.exceptions.ClientException;
-import com.aliyuncs.exceptions.ServerException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import net.sf.json.JSONObject;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -18,10 +17,11 @@ import java.util.regex.Pattern;
 /**
  * 阿里云短信发送工具类
  *
- * @author zql
- * @createTime 2020-11-29 21:56:40
+ * @author roydon
  */
 public class AliyunSmsUtil {
+
+    private static final Logger log = LoggerFactory.getLogger(AliyunSmsUtil.class);
 
     /**
      * 屏蔽构造函数，避免被实例化
@@ -32,7 +32,7 @@ public class AliyunSmsUtil {
     /**
      * Logger for this class
      */
-    private static final Logger logger = Logger.getLogger(AliyunSmsUtil.class);
+//    private static final Logger logger = Logger.getLogger(AliyunSmsUtil.class);
     /**
      * 短信发送返回信息
      */
@@ -58,7 +58,7 @@ public class AliyunSmsUtil {
      */
     public static String sendSms(String mobile, int type, String code) {
         if (!isMobile(mobile)) {
-            logger.error("短信发送失败，手机号码不正确！");
+            log.error("短信发送失败，手机号码不正确！");
             return null;
         }
         DefaultProfile profile = DefaultProfile.getProfile("default", AliyunSmsUtil.ACCESS_KEY_ID, AliyunSmsUtil.ACCESS_SECRET);
@@ -87,10 +87,8 @@ public class AliyunSmsUtil {
         try {
             CommonResponse response = client.getCommonResponse(request);
             data = response.getData();
-        } catch (ServerException e) {
-            logger.error("短信发送失败：" + e.getMessage(), e);
-        } catch (ClientException e) {
-            logger.error("短信发送失败：" + e.getMessage(), e);
+        } catch (Exception e) {
+            log.error("短信发送失败：" + e.getMessage(), e);
         }
         return data;
     }
@@ -109,7 +107,7 @@ public class AliyunSmsUtil {
         boolean bl = false;
         String str = sendSms(mobile, type, randomCode);
         if (Objects.isNull(str)) {
-            logger.error("短信发送失败，返回信息为空");
+            log.error("短信发送失败，返回信息为空");
             return false;
         }
         try {
@@ -126,15 +124,15 @@ public class AliyunSmsUtil {
             boolean condition = false;
             // 如果需要添加回传的短信消息到数据库，则把isSuccessSendAliyunSms方法独立出来
             if (condition) {
-                logger.error("添加短信回传数据" + bizId + requestId + "失败！");
+                log.error("添加短信回传数据" + bizId + requestId + "失败！");
             }
             if (AliyunSmsUtil.MESSAGE_OK.equals(backCode)) {
                 bl = true;
             } else {
-                logger.error("短信发送失败!");
+                log.error("短信发送失败!");
             }
         } catch (Exception e) {
-            logger.error("解析JSON字符串失败!" + e.getMessage(), e);
+            log.error("解析JSON字符串失败!" + e.getMessage(), e);
         }
         return bl;
     }

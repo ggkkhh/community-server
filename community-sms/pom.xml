@@ -8,8 +8,12 @@
         <artifactId>community-parent</artifactId>
         <version>1.0.0</version>
     </parent>
-    <packaging>jar</packaging>
+<!--    <packaging>jar</packaging>-->
     <artifactId>community-sms</artifactId>
+
+    <description>
+        aliyun短信服务
+    </description>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -31,64 +35,34 @@
             <version>${community.version}</version>
         </dependency>
 
-        <!-- Mysql驱动包 -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
+<!--        &lt;!&ndash; Mysql驱动包 &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>mysql</groupId>-->
+<!--            <artifactId>mysql-connector-java</artifactId>-->
+<!--        </dependency>-->
 
-        <!-- JSONObject -->
-        <dependency>
-            <groupId>net.sf.json-lib</groupId>
-            <artifactId>json-lib</artifactId>
-            <version>2.4</version>
-            <classifier>jdk15</classifier>
-        </dependency>
+<!--        &lt;!&ndash; JSONObject &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>net.sf.json-lib</groupId>-->
+<!--            <artifactId>json-lib</artifactId>-->
+<!--            <version>2.4</version>-->
+<!--            <classifier>jdk15</classifier>-->
+<!--        </dependency>-->
 
-        <!-- aliyun短信服务 -->
-        <dependency>
-            <groupId>com.aliyun</groupId>
-            <artifactId>aliyun-java-sdk-core</artifactId>
-            <version>4.0.3</version>
-        </dependency>
+<!--        &lt;!&ndash; aliyun短信服务 &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>com.aliyun</groupId>-->
+<!--            <artifactId>aliyun-java-sdk-core</artifactId>-->
+<!--            <version>4.0.3</version>-->
+<!--        </dependency>-->
 
-        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.2</version>
-        </dependency>
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.slf4j</groupId>-->
+<!--            <artifactId>slf4j-log4j12</artifactId>-->
+<!--            <version>1.7.2</version>-->
+<!--        </dependency>-->
 
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.1.1.RELEASE</version>
-                <configuration>
-                    <fork>true</fork> <!-- 如果没有该配置，devtools不会生效 -->
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>3.1.0</version>
-                <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
-                    <warName>${project.artifactId}</warName>
-                </configuration>
-            </plugin>
-        </plugins>
-        <finalName>${project.artifactId}</finalName>
-    </build>
 
 </project>

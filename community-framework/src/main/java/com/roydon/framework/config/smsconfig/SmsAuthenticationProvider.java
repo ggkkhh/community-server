@@ -1,14 +1,11 @@
 package com.roydon.framework.config.smsconfig;
 
-import com.roydon.common.utils.StringUtil;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.stereotype.Component;
 
 /**
  * 短信登录校验器
@@ -32,13 +29,11 @@ public class SmsAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         SmsAuthenticationToken authenticationToken = (SmsAuthenticationToken) authentication;
-        String telephone = (String) authenticationToken.getPrincipal();// 获取凭证也就是用户的手机号
-        // 根据手机号查询用户信息UserDetails
+        String telephone =(String) authenticationToken.getPrincipal();// 获取凭证也就是用户的手机号
         UserDetails userDetails = userDetailsService.loadUserByUsername(telephone);
-        if (StringUtil.isEmpty(userDetails)) {
+        if (userDetails == null) {
             throw new InternalAuthenticationServiceException("用户不存在");
         }
-        // 鉴权成功，返回一个拥有鉴权的 AbstractAuthenticationToken
         SmsAuthenticationToken smsAuthenticationToken = new SmsAuthenticationToken(userDetails, userDetails.getAuthorities());
         smsAuthenticationToken.setDetails(authenticationToken.getDetails());
         return smsAuthenticationToken;
