@@ -9,6 +9,8 @@
         <result property="parentId" column="parent_id"/>
         <result property="ancestors" column="ancestors"/>
         <result property="deptName" column="dept_name"/>
+        <result property="areaCode" column="area_code"/>
+        <result property="remark" column="remark"/>
         <result property="orderNum" column="order_num"/>
         <result property="leader" column="leader"/>
         <result property="phone" column="phone"/>
@@ -27,6 +29,8 @@
                d.parent_id,
                d.ancestors,
                d.dept_name,
+               d.area_code,
+               d.remark,
                d.order_num,
                d.leader,
                d.phone,
@@ -78,6 +82,8 @@
                d.parent_id,
                d.ancestors,
                d.dept_name,
+               d.area_code,
+               d.remark,
                d.order_num,
                d.leader,
                d.phone,
@@ -132,6 +138,8 @@
         <if test="deptId != null and deptId != 0">dept_id,</if>
         <if test="parentId != null and parentId != 0">parent_id,</if>
         <if test="deptName != null and deptName != ''">dept_name,</if>
+        <if test="areaCode != null and areaCode != ''">area_code,</if>
+        <if test="remark != null and remark != ''">remark,</if>
         <if test="ancestors != null and ancestors != ''">ancestors,</if>
         <if test="orderNum != null">order_num,</if>
         <if test="leader != null and leader != ''">leader,</if>
@@ -144,6 +152,8 @@
         <if test="deptId != null and deptId != 0">#{deptId},</if>
         <if test="parentId != null and parentId != 0">#{parentId},</if>
         <if test="deptName != null and deptName != ''">#{deptName},</if>
+        <if test="areaCode != null and areaCode != ''">#{areaCode},</if>
+        <if test="remark != null and remark != ''">#{remark},</if>
         <if test="ancestors != null and ancestors != ''">#{ancestors},</if>
         <if test="orderNum != null">#{orderNum},</if>
         <if test="leader != null and leader != ''">#{leader},</if>
@@ -160,6 +170,8 @@
         <set>
             <if test="parentId != null and parentId != 0">parent_id = #{parentId},</if>
             <if test="deptName != null and deptName != ''">dept_name = #{deptName},</if>
+            <if test="areaCode != null and areaCode != ''">area_code = #{areaCode},</if>
+            <if test="remark != null and remark != ''">remark = #{remark},</if>
             <if test="ancestors != null and ancestors != ''">ancestors = #{ancestors},</if>
             <if test="orderNum != null">order_num = #{orderNum},</if>
             <if test="leader != null">leader = #{leader},</if>

@@ -52,8 +52,19 @@
         <dependency>
             <groupId>com.roydon</groupId>
             <artifactId>community-framework</artifactId>
-            <version>${community.version}</version>
         </dependency>
+
+        <!-- 定时任务-->
+        <dependency>
+            <groupId>com.roydon</groupId>
+            <artifactId>community-quartz</artifactId>
+        </dependency>
+
+        <!-- 代码生成-->
+<!--        <dependency>-->
+<!--            <groupId>com.roydon</groupId>-->
+<!--            <artifactId>community-generator</artifactId>-->
+<!--        </dependency>-->
 
     </dependencies>
 

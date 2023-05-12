@@ -216,7 +216,7 @@
         <if test="email != null and email != ''">#{email},</if>
         <if test="avatar != null and avatar != ''">#{avatar},</if>
         <if test="phonenumber != null and phonenumber != ''">#{phonenumber},</if>
-        <if test="idCard != null and idCard != ''">#{id_card},</if>
+        <if test="idCard != null and idCard != ''">#{idCard},</if>
         <if test="sex != null and sex != ''">#{sex},</if>
         <if test="password != null and password != ''">#{password},</if>
         <if test="status != null and status != ''">#{status},</if>

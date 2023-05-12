@@ -2,7 +2,6 @@ package com.roydon.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.roydon.common.core.domain.entity.SysDept;
-import com.roydon.common.core.domain.entity.SysUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

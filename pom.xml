@@ -178,6 +178,20 @@
                 <version>${google.zxing.version}</version>
             </dependency>
 
+            <!-- 定时任务-->
+            <dependency>
+                <groupId>com.roydon</groupId>
+                <artifactId>community-quartz</artifactId>
+                <version>${community.version}</version>
+            </dependency>
+
+            <!-- 代码生成-->
+            <dependency>
+                <groupId>com.roydon</groupId>
+                <artifactId>community-generator</artifactId>
+                <version>${community.version}</version>
+            </dependency>
+
             <!-- 核心模块-->
             <dependency>
                 <groupId>com.roydon</groupId>
@@ -205,6 +219,8 @@
     <modules>
         <module>community-admin</module>
         <module>community-framework</module>
+        <module>community-generator</module>
+        <module>community-quartz</module>
         <module>community-system</module>
         <module>community-common</module>
         <module>community-app</module>

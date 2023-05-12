@@ -1,8 +1,6 @@
 package com.roydon.common.core.domain.entity;
 
 import com.roydon.common.core.domain.BaseEntity;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -36,6 +34,10 @@ public class SysDept extends BaseEntity {
      * 名称
      */
     private String deptName;
+
+    private Long areaCode;
+
+    private String remark;
 
     /**
      * 显示顺序
@@ -184,6 +186,24 @@ public class SysDept extends BaseEntity {
         this.parentName = parentName;
     }
 
+    public Long getAreaCode() {
+        return areaCode;
+    }
+
+    public void setAreaCode(Long areaCode) {
+        this.areaCode = areaCode;
+    }
+
+    @Override
+    public String getRemark() {
+        return remark;
+    }
+
+    @Override
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
     public List<SysDept> getChildren() {
         return children;
     }
@@ -194,22 +214,22 @@ public class SysDept extends BaseEntity {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
-                .append("deptId", getDeptId())
-                .append("parentId", getParentId())
-                .append("ancestors", getAncestors())
-                .append("deptName", getDeptName())
-                .append("orderNum", getOrderNum())
-                .append("leader", getLeader())
-                .append("phone", getPhone())
-                .append("email", getEmail())
-                .append("status", getStatus())
-                .append("isCommunity", getIsCommunity())
-                .append("delFlag", getDelFlag())
-                .append("createBy", getCreateBy())
-                .append("createTime", getCreateTime())
-                .append("updateBy", getUpdateBy())
-                .append("updateTime", getUpdateTime())
-                .toString();
+        return "SysDept{" +
+                "deptId=" + deptId +
+                ", parentId=" + parentId +
+                ", ancestors='" + ancestors + '\'' +
+                ", deptName='" + deptName + '\'' +
+                ", areaCode=" + areaCode +
+                ", remark='" + remark + '\'' +
+                ", orderNum=" + orderNum +
+                ", leader='" + leader + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", status='" + status + '\'' +
+                ", isCommunity='" + isCommunity + '\'' +
+                ", delFlag='" + delFlag + '\'' +
+                ", parentName='" + parentName + '\'' +
+                ", children=" + children +
+                '}';
     }
 }
