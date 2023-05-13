@@ -2,7 +2,7 @@ package com.roydon.framework.config;
 
 import com.roydon.framework.config.properties.PermitAllUrlProperties;
 import com.roydon.framework.config.smsconfig.SmsAuthenticationProvider;
-import com.roydon.framework.config.smsconfig.SmsUserDetailsService;
+import com.roydon.framework.security.filter.JwtAuthenticationTokenFilter;
 import com.roydon.framework.security.handle.AuthenticationEntryPointImpl;
 import com.roydon.framework.security.handle.LogoutSuccessHandlerImpl;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,7 +20,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.filter.CorsFilter;
-import com.roydon.framework.security.filter.JwtAuthenticationTokenFilter;
 
 import javax.annotation.Resource;
 
@@ -116,7 +115,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 过滤请求
                 .authorizeRequests()
                 // 对于登录login 注册register 验证码captchaImage 允许匿名访问
-                .antMatchers("/login", "/register", "/captchaImage", "/sms-login").anonymous()
+                .antMatchers("/login", "/register", "/captchaImage", "/sms-login","/app/login","/app/sms-login","/app/register").anonymous()
                 // 静态资源，可匿名访问
                 .antMatchers(HttpMethod.GET, "/", "/*.html", "/**/*.html", "/**/*.css", "/**/*.js", "/profile/**").permitAll()
                 .antMatchers("/swagger-ui.html",
