@@ -226,6 +226,7 @@
         <module>community-app</module>
         <module>community-sms</module>
         <module>community-resident</module>
+        <module>community-business</module>
     </modules>
     <packaging>pom</packaging>
 
