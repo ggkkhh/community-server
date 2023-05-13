@@ -1,4 +1,4 @@
-//package com.ruoyi.quartz.config;
+//package com.roydon.quartz.config;
 //
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
@@ -9,7 +9,7 @@
 ///**
 // * 定时任务配置（单机部署建议删除此类和qrtz数据库表，默认走内存会最高效）
 // *
-// * @author ruoyi
+// * @author roydon
 // */
 //@Configuration
 //public class ScheduleConfig
@@ -22,7 +22,7 @@
 //
 //        // quartz参数
 //        Properties prop = new Properties();
-//        prop.put("org.quartz.scheduler.instanceName", "RuoyiScheduler");
+//        prop.put("org.quartz.scheduler.instanceName", "RoydonScheduler");
 //        prop.put("org.quartz.scheduler.instanceId", "AUTO");
 //        // 线程池配置
 //        prop.put("org.quartz.threadPool.class", "org.quartz.simpl.SimpleThreadPool");
@@ -42,7 +42,7 @@
 //        prop.put("org.quartz.jobStore.tablePrefix", "QRTZ_");
 //        factory.setQuartzProperties(prop);
 //
-//        factory.setSchedulerName("RuoyiScheduler");
+//        factory.setSchedulerName("RoydonScheduler");
 //        // 延时启动
 //        factory.setStartupDelay(1);
 //        factory.setApplicationContextSchedulerContextKey("applicationContextKey");

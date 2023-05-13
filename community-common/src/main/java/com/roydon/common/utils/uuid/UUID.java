@@ -1,16 +1,17 @@
 package com.roydon.common.utils.uuid;
 
+import com.roydon.common.exception.UtilException;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
-import com.roydon.common.exception.UtilException;
 
 /**
  * 提供通用唯一识别码（universally unique identifier）（UUID）实现
  *
- * @author ruoyi
+ * @author roydon
  */
 public final class UUID implements java.io.Serializable, Comparable<UUID>
 {

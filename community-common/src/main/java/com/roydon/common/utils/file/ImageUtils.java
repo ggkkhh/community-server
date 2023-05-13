@@ -17,7 +17,7 @@ import com.roydon.common.constant.Constants;
 /**
  * 图片处理工具类
  *
- * @author ruoyi
+ * @author roydon
  */
 public class ImageUtils
 {

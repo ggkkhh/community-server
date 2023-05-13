@@ -131,3 +131,9 @@ aliyun:
     accessKeyId: LTAI5tSpJYrm2fawRxgfWncf
     accessKeySecret: Plo6TQpTC6YzThyI1QHcu53EtKvroX
     templateCode: SMS_273815229 # 可在aliyun控制台申请
+
+# roll
+roll:
+  baseUrl: https://www.mxnzp.com/api/news/
+  appId: iojgunrruwrtohpn
+  appSecret: aENjYTdrNG85UDkvenpNZmowVjFCZz09

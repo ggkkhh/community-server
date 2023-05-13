@@ -34,6 +34,12 @@
             <groupId>com.roydon</groupId>
             <artifactId>community-common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.roydon</groupId>
+            <artifactId>community-business-news</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
+        </dependency>
 
     </dependencies>
 
