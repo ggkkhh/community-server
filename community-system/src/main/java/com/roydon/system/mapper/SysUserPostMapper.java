@@ -1,13 +1,17 @@
 package com.roydon.system.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.roydon.system.domain.SysRoleMenu;
 import com.roydon.system.domain.SysUserPost;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 /**
  * 用户与岗位关联表 数据层
  */
-public interface SysUserPostMapper {
+@Mapper
+public interface SysUserPostMapper extends BaseMapper<SysUserPost> {
     /**
      * 通过用户ID删除用户和岗位关联
      *

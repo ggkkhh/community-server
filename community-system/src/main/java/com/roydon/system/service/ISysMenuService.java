@@ -1,7 +1,9 @@
 package com.roydon.system.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.roydon.common.core.domain.TreeSelect;
 import com.roydon.common.core.domain.entity.SysMenu;
+import com.roydon.system.domain.SysConfig;
 import com.roydon.system.domain.vo.RouterVo;
 
 import java.util.List;
@@ -10,7 +12,7 @@ import java.util.Set;
 /**
  * 菜单 业务层
  */
-public interface ISysMenuService {
+public interface ISysMenuService extends IService<SysMenu> {
     /**
      * 根据用户查询系统菜单列表
      *

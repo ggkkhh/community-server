@@ -6,31 +6,34 @@ import com.roydon.common.core.domain.entity.SysUser;
 import com.roydon.common.core.domain.model.LoginUser;
 import com.roydon.common.core.redis.RedisCache;
 import com.roydon.common.exception.ServiceException;
+import com.roydon.common.exception.alisms.SmsException;
 import com.roydon.common.exception.user.CaptchaException;
 import com.roydon.common.exception.user.CaptchaExpireException;
+import com.roydon.common.exception.user.TelePhoneException;
 import com.roydon.common.exception.user.UserPasswordNotMatchException;
-import com.roydon.common.utils.DateUtils;
-import com.roydon.common.utils.MessageUtils;
-import com.roydon.common.utils.ServletUtils;
-import com.roydon.common.utils.StringUtils;
+import com.roydon.common.utils.*;
 import com.roydon.common.utils.ip.IpUtils;
+import com.roydon.framework.config.smsconfig.SmsAuthenticationProvider;
+import com.roydon.framework.config.smsconfig.SmsAuthenticationToken;
 import com.roydon.framework.manager.AsyncManager;
 import com.roydon.framework.manager.factory.AsyncFactory;
 import com.roydon.framework.security.context.AuthenticationContextHolder;
 import com.roydon.system.service.ISysConfigService;
 import com.roydon.system.service.ISysUserService;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.regex.Pattern;
 
 /**
  * 登录校验方法
  */
-@Component
+@Service
 public class SysLoginService {
     @Resource
     private TokenService tokenService;
@@ -46,6 +49,9 @@ public class SysLoginService {
 
     @Resource
     private ISysConfigService configService;
+
+    @Resource
+    private RedisTemplate<String, String> redisTemplate;
 
     /**
      * 登录验证
@@ -82,6 +88,101 @@ public class SysLoginService {
             AuthenticationContextHolder.clearContext();
         }
         AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success")));
+
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        // 记录登录信息，修改用户表，添加登录IP、登录时间
+        recordLoginInfo(loginUser.getUserId());
+        // 生成token
+        return tokenService.createToken(loginUser);
+    }
+
+    /**
+     * app端账号密码登录
+     *
+     * @param username
+     * @param password
+     * @return
+     */
+    public String appUPLogin(String username, String password) {
+        // 用户验证
+        Authentication authentication = null;
+        try {
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
+            AuthenticationContextHolder.setContext(authenticationToken);
+            // 该方法会去调用UserDetailsServiceImpl.loadUserByUsername
+            authentication = authenticationManager.authenticate(authenticationToken);
+        } catch (Exception e) {
+            if (e instanceof BadCredentialsException) {
+                // 异步记录日志
+                AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("user.password.not.match")));
+                throw new UserPasswordNotMatchException();
+            } else {
+                AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, e.getMessage()));
+                throw new ServiceException(e.getMessage());
+            }
+        } finally {
+            AuthenticationContextHolder.clearContext();
+        }
+        AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success")));
+
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        // 记录登录信息，修改用户表，添加登录IP、登录时间
+        recordLoginInfo(loginUser.getUserId());
+        // 生成token
+        return tokenService.createToken(loginUser);
+    }
+
+    /**
+     * 手机验证码登录
+     *
+     * @param telephone
+     * @param phoneCode
+     * @return
+     */
+    public String smsLogin(String telephone, String phoneCode) {
+        // 未携带手机号或验证码
+        if (StringUtil.isEmpty(telephone)) {
+            throw new TelePhoneException();
+        }
+        if (StringUtil.isEmpty(phoneCode)) {
+            throw new CaptchaException();
+        }
+        // 获取手机验证码
+        String verifyKey = CacheConstants.ALIYUN_SMS_LOGIN_KEY + telephone;
+        String verifyPhoneCode = redisTemplate.opsForValue().get(verifyKey);
+        if (StringUtil.isEmpty(verifyPhoneCode)) {
+            throw new SmsException("验证码已失效");
+        }
+        if (!verifyPhoneCode.equals(phoneCode)) {
+            throw new SmsException("验证码错误");
+        }
+        // 删除key
+        redisTemplate.delete(verifyKey);
+        // 通过手机号获取用户
+        SysUser userByTelephone = userService.getUserByTelephone(telephone);
+        if (StringUtil.isEmpty(userByTelephone)) {
+            throw new TelePhoneException();
+        }
+        // 用户验证
+        Authentication authentication = null;
+        try {
+            SmsAuthenticationToken authenticationToken = new SmsAuthenticationToken(telephone);
+            AuthenticationContextHolder.setContext(authenticationToken);
+            // 该方法会去调用 SmsUserDetailsService.loadUserByUsername
+            authentication = authenticationManager.authenticate(authenticationToken);
+        } catch (Exception e) {
+            if (e instanceof BadCredentialsException) {
+                // 异步记录日志
+                AsyncManager.me().execute(AsyncFactory.recordLogininfor(telephone, Constants.LOGIN_FAIL, MessageUtils.message("user.password.not.match")));
+                throw new UserPasswordNotMatchException();
+            } else {
+                AsyncManager.me().execute(AsyncFactory.recordLogininfor(telephone, Constants.LOGIN_FAIL, e.getMessage()));
+                throw new ServiceException(e.getMessage());
+            }
+        } finally {
+            AuthenticationContextHolder.clearContext();
+        }
+        AsyncManager.me().execute(AsyncFactory.recordLogininfor(telephone, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success")));
 
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         // 记录登录信息，修改用户表，添加登录IP、登录时间

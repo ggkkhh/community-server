@@ -6,7 +6,7 @@ import com.roydon.common.utils.StringUtils;
 import com.roydon.common.utils.DateUtils;
 
 /**
- * @author ruoyi 序列生成类
+ * @author roydon 序列生成类
  */
 public class Seq
 {

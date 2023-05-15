@@ -8,6 +8,7 @@ import com.roydon.common.enums.BusinessType;
 import com.roydon.system.domain.SysNotice;
 import com.roydon.system.service.ISysNoticeService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,7 @@ public class SysNoticeController extends BaseController {
     /**
      * 获取通知公告列表
      */
+    @ApiOperation("通知公告列表")
     @PreAuthorize("@ss.hasPermi('system:notice:list')")
     @GetMapping("/list")
     public TableDataInfo list(SysNotice notice) {

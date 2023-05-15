@@ -21,7 +21,8 @@
         <bitwalker.version>1.21</bitwalker.version>
         <swagger.version>3.0.0</swagger.version>
         <kaptcha.version>2.3.2</kaptcha.version>
-        <mybatis-spring-boot.version>2.2.2</mybatis-spring-boot.version>
+<!--        <mybatis-spring-boot.version>2.2.2</mybatis-spring-boot.version>-->
+        <mybatis-plus-version>3.5.2</mybatis-plus-version>
         <pagehelper.boot.version>1.4.3</pagehelper.boot.version>
         <fastjson.version>2.0.14</fastjson.version>
         <oshi.version>6.2.2</oshi.version>
@@ -31,6 +32,8 @@
         <poi.version>4.1.2</poi.version>
         <velocity.version>2.3</velocity.version>
         <jwt.version>0.9.1</jwt.version>
+        <hutool.version>5.8.11</hutool.version>
+        <google.zxing.version>3.3.3</google.zxing.version>
     </properties>
 
     <!-- 依赖声明 -->
@@ -61,10 +64,17 @@
             </dependency>
 
             <!-- SpringBoot集成mybatis框架 -->
+<!--            <dependency>-->
+<!--                <groupId>org.mybatis.spring.boot</groupId>-->
+<!--                <artifactId>mybatis-spring-boot-starter</artifactId>-->
+<!--                <version>${mybatis-spring-boot.version}</version>-->
+<!--            </dependency>-->
+
+            <!-- mybatis-plus -->
             <dependency>
-                <groupId>org.mybatis.spring.boot</groupId>
-                <artifactId>mybatis-spring-boot-starter</artifactId>
-                <version>${mybatis-spring-boot.version}</version>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus-version}</version>
             </dependency>
 
             <!-- pagehelper 分页插件 -->
@@ -116,11 +126,11 @@
             </dependency>
 
             <!-- velocity代码生成使用模板 -->
-            <dependency>
-                <groupId>org.apache.velocity</groupId>
-                <artifactId>velocity-engine-core</artifactId>
-                <version>${velocity.version}</version>
-            </dependency>
+            <!--            <dependency>-->
+            <!--                <groupId>org.apache.velocity</groupId>-->
+            <!--                <artifactId>velocity-engine-core</artifactId>-->
+            <!--                <version>${velocity.version}</version>-->
+            <!--            </dependency>-->
 
             <!-- collections工具类 -->
             <dependency>
@@ -150,6 +160,38 @@
                 <version>${kaptcha.version}</version>
             </dependency>
 
+            <!--开发工具集-->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <!-- 二维码生成 -->
+            <dependency>
+                <groupId>com.google.zxing</groupId>
+                <artifactId>core</artifactId>
+                <version>${google.zxing.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.zxing</groupId>
+                <artifactId>javase</artifactId>
+                <version>${google.zxing.version}</version>
+            </dependency>
+
+            <!-- 定时任务-->
+            <dependency>
+                <groupId>com.roydon</groupId>
+                <artifactId>community-quartz</artifactId>
+                <version>${community.version}</version>
+            </dependency>
+
+            <!-- 代码生成-->
+            <dependency>
+                <groupId>com.roydon</groupId>
+                <artifactId>community-generator</artifactId>
+                <version>${community.version}</version>
+            </dependency>
+
             <!-- 核心模块-->
             <dependency>
                 <groupId>com.roydon</groupId>
@@ -177,8 +219,14 @@
     <modules>
         <module>community-admin</module>
         <module>community-framework</module>
+        <module>community-generator</module>
+        <module>community-quartz</module>
         <module>community-system</module>
         <module>community-common</module>
+        <module>community-app</module>
+        <module>community-sms</module>
+        <module>community-resident</module>
+        <module>community-business</module>
     </modules>
     <packaging>pom</packaging>
 

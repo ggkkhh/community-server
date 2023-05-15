@@ -10,6 +10,7 @@ import com.roydon.framework.web.service.SysPasswordService;
 import com.roydon.system.domain.SysLoginInfo;
 import com.roydon.system.service.ISysLoginInfoService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,19 +32,20 @@ public class SysLoginInfoController extends BaseController {
     @Resource
     private SysPasswordService passwordService;
 
+    @ApiOperation("访问记录列表")
     @PreAuthorize("@ss.hasPermi('monitor:logininfor:list')")
     @GetMapping("/list")
-    public TableDataInfo list(SysLoginInfo logininfor) {
+    public TableDataInfo list(SysLoginInfo loginInfo) {
         startPage();
-        List<SysLoginInfo> list = loginInfoService.selectLoginInfoList(logininfor);
+        List<SysLoginInfo> list = loginInfoService.selectLoginInfoList(loginInfo);
         return getDataTable(list);
     }
 
     @Log(title = "登录日志", businessType = BusinessType.EXPORT)
     @PreAuthorize("@ss.hasPermi('monitor:logininfor:export')")
     @PostMapping("/export")
-    public void export(HttpServletResponse response, SysLoginInfo logininfor) {
-        List<SysLoginInfo> list = loginInfoService.selectLoginInfoList(logininfor);
+    public void export(HttpServletResponse response, SysLoginInfo loginInfo) {
+        List<SysLoginInfo> list = loginInfoService.selectLoginInfoList(loginInfo);
         ExcelUtil<SysLoginInfo> util = new ExcelUtil<SysLoginInfo>(SysLoginInfo.class);
         util.exportExcel(response, list, "登录日志");
     }

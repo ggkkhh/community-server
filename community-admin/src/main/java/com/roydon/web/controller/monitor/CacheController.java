@@ -2,15 +2,16 @@ package com.roydon.web.controller.monitor;
 
 import com.roydon.common.constant.CacheConstants;
 import com.roydon.common.core.domain.AjaxResult;
-import com.roydon.system.domain.SysCache;
 import com.roydon.common.utils.StringUtils;
+import com.roydon.system.domain.SysCache;
 import io.swagger.annotations.Api;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.*;
 
 /**
@@ -20,7 +21,8 @@ import java.util.*;
 @RestController
 @RequestMapping("/monitor/cache")
 public class CacheController {
-    @Autowired
+
+    @Resource
     private RedisTemplate<String, String> redisTemplate;
 
     private final static List<SysCache> caches = new ArrayList<SysCache>();
@@ -35,6 +37,7 @@ public class CacheController {
         caches.add(new SysCache(CacheConstants.PWD_ERR_CNT_KEY, "密码错误次数"));
     }
 
+    @ApiOperation("缓存信息")
     @PreAuthorize("@ss.hasPermi('monitor:cache:list')")
     @GetMapping()
     public AjaxResult getInfo() throws Exception {

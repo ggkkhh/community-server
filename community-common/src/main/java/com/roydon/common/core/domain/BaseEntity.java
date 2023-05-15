@@ -1,5 +1,6 @@
 package com.roydon.common.core.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -20,6 +21,7 @@ public class BaseEntity implements Serializable {
      * 搜索值
      */
     @ApiModelProperty("搜索值")
+    @TableField(exist = false)
     private String searchValue;
 
     /**
@@ -58,6 +60,7 @@ public class BaseEntity implements Serializable {
      * 请求参数
      */
     @ApiModelProperty("请求参数")
+    @TableField(exist = false)
     private Map<String, Object> params;
 
     public String getSearchValue() {

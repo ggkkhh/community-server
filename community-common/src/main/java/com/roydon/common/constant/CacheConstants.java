@@ -38,4 +38,14 @@ public class CacheConstants {
      * 登录账户密码错误次数 redis key
      */
     public static final String PWD_ERR_CNT_KEY = "pwd_err_cnt:";
+
+    /**
+     * aliyun短信验证码key
+     */
+    public static final String ALIYUN_SMS_KEY = "sms:";
+
+    /**
+     * aliyun用户登录短信验证码key
+     */
+    public static final String ALIYUN_SMS_LOGIN_KEY = "sms:login_captcha:";
 }

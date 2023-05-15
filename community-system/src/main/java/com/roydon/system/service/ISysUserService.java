@@ -1,5 +1,6 @@
 package com.roydon.system.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.roydon.common.core.domain.entity.SysUser;
 
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 /**
  * 用户 业务层
  */
-public interface ISysUserService {
+public interface ISysUserService extends IService<SysUser> {
     /**
      * 根据条件分页查询用户列表
      *
@@ -203,5 +204,14 @@ public interface ISysUserService {
     public String importUser(List<SysUser> userList, Boolean isUpdateSupport, String operName);
 
     public Integer getUserAmount();
+
+    /**
+     * 检测手机号是否存在
+     * @param telephone
+     * @return
+     */
+    public SysUser checkTelephoneExists(String telephone);
+
+    public SysUser getUserByTelephone(String telephone);
 
 }

@@ -1,14 +1,16 @@
 package com.roydon.system.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.roydon.common.core.domain.TreeSelect;
 import com.roydon.common.core.domain.entity.SysDept;
+import com.roydon.system.domain.SysConfig;
 
 import java.util.List;
 
 /**
  * 部门管理 服务层
  */
-public interface ISysDeptService {
+public interface ISysDeptService extends IService<SysDept> {
     /**
      * 查询部门管理数据
      *

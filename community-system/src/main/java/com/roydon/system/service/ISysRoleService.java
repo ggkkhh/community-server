@@ -1,5 +1,6 @@
 package com.roydon.system.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.roydon.common.core.domain.entity.SysRole;
 import com.roydon.system.domain.SysUserRole;
 
@@ -9,7 +10,7 @@ import java.util.Set;
 /**
  * 角色业务层
  */
-public interface ISysRoleService {
+public interface ISysRoleService extends IService<SysRole> {
     /**
      * 根据条件分页查询角色数据
      *

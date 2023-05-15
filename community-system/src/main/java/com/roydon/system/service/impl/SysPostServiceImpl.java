@@ -2,6 +2,9 @@ package com.roydon.system.service.impl;
 
 import java.util.List;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.roydon.common.core.domain.entity.SysUser;
+import com.roydon.system.mapper.SysUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.roydon.common.constant.UserConstants;
@@ -18,7 +21,7 @@ import javax.annotation.Resource;
  * 岗位信息 服务层处理
  */
 @Service
-public class SysPostServiceImpl implements ISysPostService {
+public class SysPostServiceImpl extends ServiceImpl<SysPostMapper, SysPost> implements ISysPostService {
     @Resource
     private SysPostMapper postMapper;
 

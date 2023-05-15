@@ -34,10 +34,10 @@ server:
       min-spare: 100
 
 # 日志配置
-#logging:
-#  level:
-#    com.roydon: debug
-#    org.springframework: warn
+logging:
+  level:
+    com.roydon: debug
+    org.springframework: warn
 
 # 用户配置
 user:
@@ -67,28 +67,18 @@ spring:
     restart:
       # 热部署开关
       enabled: true
-  # redis 配置
   redis:
-    # 地址
-    host: localhost
-    # 端口，默认为6379
+    host: 43.143.33.99
     port: 6379
-    # 数据库索引
-    database: 1
-    # 密码
-    password:
-    # 连接超时时间
+    database: 0
+    password: qwer1234
     timeout: 10s
     lettuce:
       pool:
-        # 连接池中的最小空闲连接
-        min-idle: 0
-        # 连接池中的最大空闲连接
-        max-idle: 8
-        # 连接池的最大数据库连接数
-        max-active: 8
-        # #连接池最大阻塞等待时间（使用负值表示没有限制）
-        max-wait: -1ms
+        min-idle: 0 # 连接池中的最小空闲连接
+        max-idle: 8 # 连接池中的最大空闲连接
+        max-active: 8 # 连接池的最大数据库连接数
+        max-wait: -1ms # #连接池最大阻塞等待时间（使用负值表示没有限制）
 
 # token配置
 token:
@@ -96,17 +86,22 @@ token:
   header: Authorization
   # 令牌密钥
   secret: abcdefghijklmnopqrstuvwxyz
-  # 令牌有效期（默认60分钟）
-  expireTime: 60
+  # 令牌有效期（默认三天）
+  expireTime: 4320
 
 # MyBatis配置
-mybatis:
-  # 搜索指定包别名
-  typeAliasesPackage: com.roydon.**.domain
-  # 配置mapper的扫描，找到所有的mapper.xml映射文件
-  mapperLocations: classpath*:mapper/**/*Mapper.xml
-  # 加载全局的配置文件
-  configLocation: classpath:mybatis/mybatis-config.xml
+#mybatis:
+#  # 搜索指定包别名
+#  typeAliasesPackage: com.roydon.**.domain
+#  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+#  mapperLocations: classpath*:mapper/**/*Mapper.xml
+#  # 加载全局的配置文件
+#  configLocation: classpath:mybatis/mybatis-config.xml
+
+mybatis-plus:
+  type-aliases-package: com.roydon.**.domain
+  mapper-locations: classpath*:mapper/**/*Mapper.xml
+  config-location: classpath:mybatis/mybatis-config.xml
 
 # PageHelper分页插件
 pagehelper:
@@ -129,3 +124,22 @@ xss:
   excludes: /system/notice
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
+
+# aliyun配置
+aliyun:
+  sms:
+    accessKeyId: LTAI5tSpJYrm2fawRxgfWncf
+    accessKeySecret: Plo6TQpTC6YzThyI1QHcu53EtKvroX
+    templateCode: SMS_273815229 # 可在aliyun控制台申请
+  oss:
+    file:
+      endpoint: oss-cn-shanghai.aliyuncs.com
+      keyid: LTAI5tDzXh9ZUzwDRyoPxs7n
+      keysecret: Vf81KErpz5ScYJlprwbsbyVyKSysbW
+      bucketname: community-server-oss
+
+# roll
+roll:
+  baseUrl: https://www.mxnzp.com/api/news/
+  appId: iojgunrruwrtohpn
+  appSecret: aENjYTdrNG85UDkvenpNZmowVjFCZz09

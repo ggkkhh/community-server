@@ -12,6 +12,7 @@ import com.roydon.common.utils.StringUtils;
 import com.roydon.system.domain.SysUserOnline;
 import com.roydon.system.service.ISysUserOnlineService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,6 +36,7 @@ public class SysUserOnlineController extends BaseController {
     @Resource
     private RedisCache redisCache;
 
+    @ApiOperation("在线用户列表")
     @PreAuthorize("@ss.hasPermi('monitor:online:list')")
     @GetMapping("/list")
     public TableDataInfo list(String ipaddr, String userName) {
@@ -66,6 +68,7 @@ public class SysUserOnlineController extends BaseController {
     /**
      * 强退用户
      */
+    @ApiOperation("在线用户强退")
     @PreAuthorize("@ss.hasPermi('monitor:online:forceLogout')")
     @Log(title = "在线用户", businessType = BusinessType.FORCE)
     @DeleteMapping("/{tokenId}")

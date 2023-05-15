@@ -100,7 +100,13 @@ public class BaseController {
     public AjaxResult success(String message) {
         return AjaxResult.success(message);
     }
-
+    /**
+     * 返回成功消息
+     */
+    public AjaxResult success(Object data)
+    {
+        return AjaxResult.success(data);
+    }
     /**
      * 返回失败消息
      */

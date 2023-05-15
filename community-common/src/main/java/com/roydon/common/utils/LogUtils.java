@@ -3,7 +3,7 @@ package com.roydon.common.utils;
 /**
  * 处理并记录日志文件
  * 
- * @author ruoyi
+ * @author roydon
  */
 public class LogUtils
 {

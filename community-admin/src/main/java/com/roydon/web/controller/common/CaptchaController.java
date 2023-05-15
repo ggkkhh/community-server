@@ -10,6 +10,7 @@ import com.roydon.common.utils.sign.Base64;
 import com.roydon.common.utils.uuid.IdUtils;
 import com.roydon.system.service.ISysConfigService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.util.FastByteArrayOutputStream;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,6 +45,7 @@ public class CaptchaController {
     /**
      * 生成验证码
      */
+    @ApiOperation("生成验证码")
     @GetMapping("/captchaImage")
     public AjaxResult getCode() throws IOException {
         AjaxResult ajax = AjaxResult.success();

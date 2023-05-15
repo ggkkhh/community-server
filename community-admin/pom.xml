@@ -17,6 +17,27 @@
 
     <dependencies>
 
+        <!-- aliyunOSS服务 -->
+        <dependency>
+            <groupId>com.roydon</groupId>
+            <artifactId>community-business-oss</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <!-- app新闻服务 -->
+        <dependency>
+            <groupId>com.roydon</groupId>
+            <artifactId>community-business-news</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <!-- 短信服务 -->
+        <dependency>
+            <groupId>com.roydon</groupId>
+            <artifactId>community-sms</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
         <!-- spring-boot-devtools -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -48,6 +69,18 @@
             <groupId>com.roydon</groupId>
             <artifactId>community-framework</artifactId>
         </dependency>
+
+        <!-- 定时任务-->
+        <dependency>
+            <groupId>com.roydon</groupId>
+            <artifactId>community-quartz</artifactId>
+        </dependency>
+
+        <!-- 代码生成-->
+<!--        <dependency>-->
+<!--            <groupId>com.roydon</groupId>-->
+<!--            <artifactId>community-generator</artifactId>-->
+<!--        </dependency>-->
 
     </dependencies>
 

@@ -25,7 +25,7 @@ public class SysNotice extends BaseEntity {
     private String noticeTitle;
 
     /**
-     * 公告类型（1通知 2公告）
+     * 公告类型（1后台通知 2后台公告；-1app通知 -2app公告）
      */
     private String noticeType;
 

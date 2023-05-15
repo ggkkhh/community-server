@@ -3,7 +3,7 @@ package com.roydon.common.utils.file;
 /**
  * 媒体类型工具类
  * 
- * @author ruoyi
+ * @author roydon
  */
 public class MimeTypeUtils
 {
