@@ -17,12 +17,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <dependencies>
-        <!-- 通用工具-->
-        <dependency>
-            <groupId>com.roydon</groupId>
-            <artifactId>community-framework</artifactId>
-        </dependency>
-    </dependencies>
+
 
 </project>
