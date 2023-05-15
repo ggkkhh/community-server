@@ -131,6 +131,12 @@ aliyun:
     accessKeyId: LTAI5tSpJYrm2fawRxgfWncf
     accessKeySecret: Plo6TQpTC6YzThyI1QHcu53EtKvroX
     templateCode: SMS_273815229 # 可在aliyun控制台申请
+  oss:
+    file:
+      endpoint: oss-cn-shanghai.aliyuncs.com
+      keyid: LTAI5tDzXh9ZUzwDRyoPxs7n
+      keysecret: Vf81KErpz5ScYJlprwbsbyVyKSysbW
+      bucketname: community-server-oss
 
 # roll
 roll:
