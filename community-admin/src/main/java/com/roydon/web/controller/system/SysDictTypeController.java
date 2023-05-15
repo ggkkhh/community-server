@@ -10,6 +10,7 @@ import com.roydon.common.enums.BusinessType;
 import com.roydon.common.utils.poi.ExcelUtil;
 import com.roydon.system.service.ISysDictTypeService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -25,9 +26,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/system/dict/type")
 public class SysDictTypeController extends BaseController {
+
     @Resource
     private ISysDictTypeService dictTypeService;
 
+    @ApiOperation("数据字典类型列表")
     @PreAuthorize("@ss.hasPermi('system:dict:list')")
     @GetMapping("/list")
     public TableDataInfo list(SysDictType dictType) {

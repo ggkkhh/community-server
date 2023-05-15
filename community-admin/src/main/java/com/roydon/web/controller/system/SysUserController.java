@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 /**
  * 系统用户控制层
  */
-@Api("用户信息管理")
+@Api("用户管理")
 @RestController
 @RequestMapping("/system/user")
 public class SysUserController extends BaseController {
@@ -54,7 +54,7 @@ public class SysUserController extends BaseController {
     /**
      * 获取用户列表
      */
-    @ApiOperation("获取用户列表")
+    @ApiOperation("用户列表")
     @PreAuthorize("@ss.hasPermi('system:user:list')")
     @GetMapping("/list")
     public TableDataInfo list(SysUser user) {
@@ -63,6 +63,7 @@ public class SysUserController extends BaseController {
         return getDataTable(list);
     }
 
+    @ApiOperation("用户导出")
     @Log(title = "用户管理", businessType = BusinessType.EXPORT)
     @PreAuthorize("@ss.hasPermi('system:user:export')")
     @PostMapping("/export")
@@ -72,6 +73,7 @@ public class SysUserController extends BaseController {
         util.exportExcel(response, list, "用户数据");
     }
 
+    @ApiOperation("用户导入")
     @Log(title = "用户管理", businessType = BusinessType.IMPORT)
     @PreAuthorize("@ss.hasPermi('system:user:import')")
     @PostMapping("/importData")
@@ -83,6 +85,7 @@ public class SysUserController extends BaseController {
         return AjaxResult.success(message);
     }
 
+    @ApiOperation("用户导入模板")
     @PostMapping("/importTemplate")
     public void importTemplate(HttpServletResponse response) {
         ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
@@ -92,7 +95,7 @@ public class SysUserController extends BaseController {
     /**
      * 根据用户编号获取详细信息
      */
-    @ApiOperation("根据用户编号获取详细信息")
+    @ApiOperation("用户详情")
     @ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "int", paramType = "path", dataTypeClass = Integer.class)
     @PreAuthorize("@ss.hasPermi('system:user:query')")
     @GetMapping(value = {"/", "/{userId}"})
@@ -114,7 +117,7 @@ public class SysUserController extends BaseController {
     /**
      * 新增用户
      */
-    @ApiOperation("新增用户")
+    @ApiOperation("用户新增")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "用户id", dataType = "Integer", dataTypeClass = Integer.class),
             @ApiImplicitParam(name = "username", value = "用户名称", dataType = "String", dataTypeClass = String.class),
@@ -142,6 +145,7 @@ public class SysUserController extends BaseController {
     /**
      * 修改用户
      */
+    @ApiOperation("用户修改")
     @PreAuthorize("@ss.hasPermi('system:user:edit')")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PutMapping
@@ -164,6 +168,7 @@ public class SysUserController extends BaseController {
     /**
      * 删除用户
      */
+    @ApiOperation("用户删除")
     @PreAuthorize("@ss.hasPermi('system:user:remove')")
     @Log(title = "用户管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{userIds}")
@@ -177,6 +182,7 @@ public class SysUserController extends BaseController {
     /**
      * 重置密码
      */
+    @ApiOperation("用户重置密码")
     @PreAuthorize("@ss.hasPermi('system:user:resetPwd')")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PutMapping("/resetPwd")
@@ -191,6 +197,7 @@ public class SysUserController extends BaseController {
     /**
      * 状态修改
      */
+    @ApiOperation("用户禁用")
     @PreAuthorize("@ss.hasPermi('system:user:edit')")
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PutMapping("/changeStatus")
@@ -204,6 +211,7 @@ public class SysUserController extends BaseController {
     /**
      * 根据用户编号获取授权角色
      */
+    @ApiOperation("用户角色")
     @PreAuthorize("@ss.hasPermi('system:user:query')")
     @GetMapping("/authRole/{userId}")
     public AjaxResult authRole(@PathVariable("userId") Long userId) {
@@ -218,6 +226,7 @@ public class SysUserController extends BaseController {
     /**
      * 用户授权角色
      */
+    @ApiOperation("用户授权角色")
     @PreAuthorize("@ss.hasPermi('system:user:edit')")
     @Log(title = "用户管理", businessType = BusinessType.GRANT)
     @PutMapping("/authRole")
@@ -230,6 +239,7 @@ public class SysUserController extends BaseController {
     /**
      * 获取部门树列表
      */
+    @ApiOperation("用户部门")
     @PreAuthorize("@ss.hasPermi('system:user:list')")
     @GetMapping("/deptTree")
     public AjaxResult deptTree(SysDept dept) {
@@ -239,6 +249,7 @@ public class SysUserController extends BaseController {
     /**
      * 获取系统用户数量
      */
+    @ApiOperation("用户总数")
     @PreAuthorize("@ss.hasPermi('system:user:query')")
     @GetMapping("/amount")
     public AjaxResult getAmount() {

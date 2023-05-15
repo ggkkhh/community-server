@@ -9,6 +9,7 @@ import com.roydon.common.enums.BusinessType;
 import com.roydon.common.utils.StringUtils;
 import com.roydon.system.service.ISysMenuService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ import java.util.List;
 /**
  * 菜单信息
  */
-@Api("菜单信息管理")
+@Api("菜单管理")
 @RestController
 @RequestMapping("/system/menu")
 public class SysMenuController extends BaseController {
@@ -29,6 +30,7 @@ public class SysMenuController extends BaseController {
     /**
      * 获取菜单列表
      */
+    @ApiOperation("菜单列表")
     @PreAuthorize("@ss.hasPermi('system:menu:list')")
     @GetMapping("/list")
     public AjaxResult list(SysMenu menu) {

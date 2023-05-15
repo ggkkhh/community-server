@@ -15,6 +15,7 @@ import com.roydon.common.utils.file.MimeTypeUtils;
 import com.roydon.framework.web.service.TokenService;
 import com.roydon.system.service.ISysUserService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,7 +24,7 @@ import javax.annotation.Resource;
 /**
  * 个人信息 业务处理
  */
-@Api("个人信息管理")
+@Api("个人信息")
 @RestController
 @RequestMapping("/system/user/profile")
 public class SysProfileController extends BaseController {
@@ -36,6 +37,7 @@ public class SysProfileController extends BaseController {
     /**
      * 个人信息
      */
+    @ApiOperation("个人信息")
     @GetMapping
     public AjaxResult profile() {
         LoginUser loginUser = getLoginUser();
@@ -49,6 +51,7 @@ public class SysProfileController extends BaseController {
     /**
      * 修改用户
      */
+    @ApiOperation("修改个人信息")
     @Log(title = "个人信息", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult updateProfile(@RequestBody SysUser user) {
@@ -82,6 +85,7 @@ public class SysProfileController extends BaseController {
     /**
      * 重置密码
      */
+    @ApiOperation("重置密码")
     @Log(title = "个人信息", businessType = BusinessType.UPDATE)
     @PutMapping("/updatePwd")
     public AjaxResult updatePwd(String oldPassword, String newPassword) {
@@ -106,6 +110,7 @@ public class SysProfileController extends BaseController {
     /**
      * 头像上传
      */
+    @ApiOperation("头像上传")
     @Log(title = "用户头像", businessType = BusinessType.UPDATE)
     @PostMapping("/avatar")
     public AjaxResult avatar(@RequestParam("avatarfile") MultipartFile file) throws Exception {

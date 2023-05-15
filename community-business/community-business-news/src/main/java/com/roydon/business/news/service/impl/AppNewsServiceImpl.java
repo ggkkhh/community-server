@@ -25,7 +25,7 @@ public class AppNewsServiceImpl extends ServiceImpl<AppNewsMapper, AppNews> impl
                 .like(StringUtil.isNotEmpty(appNews.getSource()), AppNews::getSource, appNews.getSource())
                 .eq(StringUtil.isNotEmpty(appNews.getNewsType()), AppNews::getNewsType, appNews.getNewsType())
                 .eq(StringUtil.isNotEmpty(appNews.getDelFlag()), AppNews::getDelFlag, appNews.getDelFlag())
-                .between(StringUtil.isNotEmpty(appNews.getPostTime()), AppNews::getPostTime, appNews.getPostTime(), appNews.getPostTime())
+                .between(StringUtil.isNotEmpty(appNews.getParams().get("beginTime")) || StringUtil.isNotEmpty(appNews.getParams().get("endTime")), AppNews::getPostTime, appNews.getParams().get("beginTime"), appNews.getParams().get("endTime"))
                 .orderByDesc(AppNews::getPostTime);
         return list(queryWrapper);
     }

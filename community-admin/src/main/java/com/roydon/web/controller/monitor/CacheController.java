@@ -5,6 +5,7 @@ import com.roydon.common.core.domain.AjaxResult;
 import com.roydon.common.utils.StringUtils;
 import com.roydon.system.domain.SysCache;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,6 +37,7 @@ public class CacheController {
         caches.add(new SysCache(CacheConstants.PWD_ERR_CNT_KEY, "密码错误次数"));
     }
 
+    @ApiOperation("缓存信息")
     @PreAuthorize("@ss.hasPermi('monitor:cache:list')")
     @GetMapping()
     public AjaxResult getInfo() throws Exception {

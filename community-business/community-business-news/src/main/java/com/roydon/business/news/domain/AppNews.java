@@ -2,6 +2,7 @@ package com.roydon.business.news.domain;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.roydon.common.core.domain.BaseEntity;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -13,7 +14,7 @@ import java.util.Date;
  */
 @TableName(value ="app_news")
 @Data
-public class AppNews implements Serializable {
+public class AppNews extends BaseEntity implements Serializable {
 
     @TableId
     private String newsId;

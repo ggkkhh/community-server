@@ -11,6 +11,7 @@ import com.roydon.common.utils.poi.ExcelUtil;
 import com.roydon.system.service.ISysDictDataService;
 import com.roydon.system.service.ISysDictTypeService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ import java.util.List;
 /**
  * 数据字典信息
  */
-@Api("数据字典信息管理")
+@Api("数据字典管理")
 @RestController
 @RequestMapping("/system/dict/data")
 public class SysDictDataController extends BaseController {
@@ -33,6 +34,7 @@ public class SysDictDataController extends BaseController {
     @Resource
     private ISysDictTypeService dictTypeService;
 
+    @ApiOperation("数据字典列表")
     @PreAuthorize("@ss.hasPermi('system:dict:list')")
     @GetMapping("/list")
     public TableDataInfo list(SysDictData dictData) {

@@ -10,6 +10,7 @@ import com.roydon.common.utils.poi.ExcelUtil;
 import com.roydon.system.domain.SysConfig;
 import com.roydon.system.service.ISysConfigService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ import java.util.List;
 /**
  * 参数配置 信息操作处理
  */
-@Api("系统配置信息管理")
+@Api("系统配置管理")
 @RestController
 @RequestMapping("/system/config")
 public class SysConfigController extends BaseController {
@@ -31,6 +32,7 @@ public class SysConfigController extends BaseController {
     /**
      * 获取参数配置列表
      */
+    @ApiOperation("系统配置列表")
     @PreAuthorize("@ss.hasPermi('system:config:list')")
     @GetMapping("/list")
     public TableDataInfo list(SysConfig config) {

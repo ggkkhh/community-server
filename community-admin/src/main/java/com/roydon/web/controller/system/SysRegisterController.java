@@ -7,6 +7,7 @@ import com.roydon.common.utils.StringUtils;
 import com.roydon.framework.web.service.SysRegisterService;
 import com.roydon.system.service.ISysConfigService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,15 +17,17 @@ import javax.annotation.Resource;
 /**
  * 注册验证
  */
-@Api("注册控制层")
+@Api("用户注册")
 @RestController
 public class SysRegisterController extends BaseController {
+
     @Resource
     private SysRegisterService registerService;
 
     @Resource
     private ISysConfigService configService;
 
+    @ApiOperation("用户注册")
     @PostMapping("/register")
     public AjaxResult register(@RequestBody RegisterBody user) {
         if (!("true".equals(configService.selectConfigByKey("sys.account.registerUser")))) {

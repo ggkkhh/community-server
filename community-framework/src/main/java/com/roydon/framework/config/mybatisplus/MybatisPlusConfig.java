@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 public class MybatisPlusConfig {
 
     /**
-     * 3.4.0之后版本，mp分页插件
+     * mp分页插件
      *
      * @return MybatisPlusInterceptor
      */

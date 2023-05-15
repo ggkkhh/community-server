@@ -10,6 +10,7 @@ import com.roydon.common.utils.poi.ExcelUtil;
 import com.roydon.system.domain.SysPost;
 import com.roydon.system.service.ISysPostService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -21,16 +22,18 @@ import java.util.List;
 /**
  * 岗位信息操作处理
  */
-@Api("岗位信息管理")
+@Api("岗位管理")
 @RestController
 @RequestMapping("/system/post")
 public class SysPostController extends BaseController {
+
     @Resource
     private ISysPostService postService;
 
     /**
      * 获取岗位列表
      */
+    @ApiOperation("岗位列表")
     @PreAuthorize("@ss.hasPermi('system:post:list')")
     @GetMapping("/list")
     public TableDataInfo list(SysPost post) {
