@@ -1,4 +1,4 @@
-package com.roydon.common.core.domain.model;
+package com.roydon.app.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

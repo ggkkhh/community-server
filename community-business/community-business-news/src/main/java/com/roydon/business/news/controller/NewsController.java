@@ -1,4 +1,4 @@
-package com.roydon.app.controller;
+package com.roydon.business.news.controller;
 
 import com.roydon.business.news.domain.AppNews;
 import com.roydon.business.news.service.AppNewsService;

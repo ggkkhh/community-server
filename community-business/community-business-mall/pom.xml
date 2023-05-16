@@ -5,31 +5,16 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.roydon</groupId>
-        <artifactId>community-parent</artifactId>
+        <artifactId>community-business</artifactId>
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>community-business</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>community-business-news</module>
-        <module>community-business-oss</module>
-        <module>community-business-mall</module>
-        <module>community-business-app</module>
-    </modules>
+    <artifactId>community-business-mall</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-    <dependencies>
-        <!-- 通用工具-->
-        <dependency>
-            <groupId>com.roydon</groupId>
-            <artifactId>community-framework</artifactId>
-        </dependency>
-    </dependencies>
 
 </project>

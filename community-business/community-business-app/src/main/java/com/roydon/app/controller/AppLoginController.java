@@ -3,7 +3,7 @@ package com.roydon.app.controller;
 import com.roydon.common.constant.Constants;
 import com.roydon.common.core.domain.AjaxResult;
 import com.roydon.common.core.domain.entity.SysUser;
-import com.roydon.common.core.domain.model.SmsLoginBody;
+import com.roydon.app.domain.dto.SmsLoginBody;
 import com.roydon.common.utils.SecurityUtils;
 import com.roydon.framework.web.service.SysLoginService;
 import com.roydon.framework.web.service.SysPermissionService;

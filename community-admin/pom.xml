@@ -17,6 +17,20 @@
 
     <dependencies>
 
+        <!-- app新闻服务 -->
+        <dependency>
+            <groupId>com.roydon</groupId>
+            <artifactId>community-business-mall</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <!-- app新闻服务 -->
+        <dependency>
+            <groupId>com.roydon</groupId>
+            <artifactId>community-business-app</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
         <!-- aliyunOSS服务 -->
         <dependency>
             <groupId>com.roydon</groupId>

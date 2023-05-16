@@ -39,7 +39,7 @@ public class GetNewsService {
     public void getNewsList() {
         List<Integer> typeIdList = getTypeIdList();
         typeIdList.forEach(t -> {
-            log.warn("开始获取新闻类型为[{}]的新闻！",t);
+            log.warn("开始获取新闻类型为[{}]的新闻！", t);
             try {
                 Thread.sleep(2000L);
             } catch (InterruptedException e) {
@@ -84,8 +84,11 @@ public class GetNewsService {
                 an.setPostTime(d.getPostTime());
                 List<Images> images = newsDetails.getImages();
                 String content = newsDetails.getContent();
+                String replace =null;
                 images.forEach(i -> {
-                    content.replace(i.getPosition(), i.getImgSrc());
+                    String position = i.getPosition();
+                    String img = "<img src=\"" + i.getImgSrc() + "\" alt=\"加载失败\">";
+//                    replace = content.replace(position.toString(), img.toString());
                 });
                 an.setNewsContent(content);
                 an.setContentImages(images.toString());
