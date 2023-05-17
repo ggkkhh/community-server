@@ -19,7 +19,7 @@ import java.util.List;
 public class AppNewsServiceImpl extends ServiceImpl<AppNewsMapper, AppNews> implements AppNewsService {
 
     @Override
-    public List<AppNews> selectNewsList(AppNews appNews) {
+    public List<AppNews> getNewsList(AppNews appNews) {
         LambdaQueryWrapper<AppNews> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.like(StringUtil.isNotEmpty(appNews.getNewsTitle()), AppNews::getNewsTitle, appNews.getNewsTitle())
                 .like(StringUtil.isNotEmpty(appNews.getSource()), AppNews::getSource, appNews.getSource())
@@ -28,6 +28,13 @@ public class AppNewsServiceImpl extends ServiceImpl<AppNewsMapper, AppNews> impl
                 .between(StringUtil.isNotEmpty(appNews.getParams().get("beginTime")) || StringUtil.isNotEmpty(appNews.getParams().get("endTime")), AppNews::getPostTime, appNews.getParams().get("beginTime"), appNews.getParams().get("endTime"))
                 .orderByDesc(AppNews::getPostTime);
         return list(queryWrapper);
+    }
+
+    @Override
+    public AppNews getNewsDetails(String newsId) {
+        LambdaQueryWrapper<AppNews> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(StringUtil.isNotEmpty(newsId), AppNews::getNewsId, newsId);
+        return getOne(queryWrapper);
     }
 }
 

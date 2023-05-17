@@ -12,5 +12,8 @@ import java.util.List;
 */
 public interface AppNewsService extends IService<AppNews> {
 
-    List<AppNews> selectNewsList(AppNews appNews);
+    List<AppNews> getNewsList(AppNews appNews);
+
+    AppNews getNewsDetails(String newsId);
+
 }

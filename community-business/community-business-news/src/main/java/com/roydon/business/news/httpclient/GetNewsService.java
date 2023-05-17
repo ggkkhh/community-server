@@ -17,7 +17,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * GetNewsService
@@ -84,13 +86,21 @@ public class GetNewsService {
                 an.setPostTime(d.getPostTime());
                 List<Images> images = newsDetails.getImages();
                 String content = newsDetails.getContent();
-                String replace =null;
+                String replacedContent = null;
+                Map<String, String> map = new HashMap<>();
                 images.forEach(i -> {
                     String position = i.getPosition();
-                    String img = "<img src=\"" + i.getImgSrc() + "\" alt=\"加载失败\">";
+                    String img = "<img class=\"newsDetails-img\" src=\"" + i.getImgSrc() + "\" alt=\"图片加载失败\">";
 //                    replace = content.replace(position.toString(), img.toString());
+                    // TODO: 将 position 和 img 存储到 map 或其他数据结构中
+                    map.put(position, img);
                 });
-                an.setNewsContent(content);
+                for (Map.Entry<String, String> entry : map.entrySet()) {
+                    String position = entry.getKey();
+                    String src = entry.getValue();
+                    replacedContent = content.replaceAll(position, src);
+                }
+                an.setNewsContent(replacedContent);
                 an.setContentImages(images.toString());
                 an.setDelFlag(0);
                 // 批量添加到数据库
