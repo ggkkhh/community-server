@@ -16,4 +16,6 @@ public interface AppNewsService extends IService<AppNews> {
 
     AppNews getNewsDetails(String newsId);
 
+    boolean changeNewsStatus(AppNews appNews);
+
 }

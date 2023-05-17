@@ -47,69 +47,77 @@ public class GetNewsService {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            String newsListUrl = newsConfig.getNewsListUrl(t, 1);
-            String sendGet = HttpUtils.sendGet(newsListUrl);
-            NewsRespResult newsRespResult = JSONObject.parseObject(sendGet, NewsRespResult.class);
-            if (StringUtil.isEmpty(newsListUrl) || newsRespResult.getCode() != 1) {
-                log.warn("新闻接口获取数据为空！");
-                throw new RuntimeException();// 获取失败
-            }
-            List<News> data = newsRespResult.getData();
-            if (StringUtil.isEmpty(data)) {
-                log.warn("新闻接口获取数据为空！");
-                return;
-            }
-            data.forEach(d -> {
-                // 过滤封面为空和id为空
-                if (StringUtil.isEmpty(d.getImgList()) || StringUtil.isEmpty(d.getNewsId())) {
-                    return;
-                }
+            // 爬取十一页数据
+            for (int page = 1; page < 11; page++) {
                 try {
                     Thread.sleep(2000L);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                NewsDetailsRespResult newsDetailsRespResult = getNewsDetailsRespResult(d.getNewsId());
-                NewsDetails newsDetails = newsDetailsRespResult.getData();
-                if (StringUtil.isEmpty(newsDetailsRespResult) || newsDetailsRespResult.getCode() != 1 || StringUtil.isEmpty(newsDetails)) {
-                    log.warn("新闻详情接口获取数据为空！");
-                    return;// 获取失败
+                String newsListUrl = newsConfig.getNewsListUrl(t, page);
+                String sendGet = HttpUtils.sendGet(newsListUrl);
+                NewsRespResult newsRespResult = JSONObject.parseObject(sendGet, NewsRespResult.class);
+                if (StringUtil.isEmpty(newsListUrl) || newsRespResult.getCode() != 1) {
+                    log.warn("新闻接口获取数据为空！");
+                    throw new RuntimeException();// 获取失败
                 }
-                AppNews an = new AppNews();
-                an.setNewsId(d.getNewsId());
-                an.setNewsTitle(d.getTitle());
-                an.setCoverImg(d.getImgList().get(0));
-                an.setSource(d.getSource());
-                an.setNewsType(t);
-                an.setThereNewsId(d.getNewsId());
-                an.setDigest(d.getDigest());
-                an.setPostTime(d.getPostTime());
-                List<Images> images = newsDetails.getImages();
-                String content = newsDetails.getContent();
-                String replacedContent = null;
-                Map<String, String> map = new HashMap<>();
-                images.forEach(i -> {
-                    String position = i.getPosition();
-                    String img = "<img class=\"newsDetails-img\" src=\"" + i.getImgSrc() + "\" alt=\"图片加载失败\">";
+                List<News> data = newsRespResult.getData();
+                if (StringUtil.isEmpty(data)) {
+                    log.warn("新闻接口获取数据为空！");
+                    return;
+                }
+                data.forEach(d -> {
+                    // 过滤封面为空和id为空
+                    if (StringUtil.isEmpty(d.getImgList()) || StringUtil.isEmpty(d.getNewsId())) {
+                        return;
+                    }
+                    try {
+                        Thread.sleep(2000L);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    NewsDetailsRespResult newsDetailsRespResult = getNewsDetailsRespResult(d.getNewsId());
+                    NewsDetails newsDetails = newsDetailsRespResult.getData();
+                    if (StringUtil.isEmpty(newsDetailsRespResult) || newsDetailsRespResult.getCode() != 1 || StringUtil.isEmpty(newsDetails)) {
+                        log.warn("新闻详情接口获取数据为空！");
+                        return;// 获取失败
+                    }
+                    AppNews an = new AppNews();
+                    an.setNewsId(d.getNewsId());
+                    an.setNewsTitle(d.getTitle());
+                    an.setCoverImg(d.getImgList().get(0));
+                    an.setSource(d.getSource());
+                    an.setNewsType(t);
+                    an.setThereNewsId(d.getNewsId());
+                    an.setDigest(d.getDigest());
+                    an.setPostTime(d.getPostTime());
+                    List<Images> images = newsDetails.getImages();
+                    String content = newsDetails.getContent();
+                    String replacedContent = null;
+                    Map<String, String> map = new HashMap<>();
+                    images.forEach(i -> {
+                        String position = i.getPosition();
+                        String img = "<img class=\"newsDetails-img\" src=\"" + i.getImgSrc() + "\" alt=\"图片加载失败\">";
 //                    replace = content.replace(position.toString(), img.toString());
-                    // TODO: 将 position 和 img 存储到 map 或其他数据结构中
-                    map.put(position, img);
+                        // TODO: 将 position 和 img 存储到 map 或其他数据结构中
+                        map.put(position, img);
+                    });
+                    for (Map.Entry<String, String> entry : map.entrySet()) {
+                        String position = entry.getKey();
+                        String src = entry.getValue();
+                        int indexOf = content.indexOf(position);
+                        content = content.replaceAll(position, src);
+                    }
+                    an.setNewsContent(content);
+                    an.setContentImages(images.toString());
+                    an.setShowInApp("1");
+                    an.setDelFlag("0");
+                    // 批量添加到数据库
+                    appNewsService.saveOrUpdate(an);
+                    log.info("插入或更新新闻数据成功！");
                 });
-                for (Map.Entry<String, String> entry : map.entrySet()) {
-                    String position = entry.getKey();
-                    String src = entry.getValue();
-                    replacedContent = content.replaceAll(position, src);
-                }
-                an.setNewsContent(replacedContent);
-                an.setContentImages(images.toString());
-                an.setDelFlag(0);
-                // 批量添加到数据库
-                appNewsService.saveOrUpdate(an);
-                log.info("插入或更新新闻数据成功！");
-            });
+            }
         });
-
-
     }
 
     public NewsRespResult getNewsRespResult() {

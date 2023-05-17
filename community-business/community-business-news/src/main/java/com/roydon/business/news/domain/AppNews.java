@@ -7,14 +7,14 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * @TableName app_news
  */
-@TableName(value ="app_news")
 @Data
+@TableName(value ="app_news")
 public class AppNews extends BaseEntity implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @TableId
     private String newsId;
@@ -37,13 +37,12 @@ public class AppNews extends BaseEntity implements Serializable {
 
     private String contentImages;
 
-    private Date createTime;
+    private String showInApp;
 
-    private Date updateTime;
+    private LocalDateTime createTime;
 
-    private Integer delFlag;
+    private LocalDateTime updateTime;
 
-    private static final long serialVersionUID = 1L;
-
+    private String delFlag;
 
 }

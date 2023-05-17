@@ -1,6 +1,7 @@
 package com.roydon.business.news.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.roydon.business.news.domain.AppNews;
 import com.roydon.business.news.mapper.AppNewsMapper;
@@ -24,7 +25,7 @@ public class AppNewsServiceImpl extends ServiceImpl<AppNewsMapper, AppNews> impl
         queryWrapper.like(StringUtil.isNotEmpty(appNews.getNewsTitle()), AppNews::getNewsTitle, appNews.getNewsTitle())
                 .like(StringUtil.isNotEmpty(appNews.getSource()), AppNews::getSource, appNews.getSource())
                 .eq(StringUtil.isNotEmpty(appNews.getNewsType()), AppNews::getNewsType, appNews.getNewsType())
-                .eq(StringUtil.isNotEmpty(appNews.getDelFlag()), AppNews::getDelFlag, appNews.getDelFlag())
+                .eq(StringUtil.isNotEmpty(appNews.getShowInApp()), AppNews::getShowInApp, appNews.getShowInApp())
                 .between(StringUtil.isNotEmpty(appNews.getParams().get("beginTime")) || StringUtil.isNotEmpty(appNews.getParams().get("endTime")), AppNews::getPostTime, appNews.getParams().get("beginTime"), appNews.getParams().get("endTime"))
                 .orderByDesc(AppNews::getPostTime);
         return list(queryWrapper);
@@ -35,6 +36,13 @@ public class AppNewsServiceImpl extends ServiceImpl<AppNewsMapper, AppNews> impl
         LambdaQueryWrapper<AppNews> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(StringUtil.isNotEmpty(newsId), AppNews::getNewsId, newsId);
         return getOne(queryWrapper);
+    }
+
+    @Override
+    public boolean changeNewsStatus(AppNews appNews) {
+        LambdaUpdateWrapper<AppNews> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(AppNews::getNewsId, appNews.getNewsId()).set(AppNews::getShowInApp, appNews.getShowInApp());
+        return update(updateWrapper);
     }
 }
 
