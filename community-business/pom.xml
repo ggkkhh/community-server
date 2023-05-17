@@ -12,6 +12,7 @@
     <artifactId>community-business</artifactId>
     <packaging>pom</packaging>
     <modules>
+        <module>community-business-admin</module>
         <module>community-business-news</module>
         <module>community-business-oss</module>
         <module>community-business-mall</module>
@@ -30,6 +31,13 @@
             <groupId>com.roydon</groupId>
             <artifactId>community-framework</artifactId>
         </dependency>
+
+        <!-- 定时任务-->
+<!--        <dependency>-->
+<!--            <groupId>com.roydon</groupId>-->
+<!--            <artifactId>community-quartz</artifactId>-->
+<!--        </dependency>-->
+
     </dependencies>
 
 </project>

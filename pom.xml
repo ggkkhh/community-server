@@ -217,7 +217,7 @@
     </dependencyManagement>
 
     <modules>
-        <module>community-admin</module>
+<!--        <module>community-admin</module>-->
         <module>community-framework</module>
         <module>community-generator</module>
         <module>community-quartz</module>
@@ -227,6 +227,7 @@
         <module>community-sms</module>
         <module>community-resident</module>
         <module>community-business</module>
+        <module>community-server</module>
     </modules>
     <packaging>pom</packaging>
 
