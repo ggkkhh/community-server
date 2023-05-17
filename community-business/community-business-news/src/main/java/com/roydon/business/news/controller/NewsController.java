@@ -45,7 +45,7 @@ public class NewsController extends BaseController {
     }
 
     @ApiOperation("新闻状态")
-    @Log(title = "用户管理", businessType = BusinessType.UPDATE)
+    @Log(title = "新闻管理", businessType = BusinessType.UPDATE)
     @PreAuthorize("@ss.hasPermi('app:news:edit')")
     @PutMapping("/changeStatus")
     public AjaxResult changeStatus(@RequestBody AppNews appNews) {
