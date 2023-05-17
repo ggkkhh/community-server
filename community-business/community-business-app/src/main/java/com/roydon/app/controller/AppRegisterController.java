@@ -51,7 +51,7 @@ public class AppRegisterController {
         } else if (StringUtils.isEmpty(userRegisterBody.getCode())) {
             return AjaxResult.error("新增用户失败，请输入验证码");
         }
-        String phoneCode = redisTemplate.opsForValue().get(CacheConstants.ALIYUN_SMS_KEY + userRegisterBody.getTelephone());
+        String phoneCode = redisTemplate.opsForValue().get(CacheConstants.ALIYUN_SMS_LOGIN_KEY + userRegisterBody.getTelephone());
         if (StringUtil.isEmpty(phoneCode)) {
             throw new SmsException("验证码已失效");
         }

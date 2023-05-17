@@ -212,6 +212,9 @@ public interface ISysUserService extends IService<SysUser> {
      */
     public SysUser checkTelephoneExists(String telephone);
 
+//    public SysUser getUserByTelephone(String telephone);
+
     public SysUser getUserByTelephone(String telephone);
+
 
 }

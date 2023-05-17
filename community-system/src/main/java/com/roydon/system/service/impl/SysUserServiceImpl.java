@@ -505,8 +505,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public SysUser getUserByTelephone(String telephone) {
-        LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(SysUser::getPhonenumber, telephone);
-        return getOne(queryWrapper);
+        return userMapper.selectUserByTelephone(telephone);
     }
 }

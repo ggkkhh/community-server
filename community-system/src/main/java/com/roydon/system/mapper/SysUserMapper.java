@@ -45,6 +45,14 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
     public SysUser selectUserByUserName(String userName);
 
     /**
+     * 通过电话查询用户
+     *
+     * @param telephone
+     * @return 用户对象信息
+     */
+    public SysUser selectUserByTelephone(String telephone);
+
+    /**
      * 通过用户ID查询用户
      *
      * @param userId 用户ID
