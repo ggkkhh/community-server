@@ -13,28 +13,28 @@ import java.util.Map;
  **/
 public enum NewsType {
 
-    FINANCE(509, "财经"),
-    SCIENCE(510, "科技"),
-    MILITARY(511, "军事"),
-    FASHION(512, "时尚"),
-    LOF(514, "股票"),
-    HEALTH(516, "健康"),
-    REVIEW(518, "要闻"),
-    SPORT(519, "体育"),
-    ENTERTAINMENT(520, "娱乐"),
-    HEADLINE(521, "头条"),
-    HOTSPOT(525, "热点");
+    FINANCE("509", "财经"),
+    SCIENCE("510", "科技"),
+    MILITARY("511", "军事"),
+    FASHION("512", "时尚"),
+    LOF("514", "股票"),
+    HEALTH("516", "健康"),
+    REVIEW("518", "要闻"),
+    SPORT("519", "体育"),
+    ENTERTAINMENT("520", "娱乐"),
+    HEADLINE("521", "头条"),
+    HOTSPOT("525", "热点");
 
-    private final Integer typeId;
+    private final String typeId;
     private final String typeName;
-    private static final Map<Integer, NewsType> ENUM_MAP = new HashMap();
+    private static final Map<String, NewsType> ENUM_MAP = new HashMap();
 
-    NewsType(Integer typeId, String typeName) {
+    NewsType(String typeId, String typeName) {
         this.typeId = typeId;
         this.typeName = typeName;
     }
 
-    public Integer getTypeId() {
+    public String getTypeId() {
         return typeId;
     }
 
@@ -42,7 +42,7 @@ public enum NewsType {
         return typeName;
     }
 
-    public static NewsType fromValue(int valueType) {
+    public static NewsType fromValue(String valueType) {
         NewsType enm = (NewsType) ENUM_MAP.get(valueType);
         return enm;
     }
@@ -54,7 +54,7 @@ public enum NewsType {
 
             for (int var3 = 0; var3 < var2; ++var3) {
                 NewsType enm = var1[var3];
-                int key = enm.getTypeId();
+                String key = enm.getTypeId();
                 NewsType old = (NewsType) ENUM_MAP.put(key, enm);
                 if (old != null) {
                     throw new BaseException("Repeated value:" + old.name());
