@@ -25,7 +25,7 @@ public class AppNews extends BaseEntity implements Serializable {
 
     private String source;
 
-    private Integer newsType;
+    private String newsType;
 
     private String thereNewsId;
 
