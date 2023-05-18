@@ -21,7 +21,7 @@ public class NewsConfig {
     @Value("${roll.baseUrl}")
     private String baseUrl;
 
-    public String getNewsListUrl(Integer typeId, Integer page) {
+    public String getNewsListUrl(String typeId, Integer page) {
         return baseUrl + "list?typeId=" + typeId + "&page=" + page + "&app_id=" + appid + "&app_secret=" + appSecret;
     }
 
