@@ -9,6 +9,7 @@ import com.roydon.business.news.service.AppNewsService;
 import com.roydon.common.utils.StringUtil;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -44,6 +45,17 @@ public class AppNewsServiceImpl extends ServiceImpl<AppNewsMapper, AppNews> impl
         updateWrapper.eq(AppNews::getNewsId, appNews.getNewsId()).set(AppNews::getShowInApp, appNews.getShowInApp());
         return update(updateWrapper);
     }
+
+    @Override
+    public boolean removeNewsByIds(String[] newsIds) {
+        return removeBatchByIds(Arrays.asList(newsIds));
+    }
+
+    @Override
+    public boolean editNews(AppNews appNews) {
+        return updateById(appNews);
+    }
+
 }
 
 

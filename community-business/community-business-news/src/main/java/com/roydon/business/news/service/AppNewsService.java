@@ -18,4 +18,8 @@ public interface AppNewsService extends IService<AppNews> {
 
     boolean changeNewsStatus(AppNews appNews);
 
+    boolean removeNewsByIds(String[] newsIds);
+
+    boolean editNews(AppNews appNews);
+
 }
