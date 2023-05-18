@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * GetNewsService
@@ -39,7 +40,8 @@ public class GetNewsService {
     private AppNewsService appNewsService;
 
     public void getNewsList() {
-        List<Integer> typeIdList = getTypeIdList();
+        List<String> typeIdList = getTypeIdList();
+//        List<Integer> collect = typeIdList.stream().map(t -> Integer.valueOf(t)).collect(Collectors.toList());
         typeIdList.forEach(t -> {
             log.warn("开始获取新闻类型为[{}]的新闻！", t);
             try {
@@ -141,8 +143,8 @@ public class GetNewsService {
 
     }
 
-    public List<Integer> getTypeIdList() {
-        List<Integer> values = new ArrayList<>();
+    public List<String> getTypeIdList() {
+        List<String> values = new ArrayList<>();
         for (NewsType newsType : NewsType.values()) {
             values.add(newsType.getTypeId());
         }
