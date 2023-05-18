@@ -173,7 +173,7 @@ public class SysLoginService {
         } catch (Exception e) {
             if (e instanceof BadCredentialsException) {
                 // 异步记录日志
-                AsyncManager.me().execute(AsyncFactory.recordLogininfor(telephone, Constants.LOGIN_FAIL, MessageUtils.message("user.password.not.match")));
+                AsyncManager.me().execute(AsyncFactory.recordLogininfor(telephone, Constants.LOGIN_FAIL, MessageUtils.message("user.smsLogin.error")));
                 throw new UserPasswordNotMatchException();
             } else {
                 AsyncManager.me().execute(AsyncFactory.recordLogininfor(telephone, Constants.LOGIN_FAIL, e.getMessage()));
@@ -182,7 +182,7 @@ public class SysLoginService {
         } finally {
             AuthenticationContextHolder.clearContext();
         }
-        AsyncManager.me().execute(AsyncFactory.recordLogininfor(telephone, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success")));
+        AsyncManager.me().execute(AsyncFactory.recordLogininfor(telephone, Constants.LOGIN_SUCCESS, MessageUtils.message("user.smsLogin.success")));
 
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         // 记录登录信息，修改用户表，添加登录IP、登录时间
