@@ -98,8 +98,7 @@ public class GetNewsService {
                     images.forEach(i -> {
                         String position = i.getPosition();
                         String img = "<img class=\"newsDetails-img\" src=\"" + i.getImgSrc() + "\" alt=\"图片加载失败\">";
-//                    replace = content.replace(position.toString(), img.toString());
-                        // TODO: 将 position 和 img 存储到 map 或其他数据结构中
+                        //  将 position 和 img 存储到map
                         map.put(position, img);
                     });
                     for (Map.Entry<String, String> entry : map.entrySet()) {
