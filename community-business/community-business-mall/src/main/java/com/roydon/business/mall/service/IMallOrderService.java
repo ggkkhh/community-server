@@ -1,6 +1,6 @@
-package com.roydon.business.news.service;
+package com.roydon.business.mall.service;
 
-import com.roydon.business.news.entity.MallOrder;
+import com.roydon.business.mall.domain.MallOrder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
@@ -8,7 +8,7 @@ import org.springframework.data.domain.PageRequest;
  * (MallOrder)表服务接口
  *
  * @author roydon
- * @since 2023-05-18 23:06:30
+ * @since 2023-05-18 23:14:11
  */
 public interface IMallOrderService {
 

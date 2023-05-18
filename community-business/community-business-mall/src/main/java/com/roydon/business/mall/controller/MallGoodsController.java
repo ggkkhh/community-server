@@ -1,7 +1,7 @@
-package com.roydon.business.news.controller;
+package com.roydon.business.mall.controller;
 
-import com.roydon.business.news.entity.MallGoods;
-import com.roydon.business.news.service.IMallGoodsService;
+import com.roydon.business.mall.domain.MallGoods;
+import com.roydon.business.mall.service.IMallGoodsService;
 import com.roydon.common.core.domain.AjaxResult;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +12,7 @@ import javax.annotation.Resource;
  * (MallGoods)表控制层
  *
  * @author roydon
- * @since 2023-05-18 23:04:33
+ * @since 2023-05-18 23:14:18
  */
 @RestController
 @RequestMapping("/app/mallGoods")

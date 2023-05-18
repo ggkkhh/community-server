@@ -1,8 +1,8 @@
-package com.roydon.business.news.service.impl;
+package com.roydon.business.mall.service.impl;
 
-import com.roydon.business.news.entity.MallOrder;
-import com.roydon.business.news.mapper.MallOrderMapper;
-import com.roydon.business.news.service.IMallOrderService;
+import com.roydon.business.mall.domain.MallOrder;
+import com.roydon.business.mall.mapper.MallOrderMapper;
+import com.roydon.business.mall.service.IMallOrderService;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -14,7 +14,7 @@ import javax.annotation.Resource;
  * (MallOrder)表服务实现类
  *
  * @author roydon
- * @since 2023-05-18 23:06:30
+ * @since 2023-05-18 23:14:11
  */
 @Service("mallOrderService")
 public class MallOrderServiceImpl implements IMallOrderService {

@@ -1,12 +1,12 @@
-package com.roydon.business.news.service.impl;
+package com.roydon.business.mall.service.impl;
 
-import com.roydon.business.news.entity.MallGoods;
-import com.roydon.business.news.mapper.MallGoodsMapper;
-import com.roydon.business.news.service.IMallGoodsService;
+import com.roydon.business.mall.domain.MallGoods;
+import com.roydon.business.mall.mapper.MallGoodsMapper;
+import com.roydon.business.mall.service.IMallGoodsService;
+import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
@@ -14,7 +14,7 @@ import javax.annotation.Resource;
  * (MallGoods)表服务实现类
  *
  * @author roydon
- * @since 2023-05-18 23:04:35
+ * @since 2023-05-18 23:14:18
  */
 @Service("mallGoodsService")
 public class MallGoodsServiceImpl implements IMallGoodsService {

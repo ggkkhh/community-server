@@ -1,4 +1,4 @@
-package com.roydon.business.news.entity;
+package com.roydon.business.mall.domain;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -11,12 +11,12 @@ import java.time.LocalDateTime;
  * (MallGoods)实体类
  *
  * @author roydon
- * @since 2023-05-18 23:04:34
+ * @since 2023-05-18 23:14:18
  */
 @Data
 @TableName("mall_goods")
 public class MallGoods implements Serializable {
-    private static final long serialVersionUID = -95944727105266599L;
+    private static final long serialVersionUID = -38678073295414031L;
     /**
      * 商品id
      */
