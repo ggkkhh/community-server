@@ -1,4 +1,4 @@
-package com.roydon.business.mall.entity;
+package com.roydon.business.news.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;

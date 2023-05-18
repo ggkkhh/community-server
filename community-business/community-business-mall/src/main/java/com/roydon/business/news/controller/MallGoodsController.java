@@ -1,7 +1,7 @@
-package com.roydon.business.mall.controller;
+package com.roydon.business.news.controller;
 
-import com.roydon.business.mall.entity.MallGoods;
-import com.roydon.business.mall.service.IMallGoodsService;
+import com.roydon.business.news.entity.MallGoods;
+import com.roydon.business.news.service.IMallGoodsService;
 import com.roydon.common.core.domain.AjaxResult;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;

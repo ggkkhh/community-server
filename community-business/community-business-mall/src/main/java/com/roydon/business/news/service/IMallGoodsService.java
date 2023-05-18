@@ -1,6 +1,6 @@
-package com.roydon.business.mall.service;
+package com.roydon.business.news.service;
 
-import com.roydon.business.mall.entity.MallGoods;
+import com.roydon.business.news.entity.MallGoods;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 

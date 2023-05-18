@@ -1,8 +1,8 @@
-package com.roydon.business.mall.service.impl;
+package com.roydon.business.news.service.impl;
 
-import com.roydon.business.mall.entity.MallGoods;
-import com.roydon.business.mall.mapper.MallGoodsMapper;
-import com.roydon.business.mall.service.IMallGoodsService;
+import com.roydon.business.news.entity.MallGoods;
+import com.roydon.business.news.mapper.MallGoodsMapper;
+import com.roydon.business.news.service.IMallGoodsService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;

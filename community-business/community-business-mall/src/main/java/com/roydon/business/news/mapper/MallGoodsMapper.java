@@ -1,7 +1,7 @@
-package com.roydon.business.mall.mapper;
+package com.roydon.business.news.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.roydon.business.mall.entity.MallGoods;
+import com.roydon.business.news.entity.MallGoods;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Pageable;
 
