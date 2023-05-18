@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * GetNewsService
@@ -95,11 +94,10 @@ public class GetNewsService {
                     an.setPostTime(d.getPostTime());
                     List<Images> images = newsDetails.getImages();
                     String content = newsDetails.getContent();
-                    String replacedContent = null;
                     Map<String, String> map = new HashMap<>();
                     images.forEach(i -> {
                         String position = i.getPosition();
-                        String img = "<img class=\"newsDetails-img\" src=\"" + i.getImgSrc() + "\" alt=\"图片加载失败\">";
+                        String img = "<img class=\"newsDetails-img\" src=\"" + i.getImgSrc() + "\" alt=\"图片大小\">";
                         //  将 position 和 img 存储到map
                         map.put(position, img);
                     });
