@@ -6,5 +6,5 @@ package com.roydon.business.news.task;
  * @AUTHOR: roydon
  * @DATE: 2023/5/21
  **/
-public class deleteNewsTask {
+public class DeleteNewsTask {
 }

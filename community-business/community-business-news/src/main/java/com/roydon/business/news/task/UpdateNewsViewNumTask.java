@@ -21,9 +21,9 @@ import java.util.stream.Collectors;
  * @DATE: 2023/5/21
  **/
 @Component
-public class updateNewsViewNumTask {
+public class UpdateNewsViewNumTask {
 
-    private static final Logger log = LoggerFactory.getLogger(updateNewsViewNumTask.class);
+    private static final Logger log = LoggerFactory.getLogger(UpdateNewsViewNumTask.class);
 
     @Resource
     private RedisCache redisCache;
