@@ -39,10 +39,8 @@ public class AppNews extends BaseEntity implements Serializable {
 
     private String showInApp;
 
-    private LocalDateTime createTime;
-
-    private LocalDateTime updateTime;
-
     private String delFlag;
+
+    private Integer viewNum;
 
 }

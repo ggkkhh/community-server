@@ -48,8 +48,8 @@ public class GetNewsService {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            // 爬取十一页数据
-            for (int page = 1; page < 11; page++) {
+            // 爬取5页数据
+            for (int page = 1; page < 6; page++) {
                 try {
                     Thread.sleep(2000L);
                 } catch (InterruptedException e) {

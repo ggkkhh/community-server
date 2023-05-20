@@ -10,6 +10,7 @@ import com.roydon.common.enums.BusinessType;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -38,9 +39,12 @@ public class NewsController extends BaseController {
     }
 
     @PreAuthorize("@ss.hasPermi('app:news:query')")
+    @Transactional
     @GetMapping("/{newsId}")
     public AjaxResult getDetails(@PathVariable(value = "newsId") String newsId) {
         AppNews appNews = appNewsService.getNewsDetails(newsId);
+        // 新闻阅读量加一
+        appNewsService.viewNumIncrease(newsId);
         return AjaxResult.success(appNews);
     }
 

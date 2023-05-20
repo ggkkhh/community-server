@@ -48,4 +48,11 @@ public class CacheConstants {
      * aliyun用户登录短信验证码key
      */
     public static final String ALIYUN_SMS_LOGIN_KEY = "sms:login_captcha:";
+
+    /**
+     * 新闻阅读量加一的业务key
+     */
+    public static final String NEWS_VIEW_NUM_KEY = "news:view_num";
+
+
 }
