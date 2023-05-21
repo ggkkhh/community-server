@@ -11,6 +11,7 @@ import com.roydon.common.core.redis.RedisCache;
 import com.roydon.common.utils.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -33,6 +34,7 @@ public class AppNewsServiceImpl extends ServiceImpl<AppNewsMapper, AppNews> impl
     @Resource
     private RedisCache redisCache;
 
+    @Async
     @PostConstruct
     public void init() {
         log.info("新闻浏览量写入缓存开始==>");

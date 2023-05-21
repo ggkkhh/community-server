@@ -48,7 +48,7 @@ public class MallGoodsServiceImpl extends ServiceImpl<MallGoodsMapper, MallGoods
     public IPage<MallGoods> queryPage(MallGoodsDTO mallGoodsDTO) {
         LambdaQueryWrapper<MallGoods> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.like(StringUtil.isNotEmpty(mallGoodsDTO.getGoodsTitle()), MallGoods::getGoodsTitle, mallGoodsDTO.getGoodsTitle());
-
+        queryWrapper.eq(StringUtil.isNotEmpty(mallGoodsDTO.getStatus()), MallGoods::getStatus, mallGoodsDTO.getStatus());
         return page(new Page<>(mallGoodsDTO.getPageNum(), mallGoodsDTO.getPageSize()), queryWrapper);
     }
 
