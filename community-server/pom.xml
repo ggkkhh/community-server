@@ -19,6 +19,13 @@
 
     <dependencies>
 
+        <!-- 单元管理 -->
+        <dependency>
+            <groupId>com.roydon</groupId>
+            <artifactId>community-business-unit</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <!-- 后台 -->
         <dependency>
             <groupId>com.roydon</groupId>
             <artifactId>community-business-admin</artifactId>

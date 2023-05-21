@@ -17,9 +17,7 @@ public class CreateAndUpdateMetaObjectHandler implements MetaObjectHandler {
         Object createTime = this.getFieldValByName("createTime", metaObject);
         if (createBy == null) {
             createBy = SecurityUtils.getUsername();
-            if (createBy != null) {
-                this.setFieldValByName("createBy", createBy, metaObject);
-            }
+            this.setFieldValByName("createBy", createBy, metaObject);
         }
         if (createTime == null) {
             createTime = new Date();
@@ -31,9 +29,7 @@ public class CreateAndUpdateMetaObjectHandler implements MetaObjectHandler {
         Object updateTime = this.getFieldValByName("updateTime", metaObject);
         if (updateBy == null) {
             updateBy = createBy;
-            if (updateBy != null) {
-                this.setFieldValByName("updateBy", updateBy, metaObject);
-            }
+            this.setFieldValByName("updateBy", updateBy, metaObject);
         }
         if (updateTime == null) {
             updateTime = createTime;
@@ -49,9 +45,7 @@ public class CreateAndUpdateMetaObjectHandler implements MetaObjectHandler {
         Object updateTime = this.getFieldValByName("updateTime", metaObject);
         if (updateBy == null) {
             updateBy = SecurityUtils.getUsername();
-            if (updateBy != null) {
-                this.setFieldValByName("updateBy", updateBy, metaObject);
-            }
+            this.setFieldValByName("updateBy", updateBy, metaObject);
         }
         if (updateTime == null) {
             updateTime = new Date();

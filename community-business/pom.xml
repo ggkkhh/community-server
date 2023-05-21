@@ -17,6 +17,7 @@
         <module>community-business-oss</module>
         <module>community-business-mall</module>
         <module>community-business-app</module>
+        <module>community-business-unit</module>
     </modules>
 
     <properties>

@@ -1,6 +1,5 @@
 package com.roydon.common.core.domain;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
@@ -29,7 +28,7 @@ public class BaseEntity implements Serializable {
      * 创建者
      */
     @ApiModelProperty("创建者")
-    @TableField(fill = FieldFill.INSERT)
+//    @TableField(fill = FieldFill.INSERT)
     private String createBy;
 
     /**
@@ -37,14 +36,14 @@ public class BaseEntity implements Serializable {
      */
     @ApiModelProperty("创建时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @TableField(fill = FieldFill.INSERT)
+//    @TableField(fill = FieldFill.INSERT)
     private Date createTime;
 
     /**
      * 更新者
      */
     @ApiModelProperty("更新者")
-    @TableField(fill = FieldFill.INSERT_UPDATE)
+//    @TableField(fill = FieldFill.INSERT_UPDATE)
     private String updateBy;
 
     /**
@@ -52,7 +51,7 @@ public class BaseEntity implements Serializable {
      */
     @ApiModelProperty("更新时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @TableField(fill = FieldFill.INSERT_UPDATE)
+//    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
 
     /**
