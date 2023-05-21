@@ -92,6 +92,7 @@ public class GetNewsService {
                     an.setThereNewsId(d.getNewsId());
                     an.setDigest(d.getDigest());
                     an.setPostTime(d.getPostTime());
+                    an.setViewNum(1);
                     List<Images> images = newsDetails.getImages();
                     String content = newsDetails.getContent();
                     Map<String, String> map = new HashMap<>();
