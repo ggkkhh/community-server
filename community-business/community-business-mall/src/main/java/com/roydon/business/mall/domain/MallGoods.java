@@ -53,7 +53,7 @@ public class MallGoods implements Serializable {
     /**
      * 浏览数
      */
-    private String view;
+    private Integer viewNum;
     /**
      * 创建时间
      */
