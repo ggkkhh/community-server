@@ -31,7 +31,7 @@ public class UpdateNewsViewNumTask {
     @Resource
     private AppNewsService appNewsService;
 
-    @Scheduled(cron = "0/10 * * * * ?")
+    @Scheduled(cron = "* 0/10 * * * ?")
     public void updateViewCount() {
         log.info("开始从redis更新新闻浏览量==>");
         //获取redis中的浏览量

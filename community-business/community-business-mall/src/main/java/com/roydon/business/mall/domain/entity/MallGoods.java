@@ -1,11 +1,14 @@
-package com.roydon.business.mall.domain;
+package com.roydon.business.mall.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * (MallGoods)实体类
@@ -51,18 +54,29 @@ public class MallGoods implements Serializable {
      */
     private Integer stock;
     /**
+     * 是否下架0正常1下架
+     */
+    private String status;
+
+    /**
      * 浏览数
      */
     private Integer viewNum;
     /**
      * 创建时间
      */
-    private LocalDateTime createTime;
+    @TableField(fill = FieldFill.INSERT)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
 
+    @TableField(fill = FieldFill.INSERT)
     private String createBy;
 
-    private LocalDateTime updateTime;
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date updateTime;
 
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private String updateBy;
 
     private String remark;

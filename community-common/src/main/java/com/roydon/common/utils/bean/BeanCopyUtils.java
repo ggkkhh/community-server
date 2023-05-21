@@ -2,6 +2,9 @@ package com.roydon.common.utils.bean;
 
 import com.alibaba.fastjson2.JSON;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * @USER: roydon
  * @DATE: 2023/4/27 9:47
@@ -22,6 +25,10 @@ public class BeanCopyUtils {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public static <O, V> List<V> copyBeanList(List<O> list, Class<V> clazz) {
+        return list.stream().map(o -> copyBean(o, clazz)).collect(Collectors.toList());
     }
 
     /**

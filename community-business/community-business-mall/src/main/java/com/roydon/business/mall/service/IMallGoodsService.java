@@ -1,8 +1,9 @@
 package com.roydon.business.mall.service;
 
-import com.roydon.business.mall.domain.MallGoods;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.roydon.business.mall.domain.entity.MallGoods;
+import com.roydon.business.mall.domain.dto.MallGoodsDTO;
 
 /**
  * (MallGoods)表服务接口
@@ -10,7 +11,7 @@ import org.springframework.data.domain.PageRequest;
  * @author roydon
  * @since 2023-05-18 23:14:18
  */
-public interface IMallGoodsService {
+public interface IMallGoodsService extends IService<MallGoods> {
 
     /**
      * 通过ID查询单条数据
@@ -23,11 +24,10 @@ public interface IMallGoodsService {
     /**
      * 分页查询
      *
-     * @param mallGoods 筛选条件
-     * @param pageRequest      分页对象
-     * @return 查询结果
+     * @param mallGoodsDTO
+     * @return
      */
-    Page<MallGoods> queryByPage(MallGoods mallGoods, PageRequest pageRequest);
+    IPage<MallGoods> queryPage(MallGoodsDTO mallGoodsDTO);
 
     /**
      * 新增数据

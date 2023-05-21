@@ -1,6 +1,6 @@
 package com.roydon.business.mall.controller;
 
-import com.roydon.business.mall.domain.MallUserCart;
+import com.roydon.business.mall.domain.entity.MallUserCart;
 import com.roydon.business.mall.service.IMallUserCartService;
 import com.roydon.common.core.domain.AjaxResult;
 import org.springframework.data.domain.PageRequest;

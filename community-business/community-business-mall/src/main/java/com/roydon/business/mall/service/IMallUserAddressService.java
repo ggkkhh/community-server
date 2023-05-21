@@ -1,6 +1,6 @@
 package com.roydon.business.mall.service;
 
-import com.roydon.business.mall.domain.MallUserAddress;
+import com.roydon.business.mall.domain.entity.MallUserAddress;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 

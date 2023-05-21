@@ -16,12 +16,10 @@ public class CreateAndUpdateMetaObjectHandler implements MetaObjectHandler {
         Object createBy = this.getFieldValByName("createBy", metaObject);
         Object createTime = this.getFieldValByName("createTime", metaObject);
         if (createBy == null) {
-            try {
-                createBy = SecurityUtils.getUsername();
-            }catch (Exception e){
-                e.printStackTrace();
+            createBy = SecurityUtils.getUsername();
+            if (createBy != null) {
+                this.setFieldValByName("createBy", createBy, metaObject);
             }
-            this.setFieldValByName("createBy", createBy, metaObject);
         }
         if (createTime == null) {
             createTime = new Date();
@@ -33,7 +31,9 @@ public class CreateAndUpdateMetaObjectHandler implements MetaObjectHandler {
         Object updateTime = this.getFieldValByName("updateTime", metaObject);
         if (updateBy == null) {
             updateBy = createBy;
-            this.setFieldValByName("updateBy", updateBy, metaObject);
+            if (updateBy != null) {
+                this.setFieldValByName("updateBy", updateBy, metaObject);
+            }
         }
         if (updateTime == null) {
             updateTime = createTime;
@@ -48,12 +48,10 @@ public class CreateAndUpdateMetaObjectHandler implements MetaObjectHandler {
         Object updateBy = this.getFieldValByName("updateBy", metaObject);
         Object updateTime = this.getFieldValByName("updateTime", metaObject);
         if (updateBy == null) {
-            try {
-                updateBy = SecurityUtils.getUsername();
-            }catch (Exception e){
-                e.printStackTrace();
+            updateBy = SecurityUtils.getUsername();
+            if (updateBy != null) {
+                this.setFieldValByName("updateBy", updateBy, metaObject);
             }
-            this.setFieldValByName("updateBy", updateBy, metaObject);
         }
         if (updateTime == null) {
             updateTime = new Date();

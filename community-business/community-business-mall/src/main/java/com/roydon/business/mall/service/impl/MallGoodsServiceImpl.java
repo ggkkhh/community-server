@@ -1,12 +1,18 @@
 package com.roydon.business.mall.service.impl;
 
-import com.roydon.business.mall.domain.MallGoods;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.roydon.business.mall.domain.entity.MallGoods;
+import com.roydon.business.mall.domain.dto.MallGoodsDTO;
 import com.roydon.business.mall.mapper.MallGoodsMapper;
 import com.roydon.business.mall.service.IMallGoodsService;
+import com.roydon.common.core.domain.model.LoginUser;
+import com.roydon.common.utils.SecurityUtils;
+import com.roydon.common.utils.StringUtil;
+import com.roydon.common.utils.uuid.IdUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
 
@@ -17,7 +23,7 @@ import javax.annotation.Resource;
  * @since 2023-05-18 23:14:18
  */
 @Service("mallGoodsService")
-public class MallGoodsServiceImpl implements IMallGoodsService {
+public class MallGoodsServiceImpl extends ServiceImpl<MallGoodsMapper, MallGoods> implements IMallGoodsService {
     @Resource
     private MallGoodsMapper mallGoodsMapper;
 
@@ -35,14 +41,15 @@ public class MallGoodsServiceImpl implements IMallGoodsService {
     /**
      * 分页查询
      *
-     * @param mallGoods 筛选条件
-     * @param pageRequest      分页对象
+     * @param mallGoodsDTO 筛选条件
      * @return 查询结果
      */
     @Override
-    public Page<MallGoods> queryByPage(MallGoods mallGoods, PageRequest pageRequest) {
-        long total = this.mallGoodsMapper.count(mallGoods);
-        return new PageImpl<>(this.mallGoodsMapper.queryAllByLimit(mallGoods, pageRequest), pageRequest, total);
+    public IPage<MallGoods> queryPage(MallGoodsDTO mallGoodsDTO) {
+        LambdaQueryWrapper<MallGoods> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.like(StringUtil.isNotEmpty(mallGoodsDTO.getGoodsTitle()), MallGoods::getGoodsTitle, mallGoodsDTO.getGoodsTitle());
+
+        return page(new Page<>(mallGoodsDTO.getPageNum(), mallGoodsDTO.getPageSize()), queryWrapper);
     }
 
     /**
@@ -53,6 +60,11 @@ public class MallGoodsServiceImpl implements IMallGoodsService {
      */
     @Override
     public MallGoods insert(MallGoods mallGoods) {
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        mallGoods.setGoodsId(IdUtils.fastSimpleUUID());
+        mallGoods.setUserId(loginUser.getUserId());
+        mallGoods.setDeptId(loginUser.getDeptId());
+        mallGoods.setViewNum(0);
         this.mallGoodsMapper.insert(mallGoods);
         return mallGoods;
     }

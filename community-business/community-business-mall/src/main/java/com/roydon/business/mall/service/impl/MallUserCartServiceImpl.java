@@ -1,6 +1,6 @@
 package com.roydon.business.mall.service.impl;
 
-import com.roydon.business.mall.domain.MallUserCart;
+import com.roydon.business.mall.domain.entity.MallUserCart;
 import com.roydon.business.mall.mapper.MallUserCartMapper;
 import com.roydon.business.mall.service.IMallUserCartService;
 import org.springframework.stereotype.Service;
