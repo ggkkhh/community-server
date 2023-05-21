@@ -22,14 +22,11 @@ public class MallOrder implements Serializable {
     private String orderId;
 
     private String userId;
+    private String userName;
     /**
      * 收货地址id
      */
     private String addressId;
-    /**
-     * 关联订单商品
-     */
-    private String orderGoodsId;
     /**
      * 实际付款总价
      */
@@ -48,7 +45,6 @@ public class MallOrder implements Serializable {
     private String updateBy;
 
     private String remark;
-
 
 }
 

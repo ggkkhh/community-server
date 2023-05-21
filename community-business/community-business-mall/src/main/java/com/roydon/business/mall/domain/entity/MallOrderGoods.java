@@ -35,6 +35,7 @@ public class MallOrderGoods implements Serializable {
      * 数量
      */
     private Integer count;
+    private Double totalPrice;
     /**
      * 0未收货1已收货
      */
