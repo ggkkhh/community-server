@@ -1,5 +1,6 @@
 package com.roydon.business.mall.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.roydon.business.mall.domain.entity.MallUserAddress;
 import com.roydon.business.mall.mapper.MallUserAddressMapper;
@@ -29,8 +30,10 @@ public class MallUserAddressServiceImpl extends ServiceImpl<MallUserAddressMappe
      * @return 实例对象
      */
     @Override
-    public MallUserAddress queryById(String addressId) {
-        return this.mallUserAddressMapper.queryById(addressId);
+    public MallUserAddress getById(String addressId) {
+        LambdaQueryWrapper<MallUserAddress> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(MallUserAddress::getAddressId, addressId);
+        return getOne(queryWrapper);
     }
 
     /**
@@ -67,7 +70,7 @@ public class MallUserAddressServiceImpl extends ServiceImpl<MallUserAddressMappe
     @Override
     public MallUserAddress update(MallUserAddress mallUserAddress) {
         this.mallUserAddressMapper.update(mallUserAddress);
-        return this.queryById(mallUserAddress.getAddressId());
+        return this.getById(mallUserAddress.getAddressId());
     }
 
     /**

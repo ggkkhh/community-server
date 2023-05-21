@@ -39,8 +39,8 @@ public class MallOrderController {
     /**
      * 分页查询
      *
-     * @param mallOrderDTO
-     * @return
+     * @param mallOrderDTO mallOrderDTO
+     * @return vo
      */
     @PreAuthorize("@ss.hasPermi('mall:order:list')")
     @PostMapping("/list")
@@ -54,7 +54,7 @@ public class MallOrderController {
             // 订单商品
             mallOrderVO.setMallOrderGoodsVOList(oneOrderGoodsByOrderId);
             // 收货地址
-            mallOrderVO.setMallUserAddress(mallUserAddressService.queryById(r.getAddressId()));
+            mallOrderVO.setMallUserAddress(mallUserAddressService.getById(r.getAddressId()));
             mallOrderVOList.add(mallOrderVO);
         });
         return AjaxResult.genTableData(mallOrderVOList, mallOrderIPage.getTotal());

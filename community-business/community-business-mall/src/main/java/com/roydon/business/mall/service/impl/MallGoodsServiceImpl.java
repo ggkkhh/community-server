@@ -34,8 +34,10 @@ public class MallGoodsServiceImpl extends ServiceImpl<MallGoodsMapper, MallGoods
      * @return 实例对象
      */
     @Override
-    public MallGoods queryById(String goodsId) {
-        return this.mallGoodsMapper.queryById(goodsId);
+    public MallGoods getById(String goodsId) {
+        LambdaQueryWrapper<MallGoods> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(MallGoods::getGoodsId, goodsId);
+        return getOne(queryWrapper);
     }
 
     /**
@@ -78,7 +80,7 @@ public class MallGoodsServiceImpl extends ServiceImpl<MallGoodsMapper, MallGoods
     @Override
     public MallGoods update(MallGoods mallGoods) {
         this.mallGoodsMapper.update(mallGoods);
-        return this.queryById(mallGoods.getGoodsId());
+        return this.getById(mallGoods.getGoodsId());
     }
 
     /**

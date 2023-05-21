@@ -98,7 +98,7 @@ public class MallOrderGoodsServiceImpl extends ServiceImpl<MallOrderGoodsMapper,
         List<MallOrderGoodsVO> mallOrderGoodsVOList = new ArrayList<>();
         mallOrderGoodsList.forEach(m -> {
             MallOrderGoodsVO mallOrderGoodsVO = BeanCopyUtils.copyBean(m, MallOrderGoodsVO.class);
-            mallOrderGoodsVO.setMallGoods(mallGoodsService.queryById(m.getGoodsId()));
+            mallOrderGoodsVO.setMallGoods(mallGoodsService.getById(m.getGoodsId()));
             mallOrderGoodsVOList.add(mallOrderGoodsVO);
         });
         return mallOrderGoodsVOList;

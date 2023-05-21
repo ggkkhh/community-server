@@ -41,7 +41,7 @@ public class MallUserAddressController {
      */
     @GetMapping("{id}")
     public AjaxResult queryById(@PathVariable("id") String id) {
-        return AjaxResult.success(this.mallUserAddressService.queryById(id));
+        return AjaxResult.success(this.mallUserAddressService.getById(id));
     }
 
     /**

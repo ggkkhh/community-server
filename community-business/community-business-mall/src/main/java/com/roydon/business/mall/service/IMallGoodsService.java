@@ -19,7 +19,7 @@ public interface IMallGoodsService extends IService<MallGoods> {
      * @param goodsId 主键
      * @return 实例对象
      */
-    MallGoods queryById(String goodsId);
+    MallGoods getById(String goodsId);
 
     /**
      * 分页查询

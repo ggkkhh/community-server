@@ -62,7 +62,7 @@ public class MallGoodsController {
      */
     @GetMapping("{id}")
     public AjaxResult queryById(@PathVariable("id") String id) {
-        return AjaxResult.success(this.mallGoodsService.queryById(id));
+        return AjaxResult.success(this.mallGoodsService.getById(id));
     }
 
     /**

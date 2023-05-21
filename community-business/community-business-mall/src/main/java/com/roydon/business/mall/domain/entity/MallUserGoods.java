@@ -28,6 +28,8 @@ public class MallUserGoods implements Serializable {
      */
     private String goodsId;
 
+    private String delFlag;
+
 
 }
 

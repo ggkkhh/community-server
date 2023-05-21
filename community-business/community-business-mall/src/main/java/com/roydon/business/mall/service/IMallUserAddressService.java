@@ -19,7 +19,7 @@ public interface IMallUserAddressService extends IService<MallUserAddress> {
      * @param addressId 主键
      * @return 实例对象
      */
-    MallUserAddress queryById(String addressId);
+    MallUserAddress getById(String addressId);
 
     /**
      * 分页查询
