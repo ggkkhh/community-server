@@ -1,5 +1,6 @@
 package com.roydon.business.mall.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.roydon.business.mall.domain.entity.MallUserAddress;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -10,7 +11,7 @@ import org.springframework.data.domain.PageRequest;
  * @author roydon
  * @since 2023-05-18 23:14:25
  */
-public interface IMallUserAddressService {
+public interface IMallUserAddressService extends IService<MallUserAddress> {
 
     /**
      * 通过ID查询单条数据

@@ -7,6 +7,7 @@ import com.roydon.business.mall.domain.vo.MallOrderGoodsVO;
 import com.roydon.business.mall.domain.vo.MallOrderVO;
 import com.roydon.business.mall.service.IMallOrderGoodsService;
 import com.roydon.business.mall.service.IMallOrderService;
+import com.roydon.business.mall.service.IMallUserAddressService;
 import com.roydon.common.core.domain.AjaxResult;
 import com.roydon.common.utils.bean.BeanCopyUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -32,6 +33,9 @@ public class MallOrderController {
     @Resource
     private IMallOrderGoodsService mallOrderGoodsService;
 
+    @Resource
+    private IMallUserAddressService mallUserAddressService;
+
     /**
      * 分页查询
      *
@@ -44,10 +48,13 @@ public class MallOrderController {
         IPage<MallOrder> mallOrderIPage = mallOrderService.queryPage(mallOrderDTO);
         List<MallOrder> records = mallOrderIPage.getRecords();
         List<MallOrderVO> mallOrderVOList = new ArrayList<>();
-        records.forEach(r->{
+        records.forEach(r -> {
             List<MallOrderGoodsVO> oneOrderGoodsByOrderId = mallOrderGoodsService.getOneOrderGoodsByOrderId(r.getOrderId());
             MallOrderVO mallOrderVO = BeanCopyUtils.copyBean(r, MallOrderVO.class);
+            // 订单商品
             mallOrderVO.setMallOrderGoodsVOList(oneOrderGoodsByOrderId);
+            // 收货地址
+            mallOrderVO.setMallUserAddress(mallUserAddressService.queryById(r.getAddressId()));
             mallOrderVOList.add(mallOrderVO);
         });
         return AjaxResult.genTableData(mallOrderVOList, mallOrderIPage.getTotal());

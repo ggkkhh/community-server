@@ -1,12 +1,13 @@
 package com.roydon.business.mall.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.roydon.business.mall.domain.entity.MallUserAddress;
 import com.roydon.business.mall.mapper.MallUserAddressMapper;
 import com.roydon.business.mall.service.IMallUserAddressService;
-import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
@@ -17,7 +18,7 @@ import javax.annotation.Resource;
  * @since 2023-05-18 23:14:25
  */
 @Service("mallUserAddressService")
-public class MallUserAddressServiceImpl implements IMallUserAddressService {
+public class MallUserAddressServiceImpl extends ServiceImpl<MallUserAddressMapper, MallUserAddress> implements IMallUserAddressService {
     @Resource
     private MallUserAddressMapper mallUserAddressMapper;
 

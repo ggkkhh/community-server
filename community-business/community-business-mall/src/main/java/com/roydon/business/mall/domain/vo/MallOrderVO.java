@@ -1,6 +1,7 @@
 package com.roydon.business.mall.domain.vo;
 
 import com.roydon.business.mall.domain.entity.MallOrder;
+import com.roydon.business.mall.domain.entity.MallUserAddress;
 import lombok.Data;
 
 import java.util.List;
@@ -13,6 +14,8 @@ import java.util.List;
  **/
 @Data
 public class MallOrderVO extends MallOrder {
+
+    private MallUserAddress mallUserAddress;
 
     private List<MallOrderGoodsVO> mallOrderGoodsVOList;
 

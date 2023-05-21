@@ -38,7 +38,7 @@ public class MallOrderServiceImpl extends ServiceImpl<MallOrderMapper, MallOrder
     /**
      * 分页查询
      *
-     * @param mallOrderDTO 筛选条件：1.用户名称2.支付状态
+     * @param mallOrderDTO 筛选条件：1.用户账号2.支付状态
      * @return 查询结果
      */
     @Override
