@@ -1,12 +1,20 @@
 package com.roydon.business.mall.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.roydon.business.mall.domain.dto.MallOrderDTO;
 import com.roydon.business.mall.domain.entity.MallOrder;
+import com.roydon.business.mall.domain.vo.MallOrderGoodsVO;
+import com.roydon.business.mall.domain.vo.MallOrderVO;
+import com.roydon.business.mall.service.IMallOrderGoodsService;
 import com.roydon.business.mall.service.IMallOrderService;
 import com.roydon.common.core.domain.AjaxResult;
-import org.springframework.data.domain.PageRequest;
+import com.roydon.common.utils.bean.BeanCopyUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * (MallOrder)表控制层
@@ -21,16 +29,28 @@ public class MallOrderController {
     @Resource
     private IMallOrderService mallOrderService;
 
+    @Resource
+    private IMallOrderGoodsService mallOrderGoodsService;
+
     /**
      * 分页查询
      *
-     * @param mallOrder 筛选条件
-     * @param pageRequest      分页对象
-     * @return 查询结果
+     * @param mallOrderDTO
+     * @return
      */
-    @GetMapping
-    public AjaxResult queryByPage(MallOrder mallOrder, PageRequest pageRequest) {
-        return AjaxResult.success(this.mallOrderService.queryByPage(mallOrder, pageRequest));
+    @PreAuthorize("@ss.hasPermi('mall:order:list')")
+    @PostMapping("/list")
+    public AjaxResult list(@RequestBody MallOrderDTO mallOrderDTO) {
+        IPage<MallOrder> mallOrderIPage = mallOrderService.queryPage(mallOrderDTO);
+        List<MallOrder> records = mallOrderIPage.getRecords();
+        List<MallOrderVO> mallOrderVOList = new ArrayList<>();
+        records.forEach(r->{
+            List<MallOrderGoodsVO> oneOrderGoodsByOrderId = mallOrderGoodsService.getOneOrderGoodsByOrderId(r.getOrderId());
+            MallOrderVO mallOrderVO = BeanCopyUtils.copyBean(r, MallOrderVO.class);
+            mallOrderVO.setMallOrderGoodsVOList(oneOrderGoodsByOrderId);
+            mallOrderVOList.add(mallOrderVO);
+        });
+        return AjaxResult.genTableData(mallOrderVOList, mallOrderIPage.getTotal());
     }
 
     /**

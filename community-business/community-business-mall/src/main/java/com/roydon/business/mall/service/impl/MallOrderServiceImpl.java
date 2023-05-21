@@ -1,12 +1,15 @@
 package com.roydon.business.mall.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.roydon.business.mall.domain.dto.MallOrderDTO;
 import com.roydon.business.mall.domain.entity.MallOrder;
 import com.roydon.business.mall.mapper.MallOrderMapper;
 import com.roydon.business.mall.service.IMallOrderService;
+import com.roydon.common.utils.StringUtil;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.Resource;
 
@@ -17,7 +20,7 @@ import javax.annotation.Resource;
  * @since 2023-05-18 23:14:11
  */
 @Service("mallOrderService")
-public class MallOrderServiceImpl implements IMallOrderService {
+public class MallOrderServiceImpl extends ServiceImpl<MallOrderMapper, MallOrder> implements IMallOrderService {
     @Resource
     private MallOrderMapper mallOrderMapper;
 
@@ -35,14 +38,15 @@ public class MallOrderServiceImpl implements IMallOrderService {
     /**
      * 分页查询
      *
-     * @param mallOrder 筛选条件
-     * @param pageRequest      分页对象
+     * @param mallOrderDTO 筛选条件：1.用户名称2.支付状态
      * @return 查询结果
      */
     @Override
-    public Page<MallOrder> queryByPage(MallOrder mallOrder, PageRequest pageRequest) {
-        long total = this.mallOrderMapper.count(mallOrder);
-        return new PageImpl<>(this.mallOrderMapper.queryAllByLimit(mallOrder, pageRequest), pageRequest, total);
+    public IPage<MallOrder> queryPage(MallOrderDTO mallOrderDTO) {
+        LambdaQueryWrapper<MallOrder> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.like(StringUtil.isNotEmpty(mallOrderDTO.getUserName()), MallOrder::getUserName, mallOrderDTO.getUserName());
+        queryWrapper.eq(StringUtil.isNotEmpty(mallOrderDTO.getPayStatus()), MallOrder::getPayStatus, mallOrderDTO.getPayStatus());
+        return page(new Page<>(mallOrderDTO.getPageNum(), mallOrderDTO.getPageSize()), queryWrapper);
     }
 
     /**
