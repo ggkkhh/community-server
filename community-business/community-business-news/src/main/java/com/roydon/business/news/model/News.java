@@ -2,7 +2,7 @@ package com.roydon.business.news.model;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,7 +19,7 @@ public class News {
     private String source;
     private String newsId;
     private String digest;
-    private LocalDateTime postTime;
+    private Date postTime;
     private String videoList;
 
 }
