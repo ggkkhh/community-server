@@ -6,7 +6,7 @@ import com.roydon.common.core.domain.BaseEntity;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @TableName app_news
@@ -31,7 +31,7 @@ public class AppNews extends BaseEntity implements Serializable {
 
     private String digest;
 
-    private LocalDateTime postTime;
+    private Date postTime;
 
     private String newsContent;
 
