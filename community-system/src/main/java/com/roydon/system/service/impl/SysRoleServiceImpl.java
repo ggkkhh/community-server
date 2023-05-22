@@ -244,9 +244,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     public int authDataScope(SysRole role) {
         // 修改角色信息
         roleMapper.updateRole(role);
-        // 删除角色与部门关联
+        // 删除角色与单元关联
         roleDeptMapper.deleteRoleDeptByRoleId(role.getRoleId());
-        // 新增角色和部门信息（数据权限）
+        // 新增角色和单元信息（数据权限）
         return insertRoleDept(role);
     }
 
@@ -272,13 +272,13 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     }
 
     /**
-     * 新增角色部门信息(数据权限)
+     * 新增角色单元信息(数据权限)
      *
      * @param role 角色对象
      */
     public int insertRoleDept(SysRole role) {
         int rows = 1;
-        // 新增角色与部门（数据权限）管理
+        // 新增角色与单元（数据权限）管理
         List<SysRoleDept> list = new ArrayList<SysRoleDept>();
         for (Long deptId : role.getDeptIds()) {
             SysRoleDept rd = new SysRoleDept();
@@ -303,7 +303,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     public int deleteRoleById(Long roleId) {
         // 删除角色与菜单关联
         roleMenuMapper.deleteRoleMenuByRoleId(roleId);
-        // 删除角色与部门关联
+        // 删除角色与单元关联
         roleDeptMapper.deleteRoleDeptByRoleId(roleId);
         return roleMapper.deleteRoleById(roleId);
     }
@@ -327,7 +327,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         }
         // 删除角色与菜单关联
         roleMenuMapper.deleteRoleMenu(roleIds);
-        // 删除角色与部门关联
+        // 删除角色与单元关联
         roleDeptMapper.deleteRoleDept(roleIds);
         return roleMapper.deleteRoleByIds(roleIds);
     }

@@ -1,5 +1,6 @@
 package com.roydon.admin.web.controller.system;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.roydon.common.annotation.Log;
 import com.roydon.common.constant.UserConstants;
 import com.roydon.common.core.controller.BaseController;
@@ -10,7 +11,10 @@ import com.roydon.common.core.domain.entity.SysUser;
 import com.roydon.common.core.page.TableDataInfo;
 import com.roydon.common.enums.BusinessType;
 import com.roydon.common.utils.SecurityUtils;
+import com.roydon.common.utils.StringUtil;
 import com.roydon.common.utils.StringUtils;
+import com.roydon.common.utils.encrypt.IdCardNumUtil;
+import com.roydon.common.utils.encrypt.TelephoneUtil;
 import com.roydon.common.utils.poi.ExcelUtil;
 import com.roydon.system.service.ISysDeptService;
 import com.roydon.system.service.ISysPostService;
@@ -28,6 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,6 +65,10 @@ public class SysUserController extends BaseController {
     public TableDataInfo list(SysUser user) {
         startPage();
         List<SysUser> list = userService.selectUserList(user);
+        list.stream().peek(u -> {
+            u.setPhonenumber(TelephoneUtil.replaceSomeCharByAsterisk(u.getPhonenumber()));
+            u.setIdCard(IdCardNumUtil.replaceSomeCharByAsterisk(u.getIdCard()));
+        }).collect(Collectors.toList());
         return getDataTable(list);
     }
 
@@ -237,9 +246,9 @@ public class SysUserController extends BaseController {
     }
 
     /**
-     * 获取部门树列表
+     * 获取单元树列表
      */
-    @ApiOperation("用户部门")
+    @ApiOperation("用户单元")
     @PreAuthorize("@ss.hasPermi('system:user:list')")
     @GetMapping("/deptTree")
     public AjaxResult deptTree(SysDept dept) {

@@ -1,13 +1,17 @@
 package com.roydon.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.roydon.common.annotation.DataScope;
 import com.roydon.common.constant.UserConstants;
+import com.roydon.common.core.domain.BaseEntity;
 import com.roydon.common.core.domain.entity.SysRole;
 import com.roydon.common.core.domain.entity.SysUser;
 import com.roydon.common.exception.ServiceException;
 import com.roydon.common.utils.SecurityUtils;
+import com.roydon.common.utils.StringUtil;
 import com.roydon.common.utils.StringUtils;
 import com.roydon.common.utils.bean.BeanValidators;
 import com.roydon.common.utils.encrypt.IdCardNumUtil;
@@ -69,11 +73,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @DataScope(deptAlias = "d", userAlias = "u")
     public List<SysUser> selectUserList(SysUser user) {
         List<SysUser> sysUserList = userMapper.selectUserList(user);
-        List<SysUser> collect = sysUserList.stream().peek(u -> {
-            u.setPhonenumber(TelephoneUtil.replaceSomeCharByAsterisk(u.getPhonenumber()));
-            u.setIdCard(IdCardNumUtil.replaceSomeCharByAsterisk(u.getIdCard()));
-        }).collect(Collectors.toList());
-        return collect;
+        return sysUserList;
     }
 
     /**

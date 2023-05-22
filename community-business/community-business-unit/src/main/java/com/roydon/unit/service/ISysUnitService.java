@@ -7,7 +7,7 @@ import com.roydon.unit.domain.entity.SysUnit;
 import java.util.List;
 
 /**
- * 部门表(SysUnit)表服务接口
+ * 单元表(SysUnit)表服务接口
  *
  * @author roydon
  * @since 2023-05-22 03:53:03

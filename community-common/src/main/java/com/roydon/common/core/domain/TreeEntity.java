@@ -30,7 +30,7 @@ public class TreeEntity extends BaseEntity {
     private String ancestors;
 
     /**
-     * 子部门
+     * 子单元
      */
     private List<?> children = new ArrayList<>();
 

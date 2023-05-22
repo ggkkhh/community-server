@@ -91,7 +91,7 @@ public class SysUnitController {
         } else if (unit.getParentId().equals(unitId)) {
             return AjaxResult.error("修改单元'" + unit.getUnitName() + "'失败，上级单元不能是自己");
         } else if (StringUtils.equals(UserConstants.DEPT_DISABLE, unit.getStatus()) && sysUnitService.selectNormalChildrenUnitById(unitId) > 0) {
-            return AjaxResult.error("该部门包含未停用的子部门！");
+            return AjaxResult.error("该单元包含未停用的子单元！");
         }
         unit.setUpdateBy(SecurityUtils.getLoginUser().getUsername());
         return toAjaxResult(sysUnitService.updateById(unit));
@@ -101,7 +101,7 @@ public class SysUnitController {
      * 删除
      */
     @PreAuthorize("@ss.hasPermi('system:unit:remove')")
-    @Log(title = "部门管理", businessType = BusinessType.DELETE)
+    @Log(title = "单元管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{unitId}")
     public AjaxResult remove(@PathVariable Long unitId) {
         if (sysUnitService.hasChildByUnitId(unitId)) {

@@ -20,7 +20,7 @@ public class LoginUser implements UserDetails {
     private Long userId;
 
     /**
-     * 部门ID
+     * 单元ID
      */
     private Long deptId;
 

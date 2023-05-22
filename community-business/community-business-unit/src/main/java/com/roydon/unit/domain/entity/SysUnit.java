@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
- * 部门表(SysUnit)实体类
+ * 单元表(SysUnit)实体类
  *
  * @author roydon
  * @since 2023-05-22 03:53:02

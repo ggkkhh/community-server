@@ -19,7 +19,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * 部门表(SysUnit)表服务实现类
+ * 单元表(SysUnit)表服务实现类
  *
  * @author roydon
  * @since 2023-05-22 03:53:04

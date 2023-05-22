@@ -1,5 +1,6 @@
 package com.roydon.system.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.roydon.common.core.domain.entity.SysUser;
 
@@ -15,7 +16,7 @@ public interface ISysUserService extends IService<SysUser> {
      * @param user 用户信息
      * @return 用户信息集合信息
      */
-    public List<SysUser> selectUserList(SysUser user);
+    List<SysUser> selectUserList(SysUser user);
 
     /**
      * 根据条件分页查询已分配用户角色列表
@@ -23,7 +24,7 @@ public interface ISysUserService extends IService<SysUser> {
      * @param user 用户信息
      * @return 用户信息集合信息
      */
-    public List<SysUser> selectAllocatedList(SysUser user);
+    List<SysUser> selectAllocatedList(SysUser user);
 
     /**
      * 根据条件分页查询未分配用户角色列表
@@ -31,7 +32,7 @@ public interface ISysUserService extends IService<SysUser> {
      * @param user 用户信息
      * @return 用户信息集合信息
      */
-    public List<SysUser> selectUnallocatedList(SysUser user);
+    List<SysUser> selectUnallocatedList(SysUser user);
 
     /**
      * 通过用户名查询用户
@@ -39,7 +40,7 @@ public interface ISysUserService extends IService<SysUser> {
      * @param userName 用户名
      * @return 用户对象信息
      */
-    public SysUser selectUserByUserName(String userName);
+    SysUser selectUserByUserName(String userName);
 
     /**
      * 通过用户ID查询用户
@@ -47,7 +48,7 @@ public interface ISysUserService extends IService<SysUser> {
      * @param userId 用户ID
      * @return 用户对象信息
      */
-    public SysUser selectUserById(Long userId);
+    SysUser selectUserById(Long userId);
 
     /**
      * 根据用户ID查询用户所属角色组
@@ -55,7 +56,7 @@ public interface ISysUserService extends IService<SysUser> {
      * @param userName 用户名
      * @return 结果
      */
-    public String selectUserRoleGroup(String userName);
+    String selectUserRoleGroup(String userName);
 
     /**
      * 根据用户ID查询用户所属岗位组
@@ -63,7 +64,7 @@ public interface ISysUserService extends IService<SysUser> {
      * @param userName 用户名
      * @return 结果
      */
-    public String selectUserPostGroup(String userName);
+    String selectUserPostGroup(String userName);
 
     /**
      * 校验用户名称是否唯一
@@ -71,7 +72,7 @@ public interface ISysUserService extends IService<SysUser> {
      * @param user 用户信息
      * @return 结果
      */
-    public String checkUserNameUnique(SysUser user);
+    String checkUserNameUnique(SysUser user);
 
     /**
      * 校验手机号码是否唯一
@@ -79,7 +80,7 @@ public interface ISysUserService extends IService<SysUser> {
      * @param user 用户信息
      * @return 结果
      */
-    public String checkPhoneUnique(SysUser user);
+    String checkPhoneUnique(SysUser user);
 
     /**
      * 校验email是否唯一
@@ -87,21 +88,21 @@ public interface ISysUserService extends IService<SysUser> {
      * @param user 用户信息
      * @return 结果
      */
-    public String checkEmailUnique(SysUser user);
+    String checkEmailUnique(SysUser user);
 
     /**
      * 校验用户是否允许操作
      *
      * @param user 用户信息
      */
-    public void checkUserAllowed(SysUser user);
+    void checkUserAllowed(SysUser user);
 
     /**
      * 校验用户是否有数据权限
      *
      * @param userId 用户id
      */
-    public void checkUserDataScope(Long userId);
+    void checkUserDataScope(Long userId);
 
     /**
      * 新增用户信息
@@ -109,7 +110,7 @@ public interface ISysUserService extends IService<SysUser> {
      * @param user 用户信息
      * @return 结果
      */
-    public int insertUser(SysUser user);
+    int insertUser(SysUser user);
 
     /**
      * 注册用户信息
@@ -117,7 +118,7 @@ public interface ISysUserService extends IService<SysUser> {
      * @param user 用户信息
      * @return 结果
      */
-    public boolean registerUser(SysUser user);
+    boolean registerUser(SysUser user);
 
     /**
      * 修改用户信息
@@ -125,7 +126,7 @@ public interface ISysUserService extends IService<SysUser> {
      * @param user 用户信息
      * @return 结果
      */
-    public int updateUser(SysUser user);
+    int updateUser(SysUser user);
 
     /**
      * 用户授权角色
@@ -207,6 +208,7 @@ public interface ISysUserService extends IService<SysUser> {
 
     /**
      * 检测手机号是否存在
+     *
      * @param telephone
      * @return
      */

@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
 @Documented
 public @interface DataScope {
     /**
-     * 部门表的别名
+     * 单元表的别名
      */
     public String deptAlias() default "";
 

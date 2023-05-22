@@ -27,13 +27,13 @@ public class SecurityUtils {
     }
 
     /**
-     * 获取部门ID
+     * 获取单元ID
      **/
     public static Long getDeptId() {
         try {
             return getLoginUser().getDeptId();
         } catch (Exception e) {
-            throw new ServiceException("获取部门ID异常", HttpStatus.UNAUTHORIZED);
+            throw new ServiceException("获取单元ID异常", HttpStatus.UNAUTHORIZED);
         }
     }
 

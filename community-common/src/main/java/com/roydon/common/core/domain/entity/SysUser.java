@@ -35,17 +35,17 @@ public class SysUser extends BaseEntity {
     private Long userId;
 
     /**
-     * 部门ID
+     * 单元ID
      */
-    @ApiModelProperty("部门ID")
-    @Excel(name = "部门编号", type = Type.IMPORT)
+    @ApiModelProperty("单元ID")
+    @Excel(name = "单元编号（填1为本社区）", type = Type.IMPORT)
     private Long deptId;
 
     /**
      * 用户账号
      */
     @ApiModelProperty("用户账号")
-    @Excel(name = "登录名称")
+    @Excel(name = "登录名称（账号）")
     private String userName;
 
     /**
@@ -80,7 +80,7 @@ public class SysUser extends BaseEntity {
      * 用户性别
      */
     @ApiModelProperty("用户性别")
-    @Excel(name = "用户性别", readConverterExp = "0=男,1=女,2=未知")
+    @Excel(name = "用户性别（0=男,1=女,2=未知）", readConverterExp = "0=男,1=女,2=未知")
     private String sex;
 
     /**
@@ -99,8 +99,11 @@ public class SysUser extends BaseEntity {
      * 帐号状态（0正常 1停用）
      */
     @ApiModelProperty("帐号状态（0正常 1停用）")
-    @Excel(name = "帐号状态", readConverterExp = "0=正常,1=停用")
+    @Excel(name = "帐号状态（0=正常,1=停用）", readConverterExp = "0=正常,1=停用")
     private String status;
+
+    @ApiModelProperty("是否为租客（0代表房东 1代表租客）")
+    private String isTenant;
 
     /**
      * 删除标志（0代表存在 2代表删除）
@@ -123,12 +126,12 @@ public class SysUser extends BaseEntity {
     private Date loginDate;
 
     /**
-     * 部门对象
+     * 单元对象
      */
-    @ApiModelProperty("部门对象")
+    @ApiModelProperty("单元对象")
     @Excels({
-            @Excel(name = "部门名称", targetAttr = "deptName", type = Type.EXPORT),
-            @Excel(name = "部门负责人", targetAttr = "leader", type = Type.EXPORT)
+            @Excel(name = "单元名称", targetAttr = "deptName", type = Type.EXPORT),
+            @Excel(name = "单元负责人", targetAttr = "leader", type = Type.EXPORT)
     })
     @TableField(exist = false)
     private SysDept dept;
@@ -240,6 +243,14 @@ public class SysUser extends BaseEntity {
 
     public void setIdCard(String idCard) {
         this.idCard = idCard;
+    }
+
+    public String getIsTenant() {
+        return isTenant;
+    }
+
+    public void setIsTenant(String isTenant) {
+        this.isTenant = isTenant;
     }
 
     public String getSex() {

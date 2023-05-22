@@ -237,9 +237,9 @@ public class SysRoleController extends BaseController {
     }
 
     /**
-     * 获取对应角色部门树列表
+     * 获取对应角色单元树列表
      */
-    @ApiOperation("角色部门树")
+    @ApiOperation("角色单元树")
     @PreAuthorize("@ss.hasPermi('system:role:query')")
     @GetMapping(value = "/deptTree/{roleId}")
     public AjaxResult deptTree(@PathVariable("roleId") Long roleId) {
