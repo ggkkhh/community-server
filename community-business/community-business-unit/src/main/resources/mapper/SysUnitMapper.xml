@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.roydon.unit.mapper.SysUnitMapper">
+
+    <resultMap type="com.roydon.unit.domain.entity.SysUnit" id="SysUnitMap">
+        <result property="unitId" column="unit_id" jdbcType="INTEGER"/>
+        <result property="parentId" column="parent_id" jdbcType="INTEGER"/>
+        <result property="ancestors" column="ancestors" jdbcType="VARCHAR"/>
+        <result property="unitName" column="unit_name" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="orderNum" column="order_num" jdbcType="INTEGER"/>
+        <result property="leader" column="leader" jdbcType="VARCHAR"/>
+        <result property="telephone" column="telephone" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="selectUnitById" parameterType="Long" resultMap="SysUnitMap">
+        select u.unit_id,
+               u.parent_id,
+               u.ancestors,
+               u.unit_name,
+               u.remark,
+               u.order_num,
+               u.leader,
+               u.telephone,
+               u.email,
+               u.status,
+               (select unit_name from sys_unit where unit_id = u.parent_id) unit_name
+        from sys_unit u
+        where u.unit_id = #{unitId}
+    </select>
+
+    <select id="selectNormalChildrenUnitById" parameterType="Long" resultType="int">
+        select count(*)
+        from sys_unit
+        where status = 0
+          and del_flag = '0'
+          and find_in_set(#{unitId}, ancestors)
+    </select>
+
+    <!--    &lt;!&ndash;查询单个&ndash;&gt;-->
+    <!--    <select id="queryById" resultMap="SysUnitMap">-->
+    <!--        select-->
+    <!--          unit_id, parent_id, ancestors, unit_name, remark, order_num, leader, telephone, email, status, del_flag, create_by, create_time, update_by, update_time-->
+    <!--        from sys_unit-->
+    <!--        where unit_id = #{unitId}-->
+    <!--    </select>-->
+
+    <!--    &lt;!&ndash;查询指定行数据&ndash;&gt;-->
+    <!--    <select id="queryAllByLimit" resultMap="SysUnitMap">-->
+    <!--        select-->
+    <!--          unit_id, parent_id, ancestors, unit_name, remark, order_num, leader, telephone, email, status, del_flag, create_by, create_time, update_by, update_time-->
+    <!--        from sys_unit-->
+    <!--        <where>-->
+    <!--            <if test="unitId != null">-->
+    <!--                and unit_id = #{unitId}-->
+    <!--            </if>-->
+    <!--            <if test="parentId != null">-->
+    <!--                and parent_id = #{parentId}-->
+    <!--            </if>-->
+    <!--            <if test="ancestors != null and ancestors != ''">-->
+    <!--                and ancestors = #{ancestors}-->
+    <!--            </if>-->
+    <!--            <if test="unitName != null and unitName != ''">-->
+    <!--                and unit_name = #{unitName}-->
+    <!--            </if>-->
+    <!--            <if test="remark != null and remark != ''">-->
+    <!--                and remark = #{remark}-->
+    <!--            </if>-->
+    <!--            <if test="orderNum != null">-->
+    <!--                and order_num = #{orderNum}-->
+    <!--            </if>-->
+    <!--            <if test="leader != null and leader != ''">-->
+    <!--                and leader = #{leader}-->
+    <!--            </if>-->
+    <!--            <if test="telephone != null and telephone != ''">-->
+    <!--                and telephone = #{telephone}-->
+    <!--            </if>-->
+    <!--            <if test="email != null and email != ''">-->
+    <!--                and email = #{email}-->
+    <!--            </if>-->
+    <!--            <if test="status != null and status != ''">-->
+    <!--                and status = #{status}-->
+    <!--            </if>-->
+    <!--            <if test="delFlag != null and delFlag != ''">-->
+    <!--                and del_flag = #{delFlag}-->
+    <!--            </if>-->
+    <!--            <if test="createBy != null and createBy != ''">-->
+    <!--                and create_by = #{createBy}-->
+    <!--            </if>-->
+    <!--            <if test="createTime != null">-->
+    <!--                and create_time = #{createTime}-->
+    <!--            </if>-->
+    <!--            <if test="updateBy != null and updateBy != ''">-->
+    <!--                and update_by = #{updateBy}-->
+    <!--            </if>-->
+    <!--            <if test="updateTime != null">-->
+    <!--                and update_time = #{updateTime}-->
+    <!--            </if>-->
+    <!--        </where>-->
+    <!--        limit #{pageable.offset}, #{pageable.pageSize}-->
+    <!--    </select>-->
+
+    <!--    &lt;!&ndash;统计总行数&ndash;&gt;-->
+    <!--    <select id="count" resultType="java.lang.Long">-->
+    <!--        select count(1)-->
+    <!--        from sys_unit-->
+    <!--        <where>-->
+    <!--            <if test="unitId != null">-->
+    <!--                and unit_id = #{unitId}-->
+    <!--            </if>-->
+    <!--            <if test="parentId != null">-->
+    <!--                and parent_id = #{parentId}-->
+    <!--            </if>-->
+    <!--            <if test="ancestors != null and ancestors != ''">-->
+    <!--                and ancestors = #{ancestors}-->
+    <!--            </if>-->
+    <!--            <if test="unitName != null and unitName != ''">-->
+    <!--                and unit_name = #{unitName}-->
+    <!--            </if>-->
+    <!--            <if test="remark != null and remark != ''">-->
+    <!--                and remark = #{remark}-->
+    <!--            </if>-->
+    <!--            <if test="orderNum != null">-->
+    <!--                and order_num = #{orderNum}-->
+    <!--            </if>-->
+    <!--            <if test="leader != null and leader != ''">-->
+    <!--                and leader = #{leader}-->
+    <!--            </if>-->
+    <!--            <if test="telephone != null and telephone != ''">-->
+    <!--                and telephone = #{telephone}-->
+    <!--            </if>-->
+    <!--            <if test="email != null and email != ''">-->
+    <!--                and email = #{email}-->
+    <!--            </if>-->
+    <!--            <if test="status != null and status != ''">-->
+    <!--                and status = #{status}-->
+    <!--            </if>-->
+    <!--            <if test="delFlag != null and delFlag != ''">-->
+    <!--                and del_flag = #{delFlag}-->
+    <!--            </if>-->
+    <!--            <if test="createBy != null and createBy != ''">-->
+    <!--                and create_by = #{createBy}-->
+    <!--            </if>-->
+    <!--            <if test="createTime != null">-->
+    <!--                and create_time = #{createTime}-->
+    <!--            </if>-->
+    <!--            <if test="updateBy != null and updateBy != ''">-->
+    <!--                and update_by = #{updateBy}-->
+    <!--            </if>-->
+    <!--            <if test="updateTime != null">-->
+    <!--                and update_time = #{updateTime}-->
+    <!--            </if>-->
+    <!--        </where>-->
+    <!--    </select>-->
+
+    <!--    &lt;!&ndash;新增所有列&ndash;&gt;-->
+    <!--    <insert id="insert" keyProperty="unitId" useGeneratedKeys="true">-->
+    <!--        insert into sys_unit(parent_id, ancestors, unit_name, remark, order_num, leader, telephone, email, status, del_flag, create_by, create_time, update_by, update_time)-->
+    <!--        values (#{parentId}, #{ancestors}, #{unitName}, #{remark}, #{orderNum}, #{leader}, #{telephone}, #{email}, #{status}, #{delFlag}, #{createBy}, #{createTime}, #{updateBy}, #{updateTime})-->
+    <!--    </insert>-->
+
+    <!--    <insert id="insertBatch" keyProperty="unitId" useGeneratedKeys="true">-->
+    <!--        insert into sys_unit(parent_id, ancestors, unit_name, remark, order_num, leader, telephone, email, status, del_flag, create_by, create_time, update_by, update_time)-->
+    <!--        values-->
+    <!--        <foreach collection="entities" item="entity" separator=",">-->
+    <!--        (#{entity.parentId}, #{entity.ancestors}, #{entity.unitName}, #{entity.remark}, #{entity.orderNum}, #{entity.leader}, #{entity.telephone}, #{entity.email}, #{entity.status}, #{entity.delFlag}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime})-->
+    <!--        </foreach>-->
+    <!--    </insert>-->
+
+    <!--    <insert id="insertOrUpdateBatch" keyProperty="unitId" useGeneratedKeys="true">-->
+    <!--        insert into sys_unit(parent_id, ancestors, unit_name, remark, order_num, leader, telephone, email, status, del_flag, create_by, create_time, update_by, update_time)-->
+    <!--        values-->
+    <!--        <foreach collection="entities" item="entity" separator=",">-->
+    <!--            (#{entity.parentId}, #{entity.ancestors}, #{entity.unitName}, #{entity.remark}, #{entity.orderNum}, #{entity.leader}, #{entity.telephone}, #{entity.email}, #{entity.status}, #{entity.delFlag}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime})-->
+    <!--        </foreach>-->
+    <!--        on duplicate key update-->
+    <!--        parent_id = values(parent_id),-->
+    <!--        ancestors = values(ancestors),-->
+    <!--        unit_name = values(unit_name),-->
+    <!--        remark = values(remark),-->
+    <!--        order_num = values(order_num),-->
+    <!--        leader = values(leader),-->
+    <!--        telephone = values(telephone),-->
+    <!--        email = values(email),-->
+    <!--        status = values(status),-->
+    <!--        del_flag = values(del_flag),-->
+    <!--        create_by = values(create_by),-->
+    <!--        create_time = values(create_time),-->
+    <!--        update_by = values(update_by),-->
+    <!--        update_time = values(update_time)-->
+    <!--    </insert>-->
+
+    <!--    &lt;!&ndash;通过主键修改数据&ndash;&gt;-->
+    <!--    <update id="update">-->
+    <!--        update sys_unit-->
+    <!--        <set>-->
+    <!--            <if test="parentId != null">-->
+    <!--                parent_id = #{parentId},-->
+    <!--            </if>-->
+    <!--            <if test="ancestors != null and ancestors != ''">-->
+    <!--                ancestors = #{ancestors},-->
+    <!--            </if>-->
+    <!--            <if test="unitName != null and unitName != ''">-->
+    <!--                unit_name = #{unitName},-->
+    <!--            </if>-->
+    <!--            <if test="remark != null and remark != ''">-->
+    <!--                remark = #{remark},-->
+    <!--            </if>-->
+    <!--            <if test="orderNum != null">-->
+    <!--                order_num = #{orderNum},-->
+    <!--            </if>-->
+    <!--            <if test="leader != null and leader != ''">-->
+    <!--                leader = #{leader},-->
+    <!--            </if>-->
+    <!--            <if test="telephone != null and telephone != ''">-->
+    <!--                telephone = #{telephone},-->
+    <!--            </if>-->
+    <!--            <if test="email != null and email != ''">-->
+    <!--                email = #{email},-->
+    <!--            </if>-->
+    <!--            <if test="status != null and status != ''">-->
+    <!--                status = #{status},-->
+    <!--            </if>-->
+    <!--            <if test="delFlag != null and delFlag != ''">-->
+    <!--                del_flag = #{delFlag},-->
+    <!--            </if>-->
+    <!--            <if test="createBy != null and createBy != ''">-->
+    <!--                create_by = #{createBy},-->
+    <!--            </if>-->
+    <!--            <if test="createTime != null">-->
+    <!--                create_time = #{createTime},-->
+    <!--            </if>-->
+    <!--            <if test="updateBy != null and updateBy != ''">-->
+    <!--                update_by = #{updateBy},-->
+    <!--            </if>-->
+    <!--            <if test="updateTime != null">-->
+    <!--                update_time = #{updateTime},-->
+    <!--            </if>-->
+    <!--        </set>-->
+    <!--        where unit_id = #{unitId}-->
+    <!--    </update>-->
+
+    <!--    &lt;!&ndash;通过主键删除&ndash;&gt;-->
+    <!--    <delete id="deleteById">-->
+    <!--        delete from sys_unit where unit_id = #{unitId}-->
+    <!--    </delete>-->
+
+</mapper>
+

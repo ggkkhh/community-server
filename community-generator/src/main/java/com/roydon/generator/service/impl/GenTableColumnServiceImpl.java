@@ -1,8 +1,9 @@
-package com.roydon.generator.service;
+package com.roydon.generator.service.impl;
 
 import com.roydon.common.core.text.Convert;
 import com.roydon.generator.domain.GenTableColumn;
 import com.roydon.generator.mapper.GenTableColumnMapper;
+import com.roydon.generator.service.IGenTableColumnService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

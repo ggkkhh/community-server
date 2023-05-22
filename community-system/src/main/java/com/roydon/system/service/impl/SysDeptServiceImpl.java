@@ -306,8 +306,13 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
         return getChildList(list, t).size() > 0;
     }
 
+    /**
+     * 获取系统房屋数量
+     *
+     * @return
+     */
     @Override
     public Integer getCommunityAmount() {
-        return deptMapper.getSysCommunityAmount();
+        return deptMapper.getSysHouseAmount();
     }
 }

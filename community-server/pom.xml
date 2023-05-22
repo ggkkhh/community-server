@@ -105,10 +105,10 @@
         </dependency>
 
         <!-- 代码生成-->
-        <!--        <dependency>-->
-        <!--            <groupId>com.roydon</groupId>-->
-        <!--            <artifactId>community-generator</artifactId>-->
-        <!--        </dependency>-->
+        <dependency>
+            <groupId>com.roydon</groupId>
+            <artifactId>community-generator</artifactId>
+        </dependency>
 
     </dependencies>
 

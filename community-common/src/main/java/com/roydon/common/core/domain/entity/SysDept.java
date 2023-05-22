@@ -65,9 +65,9 @@ public class SysDept extends BaseEntity {
     private String status;
 
     /**
-     * 是否为社区：0不是，1是
+     * 是否为房屋：0不是，1是
      */
-    private String isCommunity;
+    private String isHouse;
 
     /**
      * 删除标志（0代表存在 2代表删除）
@@ -108,12 +108,12 @@ public class SysDept extends BaseEntity {
         this.ancestors = ancestors;
     }
 
-    public String getIsCommunity() {
-        return isCommunity;
+    public String getIsHouse() {
+        return isHouse;
     }
 
-    public void setIsCommunity(String isCommunity) {
-        this.isCommunity = isCommunity;
+    public void setIsHouse(String isHouse) {
+        this.isHouse = isHouse;
     }
 
     @NotBlank(message = "名称不能为空")
@@ -226,7 +226,7 @@ public class SysDept extends BaseEntity {
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
                 ", status='" + status + '\'' +
-                ", isCommunity='" + isCommunity + '\'' +
+                ", isHouse='" + isHouse + '\'' +
                 ", delFlag='" + delFlag + '\'' +
                 ", parentName='" + parentName + '\'' +
                 ", children=" + children +

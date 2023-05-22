@@ -122,5 +122,5 @@ public interface SysDeptMapper extends BaseMapper<SysDept> {
      *
      * @return Integer
      */
-    public Integer getSysCommunityAmount();
+    public Integer getSysHouseAmount();
 }

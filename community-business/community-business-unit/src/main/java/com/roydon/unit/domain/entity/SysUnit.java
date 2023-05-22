@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * 部门表(SysUnit)实体类
@@ -69,7 +70,7 @@ public class SysUnit implements Serializable {
     /**
      * 创建时间
      */
-    private LocalDateTime createTime;
+    private Date createTime;
     /**
      * 更新者
      */
@@ -77,7 +78,7 @@ public class SysUnit implements Serializable {
     /**
      * 更新时间
      */
-    private LocalDateTime updateTime;
+    private Date updateTime;
 
 
 }

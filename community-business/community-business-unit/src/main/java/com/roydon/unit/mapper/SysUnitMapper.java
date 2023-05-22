@@ -13,5 +13,9 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface SysUnitMapper extends BaseMapper<SysUnit>{
 
+    SysUnit selectUnitById(Long unitId);
+
+    int selectNormalChildrenUnitById(Long unitId);
+
 }
 

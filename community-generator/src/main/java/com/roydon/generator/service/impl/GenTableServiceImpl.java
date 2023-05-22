@@ -1,4 +1,4 @@
-package com.roydon.generator.service;
+package com.roydon.generator.service.impl;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
@@ -12,6 +12,7 @@ import com.roydon.generator.domain.GenTable;
 import com.roydon.generator.domain.GenTableColumn;
 import com.roydon.generator.mapper.GenTableColumnMapper;
 import com.roydon.generator.mapper.GenTableMapper;
+import com.roydon.generator.service.IGenTableService;
 import com.roydon.generator.util.GenUtils;
 import com.roydon.generator.util.VelocityInitializer;
 import com.roydon.generator.util.VelocityUtils;
