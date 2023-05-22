@@ -16,6 +16,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -70,6 +71,13 @@ public class SysUser extends BaseEntity {
     private String phonenumber;
 
     /**
+     * 真实姓名
+     */
+    @ApiModelProperty("真实姓名")
+    @Excel(name = "真实姓名")
+    private String realName;
+
+    /**
      * 身份证号
      */
     @ApiModelProperty("身份证号")
@@ -82,6 +90,7 @@ public class SysUser extends BaseEntity {
     @ApiModelProperty("用户性别")
     @Excel(name = "用户性别（0=男,1=女,2=未知）", readConverterExp = "0=男,1=女,2=未知")
     private String sex;
+    private Integer age;
 
     /**
      * 用户头像
@@ -190,6 +199,23 @@ public class SysUser extends BaseEntity {
 
     public Long getDeptId() {
         return deptId;
+    }
+
+    @Size(min = 0, max = 30, message = "长度不能超过30个字符")
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
     public void setDeptId(Long deptId) {
@@ -351,27 +377,29 @@ public class SysUser extends BaseEntity {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
-                .append("userId", getUserId())
-                .append("deptId", getDeptId())
-                .append("userName", getUserName())
-                .append("nickName", getNickName())
-                .append("email", getEmail())
-                .append("phonenumber", getPhonenumber())
-                .append("idCard", getIdCard())
-                .append("sex", getSex())
-                .append("avatar", getAvatar())
-                .append("password", getPassword())
-                .append("status", getStatus())
-                .append("delFlag", getDelFlag())
-                .append("loginIp", getLoginIp())
-                .append("loginDate", getLoginDate())
-                .append("createBy", getCreateBy())
-                .append("createTime", getCreateTime())
-                .append("updateBy", getUpdateBy())
-                .append("updateTime", getUpdateTime())
-                .append("remark", getRemark())
-                .append("dept", getDept())
-                .toString();
+        return "SysUser{" +
+                "userId=" + userId +
+                ", deptId=" + deptId +
+                ", userName='" + userName + '\'' +
+                ", nickName='" + nickName + '\'' +
+                ", email='" + email + '\'' +
+                ", phonenumber='" + phonenumber + '\'' +
+                ", realName='" + realName + '\'' +
+                ", idCard='" + idCard + '\'' +
+                ", sex='" + sex + '\'' +
+                ", age=" + age +
+                ", avatar='" + avatar + '\'' +
+                ", password='" + password + '\'' +
+                ", status='" + status + '\'' +
+                ", isTenant='" + isTenant + '\'' +
+                ", delFlag='" + delFlag + '\'' +
+                ", loginIp='" + loginIp + '\'' +
+                ", loginDate=" + loginDate +
+                ", dept=" + dept +
+                ", roles=" + roles +
+                ", roleIds=" + Arrays.toString(roleIds) +
+                ", postIds=" + Arrays.toString(postIds) +
+                ", roleId=" + roleId +
+                '}';
     }
 }

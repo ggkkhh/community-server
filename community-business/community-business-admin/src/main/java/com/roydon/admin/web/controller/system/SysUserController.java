@@ -78,6 +78,10 @@ public class SysUserController extends BaseController {
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysUser user) {
         List<SysUser> list = userService.selectUserList(user);
+        list.stream().peek(u -> {
+            u.setPhonenumber(TelephoneUtil.replaceSomeCharByAsterisk(u.getPhonenumber()));
+            u.setIdCard(IdCardNumUtil.replaceSomeCharByAsterisk(u.getIdCard()));
+        }).collect(Collectors.toList());
         ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
         util.exportExcel(response, list, "用户数据");
     }
@@ -116,6 +120,8 @@ public class SysUserController extends BaseController {
         ajax.put("posts", postService.selectPostAll());
         if (StringUtils.isNotNull(userId)) {
             SysUser sysUser = userService.selectUserById(userId);
+            sysUser.setPhonenumber(TelephoneUtil.replaceSomeCharByAsterisk(sysUser.getPhonenumber()));
+            sysUser.setIdCard(IdCardNumUtil.replaceSomeCharByAsterisk(sysUser.getIdCard()));
             ajax.put(AjaxResult.DATA_TAG, sysUser);
             ajax.put("postIds", postService.selectPostListByUserId(userId));
             ajax.put("roleIds", sysUser.getRoles().stream().map(SysRole::getRoleId).collect(Collectors.toList()));
