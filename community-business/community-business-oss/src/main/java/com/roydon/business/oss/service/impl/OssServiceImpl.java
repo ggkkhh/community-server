@@ -67,7 +67,7 @@ public class OssServiceImpl implements OssService {
 
     @Override
     public String uploadUserAvatar(String userName, MultipartFile file) {
-        return this.uploadFile(file,OssUtil.USER_AVATAR_FILE);
+        return this.uploadFile(file, OssUtil.USER_AVATAR_FILE);
     }
 
     @Override
@@ -97,7 +97,7 @@ public class OssServiceImpl implements OssService {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         String datePath = sdf.format(new Date()); // 将日期转换为字符串
         // 文件存储名称
-        String ossFileName = folder + datePath + UUID.randomUUID().toString().replaceAll("-", "") + fileName;
+        String ossFileName = folder + datePath + "/" + fileName + UUID.randomUUID().toString().replaceAll("-", "") + "." + FileUploadUtils.getExtension(file);
         ossClient.putObject(BUCKET_NAME, ossFileName, inputStream);
         String url = Constants.HTTPS + BUCKET_NAME + "." + END_POINT + "/" + ossFileName;
         //关闭OSSClient
