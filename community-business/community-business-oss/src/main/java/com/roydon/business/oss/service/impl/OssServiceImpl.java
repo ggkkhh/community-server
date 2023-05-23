@@ -2,7 +2,6 @@ package com.roydon.business.oss.service.impl;
 
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClient;
-import com.roydon.business.oss.config.AliyunOssProperties;
 import com.roydon.business.oss.service.OssService;
 import com.roydon.business.oss.utils.OssUtil;
 import com.roydon.common.exception.file.InvalidExtensionException;
