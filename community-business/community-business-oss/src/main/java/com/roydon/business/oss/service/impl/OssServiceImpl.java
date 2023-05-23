@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
-import static com.roydon.business.oss.config.AliyunOssProperties.ACCESS_KEY_ID;
+import static com.roydon.business.oss.config.AliyunOssProperties.*;
 
 /**
  * OssServiceImpl
@@ -34,7 +34,7 @@ public class OssServiceImpl implements OssService {
         String url = null;
 
         //创建OSSClient实例。
-        OSS ossClient = new OSSClient(AliyunOssProperties.END_POINT, ACCESS_KEY_ID, AliyunOssProperties.ACCESS_KEY_SECRET);
+        OSS ossClient = new OSSClient(END_POINT, ACCESS_KEY_ID, ACCESS_KEY_SECRET);
 
         //获取上传文件输入流
         InputStream inputStream = null;
@@ -60,11 +60,11 @@ public class OssServiceImpl implements OssService {
         //第一个参数：Bucket名称
         //第二个参数：上传到oss文件路径和文件名称
         //第三个参数：上传文件输入流
-        ossClient.putObject(AliyunOssProperties.BUCKET_NAME, fileName, inputStream);
+        ossClient.putObject(BUCKET_NAME, fileName, inputStream);
 
         //把上传后把文件url返回
         //https://xppll.oss-cn-beijing.aliyuncs.com/01.jpg
-        url = "https://" + AliyunOssProperties.BUCKET_NAME + "." + AliyunOssProperties.END_POINT + "/" + fileName;
+        url = "https://" + BUCKET_NAME + "." + END_POINT + "/" + fileName;
         //关闭OSSClient
         ossClient.shutdown();
 
@@ -73,7 +73,7 @@ public class OssServiceImpl implements OssService {
 
     @Override
     public String uploadUserAvatar(String userName, MultipartFile file) {
-        OSS ossClient = new OSSClient(AliyunOssProperties.END_POINT, ACCESS_KEY_ID, AliyunOssProperties.ACCESS_KEY_SECRET);
+        OSS ossClient = new OSSClient(END_POINT, ACCESS_KEY_ID, ACCESS_KEY_SECRET);
         try {
             FileUploadUtils.assertAllowed(file, MimeTypeUtils.IMAGE_EXTENSION);
         } catch (InvalidExtensionException e) {
@@ -90,8 +90,8 @@ public class OssServiceImpl implements OssService {
         String datePath = sdf.format(new Date()); // 将日期转换为字符串
         // 文件存储名称
         String ossFileName = OssUtil.USER_AVATAR_FILE + datePath + OssUtil.USER_AVATAR_PREFIX + UUID.randomUUID().toString().replaceAll("-", "") + fileName + "." + FileUploadUtils.getExtension(file);
-        ossClient.putObject(AliyunOssProperties.BUCKET_NAME, ossFileName, inputStream);
-        String url = "https://" + AliyunOssProperties.BUCKET_NAME + "." + AliyunOssProperties.END_POINT + "/" + ossFileName;
+        ossClient.putObject(BUCKET_NAME, ossFileName, inputStream);
+        String url = "https://" + BUCKET_NAME + "." + END_POINT + "/" + ossFileName;
         //关闭OSSClient
         ossClient.shutdown();
         return url;
