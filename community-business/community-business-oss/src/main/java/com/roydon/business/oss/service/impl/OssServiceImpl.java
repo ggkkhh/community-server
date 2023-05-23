@@ -88,11 +88,39 @@ public class OssServiceImpl implements OssService {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         String datePath = sdf.format(new Date()); // 将日期转换为字符串
         // 文件存储名称
-        String ossFileName = OssUtil.USER_AVATAR_FILE + datePath + OssUtil.USER_AVATAR_PREFIX + UUID.randomUUID().toString().replaceAll("-", "") + fileName + "." + FileUploadUtils.getExtension(file);
+        String ossFileName = OssUtil.USER_AVATAR_FILE + datePath + userName + UUID.randomUUID().toString().replaceAll("-", "").substring(0, 11) + fileName + "." + FileUploadUtils.getExtension(file);
         ossClient.putObject(BUCKET_NAME, ossFileName, inputStream);
         String url = "https://" + BUCKET_NAME + "." + END_POINT + "/" + ossFileName;
         //关闭OSSClient
         ossClient.shutdown();
         return url;
+    }
+
+    @Override
+    public String uploadNoticeFile(MultipartFile file) {
+        OSS ossClient = new OSSClient(END_POINT, ACCESS_KEY_ID, ACCESS_KEY_SECRET);
+        try {
+            FileUploadUtils.assertAllowed(file, MimeTypeUtils.IMAGE_EXTENSION);
+        } catch (InvalidExtensionException e) {
+            throw new RuntimeException(e);
+        }
+        InputStream inputStream = null;
+        try {
+            inputStream = file.getInputStream();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        String fileName = file.getOriginalFilename();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        String datePath = sdf.format(new Date()); // 将日期转换为字符串
+        // 文件存储名称
+        String ossFileName = OssUtil.USER_AVATAR_FILE + datePath + UUID.randomUUID().toString().replaceAll("-", "") + fileName + "." + FileUploadUtils.getExtension(file);
+        ossClient.putObject(BUCKET_NAME, ossFileName, inputStream);
+        String url = "https://" + BUCKET_NAME + "." + END_POINT + "/" + ossFileName;
+        //关闭OSSClient
+        ossClient.shutdown();
+        return url;
+
+
     }
 }

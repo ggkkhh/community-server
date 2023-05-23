@@ -58,6 +58,14 @@ public class SysNoticeController extends BaseController {
         return toAjax(noticeService.insertNotice(notice));
     }
 
+    @PreAuthorize("@ss.hasPermi('system:notice:add')")
+    @Log(title = "通知公告", businessType = BusinessType.INSERT)
+    @PostMapping
+    public AjaxResult addNoticeImgFile(@RequestBody SysNotice notice) {
+        notice.setCreateBy(getUsername());
+        return toAjax(noticeService.insertNotice(notice));
+    }
+
     /**
      * 修改通知公告
      */

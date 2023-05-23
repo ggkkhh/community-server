@@ -14,4 +14,6 @@ public interface OssService {
 
     String uploadUserAvatar(String userName, MultipartFile file);
 
+    String uploadNoticeFile(MultipartFile file);
+
 }

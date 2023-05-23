@@ -121,6 +121,7 @@ public class SysProfileController extends BaseController {
     public AjaxResult avatar(@RequestParam("avatarfile") MultipartFile file) throws Exception {
         if (!file.isEmpty()) {
             LoginUser loginUser = getLoginUser();
+            // TODO 用户上传头像，上传oss之前请先删除原来用户头像文件
             String avatar = ossService.uploadUserAvatar(loginUser.getUsername(), file);
 //            String avatar = FileUploadUtils.upload(CommunityConfig.getAvatarPath(), file, MimeTypeUtils.IMAGE_EXTENSION);
             if (userService.updateUserAvatar(loginUser.getUsername(), avatar)) {
