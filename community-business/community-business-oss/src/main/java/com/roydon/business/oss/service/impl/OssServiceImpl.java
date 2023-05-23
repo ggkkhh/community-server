@@ -17,6 +17,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
+import static com.roydon.business.oss.config.AliyunOssProperties.ACCESS_KEY_ID;
+
 /**
  * OssServiceImpl
  *
