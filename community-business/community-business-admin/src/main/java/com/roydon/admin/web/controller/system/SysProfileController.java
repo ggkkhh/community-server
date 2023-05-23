@@ -1,5 +1,6 @@
 package com.roydon.admin.web.controller.system;
 
+import com.roydon.business.oss.service.OssService;
 import com.roydon.common.annotation.Log;
 import com.roydon.common.config.CommunityConfig;
 import com.roydon.common.constant.UserConstants;
@@ -28,11 +29,15 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping("/system/user/profile")
 public class SysProfileController extends BaseController {
+
     @Resource
     private ISysUserService userService;
 
     @Resource
     private TokenService tokenService;
+
+    @Resource
+    private OssService ossService;
 
     /**
      * 个人信息
@@ -116,7 +121,8 @@ public class SysProfileController extends BaseController {
     public AjaxResult avatar(@RequestParam("avatarfile") MultipartFile file) throws Exception {
         if (!file.isEmpty()) {
             LoginUser loginUser = getLoginUser();
-            String avatar = FileUploadUtils.upload(CommunityConfig.getAvatarPath(), file, MimeTypeUtils.IMAGE_EXTENSION);
+            String avatar = ossService.uploadUserAvatar(loginUser.getUsername(), file);
+//            String avatar = FileUploadUtils.upload(CommunityConfig.getAvatarPath(), file, MimeTypeUtils.IMAGE_EXTENSION);
             if (userService.updateUserAvatar(loginUser.getUsername(), avatar)) {
                 AjaxResult ajax = AjaxResult.success();
                 ajax.put("imgUrl", avatar);
