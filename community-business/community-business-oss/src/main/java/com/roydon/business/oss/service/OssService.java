@@ -16,4 +16,6 @@ public interface OssService {
 
     String uploadNoticeFile(MultipartFile file);
 
+    String uploadCommonFile(MultipartFile file);
+
 }

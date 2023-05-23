@@ -1,5 +1,6 @@
 package com.roydon.admin.web.controller.common;
 
+import com.roydon.business.oss.service.OssService;
 import com.roydon.common.config.CommunityConfig;
 import com.roydon.common.constant.Constants;
 import com.roydon.common.core.domain.AjaxResult;
@@ -36,6 +37,9 @@ public class CommonController {
     @Resource
     private ServerConfig serverConfig;
 
+    @Resource
+    private OssService ossService;
+
     private static final String FILE_DELIMETER = ",";
 
     /**
@@ -71,21 +75,28 @@ public class CommonController {
     @ApiOperation("文件上传")
     @PostMapping("/upload")
     public AjaxResult uploadFile(MultipartFile file) throws Exception {
-        try {
-            // 上传文件路径
-            String filePath = CommunityConfig.getUploadPath();
-            // 上传并返回新文件名称
-            String fileName = FileUploadUtils.upload(filePath, file);
-            String url = serverConfig.getUrl() + fileName;
-            AjaxResult ajax = AjaxResult.success();
-            ajax.put("url", url);
-            ajax.put("fileName", fileName);
-            ajax.put("newFileName", FileUtils.getName(fileName));
-            ajax.put("originalFilename", file.getOriginalFilename());
-            return ajax;
-        } catch (Exception e) {
-            return AjaxResult.error(e.getMessage());
-        }
+//        try {
+//            // 上传文件路径
+//            String filePath = CommunityConfig.getUploadPath();
+//            // 上传并返回新文件名称
+//            String fileName = FileUploadUtils.upload(filePath, file);
+//            String url = serverConfig.getUrl() + fileName;
+//            AjaxResult ajax = AjaxResult.success();
+//            ajax.put("url", url);
+//            ajax.put("fileName", fileName);
+//            ajax.put("newFileName", FileUtils.getName(fileName));
+//            ajax.put("originalFilename", file.getOriginalFilename());
+//            return ajax;
+//        } catch (Exception e) {
+//            return AjaxResult.error(e.getMessage());
+//        }
+        String url = ossService.uploadCommonFile(file);
+        AjaxResult ajax = AjaxResult.success();
+        ajax.put("url", url);
+        ajax.put("fileName", file.getOriginalFilename());
+        ajax.put("newFileName", FileUtils.getName(url));
+        ajax.put("originalFilename", file.getOriginalFilename());
+        return ajax;
     }
 
     /**

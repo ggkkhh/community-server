@@ -1,7 +1,5 @@
 package com.roydon.business.oss.utils;
 
-import org.springframework.stereotype.Component;
-
 /**
  * @USER: roydon
  * @DATE: 2023/5/15 14:30
@@ -11,6 +9,8 @@ public class OssUtil {
 
     //用户头像文件夹前缀
     public static final String USER_AVATAR_FILE = "user-avatar/";
+    public static final String NOTICE_FILE = "notice-file/";
+    public static final String COMMON_FILE = "common-file/";
     //用户头像文件前缀
     public static final String USER_AVATAR_PREFIX = "/user-avatar_";
     /**

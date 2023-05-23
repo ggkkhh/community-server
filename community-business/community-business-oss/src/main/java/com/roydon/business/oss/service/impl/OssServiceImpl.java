@@ -4,6 +4,7 @@ import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClient;
 import com.roydon.business.oss.service.OssService;
 import com.roydon.business.oss.utils.OssUtil;
+import com.roydon.common.constant.Constants;
 import com.roydon.common.exception.file.InvalidExtensionException;
 import com.roydon.common.utils.file.FileUploadUtils;
 import com.roydon.common.utils.file.MimeTypeUtils;
@@ -29,13 +30,7 @@ public class OssServiceImpl implements OssService {
 
     @Override
     public String uploadFile(MultipartFile file) {
-
-        String url = null;
-
-        //创建OSSClient实例。
         OSS ossClient = new OSSClient(END_POINT, ACCESS_KEY_ID, ACCESS_KEY_SECRET);
-
-        //获取上传文件输入流
         InputStream inputStream = null;
         try {
             inputStream = file.getInputStream();
@@ -63,7 +58,7 @@ public class OssServiceImpl implements OssService {
 
         //把上传后把文件url返回
         //https://xppll.oss-cn-beijing.aliyuncs.com/01.jpg
-        url = "https://" + BUCKET_NAME + "." + END_POINT + "/" + fileName;
+        String url = "https://" + BUCKET_NAME + "." + END_POINT + "/" + fileName;
         //关闭OSSClient
         ossClient.shutdown();
 
@@ -72,32 +67,20 @@ public class OssServiceImpl implements OssService {
 
     @Override
     public String uploadUserAvatar(String userName, MultipartFile file) {
-        OSS ossClient = new OSSClient(END_POINT, ACCESS_KEY_ID, ACCESS_KEY_SECRET);
-        try {
-            FileUploadUtils.assertAllowed(file, MimeTypeUtils.IMAGE_EXTENSION);
-        } catch (InvalidExtensionException e) {
-            throw new RuntimeException(e);
-        }
-        InputStream inputStream = null;
-        try {
-            inputStream = file.getInputStream();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        String fileName = file.getOriginalFilename();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-        String datePath = sdf.format(new Date()); // 将日期转换为字符串
-        // 文件存储名称
-        String ossFileName = OssUtil.USER_AVATAR_FILE + datePath + userName + UUID.randomUUID().toString().replaceAll("-", "").substring(0, 11) + fileName + "." + FileUploadUtils.getExtension(file);
-        ossClient.putObject(BUCKET_NAME, ossFileName, inputStream);
-        String url = "https://" + BUCKET_NAME + "." + END_POINT + "/" + ossFileName;
-        //关闭OSSClient
-        ossClient.shutdown();
-        return url;
+        return this.uploadFile(file,OssUtil.USER_AVATAR_FILE);
     }
 
     @Override
     public String uploadNoticeFile(MultipartFile file) {
+        return this.uploadFile(file, OssUtil.NOTICE_FILE);
+    }
+
+    @Override
+    public String uploadCommonFile(MultipartFile file) {
+        return this.uploadFile(file, OssUtil.COMMON_FILE);
+    }
+
+    private String uploadFile(MultipartFile file, String folder) {
         OSS ossClient = new OSSClient(END_POINT, ACCESS_KEY_ID, ACCESS_KEY_SECRET);
         try {
             FileUploadUtils.assertAllowed(file, MimeTypeUtils.IMAGE_EXTENSION);
@@ -114,13 +97,11 @@ public class OssServiceImpl implements OssService {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         String datePath = sdf.format(new Date()); // 将日期转换为字符串
         // 文件存储名称
-        String ossFileName = OssUtil.USER_AVATAR_FILE + datePath + UUID.randomUUID().toString().replaceAll("-", "") + fileName + "." + FileUploadUtils.getExtension(file);
+        String ossFileName = folder + datePath + UUID.randomUUID().toString().replaceAll("-", "") + fileName;
         ossClient.putObject(BUCKET_NAME, ossFileName, inputStream);
-        String url = "https://" + BUCKET_NAME + "." + END_POINT + "/" + ossFileName;
+        String url = Constants.HTTPS + BUCKET_NAME + "." + END_POINT + "/" + ossFileName;
         //关闭OSSClient
         ossClient.shutdown();
         return url;
-
-
     }
 }

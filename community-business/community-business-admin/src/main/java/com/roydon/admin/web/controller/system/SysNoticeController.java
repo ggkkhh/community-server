@@ -1,5 +1,6 @@
 package com.roydon.admin.web.controller.system;
 
+import com.roydon.business.oss.service.OssService;
 import com.roydon.common.annotation.Log;
 import com.roydon.common.core.controller.BaseController;
 import com.roydon.common.core.domain.AjaxResult;
@@ -25,6 +26,9 @@ import java.util.List;
 public class SysNoticeController extends BaseController {
     @Resource
     private ISysNoticeService noticeService;
+
+    @Resource
+    private OssService ossService;
 
     /**
      * 获取通知公告列表
@@ -58,13 +62,18 @@ public class SysNoticeController extends BaseController {
         return toAjax(noticeService.insertNotice(notice));
     }
 
-    @PreAuthorize("@ss.hasPermi('system:notice:add')")
-    @Log(title = "通知公告", businessType = BusinessType.INSERT)
-    @PostMapping
-    public AjaxResult addNoticeImgFile(@RequestBody SysNotice notice) {
-        notice.setCreateBy(getUsername());
-        return toAjax(noticeService.insertNotice(notice));
-    }
+//    @PreAuthorize("@ss.hasPermi('system:notice:add')")
+//    @Log(title = "通知公告", businessType = BusinessType.INSERT)
+//    @PostMapping("/upload")
+//    public AjaxResult addNoticeImgFile(MultipartFile file) {
+//        String url = ossService.uploadNoticeFile(file);
+//        AjaxResult ajax = AjaxResult.success();
+//        ajax.put("url", url);
+//        ajax.put("fileName", file.getOriginalFilename());
+//        ajax.put("newFileName", FileUtils.getName(url));
+//        ajax.put("originalFilename", file.getOriginalFilename());
+//        return ajax;
+//    }
 
     /**
      * 修改通知公告
