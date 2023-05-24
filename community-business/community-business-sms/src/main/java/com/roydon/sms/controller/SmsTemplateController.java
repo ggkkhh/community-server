@@ -1,12 +1,19 @@
 package com.roydon.sms.controller;
 
+import com.roydon.common.annotation.Log;
+import com.roydon.common.core.controller.BaseController;
 import com.roydon.common.core.domain.AjaxResult;
+import com.roydon.common.core.page.TableDataInfo;
+import com.roydon.common.enums.BusinessType;
+import com.roydon.common.utils.poi.ExcelUtil;
 import com.roydon.sms.domain.entity.SmsTemplate;
 import com.roydon.sms.service.ISmsTemplateService;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * (SmsTemplate)表控制层
@@ -15,67 +22,70 @@ import javax.annotation.Resource;
  * @since 2023-05-24 19:08:58
  */
 @RestController
-@RequestMapping("/smsTemplate")
-public class SmsTemplateController {
-
+@RequestMapping("/sms/template")
+public class SmsTemplateController extends BaseController {
     @Resource
     private ISmsTemplateService smsTemplateService;
 
     /**
-     * 分页查询
-     *
-     * @param smsTemplate 筛选条件
-     * @param pageRequest      分页对象
-     * @return 查询结果
+     * 查询【请填写功能名称】列表
      */
-    @GetMapping
-    public AjaxResult queryByPage(SmsTemplate smsTemplate, PageRequest pageRequest) {
-        return AjaxResult.success(this.smsTemplateService.queryByPage(smsTemplate, pageRequest));
+    @PreAuthorize("@ss.hasPermi('sms:template:list')")
+    @GetMapping("/list")
+    public TableDataInfo list(SmsTemplate smsTemplate) {
+        startPage();
+        List<SmsTemplate> list = smsTemplateService.selectSmsTemplateList(smsTemplate);
+        return getDataTable(list);
     }
 
     /**
-     * 通过主键查询单条数据
-     *
-     * @param id 主键
-     * @return 单条数据
+     * 导出【请填写功能名称】列表
      */
-    @GetMapping("{id}")
-    public AjaxResult queryById(@PathVariable("id") String id) {
-        return AjaxResult.success(this.smsTemplateService.queryById(id));
+    @PreAuthorize("@ss.hasPermi('sms:template:export')")
+    @Log(title = "【请填写功能名称】", businessType = BusinessType.EXPORT)
+    @PostMapping("/export")
+    public void export(HttpServletResponse response, SmsTemplate smsTemplate) {
+        List<SmsTemplate> list = smsTemplateService.selectSmsTemplateList(smsTemplate);
+        ExcelUtil<SmsTemplate> util = new ExcelUtil<SmsTemplate>(SmsTemplate.class);
+        util.exportExcel(response, list, "【请填写功能名称】数据");
     }
 
     /**
-     * 新增数据
-     *
-     * @param smsTemplate 实体
-     * @return 新增结果
+     * 获取【请填写功能名称】详细信息
      */
+    @PreAuthorize("@ss.hasPermi('sms:template:query')")
+    @GetMapping(value = "/{templateId}")
+    public AjaxResult getInfo(@PathVariable("templateId") String templateId) {
+        return success(smsTemplateService.selectSmsTemplateByTemplateId(templateId));
+    }
+
+    /**
+     * 新增【请填写功能名称】
+     */
+    @PreAuthorize("@ss.hasPermi('sms:template:add')")
+    @Log(title = "【请填写功能名称】", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(SmsTemplate smsTemplate) {
-        return AjaxResult.success(this.smsTemplateService.insert(smsTemplate));
+    public AjaxResult add(@RequestBody SmsTemplate smsTemplate) {
+        return toAjax(smsTemplateService.insertSmsTemplate(smsTemplate));
     }
 
     /**
-     * 编辑数据
-     *
-     * @param smsTemplate 实体
-     * @return 编辑结果
+     * 修改【请填写功能名称】
      */
+    @PreAuthorize("@ss.hasPermi('sms:template:edit')")
+    @Log(title = "【请填写功能名称】", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(SmsTemplate smsTemplate) {
-        return AjaxResult.success(this.smsTemplateService.update(smsTemplate));
+    public AjaxResult edit(@RequestBody SmsTemplate smsTemplate) {
+        return toAjax(smsTemplateService.updateSmsTemplate(smsTemplate));
     }
 
     /**
-     * 删除数据
-     *
-     * @param id 主键
-     * @return 删除是否成功
+     * 删除【请填写功能名称】
      */
-    @DeleteMapping
-    public AjaxResult removeById(String id) {
-        return AjaxResult.success(this.smsTemplateService.deleteById(id));
+    @PreAuthorize("@ss.hasPermi('sms:template:remove')")
+    @Log(title = "【请填写功能名称】", businessType = BusinessType.DELETE)
+    @DeleteMapping("/{templateIds}")
+    public AjaxResult remove(@PathVariable String[] templateIds) {
+        return toAjax(smsTemplateService.deleteSmsTemplateByTemplateIds(templateIds));
     }
-
 }
-

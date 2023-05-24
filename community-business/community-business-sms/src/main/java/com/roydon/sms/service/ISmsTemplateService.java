@@ -2,8 +2,8 @@ package com.roydon.sms.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.roydon.sms.domain.entity.SmsTemplate;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+
+import java.util.List;
 
 /**
  * (SmsTemplate)表服务接口
@@ -12,46 +12,51 @@ import org.springframework.data.domain.PageRequest;
  * @since 2023-05-24 19:08:58
  */
 public interface ISmsTemplateService extends IService<SmsTemplate> {
+    /**
+     * 查询【请填写功能名称】
+     *
+     * @param templateId 【请填写功能名称】主键
+     * @return 【请填写功能名称】
+     */
+    public SmsTemplate selectSmsTemplateByTemplateId(String templateId);
 
     /**
-     * 通过ID查询单条数据
+     * 查询【请填写功能名称】列表
      *
-     * @param templateId 主键
-     * @return 实例对象
+     * @param smsTemplate 【请填写功能名称】
+     * @return 【请填写功能名称】集合
      */
-    SmsTemplate queryById(String templateId);
+    public List<SmsTemplate> selectSmsTemplateList(SmsTemplate smsTemplate);
 
     /**
-     * 分页查询
+     * 新增【请填写功能名称】
      *
-     * @param smsTemplate 筛选条件
-     * @param pageRequest      分页对象
-     * @return 查询结果
+     * @param smsTemplate 【请填写功能名称】
+     * @return 结果
      */
-    Page<SmsTemplate> queryByPage(SmsTemplate smsTemplate, PageRequest pageRequest);
+    public int insertSmsTemplate(SmsTemplate smsTemplate);
 
     /**
-     * 新增数据
+     * 修改【请填写功能名称】
      *
-     * @param smsTemplate 实例对象
-     * @return 实例对象
+     * @param smsTemplate 【请填写功能名称】
+     * @return 结果
      */
-    SmsTemplate insert(SmsTemplate smsTemplate);
+    public int updateSmsTemplate(SmsTemplate smsTemplate);
 
     /**
-     * 修改数据
+     * 批量删除【请填写功能名称】
      *
-     * @param smsTemplate 实例对象
-     * @return 实例对象
+     * @param templateIds 需要删除的【请填写功能名称】主键集合
+     * @return 结果
      */
-    SmsTemplate update(SmsTemplate smsTemplate);
+    public int deleteSmsTemplateByTemplateIds(String[] templateIds);
 
     /**
-     * 通过主键删除数据
+     * 删除【请填写功能名称】信息
      *
-     * @param templateId 主键
-     * @return 是否成功
+     * @param templateId 【请填写功能名称】主键
+     * @return 结果
      */
-    boolean deleteById(String templateId);
-
+    public int deleteSmsTemplateByTemplateId(String templateId);
 }

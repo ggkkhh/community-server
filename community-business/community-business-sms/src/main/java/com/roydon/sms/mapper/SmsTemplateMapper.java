@@ -2,8 +2,8 @@ package com.roydon.sms.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.roydon.sms.domain.entity.SmsTemplate;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.data.domain.Pageable;
+import org.apache.ibatis.annotations.Mapper;
+
 import java.util.List;
 
 /**
@@ -12,73 +12,53 @@ import java.util.List;
  * @author roydon
  * @since 2023-05-24 19:08:58
  */
-public interface SmsTemplateMapper extends BaseMapper<SmsTemplate>{
+@Mapper
+public interface SmsTemplateMapper extends BaseMapper<SmsTemplate> {
+    /**
+     * 查询【请填写功能名称】
+     *
+     * @param templateId 【请填写功能名称】主键
+     * @return 【请填写功能名称】
+     */
+    public SmsTemplate selectSmsTemplateByTemplateId(String templateId);
 
     /**
-     * 通过ID查询单条数据
+     * 查询【请填写功能名称】列表
      *
-     * @param templateId 主键
-     * @return 实例对象
+     * @param smsTemplate 【请填写功能名称】
+     * @return 【请填写功能名称】集合
      */
-    SmsTemplate queryById(String templateId);
+    public List<SmsTemplate> selectSmsTemplateList(SmsTemplate smsTemplate);
 
     /**
-     * 查询指定行数据
+     * 新增【请填写功能名称】
      *
-     * @param smsTemplate 查询条件
-     * @param pageable         分页对象
-     * @return 对象列表
+     * @param smsTemplate 【请填写功能名称】
+     * @return 结果
      */
-    List<SmsTemplate> queryAllByLimit(SmsTemplate smsTemplate, @Param("pageable") Pageable pageable);
+    public int insertSmsTemplate(SmsTemplate smsTemplate);
 
     /**
-     * 统计总行数
+     * 修改【请填写功能名称】
      *
-     * @param smsTemplate 查询条件
-     * @return 总行数
+     * @param smsTemplate 【请填写功能名称】
+     * @return 结果
      */
-    long count(SmsTemplate smsTemplate);
+    public int updateSmsTemplate(SmsTemplate smsTemplate);
 
     /**
-     * 新增数据
+     * 删除【请填写功能名称】
      *
-     * @param smsTemplate 实例对象
-     * @return 影响行数
+     * @param templateId 【请填写功能名称】主键
+     * @return 结果
      */
-    int insert(SmsTemplate smsTemplate);
+    public int deleteSmsTemplateByTemplateId(String templateId);
 
     /**
-     * 批量新增数据（MyBatis原生foreach方法）
+     * 批量删除【请填写功能名称】
      *
-     * @param entities List<SmsTemplate> 实例对象列表
-     * @return 影响行数
+     * @param templateIds 需要删除的数据主键集合
+     * @return 结果
      */
-    int insertBatch(@Param("entities") List<SmsTemplate> entities);
-
-    /**
-     * 批量新增或按主键更新数据（MyBatis原生foreach方法）
-     *
-     * @param entities List<SmsTemplate> 实例对象列表
-     * @return 影响行数
-     * @throws org.springframework.jdbc.BadSqlGrammarException 入参是空List的时候会抛SQL语句错误的异常，请自行校验入参
-     */
-    int insertOrUpdateBatch(@Param("entities") List<SmsTemplate> entities);
-
-    /**
-     * 修改数据
-     *
-     * @param smsTemplate 实例对象
-     * @return 影响行数
-     */
-    int update(SmsTemplate smsTemplate);
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param templateId 主键
-     * @return 影响行数
-     */
-    int deleteById(String templateId);
-
+    public int deleteSmsTemplateByTemplateIds(String[] templateIds);
 }
-

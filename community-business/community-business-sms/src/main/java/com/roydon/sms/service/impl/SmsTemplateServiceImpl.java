@@ -1,15 +1,14 @@
 package com.roydon.sms.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.roydon.common.utils.DateUtils;
 import com.roydon.sms.domain.entity.SmsTemplate;
 import com.roydon.sms.mapper.SmsTemplateMapper;
 import com.roydon.sms.service.ISmsTemplateService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (SmsTemplate)表服务实现类
@@ -19,65 +18,75 @@ import javax.annotation.Resource;
  */
 @Service("smsTemplateService")
 public class SmsTemplateServiceImpl extends ServiceImpl<SmsTemplateMapper, SmsTemplate> implements ISmsTemplateService {
+
     @Resource
     private SmsTemplateMapper smsTemplateMapper;
 
     /**
-     * 通过ID查询单条数据
+     * 查询【请填写功能名称】
      *
-     * @param templateId 主键
-     * @return 实例对象
+     * @param templateId 【请填写功能名称】主键
+     * @return 【请填写功能名称】
      */
     @Override
-    public SmsTemplate queryById(String templateId) {
-        return this.smsTemplateMapper.queryById(templateId);
+    public SmsTemplate selectSmsTemplateByTemplateId(String templateId) {
+        return smsTemplateMapper.selectSmsTemplateByTemplateId(templateId);
     }
 
     /**
-     * 分页查询
+     * 查询【请填写功能名称】列表
      *
-     * @param smsTemplate 筛选条件
-     * @param pageRequest      分页对象
-     * @return 查询结果
+     * @param smsTemplate 【请填写功能名称】
+     * @return 【请填写功能名称】
      */
     @Override
-    public Page<SmsTemplate> queryByPage(SmsTemplate smsTemplate, PageRequest pageRequest) {
-        long total = this.smsTemplateMapper.count(smsTemplate);
-        return new PageImpl<>(this.smsTemplateMapper.queryAllByLimit(smsTemplate, pageRequest), pageRequest, total);
+    public List<SmsTemplate> selectSmsTemplateList(SmsTemplate smsTemplate) {
+        return smsTemplateMapper.selectSmsTemplateList(smsTemplate);
     }
 
     /**
-     * 新增数据
+     * 新增【请填写功能名称】
      *
-     * @param smsTemplate 实例对象
-     * @return 实例对象
+     * @param smsTemplate 【请填写功能名称】
+     * @return 结果
      */
     @Override
-    public SmsTemplate insert(SmsTemplate smsTemplate) {
-        this.smsTemplateMapper.insert(smsTemplate);
-        return smsTemplate;
+    public int insertSmsTemplate(SmsTemplate smsTemplate) {
+        smsTemplate.setCreateTime(DateUtils.getNowDate());
+        return smsTemplateMapper.insertSmsTemplate(smsTemplate);
     }
 
     /**
-     * 修改数据
+     * 修改【请填写功能名称】
      *
-     * @param smsTemplate 实例对象
-     * @return 实例对象
+     * @param smsTemplate 【请填写功能名称】
+     * @return 结果
      */
     @Override
-    public SmsTemplate update(SmsTemplate smsTemplate) {
-        this.smsTemplateMapper.update(smsTemplate);
-        return this.queryById(smsTemplate.getTemplateId());
+    public int updateSmsTemplate(SmsTemplate smsTemplate) {
+        smsTemplate.setUpdateTime(DateUtils.getNowDate());
+        return smsTemplateMapper.updateSmsTemplate(smsTemplate);
     }
 
     /**
-     * 通过主键删除数据
+     * 批量删除【请填写功能名称】
      *
-     * @param templateId 主键
-     * @return 是否成功
+     * @param templateIds 需要删除的【请填写功能名称】主键
+     * @return 结果
      */
     @Override
-    public boolean deleteById(String templateId) {
-        return this.smsTemplateMapper.deleteById(templateId) > 0;
+    public int deleteSmsTemplateByTemplateIds(String[] templateIds) {
+        return smsTemplateMapper.deleteSmsTemplateByTemplateIds(templateIds);
+    }
+
+    /**
+     * 删除【请填写功能名称】信息
+     *
+     * @param templateId 【请填写功能名称】主键
+     * @return 结果
+     */
+    @Override
+    public int deleteSmsTemplateByTemplateId(String templateId) {
+        return smsTemplateMapper.deleteSmsTemplateByTemplateId(templateId);
     }
 }
