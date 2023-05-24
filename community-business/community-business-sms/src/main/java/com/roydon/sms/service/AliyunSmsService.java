@@ -1,6 +1,5 @@
 package com.roydon.sms.service;
 
-import com.roydon.sms.domain.model.AliSmsResponse;
 import com.roydon.sms.domain.model.SmsCode;
 
 /**

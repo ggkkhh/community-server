@@ -18,6 +18,7 @@
         <module>community-business-mall</module>
         <module>community-business-app</module>
         <module>community-business-unit</module>
+        <module>community-business-sms</module>
     </modules>
 
     <properties>

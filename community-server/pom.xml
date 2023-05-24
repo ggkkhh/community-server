@@ -60,9 +60,15 @@
         </dependency>
 
         <!-- 短信服务 -->
+<!--        <dependency>-->
+<!--            <groupId>com.roydon</groupId>-->
+<!--            <artifactId>community-sms</artifactId>-->
+<!--            <version>1.0.0</version>-->
+<!--        </dependency>-->
+        <!-- 短信服务 -->
         <dependency>
             <groupId>com.roydon</groupId>
-            <artifactId>community-sms</artifactId>
+            <artifactId>community-business-sms</artifactId>
             <version>1.0.0</version>
         </dependency>
 

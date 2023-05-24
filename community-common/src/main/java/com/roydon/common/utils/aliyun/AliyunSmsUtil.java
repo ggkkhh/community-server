@@ -76,7 +76,7 @@ public class AliyunSmsUtil {
         request.setAction("SendSms");
         // 要发送到的手机号
         request.putQueryParameter("PhoneNumbers", mobile);
-        // 短信签名名称。请在控制台签名管理页面签名名称一列查看。 说明 必须是已添加、并通过审核的短信签名。 
+        // 短信签名名称。请在控制台签名管理页面签名名称一列查看。 说明 必须是已添加、并通过审核的短信签名。
         request.putQueryParameter("SignName", signName);
         // 短信模板ID。请在控制台模板管理页面模板CODE一列查看。 说明 必须是已添加、并通过审核的短信签名；且发送国际/港澳台消息时，请使用国际/港澳台短信模版。
         request.putQueryParameter("TemplateCode", templateCode);
@@ -193,6 +193,9 @@ public class AliyunSmsUtil {
          * 信息变更
          */
         SMS_000000006(6),
+        /**
+         * 短信验证码
+         */
         SMS_273815229(7);
 
         private int type;

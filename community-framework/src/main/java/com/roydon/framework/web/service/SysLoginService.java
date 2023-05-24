@@ -13,7 +13,6 @@ import com.roydon.common.exception.user.TelePhoneException;
 import com.roydon.common.exception.user.UserPasswordNotMatchException;
 import com.roydon.common.utils.*;
 import com.roydon.common.utils.ip.IpUtils;
-import com.roydon.framework.config.smsconfig.SmsAuthenticationProvider;
 import com.roydon.framework.config.smsconfig.SmsAuthenticationToken;
 import com.roydon.framework.manager.AsyncManager;
 import com.roydon.framework.manager.factory.AsyncFactory;

@@ -6,6 +6,10 @@ package com.roydon.common.utils.uuid;
  * @author roydon
  */
 public class IdUtils {
+
+    public static void main(String[] args) {
+        System.out.println("simpleUUID() = " + simpleUUID());
+    }
     /**
      * 获取随机UUID
      *

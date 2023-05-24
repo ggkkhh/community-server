@@ -1,4 +1,4 @@
-package com.roydon.admin.web.controller.tool;
+package com.roydon.sms.controller;
 
 import com.roydon.common.core.domain.AjaxResult;
 import com.roydon.sms.domain.model.SmsCode;

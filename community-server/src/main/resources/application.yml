@@ -45,10 +45,10 @@ spring:
     restart:
       enabled: true # 热部署开关
   redis:
-    host: 43.143.33.99
+    host: r-uf673npd2sfuujqlaipd.redis.rds.aliyuncs.com
     port: 6379
     database: 0
-    password: qwer1234
+    password: roydon#Redis
     timeout: 10s
     lettuce:
       pool:

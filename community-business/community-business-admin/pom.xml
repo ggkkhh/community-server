@@ -17,16 +17,31 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
+        <!-- 对象存储oss -->
         <dependency>
             <groupId>com.roydon</groupId>
             <artifactId>community-business-oss</artifactId>
             <version>1.0.0</version>
         </dependency>
+
+        <!-- app -->
         <dependency>
             <groupId>com.roydon</groupId>
-            <artifactId>community-sms</artifactId>
+            <artifactId>community-business-app</artifactId>
             <version>1.0.0</version>
         </dependency>
+
+        <!-- sms -->
+        <dependency>
+            <groupId>com.roydon</groupId>
+            <artifactId>community-business-sms</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.roydon</groupId>-->
+<!--            <artifactId>community-sms</artifactId>-->
+<!--            <version>1.0.0</version>-->
+<!--        </dependency>-->
 
         <!-- swagger3-->
         <dependency>
@@ -40,12 +55,7 @@
             <artifactId>swagger-models</artifactId>
             <version>1.6.2</version>
         </dependency>
-        <dependency>
-            <groupId>com.roydon</groupId>
-            <artifactId>community-business-app</artifactId>
-            <version>1.0.0</version>
-            <scope>compile</scope>
-        </dependency>
+
     </dependencies>
 
 </project>
