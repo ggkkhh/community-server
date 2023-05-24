@@ -2,6 +2,7 @@ package com.roydon.sms.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.roydon.common.utils.DateUtils;
+import com.roydon.common.utils.uniqueid.IdGenerator;
 import com.roydon.sms.domain.entity.SmsTemplate;
 import com.roydon.sms.mapper.SmsTemplateMapper;
 import com.roydon.sms.service.ISmsTemplateService;
@@ -53,6 +54,7 @@ public class SmsTemplateServiceImpl extends ServiceImpl<SmsTemplateMapper, SmsTe
     @Override
     public int insertSmsTemplate(SmsTemplate smsTemplate) {
         smsTemplate.setCreateTime(DateUtils.getNowDate());
+        smsTemplate.setTemplateId(IdGenerator.generatorId());
         return smsTemplateMapper.insertSmsTemplate(smsTemplate);
     }
 
