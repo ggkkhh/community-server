@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.roydon.sms.mapper.SmsProviderMapper">
+
+    <resultMap type="SmsProvider" id="SmsProviderResult">
+        <result property="providerId" column="provider_id"/>
+        <result property="providerName" column="provider_name"/>
+        <result property="provideBeginTime" column="provide_begin_time"/>
+        <result property="provideEndTime" column="provide_end_time"/>
+        <result property="residueCount" column="residue_count"/>
+        <result property="accessKeyId" column="access_key_id"/>
+        <result property="accessKeySecret" column="access_key_secret"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createBy" column="create_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="selectSmsProviderVo">
+        select provider_id,
+               provider_name,
+               provide_begin_time,
+               provide_end_time,
+               residue_count,
+               access_key_id,
+               access_key_secret,
+               create_time,
+               create_by,
+               update_time,
+               update_by,
+               remark
+        from sms_provider
+    </sql>
+
+    <select id="selectSmsProviderList" parameterType="SmsProvider" resultMap="SmsProviderResult">
+        <include refid="selectSmsProviderVo"/>
+        <where>1=1
+            <if test="providerName != null  and providerName != ''">and provider_name like concat('%', #{providerName},
+                '%')
+            </if>
+            <if test="residueCount != null  and residueCount != ''">and residue_count = #{residueCount}</if>
+            <if test="accessKeyId != null ">and access_key_id like #{accessKeyId}</if>
+            <if test="accessKeySecret != null  and accessKeySecret != ''">and access_key_secret like #{accessKeySecret}
+            </if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
+        </where>
+        <!-- 数据范围过滤 -->
+        ${params.dataScope}
+    </select>
+
+    <select id="selectSmsProviderByProviderId" parameterType="String" resultMap="SmsProviderResult">
+        <include refid="selectSmsProviderVo"/>
+        where provider_id = #{providerId}
+    </select>
+
+    <insert id="insertSmsProvider" parameterType="SmsProvider">
+        insert into sms_provider
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="providerId != null">provider_id,</if>
+            <if test="providerName != null">provider_name,</if>
+            <if test="provideBeginTime != null">provide_begin_time,</if>
+            <if test="provideEndTime != null">provide_end_time,</if>
+            <if test="residueCount != null">residue_count,</if>
+            <if test="accessKeyId != null">access_key_id,</if>
+            <if test="accessKeySecret != null">access_key_secret,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="remark != null">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="providerId != null">#{providerId},</if>
+            <if test="providerName != null">#{providerName},</if>
+            <if test="provideBeginTime != null">#{provideBeginTime},</if>
+            <if test="provideEndTime != null">#{provideEndTime},</if>
+            <if test="residueCount != null">#{residueCount},</if>
+            <if test="accessKeyId != null">#{accessKeyId},</if>
+            <if test="accessKeySecret != null">#{accessKeySecret},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+
+    <update id="updateSmsProvider" parameterType="SmsProvider">
+        update sms_provider
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="providerName != null">provider_name = #{providerName},</if>
+            <if test="provideBeginTime != null">provide_begin_time = #{provideBeginTime},</if>
+            <if test="provideEndTime != null">provide_end_time = #{provideEndTime},</if>
+            <if test="residueCount != null">residue_count = #{residueCount},</if>
+            <if test="accessKeyId != null">access_key_id = #{accessKeyId},</if>
+            <if test="accessKeySecret != null">access_key_secret = #{accessKeySecret},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where provider_id = #{providerId}
+    </update>
+
+    <delete id="deleteSmsProviderByProviderId" parameterType="String">
+        delete
+        from sms_provider
+        where provider_id = #{providerId}
+    </delete>
+
+    <delete id="deleteSmsProviderByProviderIds" parameterType="String">
+        delete from sms_provider where provider_id in
+        <foreach item="providerId" collection="array" open="(" separator="," close=")">
+            #{providerId}
+        </foreach>
+    </delete>
+</mapper>
