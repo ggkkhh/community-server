@@ -24,10 +24,10 @@ public class SmsTemplateServiceImpl extends ServiceImpl<SmsTemplateMapper, SmsTe
     private SmsTemplateMapper smsTemplateMapper;
 
     /**
-     * 查询【请填写功能名称】
+     * 查询短信模板
      *
-     * @param templateId 【请填写功能名称】主键
-     * @return 【请填写功能名称】
+     * @param templateId 短信模板主键
+     * @return 短信模板
      */
     @Override
     public SmsTemplate selectSmsTemplateByTemplateId(String templateId) {
@@ -35,10 +35,10 @@ public class SmsTemplateServiceImpl extends ServiceImpl<SmsTemplateMapper, SmsTe
     }
 
     /**
-     * 查询【请填写功能名称】列表
+     * 查询短信模板列表
      *
-     * @param smsTemplate 【请填写功能名称】
-     * @return 【请填写功能名称】
+     * @param smsTemplate 短信模板
+     * @return 短信模板
      */
     @Override
     public List<SmsTemplate> selectSmsTemplateList(SmsTemplate smsTemplate) {
@@ -46,9 +46,9 @@ public class SmsTemplateServiceImpl extends ServiceImpl<SmsTemplateMapper, SmsTe
     }
 
     /**
-     * 新增【请填写功能名称】
+     * 新增短信模板
      *
-     * @param smsTemplate 【请填写功能名称】
+     * @param smsTemplate 短信模板
      * @return 结果
      */
     @Override
@@ -59,9 +59,9 @@ public class SmsTemplateServiceImpl extends ServiceImpl<SmsTemplateMapper, SmsTe
     }
 
     /**
-     * 修改【请填写功能名称】
+     * 修改短信模板
      *
-     * @param smsTemplate 【请填写功能名称】
+     * @param smsTemplate 短信模板
      * @return 结果
      */
     @Override
@@ -71,9 +71,9 @@ public class SmsTemplateServiceImpl extends ServiceImpl<SmsTemplateMapper, SmsTe
     }
 
     /**
-     * 批量删除【请填写功能名称】
+     * 批量删除短信模板
      *
-     * @param templateIds 需要删除的【请填写功能名称】主键
+     * @param templateIds 需要删除的短信模板主键
      * @return 结果
      */
     @Override
@@ -82,9 +82,9 @@ public class SmsTemplateServiceImpl extends ServiceImpl<SmsTemplateMapper, SmsTe
     }
 
     /**
-     * 删除【请填写功能名称】信息
+     * 删除短信模板信息
      *
-     * @param templateId 【请填写功能名称】主键
+     * @param templateId 短信模板主键
      * @return 结果
      */
     @Override

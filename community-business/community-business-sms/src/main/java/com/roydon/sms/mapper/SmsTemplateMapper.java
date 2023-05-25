@@ -15,47 +15,47 @@ import java.util.List;
 @Mapper
 public interface SmsTemplateMapper extends BaseMapper<SmsTemplate> {
     /**
-     * 查询【请填写功能名称】
+     * 查询短信模板
      *
-     * @param templateId 【请填写功能名称】主键
-     * @return 【请填写功能名称】
+     * @param templateId 短信模板主键
+     * @return 短信模板
      */
     public SmsTemplate selectSmsTemplateByTemplateId(String templateId);
 
     /**
-     * 查询【请填写功能名称】列表
+     * 查询短信模板列表
      *
-     * @param smsTemplate 【请填写功能名称】
-     * @return 【请填写功能名称】集合
+     * @param smsTemplate 短信模板
+     * @return 短信模板集合
      */
     public List<SmsTemplate> selectSmsTemplateList(SmsTemplate smsTemplate);
 
     /**
-     * 新增【请填写功能名称】
+     * 新增短信模板
      *
-     * @param smsTemplate 【请填写功能名称】
+     * @param smsTemplate 短信模板
      * @return 结果
      */
     public int insertSmsTemplate(SmsTemplate smsTemplate);
 
     /**
-     * 修改【请填写功能名称】
+     * 修改短信模板
      *
-     * @param smsTemplate 【请填写功能名称】
+     * @param smsTemplate 短信模板
      * @return 结果
      */
     public int updateSmsTemplate(SmsTemplate smsTemplate);
 
     /**
-     * 删除【请填写功能名称】
+     * 删除短信模板
      *
-     * @param templateId 【请填写功能名称】主键
+     * @param templateId 短信模板主键
      * @return 结果
      */
     public int deleteSmsTemplateByTemplateId(String templateId);
 
     /**
-     * 批量删除【请填写功能名称】
+     * 批量删除短信模板
      *
      * @param templateIds 需要删除的数据主键集合
      * @return 结果

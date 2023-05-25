@@ -13,49 +13,49 @@ import java.util.List;
  */
 public interface ISmsTemplateService extends IService<SmsTemplate> {
     /**
-     * 查询【请填写功能名称】
+     * 查询短信模板
      *
-     * @param templateId 【请填写功能名称】主键
-     * @return 【请填写功能名称】
+     * @param templateId 短信模板主键
+     * @return 短信模板
      */
     public SmsTemplate selectSmsTemplateByTemplateId(String templateId);
 
     /**
-     * 查询【请填写功能名称】列表
+     * 查询短信模板列表
      *
-     * @param smsTemplate 【请填写功能名称】
-     * @return 【请填写功能名称】集合
+     * @param smsTemplate 短信模板
+     * @return 短信模板集合
      */
     public List<SmsTemplate> selectSmsTemplateList(SmsTemplate smsTemplate);
 
     /**
-     * 新增【请填写功能名称】
+     * 新增短信模板
      *
-     * @param smsTemplate 【请填写功能名称】
+     * @param smsTemplate 短信模板
      * @return 结果
      */
     public int insertSmsTemplate(SmsTemplate smsTemplate);
 
     /**
-     * 修改【请填写功能名称】
+     * 修改短信模板
      *
-     * @param smsTemplate 【请填写功能名称】
+     * @param smsTemplate 短信模板
      * @return 结果
      */
     public int updateSmsTemplate(SmsTemplate smsTemplate);
 
     /**
-     * 批量删除【请填写功能名称】
+     * 批量删除短信模板
      *
-     * @param templateIds 需要删除的【请填写功能名称】主键集合
+     * @param templateIds 需要删除的短信模板主键集合
      * @return 结果
      */
     public int deleteSmsTemplateByTemplateIds(String[] templateIds);
 
     /**
-     * 删除【请填写功能名称】信息
+     * 删除短信模板信息
      *
-     * @param templateId 【请填写功能名称】主键
+     * @param templateId 短信模板主键
      * @return 结果
      */
     public int deleteSmsTemplateByTemplateId(String templateId);

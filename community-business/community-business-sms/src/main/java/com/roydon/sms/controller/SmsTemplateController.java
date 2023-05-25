@@ -28,7 +28,7 @@ public class SmsTemplateController extends BaseController {
     private ISmsTemplateService smsTemplateService;
 
     /**
-     * 查询【请填写功能名称】列表
+     * 查询短信模板列表
      */
     @PreAuthorize("@ss.hasPermi('sms:template:list')")
     @GetMapping("/list")
@@ -39,19 +39,19 @@ public class SmsTemplateController extends BaseController {
     }
 
     /**
-     * 导出【请填写功能名称】列表
+     * 导出短信模板列表
      */
     @PreAuthorize("@ss.hasPermi('sms:template:export')")
-    @Log(title = "【请填写功能名称】", businessType = BusinessType.EXPORT)
+    @Log(title = "短信模板", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, SmsTemplate smsTemplate) {
         List<SmsTemplate> list = smsTemplateService.selectSmsTemplateList(smsTemplate);
         ExcelUtil<SmsTemplate> util = new ExcelUtil<SmsTemplate>(SmsTemplate.class);
-        util.exportExcel(response, list, "【请填写功能名称】数据");
+        util.exportExcel(response, list, "短信模板数据");
     }
 
     /**
-     * 获取【请填写功能名称】详细信息
+     * 获取短信模板详细信息
      */
     @PreAuthorize("@ss.hasPermi('sms:template:query')")
     @GetMapping(value = "/{templateId}")
@@ -60,30 +60,30 @@ public class SmsTemplateController extends BaseController {
     }
 
     /**
-     * 新增【请填写功能名称】
+     * 新增短信模板
      */
     @PreAuthorize("@ss.hasPermi('sms:template:add')")
-    @Log(title = "【请填写功能名称】", businessType = BusinessType.INSERT)
+    @Log(title = "短信模板", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody SmsTemplate smsTemplate) {
         return toAjax(smsTemplateService.insertSmsTemplate(smsTemplate));
     }
 
     /**
-     * 修改【请填写功能名称】
+     * 修改短信模板
      */
     @PreAuthorize("@ss.hasPermi('sms:template:edit')")
-    @Log(title = "【请填写功能名称】", businessType = BusinessType.UPDATE)
+    @Log(title = "短信模板", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody SmsTemplate smsTemplate) {
         return toAjax(smsTemplateService.updateSmsTemplate(smsTemplate));
     }
 
     /**
-     * 删除【请填写功能名称】
+     * 删除短信模板
      */
     @PreAuthorize("@ss.hasPermi('sms:template:remove')")
-    @Log(title = "【请填写功能名称】", businessType = BusinessType.DELETE)
+    @Log(title = "短信模板", businessType = BusinessType.DELETE)
     @DeleteMapping("/{templateIds}")
     public AjaxResult remove(@PathVariable String[] templateIds) {
         return toAjax(smsTemplateService.deleteSmsTemplateByTemplateIds(templateIds));
