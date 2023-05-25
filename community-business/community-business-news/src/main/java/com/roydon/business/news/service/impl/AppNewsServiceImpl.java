@@ -37,6 +37,7 @@ public class AppNewsServiceImpl extends ServiceImpl<AppNewsMapper, AppNews> impl
     @Async
     @PostConstruct
     public void init() {
+        // TODO 如果爬取新闻事件被触发，也要调用此方法重新将新数据写入缓存
         log.info("新闻浏览量写入缓存开始==>");
         List<AppNews> appNewsList = list();
         Map<String, Integer> newsViewMap = appNewsList.stream().collect(Collectors.toMap(AppNews::getNewsId, AppNews::getViewNum));
@@ -44,7 +45,7 @@ public class AppNewsServiceImpl extends ServiceImpl<AppNewsMapper, AppNews> impl
         log.info("<==新闻浏览量写入缓存成功");
     }
 
-    //=============================公用方法区=================
+    //=============================私有方法区=================
     private void getNewsViewNumFromRedis(AppNews appNews) {
         appNews.setViewNum(redisCache.getCacheMapValue(CacheConstants.NEWS_VIEW_NUM_KEY, appNews.getNewsId()));
     }

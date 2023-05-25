@@ -1,0 +1,19 @@
+@startuml
+
+actor User
+participant Client
+participant Server
+participant Database
+
+User-> Client: 输入用户名密码
+Client->Server: 发送登录请求
+Server->Database: 查询用户信息
+Database->Server: 返回用户信息
+Server->Server: 判断用户信息是否正确
+Server->Server: 生成Token并存储到Redis中
+Server->Client: 返回Token
+Client->Server: 发送Token请求
+Server->Server: 验证Token是否正确
+Server->Client: 返回结果
+
+@enduml
