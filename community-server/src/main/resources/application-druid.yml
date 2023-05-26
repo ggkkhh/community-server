@@ -6,9 +6,9 @@ spring:
     druid:
       # 主库数据源
       master:
-        url: jdbc:mysql://43.143.33.99:3306/a_community?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+        url: jdbc:mysql://106.14.105.101:3306/community-server?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
         username: roydon
-        password: qwer1234
+        password: roydon#Mysql
       # 从库数据源
       slave:
         # 从数据源开关/默认关闭
@@ -48,8 +48,7 @@ spring:
       filter:
         stat:
           enabled: true
-          # 慢SQL记录
-          log-slow-sql: true
+          log-slow-sql: true # 慢SQL记录
           slow-sql-millis: 1000
           merge-sql: true
         wall:
