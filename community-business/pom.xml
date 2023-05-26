@@ -19,6 +19,7 @@
         <module>community-business-app</module>
         <module>community-business-unit</module>
         <module>community-business-sms</module>
+        <module>community-business-epidemic</module>
     </modules>
 
     <properties>

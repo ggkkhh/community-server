@@ -19,6 +19,12 @@
 
     <dependencies>
 
+        <!-- 疫情防控 -->
+        <dependency>
+            <groupId>com.roydon</groupId>
+            <artifactId>community-business-epidemic</artifactId>
+            <version>1.0.0</version>
+        </dependency>
         <!-- 单元管理 -->
         <dependency>
             <groupId>com.roydon</groupId>
