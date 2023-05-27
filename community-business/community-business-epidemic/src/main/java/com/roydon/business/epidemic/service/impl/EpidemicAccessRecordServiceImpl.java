@@ -5,7 +5,7 @@ import com.roydon.business.epidemic.domain.entity.EpidemicAccessRecord;
 import com.roydon.business.epidemic.mapper.EpidemicAccessRecordMapper;
 import com.roydon.business.epidemic.service.IEpidemicAccessRecordService;
 import com.roydon.common.utils.DateUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.roydon.common.utils.uniqueid.IdGenerator;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -54,6 +54,7 @@ public class EpidemicAccessRecordServiceImpl extends ServiceImpl<EpidemicAccessR
     @Override
     public int insertEpidemicAccessRecord(EpidemicAccessRecord epidemicAccessRecord) {
         epidemicAccessRecord.setCreateTime(DateUtils.getNowDate());
+        epidemicAccessRecord.setRecordId(IdGenerator.generatorId());
         return epidemicAccessRecordMapper.insertEpidemicAccessRecord(epidemicAccessRecord);
     }
 
