@@ -38,8 +38,11 @@ public class AppNewsServiceImpl extends ServiceImpl<AppNewsMapper, AppNews> impl
     @PostConstruct
     public void init() {
         // TODO 如果爬取新闻事件被触发，也要调用此方法重新将新数据写入缓存
+        // TODO 优化根据索引--两个字段
         log.info("新闻浏览量写入缓存开始==>");
-        List<AppNews> appNewsList = list();
+        LambdaQueryWrapper<AppNews> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.select(AppNews::getNewsId,AppNews::getViewNum);
+        List<AppNews> appNewsList = list(queryWrapper);
         Map<String, Integer> newsViewMap = appNewsList.stream().collect(Collectors.toMap(AppNews::getNewsId, AppNews::getViewNum));
         redisCache.setCacheMap(CacheConstants.NEWS_VIEW_NUM_KEY, newsViewMap);
         log.info("<==新闻浏览量写入缓存成功");
