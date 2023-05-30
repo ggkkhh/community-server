@@ -19,9 +19,6 @@ import java.util.Date;
 public class EpidemicAccessRecord extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
-    /**
-     * $column.columnComment
-     */
     @TableId("record_id")
     private String recordId;
 
