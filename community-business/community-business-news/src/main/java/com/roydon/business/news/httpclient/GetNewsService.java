@@ -6,7 +6,9 @@ import com.roydon.business.news.domain.AppNews;
 import com.roydon.business.news.enums.NewsType;
 import com.roydon.business.news.model.*;
 import com.roydon.business.news.service.AppNewsService;
+import com.roydon.common.constant.CacheConstants;
 import com.roydon.common.constant.Constants;
+import com.roydon.common.core.redis.RedisCache;
 import com.roydon.common.utils.StringUtil;
 import com.roydon.common.utils.http.HttpUtils;
 import com.roydon.framework.manager.AsyncManager;
@@ -37,6 +39,9 @@ public class GetNewsService {
 
     @Resource
     private AppNewsService appNewsService;
+
+    @Resource
+    private RedisCache redisCache;
 
     public void getNewsList() {
         List<String> typeIdList = getTypeIdList();
@@ -114,6 +119,8 @@ public class GetNewsService {
                     an.setDelFlag("0");
                     // 批量添加到数据库
                     appNewsService.saveOrUpdate(an);
+                    // 插入数据成功将浏览量写入redis
+                    redisCache.setCacheMapValue(CacheConstants.NEWS_VIEW_NUM_KEY, an.getNewsId(), an.getViewNum());
                     log.info("插入或更新新闻数据成功！");
                 });
             }
