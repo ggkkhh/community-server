@@ -41,7 +41,7 @@ public class AppNewsServiceImpl extends ServiceImpl<AppNewsMapper, AppNews> impl
         // TODO 优化根据索引--两个字段
         log.info("新闻浏览量写入缓存开始==>");
         LambdaQueryWrapper<AppNews> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.select(AppNews::getNewsId,AppNews::getViewNum);
+        queryWrapper.select(AppNews::getNewsId, AppNews::getViewNum);
         List<AppNews> appNewsList = list(queryWrapper);
         Map<String, Integer> newsViewMap = appNewsList.stream().collect(Collectors.toMap(AppNews::getNewsId, AppNews::getViewNum));
         redisCache.setCacheMap(CacheConstants.NEWS_VIEW_NUM_KEY, newsViewMap);
@@ -88,7 +88,14 @@ public class AppNewsServiceImpl extends ServiceImpl<AppNewsMapper, AppNews> impl
 
     @Override
     public boolean removeNewsByIds(String[] newsIds) {
-        return removeBatchByIds(Arrays.asList(newsIds));
+        boolean b = removeBatchByIds(Arrays.asList(newsIds));
+        if (b) {
+            //删除redis缓存
+            for (String newsId : newsIds) {
+                redisCache.deleteCacheMapValue(CacheConstants.NEWS_VIEW_NUM_KEY, newsId);
+            }
+        }
+        return b;
     }
 
     @Override
