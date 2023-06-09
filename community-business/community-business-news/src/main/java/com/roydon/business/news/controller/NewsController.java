@@ -5,8 +5,10 @@ import com.roydon.business.news.service.AppNewsService;
 import com.roydon.common.annotation.Log;
 import com.roydon.common.core.controller.BaseController;
 import com.roydon.common.core.domain.AjaxResult;
+import com.roydon.common.core.domain.entity.SysDictData;
 import com.roydon.common.core.page.TableDataInfo;
 import com.roydon.common.enums.BusinessType;
+import com.roydon.system.service.ISysDictDataService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,6 +31,9 @@ public class NewsController extends BaseController {
 
     @Resource
     private AppNewsService appNewsService;
+
+    @Resource
+    private ISysDictDataService dictDataService;
 
     @PreAuthorize("@ss.hasPermi('app:news:list')")
     @GetMapping("/list")
@@ -70,6 +75,14 @@ public class NewsController extends BaseController {
     @PutMapping()
     public AjaxResult edit(@RequestBody AppNews appNews) {
         return toAjax(appNewsService.editNews(appNews));
+    }
+
+    @ApiOperation("新闻分类")
+    @Log(title = "新闻管理", businessType = BusinessType.UPDATE)
+    @GetMapping("/category")
+    public AjaxResult getNewsDictList() {
+        List<SysDictData> dataList = dictDataService.selectNewsDictList();
+        return AjaxResult.success(dataList);
     }
 
 }
