@@ -57,4 +57,12 @@ public interface ISysDictDataService extends IService<SysDictData> {
      * @return 结果
      */
     public int updateDictData(SysDictData dictData);
+
+    /**
+     * 获取新闻分类集合
+     *
+     * @return
+     */
+    List<SysDictData> selectNewsDictList();
+
 }
