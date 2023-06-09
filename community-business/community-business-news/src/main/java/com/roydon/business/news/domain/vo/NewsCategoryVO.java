@@ -9,5 +9,6 @@ import lombok.Data;
  **/
 @Data
 public class NewsCategoryVO {
+    private Long dictCode;
     private String dictLabel;
 }
