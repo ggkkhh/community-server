@@ -59,11 +59,11 @@
         </dependency>
 
         <!-- app新闻服务 -->
-        <dependency>
-            <groupId>com.roydon</groupId>
-            <artifactId>community-business-news</artifactId>
-            <version>1.0.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.roydon</groupId>-->
+<!--            <artifactId>community-business-news</artifactId>-->
+<!--            <version>1.0.0</version>-->
+<!--        </dependency>-->
 
         <!-- 短信服务 -->
 <!--        <dependency>-->
