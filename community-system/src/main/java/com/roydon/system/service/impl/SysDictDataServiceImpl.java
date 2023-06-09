@@ -1,5 +1,6 @@
 package com.roydon.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.roydon.common.core.domain.entity.SysDictData;
 import com.roydon.common.core.domain.entity.SysUser;
@@ -99,5 +100,12 @@ public class SysDictDataServiceImpl extends ServiceImpl<SysDictDataMapper, SysDi
             DictUtils.setDictCache(data.getDictType(), dictDatas);
         }
         return row;
+    }
+
+    @Override
+    public List<SysDictData> selectNewsDictList() {
+        LambdaQueryWrapper<SysDictData> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysDictData::getDictType, "app_news_type").eq(SysDictData::getStatus, 0).orderByAsc(SysDictData::getDictSort);
+        return list(queryWrapper);
     }
 }
