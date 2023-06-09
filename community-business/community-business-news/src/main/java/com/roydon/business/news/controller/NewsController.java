@@ -1,6 +1,7 @@
 package com.roydon.business.news.controller;
 
 import com.roydon.business.news.domain.AppNews;
+import com.roydon.business.news.domain.vo.NewsCategoryVO;
 import com.roydon.business.news.service.AppNewsService;
 import com.roydon.common.annotation.Log;
 import com.roydon.common.core.controller.BaseController;
@@ -8,6 +9,8 @@ import com.roydon.common.core.domain.AjaxResult;
 import com.roydon.common.core.domain.entity.SysDictData;
 import com.roydon.common.core.page.TableDataInfo;
 import com.roydon.common.enums.BusinessType;
+import com.roydon.common.utils.bean.BeanCopyUtils;
+import com.roydon.common.utils.bean.BeanUtils;
 import com.roydon.system.service.ISysDictDataService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -78,11 +81,11 @@ public class NewsController extends BaseController {
     }
 
     @ApiOperation("新闻分类")
-    @Log(title = "新闻管理", businessType = BusinessType.UPDATE)
     @GetMapping("/category")
     public AjaxResult getNewsDictList() {
         List<SysDictData> dataList = dictDataService.selectNewsDictList();
-        return AjaxResult.success(dataList);
+        List<NewsCategoryVO> newsCategoryVOList = BeanCopyUtils.copyBeanList(dataList, NewsCategoryVO.class);
+        return AjaxResult.success(newsCategoryVOList);
     }
 
 }
