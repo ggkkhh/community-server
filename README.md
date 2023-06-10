@@ -4,8 +4,8 @@
 
 ## 平台简介
 
-* 前端采用Vue、Element UI。
-* 后端采用Spring Boot、Spring Security、Redis & Jwt。
+* 前端采用Vue、Element UI、Android。
+* 后端采用Spring Boot、Spring Security、Mysql、Redis & Jwt、Mybatis-Plus。
 * 权限认证使用Jwt，支持多终端认证系统。
 
 ## 项目预览
