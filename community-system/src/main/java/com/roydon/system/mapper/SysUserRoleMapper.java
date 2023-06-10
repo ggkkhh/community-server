@@ -10,7 +10,6 @@ import java.util.List;
 /**
  * 用户与角色关联表 数据层
  */
-@Mapper
 public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
     /**
      * 通过用户ID删除用户和角色关联

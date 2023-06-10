@@ -1,5 +1,7 @@
 package com.roydon.system.domain;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.roydon.common.annotation.Excel;
 import com.roydon.common.annotation.Excel.ColumnType;
 import com.roydon.common.core.domain.BaseEntity;
@@ -15,12 +17,14 @@ import javax.validation.constraints.Size;
  * 参数配置表 sys_config
  */
 @ApiModel(value = "SysConfig", description = "系统配置实体")
+@TableName("sys_config")
 public class SysConfig extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
      * 参数主键
      */
+    @TableId("config_id")
     @ApiModelProperty("参数主键")
     @Excel(name = "参数主键", cellType = ColumnType.NUMERIC)
     private Long configId;

@@ -1,24 +1,28 @@
 package com.roydon.common.core.domain.entity;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.roydon.common.annotation.Excel;
 import com.roydon.common.annotation.Excel.ColumnType;
 import com.roydon.common.constant.UserConstants;
 import com.roydon.common.core.domain.BaseEntity;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 /**
  * 字典数据表 sys_dict_data
  */
+@TableName("sys_dict_data")
 public class SysDictData extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
      * 字典编码
      */
+    @TableId("dict_code")
     @Excel(name = "字典编码", cellType = ColumnType.NUMERIC)
     private Long dictCode;
 

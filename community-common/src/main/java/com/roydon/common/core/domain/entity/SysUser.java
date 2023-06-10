@@ -1,6 +1,7 @@
 package com.roydon.common.core.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.roydon.common.annotation.Excel;
 import com.roydon.common.annotation.Excel.ColumnType;
@@ -10,8 +11,6 @@ import com.roydon.common.core.domain.BaseEntity;
 import com.roydon.common.xss.Xss;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -31,6 +30,7 @@ public class SysUser extends BaseEntity {
     /**
      * 用户ID
      */
+    @TableId
     @ApiModelProperty("用户ID")
     @Excel(name = "用户序号", cellType = ColumnType.NUMERIC, prompt = "用户编号")
     private Long userId;
@@ -90,6 +90,7 @@ public class SysUser extends BaseEntity {
     @ApiModelProperty("用户性别")
     @Excel(name = "用户性别（0=男,1=女,2=未知）", readConverterExp = "0=男,1=女,2=未知")
     private String sex;
+
     private Integer age;
 
     /**

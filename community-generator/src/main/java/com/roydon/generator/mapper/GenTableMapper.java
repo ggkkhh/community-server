@@ -1,7 +1,6 @@
 package com.roydon.generator.mapper;
 
 import com.roydon.generator.domain.GenTable;
-import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -10,7 +9,6 @@ import java.util.List;
  *
  * @author roydon
  */
-@Mapper
 public interface GenTableMapper {
     /**
      * 查询业务列表

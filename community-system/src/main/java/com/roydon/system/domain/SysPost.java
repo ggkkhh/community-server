@@ -1,5 +1,8 @@
 package com.roydon.system.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.roydon.common.annotation.Excel;
 import com.roydon.common.annotation.Excel.ColumnType;
 import com.roydon.common.core.domain.BaseEntity;
@@ -12,12 +15,14 @@ import javax.validation.constraints.Size;
 /**
  * 岗位表 sys_post
  */
+@TableName("sys_post")
 public class SysPost extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
      * 岗位序号
      */
+    @TableId("post_id")
     @Excel(name = "岗位序号", cellType = ColumnType.NUMERIC)
     private Long postId;
 
@@ -48,6 +53,7 @@ public class SysPost extends BaseEntity {
     /**
      * 用户是否存在此岗位标识 默认不存在
      */
+    @TableField(exist = false)
     private boolean flag = false;
 
     public Long getPostId() {

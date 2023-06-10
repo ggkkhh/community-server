@@ -2,14 +2,12 @@ package com.roydon.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.roydon.system.domain.SysLoginInfo;
-import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 /**
  * 系统访问日志情况信息 数据层
  */
-@Mapper
 public interface SysLoginInfoMapper extends BaseMapper<SysLoginInfo> {
     /**
      * 新增系统登录日志

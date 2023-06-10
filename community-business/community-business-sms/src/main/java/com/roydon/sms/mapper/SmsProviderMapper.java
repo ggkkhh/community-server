@@ -2,7 +2,6 @@ package com.roydon.sms.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.roydon.sms.domain.entity.SmsProvider;
-import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -12,7 +11,6 @@ import java.util.List;
  * @author roydon
  * @since 2023-05-24 19:07:28
  */
-@Mapper
 public interface SmsProviderMapper extends BaseMapper<SmsProvider>{
     /**
      * 查询系统短信服务供应商

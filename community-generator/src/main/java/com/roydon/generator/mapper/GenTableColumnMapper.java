@@ -1,7 +1,6 @@
 package com.roydon.generator.mapper;
 
 import com.roydon.generator.domain.GenTableColumn;
-import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -10,7 +9,6 @@ import java.util.List;
  *
  * @author roydon
  */
-@Mapper
 public interface GenTableColumnMapper {
     /**
      * 根据表名称查询列信息

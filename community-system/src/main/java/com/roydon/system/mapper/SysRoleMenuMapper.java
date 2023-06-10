@@ -2,14 +2,12 @@ package com.roydon.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.roydon.system.domain.SysRoleMenu;
-import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 /**
  * 角色与菜单关联表 数据层
  */
-@Mapper
 public interface SysRoleMenuMapper extends BaseMapper<SysRoleMenu> {
     /**
      * 查询菜单使用数量

@@ -2,7 +2,6 @@ package com.roydon.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.roydon.common.core.domain.entity.SysDictData;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -10,7 +9,6 @@ import java.util.List;
 /**
  * 字典表 数据层
  */
-@Mapper
 public interface SysDictDataMapper extends BaseMapper<SysDictData> {
     /**
      * 根据条件分页查询字典数据

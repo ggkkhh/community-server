@@ -2,15 +2,12 @@ package com.roydon.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.roydon.system.domain.SysConfig;
-import org.apache.ibatis.annotations.Mapper;
 
-import javax.validation.constraints.Max;
 import java.util.List;
 
 /**
  * 参数配置 数据层
  */
-@Mapper
 public interface SysConfigMapper extends BaseMapper<SysConfig> {
     /**
      * 查询参数配置信息

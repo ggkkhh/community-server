@@ -11,7 +11,6 @@ import java.util.List;
 /**
  * 菜单表 数据层
  */
-@Mapper
 public interface SysMenuMapper extends BaseMapper<SysMenu> {
     /**
      * 查询系统菜单列表

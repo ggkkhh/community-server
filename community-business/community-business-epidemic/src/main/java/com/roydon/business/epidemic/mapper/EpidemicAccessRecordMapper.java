@@ -2,7 +2,6 @@ package com.roydon.business.epidemic.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.roydon.business.epidemic.domain.entity.EpidemicAccessRecord;
-import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -12,7 +11,6 @@ import java.util.List;
  * @author roydon
  * @date 2023-05-26
  */
-@Mapper
 public interface EpidemicAccessRecordMapper extends BaseMapper<EpidemicAccessRecord> {
     /**
      * 查询出入社区人员记录
