@@ -2,9 +2,9 @@ package com.roydon.business.mall.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.roydon.business.mall.domain.entity.MallOrder;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
 /**
@@ -13,7 +13,6 @@ import java.util.List;
  * @author roydon
  * @since 2023-05-18 23:14:11
  */
-@Mapper
 public interface MallOrderMapper extends BaseMapper<MallOrder>{
 
     /**

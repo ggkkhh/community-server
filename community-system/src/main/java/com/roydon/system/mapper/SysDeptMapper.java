@@ -10,7 +10,6 @@ import java.util.List;
 /**
  * 社区管理 数据层
  */
-@Mapper
 public interface SysDeptMapper extends BaseMapper<SysDept> {
     /**
      * 查询单元管理数据

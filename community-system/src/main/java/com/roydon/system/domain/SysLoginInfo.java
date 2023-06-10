@@ -1,5 +1,7 @@
 package com.roydon.system.domain;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.roydon.common.annotation.Excel;
 import com.roydon.common.annotation.Excel.ColumnType;
@@ -10,12 +12,14 @@ import java.util.Date;
 /**
  * 系统访问记录表 sys_login_info
  */
+@TableName("sys_login_info")
 public class SysLoginInfo extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
      * ID
      */
+    @TableId("info_id")
     @Excel(name = "序号", cellType = ColumnType.NUMERIC)
     private Long infoId;
 

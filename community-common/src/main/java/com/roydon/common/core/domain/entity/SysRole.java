@@ -1,24 +1,29 @@
 package com.roydon.common.core.domain.entity;
 
-import java.util.Set;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.roydon.common.annotation.Excel;
 import com.roydon.common.annotation.Excel.ColumnType;
 import com.roydon.common.core.domain.BaseEntity;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.util.Set;
 
 /**
  * 角色表 sys_role
  */
+@TableName("sys_role")
 public class SysRole extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
      * 角色ID
      */
+    @TableId("role_id")
     @Excel(name = "角色序号", cellType = ColumnType.NUMERIC)
     private Long roleId;
 
@@ -70,21 +75,25 @@ public class SysRole extends BaseEntity {
     /**
      * 用户是否存在此角色标识 默认不存在
      */
+    @TableField(exist = false)
     private boolean flag = false;
 
     /**
      * 菜单组
      */
+    @TableField(exist = false)
     private Long[] menuIds;
 
     /**
      * 单元组（数据权限）
      */
+    @TableField(exist = false)
     private Long[] deptIds;
 
     /**
      * 角色菜单权限
      */
+    @TableField(exist = false)
     private Set<String> permissions;
 
     public SysRole() {

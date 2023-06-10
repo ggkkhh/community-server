@@ -1,24 +1,28 @@
 package com.roydon.common.core.domain.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.roydon.common.core.domain.BaseEntity;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-import com.roydon.common.core.domain.BaseEntity;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 菜单权限表 sys_menu
  */
+@TableName("sys_menu")
 public class SysMenu extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
      * 菜单ID
      */
+    @TableId("menu_id")
     private Long menuId;
 
     /**

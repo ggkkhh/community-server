@@ -1,5 +1,7 @@
 package com.roydon.system.domain;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.roydon.common.annotation.Excel;
 import com.roydon.common.annotation.Excel.ColumnType;
@@ -10,12 +12,14 @@ import java.util.Date;
 /**
  * 操作日志记录表 oper_log
  */
+@TableName("sys_oper_log")
 public class SysOperLog extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
      * 日志主键
      */
+    @TableId("oper_id")
     @Excel(name = "操作序号", cellType = ColumnType.NUMERIC)
     private Long operId;
 

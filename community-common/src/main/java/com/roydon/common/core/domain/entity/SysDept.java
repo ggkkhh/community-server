@@ -1,5 +1,8 @@
 package com.roydon.common.core.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.roydon.common.core.domain.BaseEntity;
 
 import javax.validation.constraints.Email;
@@ -12,12 +15,14 @@ import java.util.List;
 /**
  * 社区表 sys_dept
  */
+@TableName("sys_dept")
 public class SysDept extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
      * ID
      */
+    @TableId("dept_id")
     private Long deptId;
 
     /**
@@ -82,6 +87,7 @@ public class SysDept extends BaseEntity {
     /**
      * 子
      */
+    @TableField(exist = false)
     private List<SysDept> children = new ArrayList<SysDept>();
 
     public Long getDeptId() {

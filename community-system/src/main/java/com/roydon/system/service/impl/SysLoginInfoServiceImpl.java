@@ -1,10 +1,8 @@
 package com.roydon.system.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.roydon.common.core.domain.entity.SysUser;
 import com.roydon.system.domain.SysLoginInfo;
 import com.roydon.system.mapper.SysLoginInfoMapper;
-import com.roydon.system.mapper.SysUserMapper;
 import com.roydon.system.service.ISysLoginInfoService;
 import org.springframework.stereotype.Service;
 

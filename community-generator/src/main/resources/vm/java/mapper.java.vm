@@ -15,7 +15,6 @@ import ${packageName}.domain.${subClassName};
  * @author ${author}
  * @date ${datetime}
  */
-@Mapper
 public interface ${ClassName}Mapper extends BaseMapper<${ClassName}> {
 
     /**

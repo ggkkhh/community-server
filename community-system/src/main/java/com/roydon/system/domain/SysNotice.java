@@ -1,22 +1,26 @@
 package com.roydon.system.domain;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.roydon.common.core.domain.BaseEntity;
 import com.roydon.common.xss.Xss;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 /**
  * 通知公告表 sys_notice
  */
+@TableName("sys_notice")
 public class SysNotice extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
      * 公告ID
      */
+    @TableId("notice_id")
     private Long noticeId;
 
     /**
