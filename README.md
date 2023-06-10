@@ -8,3 +8,5 @@
 * 后端采用Spring Boot、Spring Security、Redis & Jwt。
 * 权限认证使用Jwt，支持多终端认证系统。
 
+## 项目预览
+![image-20230610181016397](https://cdn.jsdelivr.net/gh/roydonGuo/Typora-Pic@main/resource-image-20230610181016397.png)
