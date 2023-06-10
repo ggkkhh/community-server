@@ -1,26 +1,28 @@
 package com.roydon.system.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.roydon.common.core.domain.TreeSelect;
 import com.roydon.common.core.domain.entity.SysDept;
+import com.roydon.system.domain.SysConfig;
 
 import java.util.List;
 
 /**
- * 部门管理 服务层
+ * 单元管理 服务层
  */
-public interface ISysDeptService {
+public interface ISysDeptService extends IService<SysDept> {
     /**
-     * 查询部门管理数据
+     * 查询单元管理数据
      *
-     * @param dept 部门信息
-     * @return 部门信息集合
+     * @param dept 单元信息
+     * @return 单元信息集合
      */
     public List<SysDept> selectDeptList(SysDept dept);
 
     /**
-     * 查询部门树结构信息
+     * 查询单元树结构信息
      *
-     * @param dept 部门信息
+     * @param dept 单元信息
      * @return 部门树信息集合
      */
     public List<TreeSelect> selectDeptTreeList(SysDept dept);
@@ -68,23 +70,23 @@ public interface ISysDeptService {
     /**
      * 是否存在部门子节点
      *
-     * @param deptId 部门ID
+     * @param deptId 单元ID
      * @return 结果
      */
     public boolean hasChildByDeptId(Long deptId);
 
     /**
-     * 查询部门是否存在用户
+     * 查询单元是否存在用户
      *
-     * @param deptId 部门ID
+     * @param deptId 单元ID
      * @return 结果 true 存在 false 不存在
      */
     public boolean checkDeptExistUser(Long deptId);
 
     /**
-     * 校验部门名称是否唯一
+     * 校验单元名称是否唯一
      *
-     * @param dept 部门信息
+     * @param dept 单元信息
      * @return 结果
      */
     public String checkDeptNameUnique(SysDept dept);
@@ -92,7 +94,7 @@ public interface ISysDeptService {
     /**
      * 校验部门是否有数据权限
      *
-     * @param deptId 部门id
+     * @param deptId 单元id
      */
     public void checkDeptDataScope(Long deptId);
 

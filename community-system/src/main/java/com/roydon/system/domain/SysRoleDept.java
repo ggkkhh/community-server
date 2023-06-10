@@ -4,7 +4,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
- * 角色和部门关联 sys_role_dept
+ * 角色和单元关联 sys_role_dept
  */
 public class SysRoleDept {
     /**
@@ -13,7 +13,7 @@ public class SysRoleDept {
     private Long roleId;
 
     /**
-     * 部门ID
+     * 单元ID
      */
     private Long deptId;
 

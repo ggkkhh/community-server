@@ -1,6 +1,8 @@
 package com.roydon.system.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.roydon.common.core.domain.entity.SysUser;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -8,7 +10,8 @@ import java.util.List;
 /**
  * 用户表 数据层
  */
-public interface SysUserMapper {
+@Mapper
+public interface SysUserMapper extends BaseMapper<SysUser> {
     /**
      * 根据条件分页查询用户列表
      *
@@ -40,6 +43,14 @@ public interface SysUserMapper {
      * @return 用户对象信息
      */
     public SysUser selectUserByUserName(String userName);
+
+    /**
+     * 通过电话查询用户
+     *
+     * @param telephone
+     * @return 用户对象信息
+     */
+    public SysUser selectUserByTelephone(String telephone);
 
     /**
      * 通过用户ID查询用户

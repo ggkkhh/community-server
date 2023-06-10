@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.roydon.business.mall.mapper.MallGoodsMapper">
+
+    <resultMap type="com.roydon.business.mall.domain.entity.MallGoods" id="MallGoodsMap">
+        <result property="goodsId" column="goods_id" jdbcType="VARCHAR"/>
+        <result property="goodsTitle" column="goods_title" jdbcType="VARCHAR"/>
+        <result property="goodsImg" column="goods_img" jdbcType="VARCHAR"/>
+        <result property="goodsDetails" column="goods_details" jdbcType="VARCHAR"/>
+        <result property="goodsPrice" column="goods_price" jdbcType="NUMERIC"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="deptId" column="dept_id" jdbcType="INTEGER"/>
+        <result property="stock" column="stock" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="viewNum" column="view_num" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="MallGoodsMap">
+        select
+          goods_id, goods_title, goods_img, goods_details, goods_price, user_id, dept_id, stock, status, view_num, create_time, create_by, update_time, update_by, remark
+        from mall_goods
+        where goods_id = #{goodsId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="MallGoodsMap">
+        select
+          goods_id, goods_title, goods_img, goods_details, goods_price, user_id, dept_id, stock, status, view_num, create_time, create_by, update_time, update_by, remark
+        from mall_goods
+        <where>
+            <if test="goodsId != null and goodsId != ''">
+                and goods_id = #{goodsId}
+            </if>
+            <if test="goodsTitle != null and goodsTitle != ''">
+                and goods_title = #{goodsTitle}
+            </if>
+            <if test="goodsImg != null and goodsImg != ''">
+                and goods_img = #{goodsImg}
+            </if>
+            <if test="goodsDetails != null and goodsDetails != ''">
+                and goods_details = #{goodsDetails}
+            </if>
+            <if test="goodsPrice != null">
+                and goods_price = #{goodsPrice}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="deptId != null">
+                and dept_id = #{deptId}
+            </if>
+            <if test="stock != null">
+                and stock = #{stock}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+            <if test="viewNum != null">
+                and view_num = #{viewNum}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="remark != null and remark != ''">
+                and remark = #{remark}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from mall_goods
+        <where>
+            <if test="goodsId != null and goodsId != ''">
+                and goods_id = #{goodsId}
+            </if>
+            <if test="goodsTitle != null and goodsTitle != ''">
+                and goods_title = #{goodsTitle}
+            </if>
+            <if test="goodsImg != null and goodsImg != ''">
+                and goods_img = #{goodsImg}
+            </if>
+            <if test="goodsDetails != null and goodsDetails != ''">
+                and goods_details = #{goodsDetails}
+            </if>
+            <if test="goodsPrice != null">
+                and goods_price = #{goodsPrice}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="deptId != null">
+                and dept_id = #{deptId}
+            </if>
+            <if test="stock != null">
+                and stock = #{stock}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+            <if test="viewNum != null">
+                and view_num = #{viewNum}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="remark != null and remark != ''">
+                and remark = #{remark}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="goodsId" useGeneratedKeys="true">
+        insert into mall_goods(goods_title, goods_img, goods_details, goods_price, user_id, dept_id, stock, status, view_num, create_time, create_by, update_time, update_by, remark)
+        values (#{goodsTitle}, #{goodsImg}, #{goodsDetails}, #{goodsPrice}, #{userId}, #{deptId}, #{stock}, #{status}, #{viewNum}, #{createTime}, #{createBy}, #{updateTime}, #{updateBy}, #{remark})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="goodsId" useGeneratedKeys="true">
+        insert into mall_goods(goods_title, goods_img, goods_details, goods_price, user_id, dept_id, stock, status, view_num, create_time, create_by, update_time, update_by, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.goodsTitle}, #{entity.goodsImg}, #{entity.goodsDetails}, #{entity.goodsPrice}, #{entity.userId}, #{entity.deptId}, #{entity.stock}, #{entity.status}, #{entity.viewNum}, #{entity.createTime}, #{entity.createBy}, #{entity.updateTime}, #{entity.updateBy}, #{entity.remark})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="goodsId" useGeneratedKeys="true">
+        insert into mall_goods(goods_title, goods_img, goods_details, goods_price, user_id, dept_id, stock, status, view_num, create_time, create_by, update_time, update_by, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.goodsTitle}, #{entity.goodsImg}, #{entity.goodsDetails}, #{entity.goodsPrice}, #{entity.userId}, #{entity.deptId}, #{entity.stock}, #{entity.status}, #{entity.viewNum}, #{entity.createTime}, #{entity.createBy}, #{entity.updateTime}, #{entity.updateBy}, #{entity.remark})
+        </foreach>
+        on duplicate key update
+        goods_title = values(goods_title),
+        goods_img = values(goods_img),
+        goods_details = values(goods_details),
+        goods_price = values(goods_price),
+        user_id = values(user_id),
+        dept_id = values(dept_id),
+        stock = values(stock),
+        status = values(status),
+        view_num = values(view_num),
+        create_time = values(create_time),
+        create_by = values(create_by),
+        update_time = values(update_time),
+        update_by = values(update_by),
+        remark = values(remark)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update mall_goods
+        <set>
+            <if test="goodsTitle != null and goodsTitle != ''">
+                goods_title = #{goodsTitle},
+            </if>
+            <if test="goodsImg != null and goodsImg != ''">
+                goods_img = #{goodsImg},
+            </if>
+            <if test="goodsDetails != null and goodsDetails != ''">
+                goods_details = #{goodsDetails},
+            </if>
+            <if test="goodsPrice != null">
+                goods_price = #{goodsPrice},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="deptId != null">
+                dept_id = #{deptId},
+            </if>
+            <if test="stock != null">
+                stock = #{stock},
+            </if>
+            <if test="status != null and status != ''">
+                status = #{status},
+            </if>
+            <if test="viewNum != null">
+                view_num = #{viewNum},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                create_by = #{createBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                update_by = #{updateBy},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+        </set>
+        where goods_id = #{goodsId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from mall_goods where goods_id = #{goodsId}
+    </delete>
+
+</mapper>
+

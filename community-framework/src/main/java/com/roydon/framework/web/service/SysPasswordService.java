@@ -23,6 +23,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Component
 public class SysPasswordService {
+
     @Resource
     private RedisCache redisCache;
 

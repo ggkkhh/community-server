@@ -1,5 +1,6 @@
 package com.roydon.system.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.roydon.common.constant.Constants;
 import com.roydon.common.constant.UserConstants;
 import com.roydon.common.core.domain.TreeSelect;
@@ -13,6 +14,7 @@ import com.roydon.system.domain.vo.RouterVo;
 import com.roydon.system.mapper.SysMenuMapper;
 import com.roydon.system.mapper.SysRoleMapper;
 import com.roydon.system.mapper.SysRoleMenuMapper;
+import com.roydon.system.mapper.SysUserMapper;
 import com.roydon.system.service.ISysMenuService;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +26,7 @@ import java.util.stream.Collectors;
  * 菜单 业务层处理
  */
 @Service
-public class SysMenuServiceImpl implements ISysMenuService {
+public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> implements ISysMenuService {
     public static final String PREMISSION_STRING = "perms[\"{0}\"]";
 
     @Resource

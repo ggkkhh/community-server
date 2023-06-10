@@ -1,13 +1,16 @@
 package com.roydon.system.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.roydon.common.constant.UserConstants;
 import com.roydon.common.core.domain.entity.SysDictData;
 import com.roydon.common.core.domain.entity.SysDictType;
+import com.roydon.common.core.domain.entity.SysUser;
 import com.roydon.common.exception.ServiceException;
 import com.roydon.common.utils.DictUtils;
 import com.roydon.common.utils.StringUtils;
 import com.roydon.system.mapper.SysDictDataMapper;
 import com.roydon.system.mapper.SysDictTypeMapper;
+import com.roydon.system.mapper.SysUserMapper;
 import com.roydon.system.service.ISysDictTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +27,7 @@ import java.util.stream.Collectors;
  * 字典 业务层处理
  */
 @Service
-public class SysDictTypeServiceImpl implements ISysDictTypeService {
+public class SysDictTypeServiceImpl extends ServiceImpl<SysDictTypeMapper, SysDictType> implements ISysDictTypeService {
     @Resource
     private SysDictTypeMapper dictTypeMapper;
 

@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.roydon.business.mall.mapper.MallUserAddressMapper">
+
+    <resultMap type="com.roydon.business.mall.domain.entity.MallUserAddress" id="MallUserAddressMap">
+        <result property="addressId" column="address_id" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="provinceCode" column="province_code" jdbcType="VARCHAR"/>
+        <result property="cityCode" column="city_code" jdbcType="VARCHAR"/>
+        <result property="regionCode" column="region_code" jdbcType="VARCHAR"/>
+        <result property="communityId" column="community_id" jdbcType="VARCHAR"/>
+        <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+        <result property="telephone" column="telephone" jdbcType="VARCHAR"/>
+        <result property="completeAddress" column="complete_address" jdbcType="VARCHAR"/>
+        <result property="active" column="active" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="MallUserAddressMap">
+        select
+          address_id, user_id, province_code, city_code, region_code, community_id, nickname, telephone, complete_address, active, create_time, create_by, update_time, update_by, remark
+        from mall_user_address
+        where address_id = #{addressId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="MallUserAddressMap">
+        select
+          address_id, user_id, province_code, city_code, region_code, community_id, nickname, telephone, complete_address, active, create_time, create_by, update_time, update_by, remark
+        from mall_user_address
+        <where>
+            <if test="addressId != null and addressId != ''">
+                and address_id = #{addressId}
+            </if>
+            <if test="userId != null and userId != ''">
+                and user_id = #{userId}
+            </if>
+            <if test="provinceCode != null and provinceCode != ''">
+                and province_code = #{provinceCode}
+            </if>
+            <if test="cityCode != null and cityCode != ''">
+                and city_code = #{cityCode}
+            </if>
+            <if test="regionCode != null and regionCode != ''">
+                and region_code = #{regionCode}
+            </if>
+            <if test="communityId != null and communityId != ''">
+                and community_id = #{communityId}
+            </if>
+            <if test="nickname != null and nickname != ''">
+                and nickname = #{nickname}
+            </if>
+            <if test="telephone != null and telephone != ''">
+                and telephone = #{telephone}
+            </if>
+            <if test="completeAddress != null and completeAddress != ''">
+                and complete_address = #{completeAddress}
+            </if>
+            <if test="active != null and active != ''">
+                and active = #{active}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="remark != null and remark != ''">
+                and remark = #{remark}
+            </if>
+        </where>
+        limit #{pageable.offset}, #{pageable.pageSize}
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from mall_user_address
+        <where>
+            <if test="addressId != null and addressId != ''">
+                and address_id = #{addressId}
+            </if>
+            <if test="userId != null and userId != ''">
+                and user_id = #{userId}
+            </if>
+            <if test="provinceCode != null and provinceCode != ''">
+                and province_code = #{provinceCode}
+            </if>
+            <if test="cityCode != null and cityCode != ''">
+                and city_code = #{cityCode}
+            </if>
+            <if test="regionCode != null and regionCode != ''">
+                and region_code = #{regionCode}
+            </if>
+            <if test="communityId != null and communityId != ''">
+                and community_id = #{communityId}
+            </if>
+            <if test="nickname != null and nickname != ''">
+                and nickname = #{nickname}
+            </if>
+            <if test="telephone != null and telephone != ''">
+                and telephone = #{telephone}
+            </if>
+            <if test="completeAddress != null and completeAddress != ''">
+                and complete_address = #{completeAddress}
+            </if>
+            <if test="active != null and active != ''">
+                and active = #{active}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                and update_by = #{updateBy}
+            </if>
+            <if test="remark != null and remark != ''">
+                and remark = #{remark}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="addressId" useGeneratedKeys="true">
+        insert into mall_user_address(user_id, province_code, city_code, region_code, community_id, nickname, telephone, complete_address, active, create_time, create_by, update_time, update_by, remark)
+        values (#{userId}, #{provinceCode}, #{cityCode}, #{regionCode}, #{communityId}, #{nickname}, #{telephone}, #{completeAddress}, #{active}, #{createTime}, #{createBy}, #{updateTime}, #{updateBy}, #{remark})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="addressId" useGeneratedKeys="true">
+        insert into mall_user_address(user_id, province_code, city_code, region_code, community_id, nickname, telephone, complete_address, active, create_time, create_by, update_time, update_by, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.userId}, #{entity.provinceCode}, #{entity.cityCode}, #{entity.regionCode}, #{entity.communityId}, #{entity.nickname}, #{entity.telephone}, #{entity.completeAddress}, #{entity.active}, #{entity.createTime}, #{entity.createBy}, #{entity.updateTime}, #{entity.updateBy}, #{entity.remark})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="addressId" useGeneratedKeys="true">
+        insert into mall_user_address(user_id, province_code, city_code, region_code, community_id, nickname, telephone, complete_address, active, create_time, create_by, update_time, update_by, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.userId}, #{entity.provinceCode}, #{entity.cityCode}, #{entity.regionCode}, #{entity.communityId}, #{entity.nickname}, #{entity.telephone}, #{entity.completeAddress}, #{entity.active}, #{entity.createTime}, #{entity.createBy}, #{entity.updateTime}, #{entity.updateBy}, #{entity.remark})
+        </foreach>
+        on duplicate key update
+        user_id = values(user_id),
+        province_code = values(province_code),
+        city_code = values(city_code),
+        region_code = values(region_code),
+        community_id = values(community_id),
+        nickname = values(nickname),
+        telephone = values(telephone),
+        complete_address = values(complete_address),
+        active = values(active),
+        create_time = values(create_time),
+        create_by = values(create_by),
+        update_time = values(update_time),
+        update_by = values(update_by),
+        remark = values(remark)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update mall_user_address
+        <set>
+            <if test="userId != null and userId != ''">
+                user_id = #{userId},
+            </if>
+            <if test="provinceCode != null and provinceCode != ''">
+                province_code = #{provinceCode},
+            </if>
+            <if test="cityCode != null and cityCode != ''">
+                city_code = #{cityCode},
+            </if>
+            <if test="regionCode != null and regionCode != ''">
+                region_code = #{regionCode},
+            </if>
+            <if test="communityId != null and communityId != ''">
+                community_id = #{communityId},
+            </if>
+            <if test="nickname != null and nickname != ''">
+                nickname = #{nickname},
+            </if>
+            <if test="telephone != null and telephone != ''">
+                telephone = #{telephone},
+            </if>
+            <if test="completeAddress != null and completeAddress != ''">
+                complete_address = #{completeAddress},
+            </if>
+            <if test="active != null and active != ''">
+                active = #{active},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                create_by = #{createBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateBy != null and updateBy != ''">
+                update_by = #{updateBy},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+        </set>
+        where address_id = #{addressId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from mall_user_address where address_id = #{addressId}
+    </delete>
+
+</mapper>
+

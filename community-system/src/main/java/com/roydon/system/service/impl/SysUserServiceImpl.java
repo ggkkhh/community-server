@@ -1,12 +1,17 @@
 package com.roydon.system.service.impl;
 
-import cn.hutool.core.util.PhoneUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.roydon.common.annotation.DataScope;
 import com.roydon.common.constant.UserConstants;
+import com.roydon.common.core.domain.BaseEntity;
 import com.roydon.common.core.domain.entity.SysRole;
 import com.roydon.common.core.domain.entity.SysUser;
 import com.roydon.common.exception.ServiceException;
 import com.roydon.common.utils.SecurityUtils;
+import com.roydon.common.utils.StringUtil;
 import com.roydon.common.utils.StringUtils;
 import com.roydon.common.utils.bean.BeanValidators;
 import com.roydon.common.utils.encrypt.IdCardNumUtil;
@@ -34,7 +39,7 @@ import java.util.stream.Collectors;
  * 用户 业务层处理
  */
 @Service
-public class SysUserServiceImpl implements ISysUserService {
+public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements ISysUserService {
     private static final Logger log = LoggerFactory.getLogger(SysUserServiceImpl.class);
 
     @Resource
@@ -68,11 +73,7 @@ public class SysUserServiceImpl implements ISysUserService {
     @DataScope(deptAlias = "d", userAlias = "u")
     public List<SysUser> selectUserList(SysUser user) {
         List<SysUser> sysUserList = userMapper.selectUserList(user);
-        List<SysUser> collect = sysUserList.stream().peek(u -> {
-            u.setPhonenumber(TelephoneUtil.replaceSomeCharByAsterisk(u.getPhonenumber()));
-            u.setIdCard(IdCardNumUtil.replaceSomeCharByAsterisk(u.getIdCard()));
-        }).collect(Collectors.toList());
-        return collect;
+        return sysUserList;
     }
 
     /**
@@ -493,5 +494,17 @@ public class SysUserServiceImpl implements ISysUserService {
             successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条，数据如下：");
         }
         return successMsg.toString();
+    }
+
+    @Override
+    public SysUser checkTelephoneExists(String telephone) {
+        LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysUser::getPhonenumber, telephone);
+        return getOne(queryWrapper);
+    }
+
+    @Override
+    public SysUser getUserByTelephone(String telephone) {
+        return userMapper.selectUserByTelephone(telephone);
     }
 }

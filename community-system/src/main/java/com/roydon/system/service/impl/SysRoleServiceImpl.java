@@ -1,5 +1,6 @@
 package com.roydon.system.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.roydon.common.annotation.DataScope;
 import com.roydon.common.constant.UserConstants;
 import com.roydon.common.core.domain.entity.SysRole;
@@ -11,10 +12,7 @@ import com.roydon.common.utils.spring.SpringUtils;
 import com.roydon.system.domain.SysRoleDept;
 import com.roydon.system.domain.SysRoleMenu;
 import com.roydon.system.domain.SysUserRole;
-import com.roydon.system.mapper.SysRoleDeptMapper;
-import com.roydon.system.mapper.SysRoleMapper;
-import com.roydon.system.mapper.SysRoleMenuMapper;
-import com.roydon.system.mapper.SysUserRoleMapper;
+import com.roydon.system.mapper.*;
 import com.roydon.system.service.ISysRoleService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +24,7 @@ import java.util.*;
  * 角色 业务层处理
  */
 @Service
-public class SysRoleServiceImpl implements ISysRoleService {
+public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> implements ISysRoleService {
     @Resource
     private SysRoleMapper roleMapper;
 
@@ -246,9 +244,9 @@ public class SysRoleServiceImpl implements ISysRoleService {
     public int authDataScope(SysRole role) {
         // 修改角色信息
         roleMapper.updateRole(role);
-        // 删除角色与部门关联
+        // 删除角色与单元关联
         roleDeptMapper.deleteRoleDeptByRoleId(role.getRoleId());
-        // 新增角色和部门信息（数据权限）
+        // 新增角色和单元信息（数据权限）
         return insertRoleDept(role);
     }
 
@@ -274,13 +272,13 @@ public class SysRoleServiceImpl implements ISysRoleService {
     }
 
     /**
-     * 新增角色部门信息(数据权限)
+     * 新增角色单元信息(数据权限)
      *
      * @param role 角色对象
      */
     public int insertRoleDept(SysRole role) {
         int rows = 1;
-        // 新增角色与部门（数据权限）管理
+        // 新增角色与单元（数据权限）管理
         List<SysRoleDept> list = new ArrayList<SysRoleDept>();
         for (Long deptId : role.getDeptIds()) {
             SysRoleDept rd = new SysRoleDept();
@@ -305,7 +303,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
     public int deleteRoleById(Long roleId) {
         // 删除角色与菜单关联
         roleMenuMapper.deleteRoleMenuByRoleId(roleId);
-        // 删除角色与部门关联
+        // 删除角色与单元关联
         roleDeptMapper.deleteRoleDeptByRoleId(roleId);
         return roleMapper.deleteRoleById(roleId);
     }
@@ -329,7 +327,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
         }
         // 删除角色与菜单关联
         roleMenuMapper.deleteRoleMenu(roleIds);
-        // 删除角色与部门关联
+        // 删除角色与单元关联
         roleDeptMapper.deleteRoleDept(roleIds);
         return roleMapper.deleteRoleByIds(roleIds);
     }

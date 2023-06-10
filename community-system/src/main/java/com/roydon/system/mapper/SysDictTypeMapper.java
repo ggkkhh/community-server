@@ -1,13 +1,16 @@
 package com.roydon.system.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.roydon.common.core.domain.entity.SysDictType;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 /**
  * 字典表 数据层
  */
-public interface SysDictTypeMapper {
+@Mapper
+public interface SysDictTypeMapper extends BaseMapper<SysDictType> {
     /**
      * 根据条件分页查询字典类型
      *

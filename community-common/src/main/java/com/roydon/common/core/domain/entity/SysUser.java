@@ -1,5 +1,7 @@
 package com.roydon.common.core.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.roydon.common.annotation.Excel;
 import com.roydon.common.annotation.Excel.ColumnType;
 import com.roydon.common.annotation.Excel.Type;
@@ -14,6 +16,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +24,7 @@ import java.util.List;
  * 用户对象 sys_user
  */
 @ApiModel(value = "SysUser", description = "系统用户实体")
+@TableName("sys_user")
 public class SysUser extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
@@ -32,17 +36,17 @@ public class SysUser extends BaseEntity {
     private Long userId;
 
     /**
-     * 部门ID
+     * 单元ID
      */
-    @ApiModelProperty("部门ID")
-    @Excel(name = "部门编号", type = Type.IMPORT)
+    @ApiModelProperty("单元ID")
+    @Excel(name = "单元编号（填1为本社区）", type = Type.IMPORT)
     private Long deptId;
 
     /**
      * 用户账号
      */
     @ApiModelProperty("用户账号")
-    @Excel(name = "登录名称")
+    @Excel(name = "登录名称（账号）")
     private String userName;
 
     /**
@@ -67,19 +71,26 @@ public class SysUser extends BaseEntity {
     private String phonenumber;
 
     /**
+     * 真实姓名
+     */
+    @ApiModelProperty("真实姓名")
+    @Excel(name = "真实姓名")
+    private String realName;
+
+    /**
      * 身份证号
      */
     @ApiModelProperty("身份证号")
     @Excel(name = "身份证号")
     private String idCard;
 
-
     /**
      * 用户性别
      */
     @ApiModelProperty("用户性别")
-    @Excel(name = "用户性别", readConverterExp = "0=男,1=女,2=未知")
+    @Excel(name = "用户性别（0=男,1=女,2=未知）", readConverterExp = "0=男,1=女,2=未知")
     private String sex;
+    private Integer age;
 
     /**
      * 用户头像
@@ -97,8 +108,11 @@ public class SysUser extends BaseEntity {
      * 帐号状态（0正常 1停用）
      */
     @ApiModelProperty("帐号状态（0正常 1停用）")
-    @Excel(name = "帐号状态", readConverterExp = "0=正常,1=停用")
+    @Excel(name = "帐号状态（0=正常,1=停用）", readConverterExp = "0=正常,1=停用")
     private String status;
+
+    @ApiModelProperty("是否为租客（0代表房东 1代表租客）")
+    private String isTenant;
 
     /**
      * 删除标志（0代表存在 2代表删除）
@@ -121,37 +135,42 @@ public class SysUser extends BaseEntity {
     private Date loginDate;
 
     /**
-     * 部门对象
+     * 单元对象
      */
-    @ApiModelProperty("部门对象")
+    @ApiModelProperty("单元对象")
     @Excels({
-            @Excel(name = "部门名称", targetAttr = "deptName", type = Type.EXPORT),
-            @Excel(name = "部门负责人", targetAttr = "leader", type = Type.EXPORT)
+            @Excel(name = "单元名称", targetAttr = "deptName", type = Type.EXPORT),
+            @Excel(name = "单元负责人", targetAttr = "leader", type = Type.EXPORT)
     })
+    @TableField(exist = false)
     private SysDept dept;
 
     /**
      * 角色对象
      */
     @ApiModelProperty("角色对象")
+    @TableField(exist = false)
     private List<SysRole> roles;
 
     /**
      * 角色组
      */
     @ApiModelProperty("角色组")
+    @TableField(exist = false)
     private Long[] roleIds;
 
     /**
      * 岗位组
      */
     @ApiModelProperty("岗位组")
+    @TableField(exist = false)
     private Long[] postIds;
 
     /**
      * 角色ID
      */
     @ApiModelProperty("角色ID")
+    @TableField(exist = false)
     private Long roleId;
 
     public SysUser() {
@@ -180,6 +199,23 @@ public class SysUser extends BaseEntity {
 
     public Long getDeptId() {
         return deptId;
+    }
+
+    @Size(min = 0, max = 30, message = "长度不能超过30个字符")
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
     public void setDeptId(Long deptId) {
@@ -233,6 +269,14 @@ public class SysUser extends BaseEntity {
 
     public void setIdCard(String idCard) {
         this.idCard = idCard;
+    }
+
+    public String getIsTenant() {
+        return isTenant;
+    }
+
+    public void setIsTenant(String isTenant) {
+        this.isTenant = isTenant;
     }
 
     public String getSex() {
@@ -333,27 +377,29 @@ public class SysUser extends BaseEntity {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
-                .append("userId", getUserId())
-                .append("deptId", getDeptId())
-                .append("userName", getUserName())
-                .append("nickName", getNickName())
-                .append("email", getEmail())
-                .append("phonenumber", getPhonenumber())
-                .append("idCard", getIdCard())
-                .append("sex", getSex())
-                .append("avatar", getAvatar())
-                .append("password", getPassword())
-                .append("status", getStatus())
-                .append("delFlag", getDelFlag())
-                .append("loginIp", getLoginIp())
-                .append("loginDate", getLoginDate())
-                .append("createBy", getCreateBy())
-                .append("createTime", getCreateTime())
-                .append("updateBy", getUpdateBy())
-                .append("updateTime", getUpdateTime())
-                .append("remark", getRemark())
-                .append("dept", getDept())
-                .toString();
+        return "SysUser{" +
+                "userId=" + userId +
+                ", deptId=" + deptId +
+                ", userName='" + userName + '\'' +
+                ", nickName='" + nickName + '\'' +
+                ", email='" + email + '\'' +
+                ", phonenumber='" + phonenumber + '\'' +
+                ", realName='" + realName + '\'' +
+                ", idCard='" + idCard + '\'' +
+                ", sex='" + sex + '\'' +
+                ", age=" + age +
+                ", avatar='" + avatar + '\'' +
+                ", password='" + password + '\'' +
+                ", status='" + status + '\'' +
+                ", isTenant='" + isTenant + '\'' +
+                ", delFlag='" + delFlag + '\'' +
+                ", loginIp='" + loginIp + '\'' +
+                ", loginDate=" + loginDate +
+                ", dept=" + dept +
+                ", roles=" + roles +
+                ", roleIds=" + Arrays.toString(roleIds) +
+                ", postIds=" + Arrays.toString(postIds) +
+                ", roleId=" + roleId +
+                '}';
     }
 }

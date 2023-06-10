@@ -1,5 +1,6 @@
 package com.roydon.system.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.roydon.common.annotation.DataScope;
 import com.roydon.common.constant.UserConstants;
 import com.roydon.common.core.domain.TreeSelect;
@@ -13,6 +14,7 @@ import com.roydon.common.utils.StringUtils;
 import com.roydon.common.utils.spring.SpringUtils;
 import com.roydon.system.mapper.SysDeptMapper;
 import com.roydon.system.mapper.SysRoleMapper;
+import com.roydon.system.mapper.SysUserMapper;
 import com.roydon.system.service.ISysDeptService;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +28,8 @@ import java.util.stream.Collectors;
  * 部门管理 服务实现
  */
 @Service
-public class SysDeptServiceImpl implements ISysDeptService {
+public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> implements ISysDeptService {
+
     @Resource
     private SysDeptMapper deptMapper;
 
@@ -181,7 +184,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
             dept.setDeptId(deptId);
             List<SysDept> depts = SpringUtils.getAopProxy(this).selectDeptList(dept);
             if (StringUtils.isEmpty(depts)) {
-                throw new ServiceException("没有权限访问部门数据！");
+                throw new ServiceException("没有权限访问数据！");
             }
         }
     }
@@ -189,7 +192,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
     /**
      * 新增保存部门信息
      *
-     * @param dept 部门信息
+     * @param dept 单元信息
      * @return 结果
      */
     @Override
@@ -197,7 +200,7 @@ public class SysDeptServiceImpl implements ISysDeptService {
         SysDept info = deptMapper.selectDeptById(dept.getParentId());
         // 如果父节点不为正常状态,则不允许新增子节点
         if (!UserConstants.DEPT_NORMAL.equals(info.getStatus())) {
-            throw new ServiceException("部门停用，不允许新增");
+            throw new ServiceException("单元停用，不允许新增");
         }
         dept.setAncestors(info.getAncestors() + "," + dept.getParentId());
         return deptMapper.insertDept(dept);
@@ -303,8 +306,13 @@ public class SysDeptServiceImpl implements ISysDeptService {
         return getChildList(list, t).size() > 0;
     }
 
+    /**
+     * 获取系统房屋数量
+     *
+     * @return
+     */
     @Override
     public Integer getCommunityAmount() {
-        return deptMapper.getSysCommunityAmount();
+        return deptMapper.getSysHouseAmount();
     }
 }

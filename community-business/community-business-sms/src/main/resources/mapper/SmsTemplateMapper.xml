@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.roydon.sms.mapper.SmsTemplateMapper">
+
+    <resultMap type="SmsTemplate" id="SmsTemplateResult">
+        <result property="templateId" column="template_id"/>
+        <result property="providerId" column="provider_id"/>
+        <result property="providerName" column="provider_name"/>
+        <result property="templateName" column="template_name"/>
+        <result property="templateType" column="template_type"/>
+        <result property="templateCode" column="template_code"/>
+        <result property="templateContent" column="template_content"/>
+        <result property="status" column="status"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createBy" column="create_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="selectSmsTemplateVo">
+        select template_id,
+               provider_id,
+               provider_name,
+               template_name,
+               template_type,
+               template_code,
+               template_content,
+               status,
+               del_flag,
+               create_time,
+               create_by,
+               update_time,
+               update_by,
+               remark
+        from sms_template
+    </sql>
+
+    <select id="selectSmsTemplateList" parameterType="SmsTemplate" resultMap="SmsTemplateResult">
+        <include refid="selectSmsTemplateVo"/>
+        <where>
+            <if test="providerName != null  and providerName != ''">and provider_name = #{providerName}</if>
+            <if test="templateName != null  and templateName != ''">and template_name like concat('%', #{templateName},
+                '%')
+            </if>
+            <if test="templateType != null  and templateType != ''">and template_type = #{templateType}</if>
+            <if test="templateCode != null  and templateCode != ''">and template_code = #{templateCode}</if>
+            <if test="templateContent != null  and templateContent != ''">and template_content like #{templateContent}
+            </if>
+            <if test="status != null  and status != ''">and status = #{status}</if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
+        </where>
+        <!-- 数据范围过滤 -->
+        ${params.dataScope}
+    </select>
+
+    <select id="selectSmsTemplateByTemplateId" parameterType="String" resultMap="SmsTemplateResult">
+        <include refid="selectSmsTemplateVo"/>
+        where template_id = #{templateId}
+    </select>
+
+    <insert id="insertSmsTemplate" parameterType="SmsTemplate">
+        insert into sms_template
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="templateId != null">template_id,</if>
+            <if test="providerId != null">provider_id,</if>
+            <if test="providerName != null">provider_name,</if>
+            <if test="templateName != null">template_name,</if>
+            <if test="templateType != null">template_type,</if>
+            <if test="templateCode != null">template_code,</if>
+            <if test="templateContent != null">template_content,</if>
+            <if test="status != null">status,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="remark != null">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="templateId != null">#{templateId},</if>
+            <if test="providerId != null">#{providerId},</if>
+            <if test="providerName != null">#{providerName},</if>
+            <if test="templateName != null">#{templateName},</if>
+            <if test="templateType != null">#{templateType},</if>
+            <if test="templateCode != null">#{templateCode},</if>
+            <if test="templateContent != null">#{templateContent},</if>
+            <if test="status != null">#{status},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+
+    <update id="updateSmsTemplate" parameterType="SmsTemplate">
+        update sms_template
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="providerId != null">provider_id = #{providerId},</if>
+            <if test="providerName != null">provider_name = #{providerName},</if>
+            <if test="templateName != null">template_name = #{templateName},</if>
+            <if test="templateType != null">template_type = #{templateType},</if>
+            <if test="templateCode != null">template_code = #{templateCode},</if>
+            <if test="templateContent != null">template_content = #{templateContent},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where template_id = #{templateId}
+    </update>
+
+    <delete id="deleteSmsTemplateByTemplateId" parameterType="String">
+        delete
+        from sms_template
+        where template_id = #{templateId}
+    </delete>
+
+    <delete id="deleteSmsTemplateByTemplateIds" parameterType="String">
+        delete from sms_template where template_id in
+        <foreach item="templateId" collection="array" open="(" separator="," close=")">
+            #{templateId}
+        </foreach>
+    </delete>
+</mapper>

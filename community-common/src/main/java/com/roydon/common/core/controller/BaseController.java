@@ -81,6 +81,19 @@ public class BaseController {
     }
 
     /**
+     * 响应请求分页数据
+     */
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    protected TableDataInfo getTableData(List<?> list,Long total) {
+        TableDataInfo rspData = new TableDataInfo();
+        rspData.setCode(HttpStatus.SUCCESS);
+        rspData.setMsg("查询成功");
+        rspData.setRows(list);
+        rspData.setTotal(total);
+        return rspData;
+    }
+
+    /**
      * 返回成功
      */
     public AjaxResult success() {
@@ -100,7 +113,13 @@ public class BaseController {
     public AjaxResult success(String message) {
         return AjaxResult.success(message);
     }
-
+    /**
+     * 返回成功消息
+     */
+    public AjaxResult success(Object data)
+    {
+        return AjaxResult.success(data);
+    }
     /**
      * 返回失败消息
      */
@@ -150,7 +169,7 @@ public class BaseController {
     }
 
     /**
-     * 获取登录部门id
+     * 获取登录单元id
      */
     public Long getDeptId() {
         return getLoginUser().getDeptId();

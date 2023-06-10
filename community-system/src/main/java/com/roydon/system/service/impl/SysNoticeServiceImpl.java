@@ -1,7 +1,10 @@
 package com.roydon.system.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.roydon.common.core.domain.entity.SysUser;
 import com.roydon.system.domain.SysNotice;
 import com.roydon.system.mapper.SysNoticeMapper;
+import com.roydon.system.mapper.SysUserMapper;
 import com.roydon.system.service.ISysNoticeService;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +15,7 @@ import java.util.List;
  * 公告 服务层实现
  */
 @Service
-public class SysNoticeServiceImpl implements ISysNoticeService {
+public class SysNoticeServiceImpl extends ServiceImpl<SysNoticeMapper, SysNotice> implements ISysNoticeService {
     @Resource
     private SysNoticeMapper noticeMapper;
 

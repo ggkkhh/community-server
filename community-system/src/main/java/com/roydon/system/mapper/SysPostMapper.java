@@ -2,12 +2,15 @@ package com.roydon.system.mapper;
 
 import java.util.List;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.roydon.system.domain.SysPost;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 岗位信息 数据层
  */
-public interface SysPostMapper {
+@Mapper
+public interface SysPostMapper extends BaseMapper<SysPost> {
     /**
      * 查询岗位数据集合
      *

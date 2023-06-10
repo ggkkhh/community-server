@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.roydon.business.epidemic.mapper.EpidemicAccessRecordMapper">
+
+    <resultMap type="EpidemicAccessRecord" id="EpidemicAccessRecordResult">
+        <result property="recordId" column="record_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="username" column="username"/>
+        <result property="realName" column="real_name"/>
+        <result property="accessType" column="access_type"/>
+        <result property="destination" column="destination"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="createBy" column="create_by"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="selectEpidemicAccessRecordVo">
+        select record_id,
+               user_id,
+               username,
+               real_name,
+               access_type,
+               destination,
+               del_flag,
+               create_time,
+               update_time,
+               create_by,
+               update_by,
+               remark
+        from epidemic_access_record
+    </sql>
+
+    <select id="selectEpidemicAccessRecordList" parameterType="EpidemicAccessRecord"
+            resultMap="EpidemicAccessRecordResult">
+        <include refid="selectEpidemicAccessRecordVo"/>
+        <where>
+            <if test="userId != null ">and user_id = #{userId}</if>
+            <if test="username != null  and username != ''">and username like concat('%', #{username}, '%')</if>
+            <if test="realName != null  and realName != ''">and real_name like concat('%', #{realName}, '%')</if>
+            <if test="accessType != null  and accessType != ''">and access_type = #{accessType}</if>
+            <if test="destination != null  and destination != ''">and destination = #{destination}</if>
+        </where>
+    </select>
+
+    <select id="selectEpidemicAccessRecordByRecordId" parameterType="String" resultMap="EpidemicAccessRecordResult">
+        <include refid="selectEpidemicAccessRecordVo"/>
+        where record_id = #{recordId}
+    </select>
+
+    <insert id="insertEpidemicAccessRecord" parameterType="EpidemicAccessRecord">
+        insert into epidemic_access_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="recordId != null">record_id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="username != null and username != ''">username,</if>
+            <if test="realName != null">real_name,</if>
+            <if test="accessType != null and accessType != ''">access_type,</if>
+            <if test="destination != null">destination,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="remark != null">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="recordId != null">#{recordId},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="username != null and username != ''">#{username},</if>
+            <if test="realName != null">#{realName},</if>
+            <if test="accessType != null and accessType != ''">#{accessType},</if>
+            <if test="destination != null">#{destination},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+
+    <update id="updateEpidemicAccessRecord" parameterType="EpidemicAccessRecord">
+        update epidemic_access_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="username != null and username != ''">username = #{username},</if>
+            <if test="realName != null">real_name = #{realName},</if>
+            <if test="accessType != null and accessType != ''">access_type = #{accessType},</if>
+            <if test="destination != null">destination = #{destination},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where record_id = #{recordId}
+    </update>
+
+    <delete id="deleteEpidemicAccessRecordByRecordId" parameterType="String">
+        delete
+        from epidemic_access_record
+        where record_id = #{recordId}
+    </delete>
+
+    <delete id="deleteEpidemicAccessRecordByRecordIds" parameterType="String">
+        delete from epidemic_access_record where record_id in
+        <foreach item="recordId" collection="array" open="(" separator="," close=")">
+            #{recordId}
+        </foreach>
+    </delete>
+</mapper>

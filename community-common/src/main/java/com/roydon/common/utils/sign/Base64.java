@@ -3,7 +3,7 @@ package com.roydon.common.utils.sign;
 /**
  * Base64工具类
  * 
- * @author ruoyi
+ * @author roydon
  */
 public final class Base64
 {

@@ -10,7 +10,7 @@ public class SysUserOnline {
     private String tokenId;
 
     /**
-     * 部门名称
+     * 单元名称
      */
     private String deptName;
 
