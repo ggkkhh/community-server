@@ -4,12 +4,12 @@ community:
   version: 1.0.0
   copyrightYear: 2022
   demoEnabled: true # 实例演示开关
-  profile: /home/community/uploadPath # 文件路径 示例（ Windows配置D:/community/uploadPath，Linux配置 /home/community/uploadPath）
+  profile: /community/uploadPath # 文件路径 示例（ Windows配置D:/community/uploadPath，Linux配置 /community/uploadPath）
   addressEnabled: false # 获取ip地址开关
   captchaType: char # 验证码类型 math 数组计算 char 字符验证
 
 server:
-  port: 8888
+  port: 8088
   servlet:
     context-path: / # 应用的访问路径
   tomcat:
