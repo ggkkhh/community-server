@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.roydon.app.mapper.AppNoticeMapper">
+
+    <resultMap type="AppNotice" id="AppNoticeResult">
+        <result property="noticeId"    column="notice_id"    />
+        <result property="noticeTitle"    column="notice_title"    />
+        <result property="noticeImgUrl"    column="notice_img_url"    />
+        <result property="showInApp"    column="show_in_app"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectAppNoticeVo">
+        select notice_id, notice_title, notice_img_url, show_in_app, create_by, create_time, update_by, update_time, remark from app_notice
+    </sql>
+
+    <select id="selectAppNoticeList" parameterType="AppNotice" resultMap="AppNoticeResult">
+        <include refid="selectAppNoticeVo"/>
+        <where>
+            <if test="noticeTitle != null  and noticeTitle != ''"> and notice_title = #{noticeTitle}</if>
+            <if test="noticeImgUrl != null  and noticeImgUrl != ''"> and notice_img_url = #{noticeImgUrl}</if>
+            <if test="showInApp != null  and showInApp != ''"> and show_in_app = #{showInApp}</if>
+        </where>
+    </select>
+
+    <select id="selectAppNoticeByNoticeId" parameterType="Long" resultMap="AppNoticeResult">
+        <include refid="selectAppNoticeVo"/>
+        where notice_id = #{noticeId}
+    </select>
+
+    <insert id="insertAppNotice" parameterType="AppNotice" useGeneratedKeys="true" keyProperty="noticeId">
+        insert into app_notice
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="noticeTitle != null and noticeTitle != ''">notice_title,</if>
+            <if test="noticeImgUrl != null and noticeImgUrl != ''">notice_img_url,</if>
+            <if test="showInApp != null">show_in_app,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="noticeTitle != null and noticeTitle != ''">#{noticeTitle},</if>
+            <if test="noticeImgUrl != null and noticeImgUrl != ''">#{noticeImgUrl},</if>
+            <if test="showInApp != null">#{showInApp},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+
+    <update id="updateAppNotice" parameterType="AppNotice">
+        update app_notice
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="noticeTitle != null and noticeTitle != ''">notice_title = #{noticeTitle},</if>
+            <if test="noticeImgUrl != null and noticeImgUrl != ''">notice_img_url = #{noticeImgUrl},</if>
+            <if test="showInApp != null">show_in_app = #{showInApp},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where notice_id = #{noticeId}
+    </update>
+
+    <delete id="deleteAppNoticeByNoticeId" parameterType="Long">
+        delete from app_notice where notice_id = #{noticeId}
+    </delete>
+
+    <delete id="deleteAppNoticeByNoticeIds" parameterType="String">
+        delete from app_notice where notice_id in
+        <foreach item="noticeId" collection="array" open="(" separator="," close=")">
+            #{noticeId}
+        </foreach>
+    </delete>
+</mapper>
