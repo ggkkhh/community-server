@@ -6,9 +6,8 @@ import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
+import lombok.extern.slf4j.Slf4j;
 import net.sf.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -19,41 +18,22 @@ import java.util.regex.Pattern;
  *
  * @author roydon
  */
+@Slf4j
 public class AliyunSmsUtil {
 
-    private static final Logger log = LoggerFactory.getLogger(AliyunSmsUtil.class);
-
-    /**
-     * 屏蔽构造函数，避免被实例化
-     */
     private AliyunSmsUtil() {
     }
 
-    /**
-     * Logger for this class
-     */
-//    private static final Logger logger = Logger.getLogger(AliyunSmsUtil.class);
-    /**
-     * 短信发送返回信息
-     */
     public static final String MESSAGE_OK = "OK";
-    /**
-     * 阿里云短信服务提供的标识用户
-     */
-    private final static String ACCESS_KEY_ID = "LTAI5tSpJYrm2fawRxgfWncf";
-    /**
-     * 阿里云短信服务提供的密钥，用来验证用户的密钥。AccessKeySecret必须保密。
-     */
-    private final static String ACCESS_SECRET = "Plo6TQpTC6YzThyI1QHcu53EtKvroX";
+    private final static String ACCESS_KEY_ID = "LTAI5tDzXh9ZUzwDRyoPxs7n";
+    private final static String ACCESS_SECRET = "Vf81KErpz5ScYJlprwbsbyVyKSysbW";
 
     /**
-     * 短信发送方法
+     * 短信发送
      *
      * @param mobile 手机号
      * @param type   短信模板类型  1身份验证，2登录确认，3登录异常，4用户注册，5修改密码，6信息变更
      * @param code   验证码
-     * @return
-     * @author zql
      * @createTime 2020-11-29 21:57:08
      */
     public static String sendSms(String mobile, int type, String code) {
@@ -63,7 +43,7 @@ public class AliyunSmsUtil {
         }
         DefaultProfile profile = DefaultProfile.getProfile("default", AliyunSmsUtil.ACCESS_KEY_ID, AliyunSmsUtil.ACCESS_SECRET);
         IAcsClient client = new DefaultAcsClient(profile);
-        String signName = "郭意诚的社区后台";
+        String signName = "郭意诚社区通知";
         // 阿里云短信服务提供的模板代码，此代码是由自己创建的模板得到的
         String templateCode = TemplateEnum.getTemplate(type);
         if (Objects.isNull(templateCode)) {
@@ -196,7 +176,9 @@ public class AliyunSmsUtil {
         /**
          * 短信验证码
          */
-        SMS_273815229(7);
+        SMS_273815229(7),
+
+        SMS_460955023(8);
 
         private int type;
 
