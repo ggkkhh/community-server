@@ -1,6 +1,5 @@
 package com.roydon.system.service;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.roydon.common.core.domain.entity.SysUser;
 
@@ -214,9 +213,6 @@ public interface ISysUserService extends IService<SysUser> {
      */
     public SysUser checkTelephoneExists(String telephone);
 
-//    public SysUser getUserByTelephone(String telephone);
-
     public SysUser getUserByTelephone(String telephone);
-
 
 }

@@ -104,7 +104,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // 注解标记允许匿名访问的url
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = httpSecurity.authorizeRequests();
         permitAllUrl.getUrls().forEach(url -> registry.antMatchers(url).permitAll());
-// 添加手机号短信登录
         httpSecurity
                 // CSRF禁用，因为不使用session
                 .csrf().disable()
@@ -155,6 +154,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        // 添加手机号短信登录
         auth.authenticationProvider(new SmsAuthenticationProvider(smsUserDetailsService));
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
