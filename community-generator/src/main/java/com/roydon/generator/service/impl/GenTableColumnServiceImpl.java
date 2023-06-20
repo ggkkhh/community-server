@@ -4,9 +4,9 @@ import com.roydon.common.core.text.Convert;
 import com.roydon.generator.domain.GenTableColumn;
 import com.roydon.generator.mapper.GenTableColumnMapper;
 import com.roydon.generator.service.IGenTableColumnService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -16,7 +16,8 @@ import java.util.List;
  */
 @Service
 public class GenTableColumnServiceImpl implements IGenTableColumnService {
-    @Autowired
+
+    @Resource
     private GenTableColumnMapper genTableColumnMapper;
 
     /**

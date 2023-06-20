@@ -16,17 +16,16 @@ import com.roydon.generator.service.IGenTableService;
 import com.roydon.generator.util.GenUtils;
 import com.roydon.generator.util.VelocityInitializer;
 import com.roydon.generator.util.VelocityUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -44,14 +43,14 @@ import java.util.zip.ZipOutputStream;
  *
  * @author roydon
  */
+@Slf4j
 @Service
 public class GenTableServiceImpl implements IGenTableService {
-    private static final Logger log = LoggerFactory.getLogger(GenTableServiceImpl.class);
 
-    @Autowired
+    @Resource
     private GenTableMapper genTableMapper;
 
-    @Autowired
+    @Resource
     private GenTableColumnMapper genTableColumnMapper;
 
     /**
