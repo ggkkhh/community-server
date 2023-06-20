@@ -1,14 +1,16 @@
 package com.roydon.sms.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.roydon.common.utils.DateUtils;
 import com.roydon.common.utils.uniqueid.IdGenerator;
 import com.roydon.sms.domain.entity.SmsProvider;
 import com.roydon.sms.mapper.SmsProviderMapper;
 import com.roydon.sms.service.ISmsProviderService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -19,7 +21,8 @@ import java.util.List;
  */
 @Service("smsProviderService")
 public class SmsProviderServiceImpl extends ServiceImpl<SmsProviderMapper, SmsProvider> implements ISmsProviderService {
-    @Autowired
+
+    @Resource
     private SmsProviderMapper smsProviderMapper;
 
     /**
@@ -89,5 +92,18 @@ public class SmsProviderServiceImpl extends ServiceImpl<SmsProviderMapper, SmsPr
     @Override
     public int deleteSmsProviderByProviderId(String providerId) {
         return smsProviderMapper.deleteSmsProviderByProviderId(providerId);
+    }
+
+    /**
+     * 短信余量自减1
+     *
+     * @param providerId 系统短信服务供应商主键
+     */
+    @Override
+    public void decrementResidueCountByProviderId(String providerId) {
+        SmsProvider smsProvider = getOne(new LambdaQueryWrapper<SmsProvider>().eq(SmsProvider::getProviderId, providerId));
+        LambdaUpdateWrapper<SmsProvider> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(SmsProvider::getProviderId, providerId).set(SmsProvider::getResidueCount, smsProvider.getResidueCount() - 1l);
+        update(updateWrapper);
     }
 }

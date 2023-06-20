@@ -1,5 +1,6 @@
 package com.roydon.sms.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.roydon.common.annotation.Excel;
 import com.roydon.common.core.domain.BaseEntity;
@@ -23,6 +24,7 @@ public class SmsProvider extends BaseEntity implements Serializable {
     /**
      * 短信业务主键
      */
+    @TableId("provider_id")
     private String providerId;
     /**
      * 短信服务供应商
@@ -43,7 +45,7 @@ public class SmsProvider extends BaseEntity implements Serializable {
      * 短信剩余发送量
      */
     @Excel(name = "短信剩余发送量")
-    private String residueCount;
+    private long residueCount;
 
     @Excel(name = "accessKeyId")
     private String accessKeyId;

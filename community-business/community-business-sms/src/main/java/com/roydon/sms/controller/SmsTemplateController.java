@@ -88,4 +88,12 @@ public class SmsTemplateController extends BaseController {
     public AjaxResult remove(@PathVariable String[] templateIds) {
         return toAjax(smsTemplateService.deleteSmsTemplateByTemplateIds(templateIds));
     }
+
+    @Log(title = "短信模板", businessType = BusinessType.UPDATE)
+    @PreAuthorize("@ss.hasPermi('sms:template:edit')")
+    @PutMapping("/changeStatus")
+    public AjaxResult changeStatus(@RequestBody SmsTemplate smsTemplate) {
+        return toAjax(smsTemplateService.changeTemplateStatus(smsTemplate));
+    }
+
 }

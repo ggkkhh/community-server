@@ -59,4 +59,12 @@ public interface ISmsTemplateService extends IService<SmsTemplate> {
      * @return 结果
      */
     public int deleteSmsTemplateByTemplateId(String templateId);
+
+    /**
+     * 短信模板状态修改
+     *
+     * @param smsTemplate 短信模板
+     * @return true
+     */
+    boolean changeTemplateStatus(SmsTemplate smsTemplate);
 }

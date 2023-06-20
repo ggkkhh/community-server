@@ -1,5 +1,6 @@
 package com.roydon.sms.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.roydon.common.annotation.Excel;
 import com.roydon.common.core.domain.BaseEntity;
@@ -20,6 +21,7 @@ public class SmsTemplate extends BaseEntity implements Serializable {
     /**
      * 模板id
      */
+    @TableId("template_id")
     private String templateId;
     /**
      * 供应商id

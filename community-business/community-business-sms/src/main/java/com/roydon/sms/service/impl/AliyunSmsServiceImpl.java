@@ -9,6 +9,7 @@ import com.roydon.common.utils.aliyun.AliyunSmsUtil;
 import com.roydon.sms.domain.model.AliSmsResponse;
 import com.roydon.sms.domain.model.SmsCode;
 import com.roydon.sms.service.AliyunSmsService;
+import com.roydon.sms.service.ISmsProviderService;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,9 @@ public class AliyunSmsServiceImpl implements AliyunSmsService {
     @Resource
     private RedisTemplate<String, String> redisTemplate;
 
+    @Resource
+    private ISmsProviderService smsProviderService;
+
     private static final long SMSCODE_EXPIRE_TIME = 1l;
 
     @Override
@@ -42,7 +46,7 @@ public class AliyunSmsServiceImpl implements AliyunSmsService {
         // 生成随机验证码
         String smsCode = RandomStringUtils.randomNumeric(6);
 
-        String callbackMsg = AliyunSmsUtil.sendSms(phone, 7, smsCode);
+        String callbackMsg = AliyunSmsUtil.sendSms(phone, 8, smsCode);
         // 回调消息转换
         JSONObject jsonObject = JSON.parseObject(callbackMsg);
         AliSmsResponse aliSmsResponse = JSON.toJavaObject(jsonObject, AliSmsResponse.class);
@@ -53,6 +57,8 @@ public class AliyunSmsServiceImpl implements AliyunSmsService {
         }
         // 将验证码存到 redis ，默认一分钟
         redisTemplate.opsForValue().set(captchaKey, smsCode, SMSCODE_EXPIRE_TIME, TimeUnit.MINUTES);
+        // TODO 动态扣减短信套餐余量,目前默认扣减aliyun的sms
+        smsProviderService.decrementResidueCountByProviderId("1111040954007027712fbea48bbbc4841eda93c0ed1f3630bc8");
         SmsCode sCode = new SmsCode(smsCode, SMSCODE_EXPIRE_TIME);
         return sCode;
     }

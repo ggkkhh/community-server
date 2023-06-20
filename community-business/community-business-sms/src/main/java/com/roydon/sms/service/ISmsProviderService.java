@@ -59,4 +59,11 @@ public interface ISmsProviderService extends IService<SmsProvider> {
      * @return 结果
      */
     public int deleteSmsProviderByProviderId(String providerId);
+
+    /**
+     * 短信余量自减1
+     * @param providerId 系统短信服务供应商主键
+     */
+    void decrementResidueCountByProviderId(String providerId);
+
 }

@@ -1,5 +1,6 @@
 package com.roydon.sms.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.roydon.common.utils.DateUtils;
 import com.roydon.common.utils.uniqueid.IdGenerator;
@@ -90,5 +91,19 @@ public class SmsTemplateServiceImpl extends ServiceImpl<SmsTemplateMapper, SmsTe
     @Override
     public int deleteSmsTemplateByTemplateId(String templateId) {
         return smsTemplateMapper.deleteSmsTemplateByTemplateId(templateId);
+    }
+
+    /**
+     * 短信模板状态修改
+     *
+     * @param smsTemplate 短信模板
+     * @return true
+     */
+    @Override
+    public boolean changeTemplateStatus(SmsTemplate smsTemplate) {
+        LambdaUpdateWrapper<SmsTemplate> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(SmsTemplate::getTemplateId, smsTemplate.getTemplateId()).set(SmsTemplate::getStatus, smsTemplate.getStatus());
+        return update(updateWrapper);
+
     }
 }
