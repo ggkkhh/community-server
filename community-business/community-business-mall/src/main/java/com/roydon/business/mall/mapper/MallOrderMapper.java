@@ -13,7 +13,7 @@ import java.util.List;
  * @author roydon
  * @since 2023-05-18 23:14:11
  */
-public interface MallOrderMapper extends BaseMapper<MallOrder>{
+public interface MallOrderMapper extends BaseMapper<MallOrder> {
 
     /**
      * 通过ID查询单条数据
@@ -27,7 +27,7 @@ public interface MallOrderMapper extends BaseMapper<MallOrder>{
      * 查询指定行数据
      *
      * @param mallOrder 查询条件
-     * @param pageable         分页对象
+     * @param pageable  分页对象
      * @return 对象列表
      */
     List<MallOrder> queryAllByLimit(MallOrder mallOrder, @Param("pageable") Pageable pageable);

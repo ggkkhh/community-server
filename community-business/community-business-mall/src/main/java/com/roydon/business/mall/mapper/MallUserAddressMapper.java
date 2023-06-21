@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.roydon.business.mall.domain.entity.MallUserAddress;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ import java.util.List;
  * @author roydon
  * @since 2023-05-18 23:14:25
  */
-public interface MallUserAddressMapper extends BaseMapper<MallUserAddress>{
+public interface MallUserAddressMapper extends BaseMapper<MallUserAddress> {
 
     /**
      * 通过ID查询单条数据
@@ -26,7 +27,7 @@ public interface MallUserAddressMapper extends BaseMapper<MallUserAddress>{
      * 查询指定行数据
      *
      * @param mallUserAddress 查询条件
-     * @param pageable         分页对象
+     * @param pageable        分页对象
      * @return 对象列表
      */
     List<MallUserAddress> queryAllByLimit(MallUserAddress mallUserAddress, @Param("pageable") Pageable pageable);
