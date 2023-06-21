@@ -18,4 +18,5 @@ public class MallGoodsDTO extends MallGoods {
 
     @TableField(exist = false)
     private Integer pageSize;
+
 }

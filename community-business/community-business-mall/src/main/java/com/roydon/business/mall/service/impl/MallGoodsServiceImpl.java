@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.roydon.business.mall.domain.entity.MallGoods;
 import com.roydon.business.mall.domain.dto.MallGoodsDTO;
+import com.roydon.business.mall.domain.entity.MallGoods;
 import com.roydon.business.mall.mapper.MallGoodsMapper;
 import com.roydon.business.mall.service.IMallGoodsService;
 import com.roydon.common.core.domain.model.LoginUser;
@@ -15,6 +15,7 @@ import com.roydon.common.utils.uuid.IdUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * (MallGoods)表服务实现类
@@ -49,8 +50,9 @@ public class MallGoodsServiceImpl extends ServiceImpl<MallGoodsMapper, MallGoods
     @Override
     public IPage<MallGoods> queryPage(MallGoodsDTO mallGoodsDTO) {
         LambdaQueryWrapper<MallGoods> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.like(StringUtil.isNotEmpty(mallGoodsDTO.getGoodsTitle()), MallGoods::getGoodsTitle, mallGoodsDTO.getGoodsTitle());
-        queryWrapper.eq(StringUtil.isNotEmpty(mallGoodsDTO.getStatus()), MallGoods::getStatus, mallGoodsDTO.getStatus());
+        queryWrapper.like(StringUtil.isNotEmpty(mallGoodsDTO.getGoodsTitle()), MallGoods::getGoodsTitle, mallGoodsDTO.getGoodsTitle())
+                .eq(StringUtil.isNotEmpty(mallGoodsDTO.getStatus()), MallGoods::getStatus, mallGoodsDTO.getStatus())
+                .orderByDesc(MallGoods::getUpdateTime);
         return page(new Page<>(mallGoodsDTO.getPageNum(), mallGoodsDTO.getPageSize()), queryWrapper);
     }
 
@@ -66,6 +68,8 @@ public class MallGoodsServiceImpl extends ServiceImpl<MallGoodsMapper, MallGoods
         mallGoods.setGoodsId(IdUtils.fastSimpleUUID());
         mallGoods.setUserId(loginUser.getUserId());
         mallGoods.setDeptId(loginUser.getDeptId());
+        mallGoods.setCreateTime(new Date());
+        mallGoods.setCreateBy(loginUser.getUser().getUserName());
         mallGoods.setViewNum(0);
         this.mallGoodsMapper.insert(mallGoods);
         return mallGoods;
