@@ -11,10 +11,11 @@ import com.roydon.business.mall.service.IMallGoodsService;
 import com.roydon.common.core.domain.model.LoginUser;
 import com.roydon.common.utils.SecurityUtils;
 import com.roydon.common.utils.StringUtil;
-import com.roydon.common.utils.uuid.IdUtils;
+import com.roydon.common.utils.uniqueid.IdGenerator;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -65,12 +66,14 @@ public class MallGoodsServiceImpl extends ServiceImpl<MallGoodsMapper, MallGoods
     @Override
     public MallGoods insert(MallGoods mallGoods) {
         LoginUser loginUser = SecurityUtils.getLoginUser();
-        mallGoods.setGoodsId(IdUtils.fastSimpleUUID());
+        mallGoods.setGoodsId(IdGenerator.generatorId());
         mallGoods.setUserId(loginUser.getUserId());
         mallGoods.setDeptId(loginUser.getDeptId());
         mallGoods.setCreateTime(new Date());
         mallGoods.setCreateBy(loginUser.getUser().getUserName());
         mallGoods.setViewNum(0);
+        // 默认为上架状态
+        mallGoods.setStatus("0");
         this.mallGoodsMapper.insert(mallGoods);
         return mallGoods;
     }
@@ -96,5 +99,18 @@ public class MallGoodsServiceImpl extends ServiceImpl<MallGoodsMapper, MallGoods
     @Override
     public boolean deleteById(String goodsId) {
         return this.mallGoodsMapper.deleteById(goodsId) > 0;
+    }
+
+    @Override
+    public boolean deleteByIds(String[] goodsIds) {
+        boolean b = removeBatchByIds(Arrays.asList(goodsIds));
+        return b;
+    }
+
+    @Override
+    public boolean changeStatus(MallGoods mallGoods) {
+//        LambdaUpdateWrapper<MallGoods> updateWrapper = new LambdaUpdateWrapper<>();
+//        updateWrapper.eq(MallGoods::getGoodsId, mallGoods.getGoodsId()).set(MallGoods::getStatus, mallGoods.getStatus());
+        return updateById(mallGoods);
     }
 }

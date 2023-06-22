@@ -44,7 +44,7 @@ public class AppNoticeController extends BaseController {
     }
 
     /**
-     * 头像上传
+     * 轮播图上传
      */
     @ApiOperation("轮播图上传")
     @Log(title = "轮播图上传", businessType = BusinessType.UPDATE)

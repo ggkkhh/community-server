@@ -22,8 +22,21 @@
 
     <!--查询单个-->
     <select id="queryById" resultMap="MallGoodsMap">
-        select
-          goods_id, goods_title, goods_img, goods_details, goods_price, user_id, dept_id, stock, status, view_num, create_time, create_by, update_time, update_by, remark
+        select goods_id,
+               goods_title,
+               goods_img,
+               goods_details,
+               goods_price,
+               user_id,
+               dept_id,
+               stock,
+               status,
+               view_num,
+               create_time,
+               create_by,
+               update_time,
+               update_by,
+               remark
         from mall_goods
         where goods_id = #{goodsId}
     </select>
@@ -31,7 +44,8 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="MallGoodsMap">
         select
-          goods_id, goods_title, goods_img, goods_details, goods_price, user_id, dept_id, stock, status, view_num, create_time, create_by, update_time, update_by, remark
+        goods_id, goods_title, goods_img, goods_details, goods_price, user_id, dept_id, stock, status, view_num,
+        create_time, create_by, update_time, update_by, remark
         from mall_goods
         <where>
             <if test="goodsId != null and goodsId != ''">
@@ -138,23 +152,33 @@
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="goodsId" useGeneratedKeys="true">
-        insert into mall_goods(goods_title, goods_img, goods_details, goods_price, user_id, dept_id, stock, status, view_num, create_time, create_by, update_time, update_by, remark)
-        values (#{goodsTitle}, #{goodsImg}, #{goodsDetails}, #{goodsPrice}, #{userId}, #{deptId}, #{stock}, #{status}, #{viewNum}, #{createTime}, #{createBy}, #{updateTime}, #{updateBy}, #{remark})
+        insert into mall_goods(goods_id, goods_title, goods_img, goods_details, goods_price, user_id, dept_id, stock,
+                               status, view_num, create_time, create_by, update_time, update_by, remark)
+        values (#{goodsId}, #{goodsTitle}, #{goodsImg}, #{goodsDetails}, #{goodsPrice}, #{userId}, #{deptId}, #{stock},
+                #{status}, #{viewNum}, #{createTime}, #{createBy}, #{updateTime}, #{updateBy}, #{remark})
     </insert>
 
     <insert id="insertBatch" keyProperty="goodsId" useGeneratedKeys="true">
-        insert into mall_goods(goods_title, goods_img, goods_details, goods_price, user_id, dept_id, stock, status, view_num, create_time, create_by, update_time, update_by, remark)
+        insert into mall_goods(goods_id,goods_title, goods_img, goods_details, goods_price, user_id, dept_id, stock,
+        status,
+        view_num, create_time, create_by, update_time, update_by, remark)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.goodsTitle}, #{entity.goodsImg}, #{entity.goodsDetails}, #{entity.goodsPrice}, #{entity.userId}, #{entity.deptId}, #{entity.stock}, #{entity.status}, #{entity.viewNum}, #{entity.createTime}, #{entity.createBy}, #{entity.updateTime}, #{entity.updateBy}, #{entity.remark})
+            (#{goodsId},#{entity.goodsTitle}, #{entity.goodsImg}, #{entity.goodsDetails}, #{entity.goodsPrice},
+            #{entity.userId},
+            #{entity.deptId}, #{entity.stock}, #{entity.status}, #{entity.viewNum}, #{entity.createTime},
+            #{entity.createBy}, #{entity.updateTime}, #{entity.updateBy}, #{entity.remark})
         </foreach>
     </insert>
 
     <insert id="insertOrUpdateBatch" keyProperty="goodsId" useGeneratedKeys="true">
-        insert into mall_goods(goods_title, goods_img, goods_details, goods_price, user_id, dept_id, stock, status, view_num, create_time, create_by, update_time, update_by, remark)
+        insert into mall_goods(goods_title, goods_img, goods_details, goods_price, user_id, dept_id, stock, status,
+        view_num, create_time, create_by, update_time, update_by, remark)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.goodsTitle}, #{entity.goodsImg}, #{entity.goodsDetails}, #{entity.goodsPrice}, #{entity.userId}, #{entity.deptId}, #{entity.stock}, #{entity.status}, #{entity.viewNum}, #{entity.createTime}, #{entity.createBy}, #{entity.updateTime}, #{entity.updateBy}, #{entity.remark})
+            (#{entity.goodsTitle}, #{entity.goodsImg}, #{entity.goodsDetails}, #{entity.goodsPrice}, #{entity.userId},
+            #{entity.deptId}, #{entity.stock}, #{entity.status}, #{entity.viewNum}, #{entity.createTime},
+            #{entity.createBy}, #{entity.updateTime}, #{entity.updateBy}, #{entity.remark})
         </foreach>
         on duplicate key update
         goods_title = values(goods_title),
@@ -225,7 +249,9 @@
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from mall_goods where goods_id = #{goodsId}
+        delete
+        from mall_goods
+        where goods_id = #{goodsId}
     </delete>
 
 </mapper>

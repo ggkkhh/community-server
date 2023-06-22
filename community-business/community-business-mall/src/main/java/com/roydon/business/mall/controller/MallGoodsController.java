@@ -1,16 +1,21 @@
 package com.roydon.business.mall.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.roydon.business.mall.domain.entity.MallGoods;
 import com.roydon.business.mall.domain.dto.MallGoodsDTO;
+import com.roydon.business.mall.domain.entity.MallGoods;
 import com.roydon.business.mall.domain.vo.MallGoodsVO;
 import com.roydon.business.mall.service.IMallGoodsService;
+import com.roydon.business.oss.service.OssService;
+import com.roydon.common.annotation.Log;
 import com.roydon.common.core.domain.AjaxResult;
 import com.roydon.common.core.domain.entity.SysUser;
+import com.roydon.common.enums.BusinessType;
 import com.roydon.common.utils.bean.BeanCopyUtils;
 import com.roydon.system.service.ISysUserService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -31,6 +36,9 @@ public class MallGoodsController {
 
     @Resource
     private ISysUserService sysUserService;
+
+    @Resource
+    private OssService ossService;
 
     /**
      * 分页查询
@@ -55,14 +63,20 @@ public class MallGoodsController {
     }
 
     /**
-     * 通过主键查询单条数据
+     * 获取商品详细信息
      *
-     * @param id 主键
-     * @return 单条数据
+     * @param goodsId goodsId
+     * @return MallGoodsVO
      */
-    @GetMapping("{id}")
-    public AjaxResult queryById(@PathVariable("id") String id) {
-        return AjaxResult.success(this.mallGoodsService.getById(id));
+    @PreAuthorize("@ss.hasPermi('mall:goods:query')")
+    @GetMapping("/{goodsId}")
+    public AjaxResult queryById(@PathVariable("goodsId") String goodsId) {
+        MallGoods mallGoods = mallGoodsService.getById(goodsId);
+        SysUser sysUser = sysUserService.selectUserById(mallGoods.getUserId());
+        MallGoodsVO mallGoodsVO = BeanCopyUtils.copyBean(mallGoods, MallGoodsVO.class);
+        mallGoodsVO.setNickName(sysUser.getNickName());
+        mallGoodsVO.setAvatar(sysUser.getAvatar());
+        return AjaxResult.success(mallGoodsVO);
     }
 
     /**
@@ -71,6 +85,8 @@ public class MallGoodsController {
      * @param mallGoods 实体
      * @return 新增结果
      */
+    @PreAuthorize("@ss.hasPermi('mall:goods:add')")
+    @Log(title = "商品管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody MallGoods mallGoods) {
         return AjaxResult.success(this.mallGoodsService.insert(mallGoods));
@@ -82,20 +98,48 @@ public class MallGoodsController {
      * @param mallGoods 实体
      * @return 编辑结果
      */
+    @PreAuthorize("@ss.hasPermi('mall:goods:edit')")
+    @Log(title = "商品管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(MallGoods mallGoods) {
+    public AjaxResult edit(@RequestBody MallGoods mallGoods) {
         return AjaxResult.success(this.mallGoodsService.update(mallGoods));
     }
 
     /**
      * 删除数据
      *
-     * @param id 主键
+     * @param goodsIds 主键
      * @return 删除是否成功
      */
-    @DeleteMapping
-    public AjaxResult removeById(String id) {
-        return AjaxResult.success(this.mallGoodsService.deleteById(id));
+    @PreAuthorize("@ss.hasPermi('mall:goods:remove')")
+    @Log(title = "商品管理", businessType = BusinessType.DELETE)
+    @DeleteMapping("/{goodsIds}")
+    public AjaxResult removeById(@PathVariable String[] goodsIds) {
+        return AjaxResult.success(this.mallGoodsService.deleteByIds(goodsIds));
+    }
+
+    /**
+     * 商品封面上传
+     */
+    @ApiOperation("商品封面上传")
+    @Log(title = "商品封面上传", businessType = BusinessType.UPDATE)
+    @PostMapping("/uploadImg")
+    public AjaxResult avatar(@RequestParam("file") MultipartFile file) throws Exception {
+        if (!file.isEmpty()) {
+            String imgUrl = ossService.uploadGoodsImgFile(file);
+            AjaxResult ajax = AjaxResult.success();
+            ajax.put("imgUrl", imgUrl);
+            return ajax;
+        }
+        return AjaxResult.error("上传图片异常，请联系管理员");
+    }
+
+    @ApiOperation("商品状态")
+    @Log(title = "商品管理", businessType = BusinessType.UPDATE)
+    @PreAuthorize("@ss.hasPermi('mall:goods:edit')")
+    @PutMapping("/changeStatus")
+    public AjaxResult changeStatus(@RequestBody MallGoods mallGoods) {
+        return AjaxResult.success(mallGoodsService.changeStatus(mallGoods));
     }
 
 }

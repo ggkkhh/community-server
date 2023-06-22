@@ -39,29 +39,21 @@ public class OssServiceImpl implements OssService {
         }
         //获取文件名称
         String fileName = file.getOriginalFilename();
-
         //保证文件名唯一，去掉uuid中的'-'
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
         fileName = uuid + fileName;
-
         //把文件按日期分类，构建日期路径：avatar/2000/02/26/文件名
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd"); // 定义日期格式
         String datePath = sdf.format(new Date()); // 将日期转换为字符串
         //拼接
         fileName = datePath + "/" + fileName;
-
-        //调用oss方法上传到阿里云
-        //第一个参数：Bucket名称
-        //第二个参数：上传到oss文件路径和文件名称
-        //第三个参数：上传文件输入流
+        //调用oss方法上传到阿里云第一个参数：Bucket名称第二个参数：上传到oss文件路径和文件名称第三个参数：上传文件输入流
         ossClient.putObject(BUCKET_NAME, fileName, inputStream);
-
         //把上传后把文件url返回
         //https://xppll.oss-cn-beijing.aliyuncs.com/01.jpg
         String url = "https://" + BUCKET_NAME + "." + END_POINT + "/" + fileName;
         //关闭OSSClient
         ossClient.shutdown();
-
         return url;
     }
 
@@ -73,6 +65,11 @@ public class OssServiceImpl implements OssService {
     @Override
     public String uploadNoticeFile(MultipartFile file) {
         return this.uploadFile(file, OssUtil.NOTICE_FILE);
+    }
+
+    @Override
+    public String uploadGoodsImgFile(MultipartFile file) {
+        return this.uploadFile(file, OssUtil.GOODS_FILE);
     }
 
     @Override

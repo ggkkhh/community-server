@@ -18,4 +18,6 @@ public interface OssService {
 
     String uploadCommonFile(MultipartFile file);
 
+    String uploadGoodsImgFile(MultipartFile file);
+
 }

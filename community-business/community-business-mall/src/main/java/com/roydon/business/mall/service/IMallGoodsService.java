@@ -53,4 +53,20 @@ public interface IMallGoodsService extends IService<MallGoods> {
      */
     boolean deleteById(String goodsId);
 
+    /**
+     * 批量删除
+     *
+     * @param goodsIds
+     * @return
+     */
+    boolean deleteByIds(String[] goodsIds);
+
+    /**
+     * 修改上下架状态
+     *
+     * @param mallGoods
+     * @return
+     */
+    boolean changeStatus(MallGoods mallGoods);
+
 }
