@@ -46,6 +46,7 @@ public class MallOrderServiceImpl extends ServiceImpl<MallOrderMapper, MallOrder
         LambdaQueryWrapper<MallOrder> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.like(StringUtil.isNotEmpty(mallOrderDTO.getUserName()), MallOrder::getUserName, mallOrderDTO.getUserName());
         queryWrapper.eq(StringUtil.isNotEmpty(mallOrderDTO.getPayStatus()), MallOrder::getPayStatus, mallOrderDTO.getPayStatus());
+        queryWrapper.eq(StringUtil.isNotEmpty(mallOrderDTO.getUserId()), MallOrder::getUserId, mallOrderDTO.getUserId());
         return page(new Page<>(mallOrderDTO.getPageNum(), mallOrderDTO.getPageSize()), queryWrapper);
     }
 

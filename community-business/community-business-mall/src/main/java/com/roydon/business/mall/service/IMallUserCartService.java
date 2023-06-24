@@ -1,8 +1,8 @@
 package com.roydon.business.mall.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.roydon.business.mall.domain.dto.MallUserCartDTO;
 import com.roydon.business.mall.domain.entity.MallUserCart;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 
 /**
  * (MallUserCart)表服务接口
@@ -13,21 +13,12 @@ import org.springframework.data.domain.PageRequest;
 public interface IMallUserCartService {
 
     /**
-     * 通过ID查询单条数据
+     * 通过用户id查询
      *
-     * @param cartId 主键
-     * @return 实例对象
+     * @param mallUserCartDTO 用户id
+     * @return IPage
      */
-    MallUserCart queryById(String cartId);
-
-    /**
-     * 分页查询
-     *
-     * @param mallUserCart 筛选条件
-     * @param pageRequest      分页对象
-     * @return 查询结果
-     */
-    Page<MallUserCart> queryByPage(MallUserCart mallUserCart, PageRequest pageRequest);
+    IPage<MallUserCart> queryPage(MallUserCartDTO mallUserCartDTO);
 
     /**
      * 新增数据
@@ -38,19 +29,11 @@ public interface IMallUserCartService {
     MallUserCart insert(MallUserCart mallUserCart);
 
     /**
-     * 修改数据
+     * 批量删除
      *
-     * @param mallUserCart 实例对象
-     * @return 实例对象
+     * @param cartIds cartIds
+     * @return boolean
      */
-    MallUserCart update(MallUserCart mallUserCart);
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param cartId 主键
-     * @return 是否成功
-     */
-    boolean deleteById(String cartId);
+    boolean deleteByIds(String[] cartIds);
 
 }

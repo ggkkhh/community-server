@@ -1,10 +1,14 @@
 package com.roydon.business.mall.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * (MallUserCart)实体类
@@ -20,7 +24,7 @@ public class MallUserCart implements Serializable {
     @TableId("cart_id")
     private String cartId;
 
-    private String userId;
+    private Long userId;
     /**
      * 商品id
      */
@@ -28,11 +32,15 @@ public class MallUserCart implements Serializable {
     /**
      * 数量
      */
-    private Integer count;
+    private Integer goodsCount;
     /**
      * 选择状态0未选1已选
      */
-    private String active;
+    private String defaultActive;
+
+    @TableField(fill = FieldFill.INSERT)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
 
 
 }

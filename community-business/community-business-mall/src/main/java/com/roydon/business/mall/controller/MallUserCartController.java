@@ -1,12 +1,19 @@
 package com.roydon.business.mall.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.roydon.business.mall.domain.dto.MallUserCartDTO;
+import com.roydon.business.mall.domain.entity.MallGoods;
 import com.roydon.business.mall.domain.entity.MallUserCart;
+import com.roydon.business.mall.domain.vo.MallUserCartVO;
+import com.roydon.business.mall.service.IMallGoodsService;
 import com.roydon.business.mall.service.IMallUserCartService;
 import com.roydon.common.core.domain.AjaxResult;
-import org.springframework.data.domain.PageRequest;
+import com.roydon.common.utils.bean.BeanCopyUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * (MallUserCart)表控制层
@@ -21,27 +28,30 @@ public class MallUserCartController {
     @Resource
     private IMallUserCartService mallUserCartService;
 
+    @Resource
+    private IMallGoodsService mallGoodsService;
+
     /**
      * 分页查询
      *
-     * @param mallUserCart 筛选条件
-     * @param pageRequest      分页对象
-     * @return 查询结果
+     * @param mallUserCartDTO 分页参数
+     * @return MallUserCartVO
      */
-    @GetMapping
-    public AjaxResult queryByPage(MallUserCart mallUserCart, PageRequest pageRequest) {
-        return AjaxResult.success(this.mallUserCartService.queryByPage(mallUserCart, pageRequest));
-    }
-
-    /**
-     * 通过主键查询单条数据
-     *
-     * @param id 主键
-     * @return 单条数据
-     */
-    @GetMapping("{id}")
-    public AjaxResult queryById(@PathVariable("id") String id) {
-        return AjaxResult.success(this.mallUserCartService.queryById(id));
+    @PostMapping("/list")
+    public AjaxResult list(@RequestBody MallUserCartDTO mallUserCartDTO) {
+        IPage<MallUserCart> mallGoodsIPage = mallUserCartService.queryPage(mallUserCartDTO);
+        List<MallUserCart> records = mallGoodsIPage.getRecords();
+        List<MallUserCartVO> voList = new ArrayList<>();
+        records.forEach(r -> {
+            String goodsId = r.getGoodsId();
+            MallGoods mallGoods = mallGoodsService.getById(goodsId);
+            MallUserCartVO mallUserCartVO = BeanCopyUtils.copyBean(r, MallUserCartVO.class);
+            mallUserCartVO.setGoodsTitle(mallGoods.getGoodsTitle());
+            mallUserCartVO.setGoodsPrice(mallGoods.getGoodsPrice());
+            mallUserCartVO.setGoodsImg(mallGoods.getGoodsImg());
+            voList.add(mallUserCartVO);
+        });
+        return AjaxResult.genTableData(voList, mallGoodsIPage.getTotal());
     }
 
     /**
@@ -51,31 +61,33 @@ public class MallUserCartController {
      * @return 新增结果
      */
     @PostMapping
-    public AjaxResult add(MallUserCart mallUserCart) {
-        return AjaxResult.success(this.mallUserCartService.insert(mallUserCart));
+    public AjaxResult add(@RequestBody MallUserCart mallUserCart) {
+        return AjaxResult.success(mallUserCartService.insert(mallUserCart));
     }
 
     /**
-     * 编辑数据
+     * 编辑数据，即购物车商品数量加一，不应该直接操作数据库
      *
      * @param mallUserCart 实体
      * @return 编辑结果
      */
-    @PutMapping
-    public AjaxResult edit(MallUserCart mallUserCart) {
-        return AjaxResult.success(this.mallUserCartService.update(mallUserCart));
-    }
+//    @PreAuthorize("@ss.hasPermi('mall:cart:edit')")
+//    @PutMapping
+//    public AjaxResult edit(@RequestBody MallUserCart mallUserCart) {
+//        return AjaxResult.success(mallUserCartService.update(mallUserCart));
+//    }
 
     /**
      * 删除数据
      *
-     * @param id 主键
+     * @param cartIds 主键
      * @return 删除是否成功
      */
-    @DeleteMapping
-    public AjaxResult removeById(String id) {
-        return AjaxResult.success(this.mallUserCartService.deleteById(id));
+    @DeleteMapping("/{cartIds}")
+    public AjaxResult removeById(@PathVariable String[] cartIds) {
+        return AjaxResult.success(mallUserCartService.deleteByIds(cartIds));
     }
+
 
 }
 
