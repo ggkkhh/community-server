@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * (MallOrder)实体类
@@ -21,7 +21,7 @@ public class MallOrder implements Serializable {
     @TableId("order_id")
     private String orderId;
 
-    private String userId;
+    private Long userId;
     private String userName;
     /**
      * 收货地址id
@@ -36,11 +36,13 @@ public class MallOrder implements Serializable {
      */
     private String payStatus;
 
-    private LocalDateTime createTime;
+    private String payOrderId;
+
+    private Date createTime;
 
     private String createBy;
 
-    private LocalDateTime updateTime;
+    private Date updateTime;
 
     private String updateBy;
 

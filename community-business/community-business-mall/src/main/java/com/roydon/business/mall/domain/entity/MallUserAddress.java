@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * (MallUserAddress)实体类
@@ -23,7 +23,7 @@ public class MallUserAddress implements Serializable {
     /**
      * 用户id
      */
-    private String userId;
+    private Long userId;
     /**
      * 省代码
      */
@@ -39,7 +39,7 @@ public class MallUserAddress implements Serializable {
     /**
      * 社区id
      */
-    private String communityId;
+    private Long communityId;
     /**
      * 备注
      */
@@ -55,13 +55,13 @@ public class MallUserAddress implements Serializable {
     /**
      * 状态：0；1默认收货地址；
      */
-    private String active;
+    private String isDefault;
 
-    private LocalDateTime createTime;
+    private Date createTime;
 
     private String createBy;
 
-    private LocalDateTime updateTime;
+    private Date updateTime;
 
     private String updateBy;
 

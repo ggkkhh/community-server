@@ -1,9 +1,9 @@
 package com.roydon.business.mall.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.roydon.business.mall.domain.dto.MallUserAddressDTO;
 import com.roydon.business.mall.domain.entity.MallUserAddress;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 
 /**
  * (MallUserAddress)表服务接口
@@ -14,21 +14,12 @@ import org.springframework.data.domain.PageRequest;
 public interface IMallUserAddressService extends IService<MallUserAddress> {
 
     /**
-     * 通过ID查询单条数据
+     * 通过用户id查询收货地址
      *
-     * @param addressId 主键
-     * @return 实例对象
+     * @param MallUserAddressDTO 用户id
+     * @return IPage
      */
-    MallUserAddress getById(String addressId);
-
-    /**
-     * 分页查询
-     *
-     * @param mallUserAddress 筛选条件
-     * @param pageRequest      分页对象
-     * @return 查询结果
-     */
-    Page<MallUserAddress> queryByPage(MallUserAddress mallUserAddress, PageRequest pageRequest);
+    IPage<MallUserAddress> queryPage(MallUserAddressDTO MallUserAddressDTO);
 
     /**
      * 新增数据
@@ -39,19 +30,11 @@ public interface IMallUserAddressService extends IService<MallUserAddress> {
     MallUserAddress insert(MallUserAddress mallUserAddress);
 
     /**
-     * 修改数据
+     * 批量删除
      *
-     * @param mallUserAddress 实例对象
-     * @return 实例对象
+     * @param addressIds addressIds
+     * @return boolean
      */
-    MallUserAddress update(MallUserAddress mallUserAddress);
-
-    /**
-     * 通过主键删除数据
-     *
-     * @param addressId 主键
-     * @return 是否成功
-     */
-    boolean deleteById(String addressId);
+    boolean deleteByIds(String[] addressIds);
 
 }

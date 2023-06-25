@@ -88,6 +88,24 @@ public class MallUserCartController {
         return AjaxResult.success(mallUserCartService.deleteByIds(cartIds));
     }
 
+    /**
+     * 获取所有数据
+     */
+    @GetMapping("/all")
+    public AjaxResult all() {
+        List<MallUserCart> list = mallUserCartService.list();
+        List<MallUserCartVO> voList = new ArrayList<>();
+        list.forEach(r -> {
+            String goodsId = r.getGoodsId();
+            MallGoods mallGoods = mallGoodsService.getById(goodsId);
+            MallUserCartVO mallUserCartVO = BeanCopyUtils.copyBean(r, MallUserCartVO.class);
+            mallUserCartVO.setGoodsTitle(mallGoods.getGoodsTitle());
+            mallUserCartVO.setGoodsPrice(mallGoods.getGoodsPrice());
+            mallUserCartVO.setGoodsImg(mallGoods.getGoodsImg());
+            voList.add(mallUserCartVO);
+        });
+        return AjaxResult.genTableData(voList, voList.size());
+    }
 
 }
 

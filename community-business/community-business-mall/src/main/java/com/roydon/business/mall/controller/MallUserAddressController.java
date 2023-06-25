@@ -1,12 +1,17 @@
 package com.roydon.business.mall.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.roydon.business.mall.domain.dto.MallUserAddressDTO;
 import com.roydon.business.mall.domain.entity.MallUserAddress;
 import com.roydon.business.mall.service.IMallUserAddressService;
 import com.roydon.common.core.domain.AjaxResult;
-import org.springframework.data.domain.PageRequest;
+import com.roydon.common.core.domain.model.LoginUser;
+import com.roydon.common.utils.SecurityUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (MallUserAddress)表控制层
@@ -24,24 +29,14 @@ public class MallUserAddressController {
     /**
      * 分页查询
      *
-     * @param mallUserAddress 筛选条件
-     * @param pageRequest      分页对象
-     * @return 查询结果
+     * @param MallUserAddressDTO
+     * @return
      */
-    @GetMapping
-    public AjaxResult queryByPage(MallUserAddress mallUserAddress, PageRequest pageRequest) {
-        return AjaxResult.success(this.mallUserAddressService.queryByPage(mallUserAddress, pageRequest));
-    }
-
-    /**
-     * 通过主键查询单条数据
-     *
-     * @param id 主键
-     * @return 单条数据
-     */
-    @GetMapping("{id}")
-    public AjaxResult queryById(@PathVariable("id") String id) {
-        return AjaxResult.success(this.mallUserAddressService.getById(id));
+    @PostMapping("/list")
+    public AjaxResult list(@RequestBody MallUserAddressDTO MallUserAddressDTO) {
+        IPage<MallUserAddress> addressIPage = mallUserAddressService.queryPage(MallUserAddressDTO);
+        List<MallUserAddress> records = addressIPage.getRecords();
+        return AjaxResult.genTableData(records, addressIPage.getTotal());
     }
 
     /**
@@ -51,8 +46,8 @@ public class MallUserAddressController {
      * @return 新增结果
      */
     @PostMapping
-    public AjaxResult add(MallUserAddress mallUserAddress) {
-        return AjaxResult.success(this.mallUserAddressService.insert(mallUserAddress));
+    public AjaxResult add(@RequestBody MallUserAddress mallUserAddress) {
+        return AjaxResult.success(mallUserAddressService.insert(mallUserAddress));
     }
 
     /**
@@ -62,19 +57,30 @@ public class MallUserAddressController {
      * @return 编辑结果
      */
     @PutMapping
-    public AjaxResult edit(MallUserAddress mallUserAddress) {
-        return AjaxResult.success(this.mallUserAddressService.update(mallUserAddress));
+    public AjaxResult edit(@RequestBody MallUserAddress mallUserAddress) {
+        return AjaxResult.success(mallUserAddressService.updateById(mallUserAddress));
     }
 
     /**
      * 删除数据
      *
-     * @param id 主键
+     * @param addressIds 主键
      * @return 删除是否成功
      */
-    @DeleteMapping
-    public AjaxResult removeById(String id) {
-        return AjaxResult.success(this.mallUserAddressService.deleteById(id));
+    @DeleteMapping("/{addressIds}")
+    public AjaxResult removeById(@PathVariable String[] addressIds) {
+        return AjaxResult.success(mallUserAddressService.deleteByIds(addressIds));
+    }
+
+    /**
+     * 获取默认收货地址
+     */
+    @GetMapping("/default")
+    public AjaxResult getOneDefault() {
+        LambdaQueryWrapper<MallUserAddress> queryWrapper = new LambdaQueryWrapper<>();
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        queryWrapper.eq(MallUserAddress::getUserId, loginUser.getUserId()).eq(MallUserAddress::getIsDefault, "1");
+        return AjaxResult.success(mallUserAddressService.getOne(queryWrapper));
     }
 
 }

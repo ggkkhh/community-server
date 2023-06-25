@@ -1,6 +1,7 @@
 package com.roydon.business.mall.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.roydon.business.mall.domain.dto.MallOrderCreateDTO;
 import com.roydon.business.mall.domain.dto.MallOrderDTO;
 import com.roydon.business.mall.domain.entity.MallOrder;
 import com.roydon.business.mall.domain.vo.MallOrderGoodsVO;
@@ -72,14 +73,14 @@ public class MallOrderController {
     }
 
     /**
-     * 新增数据
+     * 创建订单
      *
-     * @param mallOrder 实体
-     * @return 新增结果
+     * @param mallOrderCreateDTO
+     * @return
      */
-    @PostMapping
-    public AjaxResult add(MallOrder mallOrder) {
-        return AjaxResult.success(this.mallOrderService.insert(mallOrder));
+    @PostMapping("/create")
+    public AjaxResult createOrder(@RequestBody MallOrderCreateDTO mallOrderCreateDTO) {
+        return AjaxResult.success(mallOrderService.createOrder(mallOrderCreateDTO));
     }
 
     /**

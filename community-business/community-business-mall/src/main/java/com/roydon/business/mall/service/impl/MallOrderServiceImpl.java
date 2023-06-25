@@ -4,14 +4,29 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.roydon.business.mall.domain.dto.MallOrderCreateDTO;
 import com.roydon.business.mall.domain.dto.MallOrderDTO;
+import com.roydon.business.mall.domain.entity.MallGoods;
 import com.roydon.business.mall.domain.entity.MallOrder;
+import com.roydon.business.mall.domain.entity.MallOrderGoods;
+import com.roydon.business.mall.domain.entity.MallUserCart;
 import com.roydon.business.mall.mapper.MallOrderMapper;
+import com.roydon.business.mall.service.IMallGoodsService;
+import com.roydon.business.mall.service.IMallOrderGoodsService;
 import com.roydon.business.mall.service.IMallOrderService;
+import com.roydon.business.mall.service.IMallUserCartService;
+import com.roydon.common.core.domain.model.LoginUser;
+import com.roydon.common.utils.SecurityUtils;
 import com.roydon.common.utils.StringUtil;
+import com.roydon.common.utils.uniqueid.IdGenerator;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * (MallOrder)表服务实现类
@@ -21,8 +36,18 @@ import javax.annotation.Resource;
  */
 @Service("mallOrderService")
 public class MallOrderServiceImpl extends ServiceImpl<MallOrderMapper, MallOrder> implements IMallOrderService {
+
     @Resource
     private MallOrderMapper mallOrderMapper;
+
+    @Resource
+    private IMallUserCartService mallUserCartService;
+
+    @Resource
+    private IMallGoodsService mallGoodsService;
+
+    @Resource
+    private IMallOrderGoodsService mallOrderGoodsService;
 
     /**
      * 通过ID查询单条数据
@@ -32,7 +57,7 @@ public class MallOrderServiceImpl extends ServiceImpl<MallOrderMapper, MallOrder
      */
     @Override
     public MallOrder queryById(String orderId) {
-        return this.mallOrderMapper.queryById(orderId);
+        return getById(orderId);
     }
 
     /**
@@ -47,6 +72,7 @@ public class MallOrderServiceImpl extends ServiceImpl<MallOrderMapper, MallOrder
         queryWrapper.like(StringUtil.isNotEmpty(mallOrderDTO.getUserName()), MallOrder::getUserName, mallOrderDTO.getUserName());
         queryWrapper.eq(StringUtil.isNotEmpty(mallOrderDTO.getPayStatus()), MallOrder::getPayStatus, mallOrderDTO.getPayStatus());
         queryWrapper.eq(StringUtil.isNotEmpty(mallOrderDTO.getUserId()), MallOrder::getUserId, mallOrderDTO.getUserId());
+        queryWrapper.orderByDesc(MallOrder::getCreateTime);
         return page(new Page<>(mallOrderDTO.getPageNum(), mallOrderDTO.getPageSize()), queryWrapper);
     }
 
@@ -63,6 +89,53 @@ public class MallOrderServiceImpl extends ServiceImpl<MallOrderMapper, MallOrder
     }
 
     /**
+     * 创建订单
+     *
+     * @param mallOrderCreateDTO
+     */
+    @Override
+    @Transactional
+    public MallOrder createOrder(MallOrderCreateDTO mallOrderCreateDTO) {
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        MallOrder mallOrder = new MallOrder();
+        mallOrder.setOrderId(IdGenerator.generatorId());
+        mallOrder.setUserId(loginUser.getUserId());
+        mallOrder.setUserName(loginUser.getUsername());
+        mallOrder.setAddressId(mallOrderCreateDTO.getAddressId());
+        List<String> goodsIds = mallOrderCreateDTO.getGoodsIds();
+        List<MallUserCart> cartList = mallUserCartService.queryListByGoodsId(goodsIds);
+        // 订单管理订单商品
+        List<MallOrderGoods> mallOrderGoodsList = new ArrayList<>();
+        // 计算总价
+        AtomicReference<Double> totalPrice = new AtomicReference<>(0.00);
+        cartList.forEach(c -> {
+            MallGoods goods = mallGoodsService.getById(c.getGoodsId());
+            Double price = c.getGoodsCount() * goods.getGoodsPrice();
+            totalPrice.updateAndGet(v -> v + price);
+            // 订单关联订单商品
+            MallOrderGoods mallOrderGoods = new MallOrderGoods();
+            mallOrderGoods.setId(IdGenerator.generatorId());
+            mallOrderGoods.setOrderId(mallOrder.getOrderId());
+            mallOrderGoods.setGoodsId(goods.getGoodsId());
+            mallOrderGoods.setPrice(goods.getGoodsPrice());
+            mallOrderGoods.setCount(c.getGoodsCount());
+            mallOrderGoods.setTotalPrice((Double) totalPrice.get());
+            // 默认未收货
+            mallOrderGoods.setReceive("0");
+            mallOrderGoodsList.add(mallOrderGoods);
+        });
+        mallOrder.setTotalPrice((Double) totalPrice.get());
+        // TODO 默认未支付
+        mallOrder.setPayStatus("0");
+        mallOrder.setPayOrderId(null);
+        mallOrder.setCreateTime(new Date());
+        // 订单商品新增
+        mallOrderGoodsService.saveBatch(mallOrderGoodsList);
+        this.save(mallOrder);
+        return mallOrder;
+    }
+
+    /**
      * 修改数据
      *
      * @param mallOrder 实例对象
@@ -70,7 +143,7 @@ public class MallOrderServiceImpl extends ServiceImpl<MallOrderMapper, MallOrder
      */
     @Override
     public MallOrder update(MallOrder mallOrder) {
-        this.mallOrderMapper.update(mallOrder);
+        update(mallOrder);
         return this.queryById(mallOrder.getOrderId());
     }
 

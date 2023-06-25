@@ -2,6 +2,7 @@ package com.roydon.business.mall.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.roydon.business.mall.domain.dto.MallOrderCreateDTO;
 import com.roydon.business.mall.domain.dto.MallOrderDTO;
 import com.roydon.business.mall.domain.entity.MallOrder;
 
@@ -36,6 +37,13 @@ public interface IMallOrderService extends IService<MallOrder> {
      * @return 实例对象
      */
     MallOrder insert(MallOrder mallOrder);
+
+    /**
+     * 创建订单
+     *
+     * @param mallOrderCreateDTO
+     */
+    MallOrder createOrder(MallOrderCreateDTO mallOrderCreateDTO);
 
     /**
      * 修改数据

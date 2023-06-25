@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * (MallUserCart)表服务实现类
@@ -37,6 +38,15 @@ public class MallUserCartServiceImpl extends ServiceImpl<MallUserCartMapper, Mal
         queryWrapper.eq(MallUserCart::getUserId, loginUser.getUserId());
         queryWrapper.orderByDesc(MallUserCart::getCreateTime);
         return this.page(new Page<>(mallUserCartDTO.getPageNum(), mallUserCartDTO.getPageSize()), queryWrapper);
+    }
+
+    @Override
+    public List<MallUserCart> queryListByGoodsId(List<String> goodsIds) {
+        LambdaQueryWrapper<MallUserCart> queryWrapper = new LambdaQueryWrapper<>();
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        queryWrapper.eq(MallUserCart::getUserId, loginUser.getUserId());
+        queryWrapper.in(MallUserCart::getGoodsId, goodsIds);
+        return list(queryWrapper);
     }
 
     /**
