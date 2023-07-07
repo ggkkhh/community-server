@@ -151,7 +151,7 @@
     </select>
 
     <!--新增所有列-->
-    <insert id="insert" keyProperty="goodsId" useGeneratedKeys="true">
+    <insert id="insertOne" keyProperty="goodsId" useGeneratedKeys="true">
         insert into mall_goods(goods_id, goods_title, goods_img, goods_details, goods_price, user_id, dept_id, stock,
                                status, view_num, create_time, create_by, update_time, update_by, remark)
         values (#{goodsId}, #{goodsTitle}, #{goodsImg}, #{goodsDetails}, #{goodsPrice}, #{userId}, #{deptId}, #{stock},
@@ -198,7 +198,7 @@
     </insert>
 
     <!--通过主键修改数据-->
-    <update id="update">
+    <update id="updateOne">
         update mall_goods
         <set>
             <if test="goodsTitle != null and goodsTitle != ''">
@@ -248,7 +248,7 @@
     </update>
 
     <!--通过主键删除-->
-    <delete id="deleteById">
+    <delete id="deleteOneById">
         delete
         from mall_goods
         where goods_id = #{goodsId}

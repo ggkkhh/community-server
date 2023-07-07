@@ -29,7 +29,7 @@ public class MallUserGoodsServiceImpl implements IMallUserGoodsService {
      */
     @Override
     public MallUserGoods queryById(String id) {
-        return this.mallUserGoodsMapper.queryById(id);
+        return this.mallUserGoodsMapper.queryOneById(id);
     }
 
     /**
@@ -53,7 +53,7 @@ public class MallUserGoodsServiceImpl implements IMallUserGoodsService {
      */
     @Override
     public MallUserGoods insert(MallUserGoods mallUserGoods) {
-        this.mallUserGoodsMapper.insert(mallUserGoods);
+        this.mallUserGoodsMapper.insertOne(mallUserGoods);
         return mallUserGoods;
     }
 
@@ -65,7 +65,7 @@ public class MallUserGoodsServiceImpl implements IMallUserGoodsService {
      */
     @Override
     public MallUserGoods update(MallUserGoods mallUserGoods) {
-        this.mallUserGoodsMapper.update(mallUserGoods);
+        this.mallUserGoodsMapper.updateOne(mallUserGoods);
         return this.queryById(mallUserGoods.getId());
     }
 
@@ -77,6 +77,7 @@ public class MallUserGoodsServiceImpl implements IMallUserGoodsService {
      */
     @Override
     public boolean deleteById(String id) {
-        return this.mallUserGoodsMapper.deleteById(id) > 0;
+        return this.mallUserGoodsMapper.deleteOneById(id) > 0;
     }
+
 }

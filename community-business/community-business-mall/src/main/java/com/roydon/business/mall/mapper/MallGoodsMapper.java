@@ -46,7 +46,7 @@ public interface MallGoodsMapper extends BaseMapper<MallGoods> {
      * @param mallGoods 实例对象
      * @return 影响行数
      */
-    int insert(MallGoods mallGoods);
+    int insertOne(MallGoods mallGoods);
 
     /**
      * 批量新增数据（MyBatis原生foreach方法）
@@ -71,7 +71,7 @@ public interface MallGoodsMapper extends BaseMapper<MallGoods> {
      * @param mallGoods 实例对象
      * @return 影响行数
      */
-    int update(MallGoods mallGoods);
+    int updateOne(MallGoods mallGoods);
 
     /**
      * 通过主键删除数据
@@ -79,7 +79,7 @@ public interface MallGoodsMapper extends BaseMapper<MallGoods> {
      * @param goodsId 主键
      * @return 影响行数
      */
-    int deleteById(String goodsId);
+    int deleteOneById(String goodsId);
 
 }
 

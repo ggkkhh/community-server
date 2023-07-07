@@ -74,7 +74,7 @@ public class MallGoodsServiceImpl extends ServiceImpl<MallGoodsMapper, MallGoods
         mallGoods.setViewNum(0);
         // 默认为上架状态
         mallGoods.setStatus("0");
-        this.mallGoodsMapper.insert(mallGoods);
+        this.mallGoodsMapper.insertOne(mallGoods);
         return mallGoods;
     }
 
@@ -86,7 +86,7 @@ public class MallGoodsServiceImpl extends ServiceImpl<MallGoodsMapper, MallGoods
      */
     @Override
     public MallGoods update(MallGoods mallGoods) {
-        this.mallGoodsMapper.update(mallGoods);
+        this.mallGoodsMapper.updateOne(mallGoods);
         return this.getById(mallGoods.getGoodsId());
     }
 
@@ -98,7 +98,7 @@ public class MallGoodsServiceImpl extends ServiceImpl<MallGoodsMapper, MallGoods
      */
     @Override
     public boolean deleteById(String goodsId) {
-        return this.mallGoodsMapper.deleteById(goodsId) > 0;
+        return this.mallGoodsMapper.deleteOneById(goodsId) > 0;
     }
 
     @Override

@@ -21,7 +21,7 @@ public interface MallUserGoodsMapper extends BaseMapper<MallUserGoods> {
      * @param id 主键
      * @return 实例对象
      */
-    MallUserGoods queryById(String id);
+    MallUserGoods queryOneById(String id);
 
     /**
      * 查询指定行数据
@@ -46,7 +46,7 @@ public interface MallUserGoodsMapper extends BaseMapper<MallUserGoods> {
      * @param mallUserGoods 实例对象
      * @return 影响行数
      */
-    int insert(MallUserGoods mallUserGoods);
+    int insertOne(MallUserGoods mallUserGoods);
 
     /**
      * 批量新增数据（MyBatis原生foreach方法）
@@ -71,7 +71,7 @@ public interface MallUserGoodsMapper extends BaseMapper<MallUserGoods> {
      * @param mallUserGoods 实例对象
      * @return 影响行数
      */
-    int update(MallUserGoods mallUserGoods);
+    int updateOne(MallUserGoods mallUserGoods);
 
     /**
      * 通过主键删除数据
@@ -79,7 +79,7 @@ public interface MallUserGoodsMapper extends BaseMapper<MallUserGoods> {
      * @param id 主键
      * @return 影响行数
      */
-    int deleteById(String id);
+    int deleteOneById(String id);
 
 }
 
