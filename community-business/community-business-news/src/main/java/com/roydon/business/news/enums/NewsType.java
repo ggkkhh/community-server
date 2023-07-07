@@ -23,7 +23,7 @@ public enum NewsType {
 
     private final String typeId;
     private final String typeName;
-    private static final Map<String, NewsType> ENUM_MAP = new HashMap();
+    private static final Map<String, NewsType> ENUM_MAP = new HashMap<>();
 
     NewsType(String typeId, String typeName) {
         this.typeId = typeId;

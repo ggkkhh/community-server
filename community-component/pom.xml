@@ -9,19 +9,13 @@
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>community-business</artifactId>
+    <artifactId>community-component</artifactId>
 
     <packaging>pom</packaging>
 
     <modules>
-        <module>community-business-admin</module>
-        <module>community-business-news</module>
-        <module>community-business-oss</module>
-        <module>community-business-mall</module>
-        <module>community-business-app</module>
-        <module>community-business-unit</module>
-        <module>community-business-sms</module>
-        <module>community-business-epidemic</module>
+        <module>community-component-generator</module>
+        <module>community-component-quartz</module>
     </modules>
 
     <properties>
@@ -34,14 +28,8 @@
         <!-- 通用工具-->
         <dependency>
             <groupId>com.roydon</groupId>
-            <artifactId>community-framework</artifactId>
+            <artifactId>community-common</artifactId>
         </dependency>
-
-        <!-- 定时任务-->
-<!--        <dependency>-->
-<!--            <groupId>com.roydon</groupId>-->
-<!--            <artifactId>community-quartz</artifactId>-->
-<!--        </dependency>-->
 
     </dependencies>
 

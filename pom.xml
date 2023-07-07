@@ -9,7 +9,21 @@
     <version>1.0.0</version>
 
     <name>community-parent</name>
+
     <description>社区管理系统</description>
+
+    <modules>
+        <module>community-framework</module>
+        <module>community-system</module>
+        <module>community-common</module>
+
+        <module>community-business</module>
+        <module>community-component</module>
+
+        <module>community-server</module>
+    </modules>
+
+    <packaging>pom</packaging>
 
     <properties>
         <community.version>1.0.0</community.version>
@@ -166,12 +180,14 @@
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
+
             <!-- 二维码生成 -->
             <dependency>
                 <groupId>com.google.zxing</groupId>
                 <artifactId>core</artifactId>
                 <version>${google.zxing.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>com.google.zxing</groupId>
                 <artifactId>javase</artifactId>
@@ -179,16 +195,23 @@
             </dependency>
 
             <!-- 定时任务-->
-            <dependency>
-                <groupId>com.roydon</groupId>
-                <artifactId>community-quartz</artifactId>
-                <version>${community.version}</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>com.roydon</groupId>-->
+<!--                <artifactId>community-quartz</artifactId>-->
+<!--                <version>${community.version}</version>-->
+<!--            </dependency>-->
 
             <!-- 代码生成-->
+<!--            <dependency>-->
+<!--                <groupId>com.roydon</groupId>-->
+<!--                <artifactId>community-generator</artifactId>-->
+<!--                <version>${community.version}</version>-->
+<!--            </dependency>-->
+
+            <!-- 组件 -->
             <dependency>
                 <groupId>com.roydon</groupId>
-                <artifactId>community-generator</artifactId>
+                <artifactId>community-component</artifactId>
                 <version>${community.version}</version>
             </dependency>
 
@@ -215,23 +238,6 @@
 
         </dependencies>
     </dependencyManagement>
-
-    <modules>
-<!--        <module>community-admin</module>-->
-        <module>community-framework</module>
-        <module>community-generator</module>
-        <module>community-quartz</module>
-        <module>community-system</module>
-        <module>community-common</module>
-        <module>community-resident</module>
-        <module>community-business</module>
-        <module>community-server</module>
-    </modules>
-    <packaging>pom</packaging>
-
-    <dependencies>
-
-    </dependencies>
 
     <build>
         <plugins>

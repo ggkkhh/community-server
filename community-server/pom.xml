@@ -113,13 +113,15 @@
         <!-- 定时任务-->
         <dependency>
             <groupId>com.roydon</groupId>
-            <artifactId>community-quartz</artifactId>
+            <artifactId>community-component-quartz</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
         <!-- 代码生成-->
         <dependency>
             <groupId>com.roydon</groupId>
-            <artifactId>community-generator</artifactId>
+            <artifactId>community-component-generator</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
     </dependencies>

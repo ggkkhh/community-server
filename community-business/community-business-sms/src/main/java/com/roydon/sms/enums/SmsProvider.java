@@ -13,7 +13,7 @@ import java.util.Map;
 public enum SmsProvider {
 
     ALIYUN_SMS("1", "阿里云sms"),
-    TENCENTUUN_SMS("2", "腾讯云sms"),
+    TENCENTYUN_SMS("2", "腾讯云sms"),
     ;
 
     private final String typeId;
