@@ -62,6 +62,29 @@ public class MallOrderController {
     }
 
     /**
+     * 分页查询
+     *
+     * @param mallOrderDTO mallOrderDTO
+     * @return vo
+     */
+    @PostMapping("/userOrderList")
+    public AjaxResult userOrderList(@RequestBody MallOrderDTO mallOrderDTO) {
+        IPage<MallOrder> mallOrderIPage = mallOrderService.queryPage(mallOrderDTO);
+        List<MallOrder> records = mallOrderIPage.getRecords();
+        List<MallOrderVO> mallOrderVOList = new ArrayList<>();
+        records.forEach(r -> {
+            List<MallOrderGoodsVO> oneOrderGoodsByOrderId = mallOrderGoodsService.getOneOrderGoodsByOrderId(r.getOrderId());
+            MallOrderVO mallOrderVO = BeanCopyUtils.copyBean(r, MallOrderVO.class);
+            // 订单商品
+            mallOrderVO.setMallOrderGoodsVOList(oneOrderGoodsByOrderId);
+            // 收货地址
+            mallOrderVO.setMallUserAddress(mallUserAddressService.getById(r.getAddressId()));
+            mallOrderVOList.add(mallOrderVO);
+        });
+        return AjaxResult.genTableData(mallOrderVOList, mallOrderIPage.getTotal());
+    }
+
+    /**
      * 通过主键查询单条数据
      *
      * @param id 主键
