@@ -7,8 +7,7 @@ import com.roydon.common.exception.ServiceException;
 import com.roydon.common.utils.StringUtils;
 import com.roydon.framework.web.service.SysPermissionService;
 import com.roydon.system.service.ISysUserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,9 +20,9 @@ import javax.annotation.Resource;
 /**
  * 查询短信登录信息并封装为 UserDetails 这里可以抽取一个抽象类，权限加载和校验租户等逻辑交给父类处理
  */
+@Slf4j
 @Service("smsUserDetailsService")
 public class SmsUserDetailsService implements UserDetailsService {
-    private static final Logger log = LoggerFactory.getLogger(SmsUserDetailsService.class);
 
     @Resource
     private ISysUserService userService;
