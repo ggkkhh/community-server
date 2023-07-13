@@ -1,6 +1,6 @@
-package com.roydon.quartz.service;
+package com.roydon.generator.service;
 
-import com.roydon.quartz.domain.GenTable;
+import com.roydon.generator.domain.GenTable;
 
 import java.util.List;
 import java.util.Map;

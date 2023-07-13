@@ -1,4 +1,4 @@
-package com.roydon.quartz.service.impl;
+package com.roydon.generator.service.impl;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
@@ -8,14 +8,14 @@ import com.roydon.common.core.text.CharsetKit;
 import com.roydon.common.exception.ServiceException;
 import com.roydon.common.utils.SecurityUtils;
 import com.roydon.common.utils.StringUtils;
-import com.roydon.quartz.domain.GenTable;
-import com.roydon.quartz.domain.GenTableColumn;
-import com.roydon.quartz.mapper.GenTableColumnMapper;
-import com.roydon.quartz.mapper.GenTableMapper;
-import com.roydon.quartz.service.IGenTableService;
-import com.roydon.quartz.util.GenUtils;
-import com.roydon.quartz.util.VelocityInitializer;
-import com.roydon.quartz.util.VelocityUtils;
+import com.roydon.generator.domain.GenTable;
+import com.roydon.generator.domain.GenTableColumn;
+import com.roydon.generator.mapper.GenTableColumnMapper;
+import com.roydon.generator.mapper.GenTableMapper;
+import com.roydon.generator.service.IGenTableService;
+import com.roydon.generator.util.GenUtils;
+import com.roydon.generator.util.VelocityInitializer;
+import com.roydon.generator.util.VelocityUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;

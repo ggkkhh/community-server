@@ -1,10 +1,10 @@
-package com.roydon.quartz.util;
+package com.roydon.generator.util;
 
 import com.roydon.common.constant.GenConstants;
 import com.roydon.common.utils.StringUtils;
-import com.roydon.quartz.config.GenConfig;
-import com.roydon.quartz.domain.GenTable;
-import com.roydon.quartz.domain.GenTableColumn;
+import com.roydon.generator.config.GenConfig;
+import com.roydon.generator.domain.GenTable;
+import com.roydon.generator.domain.GenTableColumn;
 import org.apache.commons.lang3.RegExUtils;
 
 import java.util.Arrays;

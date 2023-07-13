@@ -1,4 +1,4 @@
-package com.roydon.quartz.config;
+package com.roydon.generator.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;

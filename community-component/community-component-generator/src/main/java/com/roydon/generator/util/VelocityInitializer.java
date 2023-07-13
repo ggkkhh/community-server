@@ -1,4 +1,4 @@
-package com.roydon.quartz.util;
+package com.roydon.generator.util;
 
 import com.roydon.common.constant.Constants;
 import org.apache.velocity.app.Velocity;

@@ -1,4 +1,4 @@
-package com.roydon.quartz.domain;
+package com.roydon.generator.domain;
 
 import com.roydon.common.constant.GenConstants;
 import com.roydon.common.core.domain.BaseEntity;

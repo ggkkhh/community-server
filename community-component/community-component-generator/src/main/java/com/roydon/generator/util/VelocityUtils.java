@@ -1,12 +1,12 @@
-package com.roydon.quartz.util;
+package com.roydon.generator.util;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.roydon.common.constant.GenConstants;
 import com.roydon.common.utils.DateUtils;
 import com.roydon.common.utils.StringUtils;
-import com.roydon.quartz.domain.GenTable;
-import com.roydon.quartz.domain.GenTableColumn;
+import com.roydon.generator.domain.GenTable;
+import com.roydon.generator.domain.GenTableColumn;
 import org.apache.velocity.VelocityContext;
 
 import java.util.ArrayList;

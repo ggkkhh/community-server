@@ -1,4 +1,4 @@
-package com.roydon.quartz.controller;
+package com.roydon.generator.controller;
 
 import com.roydon.common.annotation.Log;
 import com.roydon.common.core.controller.BaseController;
@@ -6,10 +6,10 @@ import com.roydon.common.core.domain.AjaxResult;
 import com.roydon.common.core.page.TableDataInfo;
 import com.roydon.common.core.text.Convert;
 import com.roydon.common.enums.BusinessType;
-import com.roydon.quartz.domain.GenTable;
-import com.roydon.quartz.domain.GenTableColumn;
-import com.roydon.quartz.service.IGenTableColumnService;
-import com.roydon.quartz.service.IGenTableService;
+import com.roydon.generator.domain.GenTable;
+import com.roydon.generator.domain.GenTableColumn;
+import com.roydon.generator.service.IGenTableColumnService;
+import com.roydon.generator.service.IGenTableService;
 import org.apache.commons.io.IOUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
