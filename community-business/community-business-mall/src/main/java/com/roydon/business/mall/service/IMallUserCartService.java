@@ -47,4 +47,5 @@ public interface IMallUserCartService extends IService<MallUserCart> {
      */
     boolean deleteByIds(String[] cartIds);
 
+    List<MallUserCart> getAllByToken();
 }
