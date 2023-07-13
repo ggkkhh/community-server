@@ -60,14 +60,16 @@ public class MallUserCartServiceImpl extends ServiceImpl<MallUserCartMapper, Mal
         LoginUser loginUser = SecurityUtils.getLoginUser();
         mallUserCart.setCartId(IdGenerator.generatorId());
         mallUserCart.setUserId(loginUser.getUserId());
+        mallUserCart.setGoodsId(mallUserCart.getGoodsId());
+        // TODO 根据goodsId查询，有数据再新增
         // 存在此商品直接返回
         LambdaQueryWrapper<MallUserCart> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(MallUserCart::getGoodsId, mallUserCart.getGoodsId());
+        queryWrapper.eq(MallUserCart::getUserId, loginUser.getUserId());
         MallUserCart one = getOne(queryWrapper);
         if (StringUtil.isNotEmpty(one)) {
             return one;
         }
-        mallUserCart.setGoodsId(mallUserCart.getGoodsId());
         mallUserCart.setGoodsCount(1);
         // 默认此商品未选中
         mallUserCart.setDefaultActive("0");
@@ -88,4 +90,13 @@ public class MallUserCartServiceImpl extends ServiceImpl<MallUserCartMapper, Mal
         return removeBatchByIds(Arrays.asList(cartIds));
     }
 
+    @Override
+    public List<MallUserCart> getAllByToken() {
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        Long userId = loginUser.getUserId();
+        LambdaQueryWrapper<MallUserCart> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(MallUserCart::getUserId, userId);
+        List<MallUserCart> list = list(queryWrapper);
+        return list;
+    }
 }

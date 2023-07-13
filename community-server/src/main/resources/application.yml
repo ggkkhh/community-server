@@ -45,10 +45,10 @@ spring:
     restart:
       enabled: true # 热部署开关
   redis:
-    host: r
+    host: r-uf673npd2sfuujqlaipd.redis.rds.aliyuncs.com
     port: 6379
     database: 0
-    password: r
+    password: roydon#Redis
     timeout: 10s
     lettuce:
       pool:
@@ -96,18 +96,18 @@ xss:
 # aliyun配置
 aliyun:
   sms:
-    accessKeyId: r
-    accessKeySecret: r
-    templateCode: r # 可在aliyun控制台申请
+    accessKeyId: LTAI5tDzXh9ZUzwDRyoPxs7n
+    accessKeySecret: Vf81KErpz5ScYJlprwbsbyVyKSysbW
+    templateCode: SMS_460955023 # 可在aliyun控制台申请
   oss:
     file:
       endpoint: oss-cn-shanghai.aliyuncs.com
-      keyid: r
-      keysecret: r
+      keyid: LTAI5tDzXh9ZUzwDRyoPxs7n
+      keysecret: Vf81KErpz5ScYJlprwbsbyVyKSysbW
       bucketname: community-server-oss
 
 # roll
 roll:
-  baseUrl: r
-  appId: r
-  appSecret: r
+  baseUrl: https://www.mxnzp.com/api/news/
+  appId: iojgunrruwrtohpn
+  appSecret: aENjYTdrNG85UDkvenpNZmowVjFCZz09

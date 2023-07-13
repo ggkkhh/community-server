@@ -93,7 +93,7 @@ public class MallUserCartController {
      */
     @GetMapping("/all")
     public AjaxResult all() {
-        List<MallUserCart> list = mallUserCartService.list();
+        List<MallUserCart> list = mallUserCartService.getAllByToken();
         List<MallUserCartVO> voList = new ArrayList<>();
         list.forEach(r -> {
             String goodsId = r.getGoodsId();

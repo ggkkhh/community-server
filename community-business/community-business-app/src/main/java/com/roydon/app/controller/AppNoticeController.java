@@ -35,7 +35,6 @@ public class AppNoticeController extends BaseController {
     /**
      * 查询app端图文轮播图公告列表
      */
-    @PreAuthorize("@ss.hasPermi('app:notice:list')")
     @GetMapping("/list")
     public TableDataInfo list(AppNotice appNotice) {
         startPage();
@@ -48,6 +47,7 @@ public class AppNoticeController extends BaseController {
      */
     @ApiOperation("轮播图上传")
     @Log(title = "轮播图上传", businessType = BusinessType.UPDATE)
+    @PreAuthorize("@ss.hasPermi('app:notice:edit')")
     @PostMapping("/uploadImg")
     public AjaxResult avatar(@RequestParam("appNoticeFile") MultipartFile file) throws Exception {
         if (!file.isEmpty()) {
