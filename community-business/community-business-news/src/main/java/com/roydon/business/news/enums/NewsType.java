@@ -16,10 +16,13 @@ public enum NewsType {
     SCIENCE("510", "科技"),
     MILITARY("511", "军事"),
     FASHION("512", "时尚"),
+    NBA("513", "NBA"),
+    GAME("515", "游戏"),
     HEALTH("516", "健康"),
+    WEATHER("517", "知否"),
     REVIEW("518", "要闻"),
     HEADLINE("521", "头条"),
-    HOTSPOT("525", "热点");
+    ;
 
     private final String typeId;
     private final String typeName;

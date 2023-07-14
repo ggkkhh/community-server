@@ -8,20 +8,20 @@ import com.roydon.business.news.model.*;
 import com.roydon.business.news.service.AppNewsService;
 import com.roydon.common.constant.CacheConstants;
 import com.roydon.common.constant.Constants;
+import com.roydon.common.core.domain.entity.SysDictData;
 import com.roydon.common.core.redis.RedisCache;
 import com.roydon.common.utils.StringUtil;
 import com.roydon.common.utils.http.HttpUtils;
 import com.roydon.framework.manager.AsyncManager;
 import com.roydon.framework.manager.factory.AsyncFactory;
+import com.roydon.system.service.ISysDictDataService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * GetNewsService
@@ -43,8 +43,11 @@ public class GetNewsService {
     @Resource
     private RedisCache redisCache;
 
+    @Resource
+    private ISysDictDataService dictDataService;
+
     public void getNewsList() {
-        List<String> typeIdList = getTypeIdList();
+        List<String> typeIdList = getNewsTypeList();
 //        List<Integer> collect = typeIdList.stream().map(t -> Integer.valueOf(t)).collect(Collectors.toList());
         typeIdList.forEach(t -> {
             log.warn("开始获取新闻类型为[{}]的新闻！", t);
@@ -97,7 +100,8 @@ public class GetNewsService {
                     an.setThereNewsId(d.getNewsId());
                     an.setDigest(d.getDigest());
                     an.setPostTime(d.getPostTime());
-                    an.setViewNum(1);
+//                    an.setViewNum(1);
+                    an.setCreateTime(new Date());
                     List<Images> images = newsDetails.getImages();
                     String content = newsDetails.getContent();
                     Map<String, String> map = new HashMap<>();
@@ -149,12 +153,24 @@ public class GetNewsService {
 
     }
 
+    /**
+     * 获取所有新闻分类
+     * TODO 动态获取从数据库获取
+     *
+     * @return List<String>
+     */
     public List<String> getTypeIdList() {
         List<String> values = new ArrayList<>();
         for (NewsType newsType : NewsType.values()) {
             values.add(newsType.getTypeId());
         }
         return values;
+    }
+
+    private List<String> getNewsTypeList() {
+        List<SysDictData> dataList = dictDataService.selectNewsDictList();
+        List<String> collect = dataList.stream().map(SysDictData::getDictValue).collect(Collectors.toList());
+        return collect;
     }
 
 }
