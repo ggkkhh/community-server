@@ -59,4 +59,6 @@ public interface AppNewsService extends IService<AppNews> {
      */
     void viewNumIncrease(String newsId);
 
+//    boolean isExistById(String newsId);
+
 }

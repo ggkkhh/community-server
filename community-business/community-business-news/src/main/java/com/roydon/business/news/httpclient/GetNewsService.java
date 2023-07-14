@@ -77,7 +77,7 @@ public class GetNewsService {
                 }
                 data.forEach(d -> {
                     // 过滤封面为空和id为空
-                    if (StringUtil.isEmpty(d.getImgList()) || StringUtil.isEmpty(d.getNewsId())) {
+                    if (StringUtil.isEmpty(d.getImgList()) || StringUtil.isEmpty(d.getNewsId()) || !StringUtil.isEmpty(appNewsService.getById(d.getNewsId()))) {
                         return;
                     }
                     try {
@@ -100,7 +100,7 @@ public class GetNewsService {
                     an.setThereNewsId(d.getNewsId());
                     an.setDigest(d.getDigest());
                     an.setPostTime(d.getPostTime());
-//                    an.setViewNum(1);
+                    an.setViewNum(0);
                     an.setCreateTime(new Date());
                     List<Images> images = newsDetails.getImages();
                     String content = newsDetails.getContent();
