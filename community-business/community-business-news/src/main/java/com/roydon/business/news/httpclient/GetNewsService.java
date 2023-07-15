@@ -99,7 +99,7 @@ public class GetNewsService {
                     an.setNewsType(t);
                     an.setThereNewsId(d.getNewsId());
                     an.setDigest(d.getDigest());
-                    an.setPostTime(d.getPostTime());
+                    an.setPostTime(StringUtil.isEmpty(d.getPostTime()) ? new Date() : d.getPostTime());
                     an.setViewNum(0);
                     an.setCreateTime(new Date());
                     List<Images> images = newsDetails.getImages();
@@ -107,7 +107,7 @@ public class GetNewsService {
                     Map<String, String> map = new HashMap<>();
                     images.forEach(i -> {
                         String position = i.getPosition();
-                        String img = "<img class=\"newsDetails-img\" src=\"" + i.getImgSrc() + "\" alt=\"图片大小\">";
+                        String img = "<img class=\"newsDetails-img\" src=\"" + i.getImgSrc() + "\" alt=\"图片\">";
                         //  将 position 和 img 存储到map
                         map.put(position, img);
                     });

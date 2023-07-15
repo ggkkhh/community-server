@@ -30,6 +30,13 @@ public class MallOrderGoodsServiceImpl extends ServiceImpl<MallOrderGoodsMapper,
     private IMallGoodsService mallGoodsService;
 
     @Override
+    public List<MallOrderGoods> getOrderGoodsByOrderId(String orderId) {
+        LambdaQueryWrapper<MallOrderGoods> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(MallOrderGoods::getOrderId, orderId);
+        return list(queryWrapper);
+    }
+
+    @Override
     public List<MallOrderGoodsVO> getOneOrderGoodsByOrderId(String orderId) {
         LambdaQueryWrapper<MallOrderGoods> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(MallOrderGoods::getOrderId, orderId);

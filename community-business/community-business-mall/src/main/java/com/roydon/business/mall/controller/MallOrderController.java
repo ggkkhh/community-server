@@ -9,6 +9,7 @@ import com.roydon.business.mall.domain.vo.MallOrderVO;
 import com.roydon.business.mall.service.IMallOrderGoodsService;
 import com.roydon.business.mall.service.IMallOrderService;
 import com.roydon.business.mall.service.IMallUserAddressService;
+import com.roydon.common.core.controller.BaseController;
 import com.roydon.common.core.domain.AjaxResult;
 import com.roydon.common.utils.bean.BeanCopyUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,7 +27,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/app/mallOrder")
-public class MallOrderController {
+public class MallOrderController extends BaseController {
 
     @Resource
     private IMallOrderService mallOrderService;
@@ -62,14 +63,14 @@ public class MallOrderController {
     }
 
     /**
-     * 分页查询
+     * 分页查询userOrderList
      *
      * @param mallOrderDTO mallOrderDTO
      * @return vo
      */
     @PostMapping("/userOrderList")
     public AjaxResult userOrderList(@RequestBody MallOrderDTO mallOrderDTO) {
-        IPage<MallOrder> mallOrderIPage = mallOrderService.queryPage(mallOrderDTO);
+        IPage<MallOrder> mallOrderIPage = mallOrderService.queryPageByToken(mallOrderDTO);
         List<MallOrder> records = mallOrderIPage.getRecords();
         List<MallOrderVO> mallOrderVOList = new ArrayList<>();
         records.forEach(r -> {
@@ -83,6 +84,18 @@ public class MallOrderController {
         });
         return AjaxResult.genTableData(mallOrderVOList, mallOrderIPage.getTotal());
     }
+
+    /**
+     * 用户删除订单（逻辑删除）
+     *
+     * @param orderIds
+     * @return AjaxResult
+     */
+    @DeleteMapping("/userRemoveOrder/{orderIds}")
+    public AjaxResult userRemoveOneOrder(@PathVariable String[] orderIds) {
+        return toAjax(mallOrderService.removeOrderByIds(orderIds));
+    }
+
 
     /**
      * 通过主键查询单条数据

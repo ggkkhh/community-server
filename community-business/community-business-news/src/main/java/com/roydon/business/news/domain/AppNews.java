@@ -12,7 +12,7 @@ import java.util.Date;
  * @TableName app_news
  */
 @Data
-@TableName(value ="app_news")
+@TableName(value = "app_news")
 public class AppNews extends BaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -38,6 +38,8 @@ public class AppNews extends BaseEntity implements Serializable {
     private String contentImages;
 
     private String showInApp;
+
+    private String showType;
 
     private String delFlag;
 

@@ -14,6 +14,13 @@ import java.util.List;
  */
 public interface IMallOrderGoodsService extends IService<MallOrderGoods> {
 
+    /**
+     * 根据订单id查询所有订单商品
+     *
+     * @param orderId
+     * @return
+     */
+    List<MallOrderGoods> getOrderGoodsByOrderId(String orderId);
 
     /**
      * 根据订单id获取一个订单下的所有商品封装VO

@@ -28,18 +28,25 @@ public class MallOrderGoods implements Serializable {
      */
     private String goodsId;
     /**
-     * 此商品总价格
+     * 此商品单价
      */
     private Double price;
     /**
      * 数量
      */
     private Integer count;
+    /**
+     * 此商品总价
+     */
     private Double totalPrice;
     /**
      * 0未收货1已收货
      */
     private String receive;
+    /**
+     * 删除标志（0代表存在 2代表删除）
+     */
+    private String delFlag;
 
 }
 

@@ -31,6 +31,14 @@ public interface IMallOrderService extends IService<MallOrder> {
     IPage<MallOrder> queryPage(MallOrderDTO mallOrderDTO);
 
     /**
+     * 分页查询ByToken
+     *
+     * @param mallOrderDTO 筛选条件
+     * @return 查询结果
+     */
+    IPage<MallOrder> queryPageByToken(MallOrderDTO mallOrderDTO);
+
+    /**
      * 新增数据
      *
      * @param mallOrder 实例对象
@@ -60,5 +68,13 @@ public interface IMallOrderService extends IService<MallOrder> {
      * @return 是否成功
      */
     boolean deleteById(String orderId);
+
+    /**
+     * 批量删除
+     *
+     * @param orderIds
+     * @return
+     */
+    boolean removeOrderByIds(String[] orderIds);
 
 }
