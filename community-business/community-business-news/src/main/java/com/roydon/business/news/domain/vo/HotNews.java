@@ -22,9 +22,9 @@ public class HotNews implements Serializable {
 
     private String coverImg;
 
-    private String newsType;
+    private String source;
 
-    private String digest;
+    private String newsType;
 
     private Date postTime;
 
