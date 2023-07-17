@@ -89,6 +89,13 @@ public class AppNewsServiceImpl extends ServiceImpl<AppNewsMapper, AppNews> impl
     }
 
     @Override
+    public boolean changeNewsShowType(AppNews appNews) {
+        LambdaUpdateWrapper<AppNews> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(AppNews::getNewsId, appNews.getNewsId()).set(AppNews::getShowType, appNews.getShowType());
+        return update(updateWrapper);
+    }
+
+    @Override
     public boolean removeNewsByIds(String[] newsIds) {
         boolean b = removeBatchByIds(Arrays.asList(newsIds));
         if (b) {

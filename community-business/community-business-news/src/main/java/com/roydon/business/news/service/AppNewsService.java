@@ -38,6 +38,14 @@ public interface AppNewsService extends IService<AppNews> {
     boolean changeNewsStatus(AppNews appNews);
 
     /**
+     * 改变新闻封面展示
+     *
+     * @param appNews
+     * @return
+     */
+    boolean changeNewsShowType(AppNews appNews);
+
+    /**
      * 删除（批量）
      *
      * @param newsIds

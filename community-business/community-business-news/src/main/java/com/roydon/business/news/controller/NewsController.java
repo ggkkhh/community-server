@@ -61,6 +61,14 @@ public class NewsController extends BaseController {
         return toAjax(appNewsService.changeNewsStatus(appNews));
     }
 
+    @ApiOperation("新闻大图展示")
+    @Log(title = "新闻管理", businessType = BusinessType.UPDATE)
+    @PreAuthorize("@ss.hasPermi('app:news:edit')")
+    @PutMapping("/changeShowType")
+    public AjaxResult changeShowType(@RequestBody AppNews appNews) {
+        return toAjax(appNewsService.changeNewsShowType(appNews));
+    }
+
     @ApiOperation("新闻删除")
     @PreAuthorize("@ss.hasPermi('app:news:remove')")
     @Log(title = "新闻管理", businessType = BusinessType.DELETE)
