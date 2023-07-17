@@ -84,7 +84,7 @@ public class BaseController {
      * 响应请求分页数据
      */
     @SuppressWarnings({"rawtypes", "unchecked"})
-    protected TableDataInfo getTableData(List<?> list,Long total) {
+    protected TableDataInfo getTableData(List<?> list, Long total) {
         TableDataInfo rspData = new TableDataInfo();
         rspData.setCode(HttpStatus.SUCCESS);
         rspData.setMsg("查询成功");
@@ -113,13 +113,14 @@ public class BaseController {
     public AjaxResult success(String message) {
         return AjaxResult.success(message);
     }
+
     /**
      * 返回成功消息
      */
-    public AjaxResult success(Object data)
-    {
+    public AjaxResult success(Object data) {
         return AjaxResult.success(data);
     }
+
     /**
      * 返回失败消息
      */

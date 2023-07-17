@@ -158,15 +158,44 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         return Date.from(zdt.toInstant());
     }
 
+    /**
+     * 获取今日0时
+     *
+     * @return LocalDateTime
+     */
     public static LocalDateTime getStartOfDay() {
         return LocalDate.now().atStartOfDay().with(LocalTime.MIN);
     }
 
+    /**
+     * 今日23：59：59
+     *
+     * @return LocalDateTime
+     */
     public static LocalDateTime getEndOfDay() {
         return LocalDate.now().atStartOfDay().with(LocalTime.MAX);
     }
 
+    /**
+     * 获取明日开始0时
+     *
+     * @return LocalDateTime
+     */
     public static LocalDateTime getStartOfNextDay() {
-        return DateUtils.getStartOfDay().plusDays(1).with(LocalTime.MIN);
+        return getStartOfDay().plusDays(1).with(LocalTime.MIN);
     }
+
+    /**
+     * 获取7天前的0时
+     *
+     * @return LocalDateTime
+     */
+    public static LocalDateTime getTimeBefore7day() {
+        return LocalDateTime.now().minusDays(7).with(LocalTime.MIN);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(getTimeBefore7day());
+    }
+
 }

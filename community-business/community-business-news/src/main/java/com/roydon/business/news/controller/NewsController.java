@@ -1,14 +1,13 @@
 package com.roydon.business.news.controller;
 
 import com.roydon.business.news.domain.AppNews;
+import com.roydon.business.news.domain.vo.HotNews;
 import com.roydon.business.news.service.AppNewsService;
 import com.roydon.common.annotation.Log;
 import com.roydon.common.core.controller.BaseController;
 import com.roydon.common.core.domain.AjaxResult;
-import com.roydon.common.core.domain.entity.SysDictData;
 import com.roydon.common.core.page.TableDataInfo;
 import com.roydon.common.enums.BusinessType;
-import com.roydon.common.utils.bean.BeanCopyUtils;
 import com.roydon.system.service.ISysDictDataService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -76,6 +75,18 @@ public class NewsController extends BaseController {
     @PutMapping()
     public AjaxResult edit(@RequestBody AppNews appNews) {
         return toAjax(appNewsService.editNews(appNews));
+    }
+
+    /**
+     * 最近七天热点新闻十条，按照阅读量排名
+     *
+     * @return list
+     */
+    @ApiOperation("热点新闻")
+    @GetMapping("/hot")
+    public TableDataInfo hotNews() {
+        List<HotNews> hotNews = appNewsService.getHotNews();
+        return getTableData(hotNews, (long) hotNews.size());
     }
 
 //    @ApiOperation("新闻分类")

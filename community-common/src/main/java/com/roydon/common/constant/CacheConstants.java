@@ -54,5 +54,10 @@ public class CacheConstants {
      */
     public static final String NEWS_VIEW_NUM_KEY = "news:view_num";
 
+    /**
+     * 新闻阅读量加一的业务key
+     */
+    public static final String NEWS_HOT_NEWS = "news:hot_news";
+
 
 }

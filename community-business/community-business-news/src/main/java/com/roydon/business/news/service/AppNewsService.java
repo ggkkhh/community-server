@@ -2,6 +2,7 @@ package com.roydon.business.news.service;
 
 import com.roydon.business.news.domain.AppNews;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.roydon.business.news.domain.vo.HotNews;
 
 import java.util.List;
 
@@ -55,10 +56,24 @@ public interface AppNewsService extends IService<AppNews> {
     /**
      * 新闻浏览量加一业务
      *
-     * @param newsId
+     * @param newsId 新闻id
      */
     void viewNumIncrease(String newsId);
 
 //    boolean isExistById(String newsId);
+
+    /**
+     * 最近七天热点新闻10条
+     *
+     * @return List<AppNews>
+     */
+    List<HotNews> getHotNews();
+
+    /**
+     * 最近七天热点新闻10条写入缓存
+     *
+     * @return ids
+     */
+    List<HotNews> setHotNewsToCache();
 
 }
