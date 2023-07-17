@@ -141,6 +141,9 @@ public class AppNewsServiceImpl extends ServiceImpl<AppNewsMapper, AppNews> impl
     @Override
     public List<HotNews> setHotNewsToCache() {
         log.info("热点新闻写入缓存==>");
+        if (StringUtils.isNotEmpty(redisCache.getCacheList(CacheConstants.NEWS_HOT_NEWS))) {
+            redisCache.deleteObject(CacheConstants.NEWS_HOT_NEWS);
+        }
         // 筛选最近七天的数据
         LambdaQueryWrapper<AppNews> queryWrapper = new LambdaQueryWrapper<>();
 //        queryWrapper.select(AppNews::getNewsId);
