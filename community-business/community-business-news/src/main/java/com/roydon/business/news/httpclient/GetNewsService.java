@@ -95,7 +95,7 @@ public class GetNewsService {
                     an.setNewsId(d.getNewsId());
                     an.setNewsTitle(d.getTitle());
                     an.setCoverImg(d.getImgList().get(0));
-                    an.setSource(d.getSource());
+                    an.setSource(StringUtil.isEmpty(d.getSource()) ? "资讯" : d.getSource());
                     an.setNewsType(t);
                     an.setThereNewsId(d.getNewsId());
                     an.setDigest(d.getDigest());
