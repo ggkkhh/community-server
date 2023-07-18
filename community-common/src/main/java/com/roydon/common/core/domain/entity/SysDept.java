@@ -42,8 +42,6 @@ public class SysDept extends BaseEntity {
 
     private Long areaCode;
 
-    private String remark;
-
     /**
      * 显示顺序
      */
@@ -200,16 +198,6 @@ public class SysDept extends BaseEntity {
         this.areaCode = areaCode;
     }
 
-    @Override
-    public String getRemark() {
-        return remark;
-    }
-
-    @Override
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
     public List<SysDept> getChildren() {
         return children;
     }
@@ -226,7 +214,6 @@ public class SysDept extends BaseEntity {
                 ", ancestors='" + ancestors + '\'' +
                 ", deptName='" + deptName + '\'' +
                 ", areaCode=" + areaCode +
-                ", remark='" + remark + '\'' +
                 ", orderNum=" + orderNum +
                 ", leader='" + leader + '\'' +
                 ", phone='" + phone + '\'' +

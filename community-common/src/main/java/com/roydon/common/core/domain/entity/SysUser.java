@@ -3,6 +3,7 @@ package com.roydon.common.core.domain.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.roydon.common.annotation.Excel;
 import com.roydon.common.annotation.Excel.ColumnType;
 import com.roydon.common.annotation.Excel.Type;
@@ -91,6 +92,7 @@ public class SysUser extends BaseEntity {
     @Excel(name = "用户性别（0=男,1=女,2=未知）", readConverterExp = "0=男,1=女,2=未知")
     private String sex;
 
+    @ApiModelProperty("年龄")
     private Integer age;
 
     /**
@@ -133,6 +135,7 @@ public class SysUser extends BaseEntity {
      */
     @ApiModelProperty("最后登录时间")
     @Excel(name = "最后登录时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss", type = Type.EXPORT)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date loginDate;
 
     /**
