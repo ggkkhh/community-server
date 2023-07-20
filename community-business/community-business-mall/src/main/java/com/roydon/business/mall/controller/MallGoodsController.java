@@ -13,7 +13,6 @@ import com.roydon.common.enums.BusinessType;
 import com.roydon.common.utils.bean.BeanCopyUtils;
 import com.roydon.system.service.ISysUserService;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -46,7 +45,6 @@ public class MallGoodsController {
      * @param mallGoodsDTO
      * @return
      */
-    @PreAuthorize("@ss.hasPermi('mall:goods:list')")
     @PostMapping("/list")
     public AjaxResult list(@RequestBody MallGoodsDTO mallGoodsDTO) {
         IPage<MallGoods> mallGoodsIPage = mallGoodsService.queryPage(mallGoodsDTO);
@@ -68,7 +66,6 @@ public class MallGoodsController {
      * @param goodsId goodsId
      * @return MallGoodsVO
      */
-    @PreAuthorize("@ss.hasPermi('mall:goods:query')")
     @GetMapping("/{goodsId}")
     public AjaxResult queryById(@PathVariable("goodsId") String goodsId) {
         MallGoods mallGoods = mallGoodsService.getById(goodsId);
@@ -85,7 +82,6 @@ public class MallGoodsController {
      * @param mallGoods 实体
      * @return 新增结果
      */
-    @PreAuthorize("@ss.hasPermi('mall:goods:add')")
     @Log(title = "商品管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody MallGoods mallGoods) {
@@ -98,7 +94,6 @@ public class MallGoodsController {
      * @param mallGoods 实体
      * @return 编辑结果
      */
-    @PreAuthorize("@ss.hasPermi('mall:goods:edit')")
     @Log(title = "商品管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody MallGoods mallGoods) {
@@ -111,7 +106,6 @@ public class MallGoodsController {
      * @param goodsIds 主键
      * @return 删除是否成功
      */
-    @PreAuthorize("@ss.hasPermi('mall:goods:remove')")
     @Log(title = "商品管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{goodsIds}")
     public AjaxResult removeById(@PathVariable String[] goodsIds) {
@@ -136,7 +130,6 @@ public class MallGoodsController {
 
     @ApiOperation("商品状态")
     @Log(title = "商品管理", businessType = BusinessType.UPDATE)
-    @PreAuthorize("@ss.hasPermi('mall:goods:edit')")
     @PutMapping("/changeStatus")
     public AjaxResult changeStatus(@RequestBody MallGoods mallGoods) {
         return AjaxResult.success(mallGoodsService.changeStatus(mallGoods));

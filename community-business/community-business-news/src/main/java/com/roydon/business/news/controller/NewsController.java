@@ -35,7 +35,6 @@ public class NewsController extends BaseController {
     @Resource
     private ISysDictDataService dictDataService;
 
-    @PreAuthorize("@ss.hasPermi('app:news:list')")
     @GetMapping("/list")
     public TableDataInfo list(AppNews appNews) {
         startPage();
@@ -43,6 +42,7 @@ public class NewsController extends BaseController {
         return getDataTable(list);
     }
 
+    //    @PreAuthorize("hasRole('admin')")
     @PreAuthorize("@ss.hasPermi('app:news:query')")
     @Transactional
     @GetMapping("/{newsId}")

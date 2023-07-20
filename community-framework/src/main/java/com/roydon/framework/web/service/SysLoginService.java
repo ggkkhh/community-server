@@ -27,7 +27,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.regex.Pattern;
 
 /**
  * 登录校验方法
@@ -59,7 +58,7 @@ public class SysLoginService {
      * @param password 密码
      * @param code     验证码
      * @param uuid     唯一标识
-     * @return 结果
+     * @return token
      */
     public String login(String username, String password, String code, String uuid) {
         boolean captchaEnabled = configService.selectCaptchaEnabled();
@@ -98,9 +97,9 @@ public class SysLoginService {
     /**
      * app端账号密码登录
      *
-     * @param username
-     * @param password
-     * @return
+     * @param username 用户名
+     * @param password 密码
+     * @return token
      */
     public String appUPLogin(String username, String password) {
         // 用户验证
@@ -134,9 +133,9 @@ public class SysLoginService {
     /**
      * 手机验证码登录
      *
-     * @param telephone
-     * @param phoneCode
-     * @return
+     * @param telephone 手机号
+     * @param phoneCode 验证码
+     * @return token
      */
     public String smsLogin(String telephone, String phoneCode) {
         // 未携带手机号或验证码
@@ -196,7 +195,6 @@ public class SysLoginService {
      * @param username 用户名
      * @param code     验证码
      * @param uuid     唯一标识
-     * @return 结果
      */
     public void validateCaptcha(String username, String code, String uuid) {
         String verifyKey = CacheConstants.CAPTCHA_CODE_KEY + StringUtils.nvl(uuid, "");

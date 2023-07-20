@@ -61,7 +61,7 @@ spring:
 token:
   header: Authorization # 令牌自定义标识
   secret: abcdefghijklmnopqrstuvwxyz # 令牌密钥
-  expireTime: 4320 # 令牌有效期（默认三天）
+  expireTime: 1440 # 令牌有效期（默认1天）（单位：分钟）
 
 # MyBatis配置
 #mybatis:
@@ -73,9 +73,9 @@ token:
 #  configLocation: classpath:mybatis/mybatis-config.xml
 
 mybatis-plus:
-  type-aliases-package: com.roydon.**.domain
-  mapper-locations: classpath*:mapper/**/*Mapper.xml
-  config-location: classpath:mybatis/mybatis-config.xml
+  type-aliases-package: com.roydon.**.domain # 搜索指定包别名
+  mapper-locations: classpath*:mapper/**/*Mapper.xml # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  config-location: classpath:mybatis/mybatis-config.xml # 加载全局的配置文件
 
 # PageHelper分页插件
 pagehelper:

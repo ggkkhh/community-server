@@ -13,13 +13,11 @@
     <description>社区管理系统</description>
 
     <modules>
+        <module>community-business</module>
+        <module>community-common</module>
+        <module>community-component</module>
         <module>community-framework</module>
         <module>community-system</module>
-        <module>community-common</module>
-
-        <module>community-business</module>
-        <module>community-component</module>
-
         <module>community-server</module>
     </modules>
 
@@ -38,7 +36,7 @@
 <!--        <mybatis-spring-boot.version>2.2.2</mybatis-spring-boot.version>-->
         <mybatis-plus-version>3.5.2</mybatis-plus-version>
         <pagehelper.boot.version>1.4.3</pagehelper.boot.version>
-        <fastjson.version>2.0.14</fastjson.version>
+        <fastjson.version>2.0.34</fastjson.version>
         <oshi.version>6.2.2</oshi.version>
         <commons.io.version>2.11.0</commons.io.version>
         <commons.fileupload.version>1.4</commons.fileupload.version>

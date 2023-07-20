@@ -12,7 +12,6 @@ import com.roydon.business.mall.service.IMallUserAddressService;
 import com.roydon.common.core.controller.BaseController;
 import com.roydon.common.core.domain.AjaxResult;
 import com.roydon.common.utils.bean.BeanCopyUtils;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -44,7 +43,6 @@ public class MallOrderController extends BaseController {
      * @param mallOrderDTO mallOrderDTO
      * @return vo
      */
-    @PreAuthorize("@ss.hasPermi('mall:order:list')")
     @PostMapping("/list")
     public AjaxResult list(@RequestBody MallOrderDTO mallOrderDTO) {
         IPage<MallOrder> mallOrderIPage = mallOrderService.queryPage(mallOrderDTO);

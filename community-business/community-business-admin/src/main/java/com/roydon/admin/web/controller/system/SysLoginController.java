@@ -59,7 +59,7 @@ public class SysLoginController {
     /**
      * 手机验证码登录方法
      *
-     * @param smsLoginBody
+     * @param smsLoginBody 短信登陆体 {String telephone;String phoneCode;}
      * @return 结果
      */
     @ApiOperation("短信登陆")
