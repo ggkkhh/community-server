@@ -1,4 +1,4 @@
-package com.roydon.common.utils.aliyun;
+package com.roydon.sms.util;
 
 import com.aliyuncs.CommonRequest;
 import com.aliyuncs.CommonResponse;
@@ -13,6 +13,9 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.roydon.sms.config.AliyunSmsProperties.SMS_ACCESS_KEY_ID;
+import static com.roydon.sms.config.AliyunSmsProperties.SMS_ACCESS_KEY_SECRET;
+
 /**
  * 阿里云短信发送工具类
  *
@@ -25,8 +28,6 @@ public class AliyunSmsUtil {
     }
 
     public static final String MESSAGE_OK = "OK";
-    private final static String ACCESS_KEY_ID = "LTAI5tDzXh9ZUzwDRyoPxs7n";
-    private final static String ACCESS_SECRET = "Vf81KErpz5ScYJlprwbsbyVyKSysbW";
 
     /**
      * 短信发送
@@ -34,14 +35,13 @@ public class AliyunSmsUtil {
      * @param mobile 手机号
      * @param type   短信模板类型  1身份验证，2登录确认，3登录异常，4用户注册，5修改密码，6信息变更
      * @param code   验证码
-     * @createTime 2020-11-29 21:57:08
      */
     public static String sendSms(String mobile, int type, String code) {
         if (!isMobile(mobile)) {
             log.error("短信发送失败，手机号码不正确！");
             return null;
         }
-        DefaultProfile profile = DefaultProfile.getProfile("default", AliyunSmsUtil.ACCESS_KEY_ID, AliyunSmsUtil.ACCESS_SECRET);
+        DefaultProfile profile = DefaultProfile.getProfile("default", SMS_ACCESS_KEY_ID, SMS_ACCESS_KEY_SECRET);
         IAcsClient client = new DefaultAcsClient(profile);
         String signName = "郭意诚社区通知";
         // 阿里云短信服务提供的模板代码，此代码是由自己创建的模板得到的
@@ -79,9 +79,6 @@ public class AliyunSmsUtil {
      * @param mobile     手机号
      * @param type       短信模板类型 1身份验证，2登录确认，3登录异常，4用户注册，5修改密码，6信息变更
      * @param randomCode 验证码
-     * @return
-     * @author zql
-     * @createTime 2020-11-29 22:13:20
      */
     public static boolean isSuccessSendAliyunSms(String mobile, int type, String randomCode) {
         boolean bl = false;
@@ -121,9 +118,7 @@ public class AliyunSmsUtil {
      * 验证是否是正确的手机
      *
      * @param mobile 手机号码
-     * @return
      * @author zql
-     * @createTime 2020-11-29 22:13:04
      */
     private static boolean isMobile(String mobile) {
         boolean bl = false;
@@ -143,10 +138,6 @@ public class AliyunSmsUtil {
 
     /**
      * 阿里云提供的模板代码枚举
-     *
-     * @author zql
-     * @createTime 2020-11-29 22:07:59
-     * @version:1.0
      */
     enum TemplateEnum {
         /**

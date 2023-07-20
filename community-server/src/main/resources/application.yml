@@ -96,8 +96,8 @@ xss:
 # aliyun配置
 aliyun:
   sms:
-    accessKeyId: LTAI5tDzXh9ZUzwDRyoPxs7n
-    accessKeySecret: Vf81KErpz5ScYJlprwbsbyVyKSysbW
+#    accessKeyId: LTAI5tDzXh9ZUzwDRyoPxs7n
+#    accessKeySecret: Vf81KErpz5ScYJlprwbsbyVyKSysbW
     templateCode: SMS_460955023 # 可在aliyun控制台申请
   oss:
     file:
