@@ -2,6 +2,7 @@ package com.roydon.admin.web.controller.monitor;
 
 import com.roydon.common.constant.CacheConstants;
 import com.roydon.common.core.domain.AjaxResult;
+import com.roydon.common.core.redis.RedisCache;
 import com.roydon.common.utils.StringUtils;
 import com.roydon.system.domain.SysCache;
 import io.swagger.annotations.Api;
@@ -24,6 +25,9 @@ public class CacheController {
 
     @Resource
     private RedisTemplate<String, String> redisTemplate;
+
+    @Resource
+    private RedisCache redisCache;
 
     private final static List<SysCache> caches = new ArrayList<SysCache>();
 
@@ -77,8 +81,9 @@ public class CacheController {
     @PreAuthorize("@ss.hasPermi('monitor:cache:list')")
     @GetMapping("/getValue/{cacheName}/{cacheKey}")
     public AjaxResult getCacheValue(@PathVariable String cacheName, @PathVariable String cacheKey) {
-        String cacheValue = redisTemplate.opsForValue().get(cacheKey);
-        SysCache sysCache = new SysCache(cacheName, cacheKey, cacheValue);
+//        String cacheValue = redisTemplate.opsForValue().get(cacheKey);
+        Object cacheObject = redisCache.getCacheObject(cacheKey);
+        SysCache sysCache = new SysCache(cacheName, cacheKey, cacheObject.toString());
         return AjaxResult.success(sysCache);
     }
 
