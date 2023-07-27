@@ -8,7 +8,9 @@
         <artifactId>community-parent</artifactId>
         <version>1.0.0</version>
     </parent>
+
     <packaging>jar</packaging>
+
     <artifactId>community-server</artifactId>
 
     <properties>
@@ -25,26 +27,29 @@
             <artifactId>community-business-epidemic</artifactId>
             <version>1.0.0</version>
         </dependency>
+
         <!-- 单元管理 -->
         <dependency>
             <groupId>com.roydon</groupId>
             <artifactId>community-business-unit</artifactId>
             <version>1.0.0</version>
         </dependency>
+
         <!-- 后台 -->
         <dependency>
             <groupId>com.roydon</groupId>
             <artifactId>community-business-admin</artifactId>
             <version>1.0.0</version>
         </dependency>
-        <!-- app新闻服务 -->
+
+        <!-- app商城服务 -->
         <dependency>
             <groupId>com.roydon</groupId>
             <artifactId>community-business-mall</artifactId>
             <version>1.0.0</version>
         </dependency>
 
-        <!-- app新闻服务 -->
+        <!-- app服务 -->
         <dependency>
             <groupId>com.roydon</groupId>
             <artifactId>community-business-app</artifactId>
@@ -65,12 +70,6 @@
 <!--            <version>1.0.0</version>-->
 <!--        </dependency>-->
 
-        <!-- 短信服务 -->
-<!--        <dependency>-->
-<!--            <groupId>com.roydon</groupId>-->
-<!--            <artifactId>community-sms</artifactId>-->
-<!--            <version>1.0.0</version>-->
-<!--        </dependency>-->
         <!-- 短信服务 -->
         <dependency>
             <groupId>com.roydon</groupId>

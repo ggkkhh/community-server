@@ -18,6 +18,8 @@
     </properties>
 
     <dependencies>
+
+        <!-- aliyun-sdk-oss -->
         <dependency>
             <groupId>com.aliyun.oss</groupId>
             <artifactId>aliyun-sdk-oss</artifactId>

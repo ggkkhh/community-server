@@ -31,17 +31,12 @@
     </properties>
 
     <dependencies>
+
         <!-- 通用工具-->
         <dependency>
             <groupId>com.roydon</groupId>
             <artifactId>community-framework</artifactId>
         </dependency>
-
-        <!-- 定时任务-->
-<!--        <dependency>-->
-<!--            <groupId>com.roydon</groupId>-->
-<!--            <artifactId>community-quartz</artifactId>-->
-<!--        </dependency>-->
 
     </dependencies>
 

@@ -11,37 +11,28 @@
 
     <artifactId>community-business-admin</artifactId>
 
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
     <dependencies>
+
         <!-- 对象存储oss -->
         <dependency>
             <groupId>com.roydon</groupId>
             <artifactId>community-business-oss</artifactId>
-            <version>1.0.0</version>
+            <version>${community.version}</version>
         </dependency>
 
         <!-- app -->
         <dependency>
             <groupId>com.roydon</groupId>
             <artifactId>community-business-app</artifactId>
-            <version>1.0.0</version>
+            <version>${community.version}</version>
         </dependency>
 
         <!-- sms -->
         <dependency>
             <groupId>com.roydon</groupId>
             <artifactId>community-business-sms</artifactId>
-            <version>1.0.0</version>
+            <version>${community.version}</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.roydon</groupId>-->
-<!--            <artifactId>community-sms</artifactId>-->
-<!--            <version>1.0.0</version>-->
-<!--        </dependency>-->
 
         <!-- swagger3-->
         <dependency>

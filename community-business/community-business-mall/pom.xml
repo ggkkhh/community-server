@@ -17,10 +17,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
+
+        <!-- oss -->
         <dependency>
             <groupId>com.roydon</groupId>
             <artifactId>community-business-oss</artifactId>
-            <version>1.0.0</version>
+            <version>${community.version}</version>
         </dependency>
     </dependencies>
 

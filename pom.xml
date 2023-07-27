@@ -3,7 +3,6 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>com.roydon</groupId>
     <artifactId>community-parent</artifactId>
     <version>1.0.0</version>
@@ -33,7 +32,6 @@
         <bitwalker.version>1.21</bitwalker.version>
         <swagger.version>3.0.0</swagger.version>
         <kaptcha.version>2.3.2</kaptcha.version>
-<!--        <mybatis-spring-boot.version>2.2.2</mybatis-spring-boot.version>-->
         <mybatis-plus-version>3.5.2</mybatis-plus-version>
         <pagehelper.boot.version>1.4.3</pagehelper.boot.version>
         <fastjson.version>2.0.34</fastjson.version>
@@ -74,13 +72,6 @@
                 <artifactId>UserAgentUtils</artifactId>
                 <version>${bitwalker.version}</version>
             </dependency>
-
-            <!-- SpringBoot集成mybatis框架 -->
-<!--            <dependency>-->
-<!--                <groupId>org.mybatis.spring.boot</groupId>-->
-<!--                <artifactId>mybatis-spring-boot-starter</artifactId>-->
-<!--                <version>${mybatis-spring-boot.version}</version>-->
-<!--            </dependency>-->
 
             <!-- mybatis-plus -->
             <dependency>
@@ -192,19 +183,12 @@
                 <version>${google.zxing.version}</version>
             </dependency>
 
-            <!-- 定时任务-->
-<!--            <dependency>-->
-<!--                <groupId>com.roydon</groupId>-->
-<!--                <artifactId>community-quartz</artifactId>-->
-<!--                <version>${community.version}</version>-->
-<!--            </dependency>-->
-
-            <!-- 代码生成-->
-<!--            <dependency>-->
-<!--                <groupId>com.roydon</groupId>-->
-<!--                <artifactId>community-generator</artifactId>-->
-<!--                <version>${community.version}</version>-->
-<!--            </dependency>-->
+            <!-- 通用工具-->
+            <dependency>
+                <groupId>com.roydon</groupId>
+                <artifactId>community-common</artifactId>
+                <version>${community.version}</version>
+            </dependency>
 
             <!-- 组件 -->
             <dependency>
@@ -224,13 +208,6 @@
             <dependency>
                 <groupId>com.roydon</groupId>
                 <artifactId>community-system</artifactId>
-                <version>${community.version}</version>
-            </dependency>
-
-            <!-- 通用工具-->
-            <dependency>
-                <groupId>com.roydon</groupId>
-                <artifactId>community-common</artifactId>
                 <version>${community.version}</version>
             </dependency>
 
