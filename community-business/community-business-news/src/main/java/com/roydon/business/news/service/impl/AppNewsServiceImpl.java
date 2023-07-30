@@ -124,7 +124,7 @@ public class AppNewsServiceImpl extends ServiceImpl<AppNewsMapper, AppNews> impl
     }
 
     /**
-     * 最近七天热点新闻
+     * 最近两天热点新闻
      *
      * @return List<AppNews>
      */
@@ -141,7 +141,7 @@ public class AppNewsServiceImpl extends ServiceImpl<AppNewsMapper, AppNews> impl
     }
 
     /**
-     * 最近七天热点新闻10条写入缓存
+     * 最近两天热点新闻10条写入缓存
      *
      * @return ids
      */
@@ -151,10 +151,10 @@ public class AppNewsServiceImpl extends ServiceImpl<AppNewsMapper, AppNews> impl
         if (StringUtils.isNotEmpty(redisCache.getCacheList(CacheConstants.NEWS_HOT_NEWS))) {
             redisCache.deleteObject(CacheConstants.NEWS_HOT_NEWS);
         }
-        // 筛选最近七天的数据
+        // 筛选最近两天的数据
         LambdaQueryWrapper<AppNews> queryWrapper = new LambdaQueryWrapper<>();
 //        queryWrapper.select(AppNews::getNewsId);
-        queryWrapper.between(AppNews::getPostTime, DateUtils.getTimeBefore7day(), LocalDateTime.now());
+        queryWrapper.between(AppNews::getPostTime, DateUtils.getTimeBeforeDay(2L), LocalDateTime.now());
         // 按照浏览量降序
         queryWrapper.orderByDesc(AppNews::getViewNum);
         // limit十条

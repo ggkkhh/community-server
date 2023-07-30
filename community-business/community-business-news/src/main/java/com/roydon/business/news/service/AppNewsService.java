@@ -71,14 +71,14 @@ public interface AppNewsService extends IService<AppNews> {
 //    boolean isExistById(String newsId);
 
     /**
-     * 最近七天热点新闻10条
+     * 最近两天热点新闻10条
      *
      * @return List<AppNews>
      */
     List<HotNews> getHotNews();
 
     /**
-     * 最近七天热点新闻10条写入缓存
+     * 最近两天热点新闻10条写入缓存
      *
      * @return ids
      */
