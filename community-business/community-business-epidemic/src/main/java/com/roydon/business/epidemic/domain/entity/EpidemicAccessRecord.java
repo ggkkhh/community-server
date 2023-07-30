@@ -6,8 +6,6 @@ import com.roydon.common.annotation.Excel;
 import com.roydon.common.core.domain.BaseEntity;
 import lombok.Data;
 
-import java.util.Date;
-
 /**
  * 出入社区人员记录对象 epidemic_access_record
  *
@@ -41,30 +39,38 @@ public class EpidemicAccessRecord extends BaseEntity {
     private String realName;
 
     /**
+     * 真实姓名
+     */
+    @Excel(name = "联系电话")
+    private String telephone;
+
+    /**
      * 进出类型0进入1出
      */
-    @Excel(name = "进出类型0进入1出")
+    @Excel(name = "进出类型0出1进")
     private String accessType;
+
+    /**
+     * 报备类型：0手动1管理员录入
+     */
+    @Excel(name = "报备类型：0手动1管理员录入")
+    private String reportType;
 
     /**
      * 出：目的地；进：来源地
      */
-    @Excel(name = "出：目的地；进：来源地")
-    private String destination;
+    @Excel(name = "出发地")
+    private String placeStart;
+
+    /**
+     * 出：目的地；进：来源地
+     */
+    @Excel(name = "目的地")
+    private String placeEnd;
 
     /**
      * 0正常2已删除
      */
     private String delFlag;
-
-    private String createBy;
-
-    private Date createTime;
-
-    private String updateBy;
-
-    private Date updateTime;
-
-    private String remark;
 
 }

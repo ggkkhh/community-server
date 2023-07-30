@@ -17,4 +17,12 @@ public interface AliyunSmsService {
      * @return ali回调返回体封装
      */
     SmsCode sendCode(String phone);
+
+    /**
+     * 手机发送注册验证码
+     *
+     * @param phone phone
+     * @return ali回调返回体封装
+     */
+    SmsCode sendRegisterCode(String phone);
 }

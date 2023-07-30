@@ -9,8 +9,11 @@
         <result property="userId" column="user_id"/>
         <result property="username" column="username"/>
         <result property="realName" column="real_name"/>
+        <result property="telephone" column="telephone"/>
         <result property="accessType" column="access_type"/>
-        <result property="destination" column="destination"/>
+        <result property="reportType" column="report_type"/>
+        <result property="placeStart" column="place_start"/>
+        <result property="placeEnd" column="place_end"/>
         <result property="delFlag" column="del_flag"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
@@ -24,8 +27,11 @@
                user_id,
                username,
                real_name,
+               telephone,
                access_type,
-               destination,
+               report_type,
+               place_start,
+               place_end,
                del_flag,
                create_time,
                update_time,
@@ -42,8 +48,11 @@
             <if test="userId != null ">and user_id = #{userId}</if>
             <if test="username != null  and username != ''">and username like concat('%', #{username}, '%')</if>
             <if test="realName != null  and realName != ''">and real_name like concat('%', #{realName}, '%')</if>
+            <if test="telephone != null  and telephone != ''">and telephone like concat('%', #{telephone}, '%')</if>
             <if test="accessType != null  and accessType != ''">and access_type = #{accessType}</if>
-            <if test="destination != null  and destination != ''">and destination = #{destination}</if>
+            <if test="reportType != null  and reportType != ''">and report_type = #{reportType}</if>
+            <if test="placeStart != null  and placeStart != ''">and place_start = #{placeStart}</if>
+            <if test="placeEnd != null  and placeEnd != ''">and place_end = #{placeEnd}</if>
         </where>
     </select>
 
@@ -59,8 +68,11 @@
             <if test="userId != null">user_id,</if>
             <if test="username != null and username != ''">username,</if>
             <if test="realName != null">real_name,</if>
+            <if test="telephone != null">telephone,</if>
             <if test="accessType != null and accessType != ''">access_type,</if>
-            <if test="destination != null">destination,</if>
+            <if test="reportType != null and reportType != ''">report_type,</if>
+            <if test="placeStart != null">place_start,</if>
+            <if test="placeEnd != null">place_end,</if>
             <if test="delFlag != null">del_flag,</if>
             <if test="createTime != null">create_time,</if>
             <if test="updateTime != null">update_time,</if>
@@ -73,8 +85,11 @@
             <if test="userId != null">#{userId},</if>
             <if test="username != null and username != ''">#{username},</if>
             <if test="realName != null">#{realName},</if>
+            <if test="telephone != null">#{telephone},</if>
             <if test="accessType != null and accessType != ''">#{accessType},</if>
-            <if test="destination != null">#{destination},</if>
+            <if test="reportType != null and reportType != ''">#{reportType},</if>
+            <if test="placeStart != null">#{placeStart},</if>
+            <if test="placeEnd != null">#{placeEnd},</if>
             <if test="delFlag != null">#{delFlag},</if>
             <if test="createTime != null">#{createTime},</if>
             <if test="updateTime != null">#{updateTime},</if>
@@ -90,8 +105,11 @@
             <if test="userId != null">user_id = #{userId},</if>
             <if test="username != null and username != ''">username = #{username},</if>
             <if test="realName != null">real_name = #{realName},</if>
+            <if test="telephone != null">telephone = #{telephone},</if>
             <if test="accessType != null and accessType != ''">access_type = #{accessType},</if>
-            <if test="destination != null">destination = #{destination},</if>
+            <if test="reportType != null and reportType != ''">report_type = #{reportType},</if>
+            <if test="placeStart != null">place_start = #{placeStart},</if>
+            <if test="placeEnd != null">place_end = #{placeEnd},</if>
             <if test="delFlag != null">del_flag = #{delFlag},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>

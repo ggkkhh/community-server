@@ -1,21 +1,16 @@
 package com.roydon.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.roydon.common.annotation.DataScope;
 import com.roydon.common.constant.UserConstants;
-import com.roydon.common.core.domain.BaseEntity;
 import com.roydon.common.core.domain.entity.SysRole;
 import com.roydon.common.core.domain.entity.SysUser;
+import com.roydon.common.enums.UserStatus;
 import com.roydon.common.exception.ServiceException;
 import com.roydon.common.utils.SecurityUtils;
-import com.roydon.common.utils.StringUtil;
 import com.roydon.common.utils.StringUtils;
 import com.roydon.common.utils.bean.BeanValidators;
-import com.roydon.common.utils.encrypt.IdCardNumUtil;
-import com.roydon.common.utils.encrypt.TelephoneUtil;
 import com.roydon.common.utils.spring.SpringUtils;
 import com.roydon.system.domain.SysPost;
 import com.roydon.system.domain.SysUserPost;
@@ -500,6 +495,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public SysUser checkTelephoneExists(String telephone) {
         LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SysUser::getPhonenumber, telephone);
+        queryWrapper.ne(SysUser::getDelFlag, UserStatus.DELETED.getCode());
         return getOne(queryWrapper);
     }
 
