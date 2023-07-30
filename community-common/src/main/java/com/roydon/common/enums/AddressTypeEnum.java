@@ -6,7 +6,7 @@ package com.roydon.common.enums;
  * @description com.roydon.common.enums
  * <p> 地址类型枚举类 </p>
  **/
-public enum AddressTypeEnums {
+public enum AddressTypeEnum {
 
     /**
      * 省

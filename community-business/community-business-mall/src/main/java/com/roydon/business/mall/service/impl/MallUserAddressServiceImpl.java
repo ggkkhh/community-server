@@ -10,7 +10,7 @@ import com.roydon.business.mall.domain.entity.MallUserAddress;
 import com.roydon.business.mall.mapper.MallUserAddressMapper;
 import com.roydon.business.mall.service.IMallUserAddressService;
 import com.roydon.common.core.domain.model.LoginUser;
-import com.roydon.common.enums.AddressTypeEnums;
+import com.roydon.common.enums.AddressTypeEnum;
 import com.roydon.common.utils.SecurityUtils;
 import com.roydon.common.utils.mall.AddressUtils;
 import com.roydon.common.utils.uniqueid.IdGenerator;
@@ -44,10 +44,11 @@ public class MallUserAddressServiceImpl extends ServiceImpl<MallUserAddressMappe
 
     /**
      * 新增收货地址
+     * TODO 若起始无收货地址，新增的一条强制为默认收货地址
      *
      * @param mallUserAddress 实例对象
      *                        {
-     *                        "nickName": "guoyicheng",
+     *                        "nickname": "guoyicheng",
      *                        "telephone": "18203707837",
      *                        "regionCode": "411481",
      *                        "completeAddress": "嗯~ o(*￣▽￣*)o",
@@ -68,8 +69,8 @@ public class MallUserAddressServiceImpl extends ServiceImpl<MallUserAddressMappe
         String regionCode = mallUserAddress.getRegionCode();
         String provinceCode, cityCode;
         try {
-            provinceCode = AddressUtils.getProvinceCode(regionCode, AddressTypeEnums.PROVINCE);
-            cityCode = AddressUtils.getProvinceCode(regionCode, AddressTypeEnums.CITY);
+            provinceCode = AddressUtils.getProvinceCode(regionCode, AddressTypeEnum.PROVINCE);
+            cityCode = AddressUtils.getProvinceCode(regionCode, AddressTypeEnum.CITY);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -86,8 +87,17 @@ public class MallUserAddressServiceImpl extends ServiceImpl<MallUserAddressMappe
         return mallUserAddress;
     }
 
+    /**
+     * 逻辑删除
+     *
+     * @param addressIds addressIds
+     * @return boolean
+     */
     @Override
     public boolean deleteByIds(String[] addressIds) {
+//        LambdaUpdateWrapper<MallUserAddress> updateWrapper = new LambdaUpdateWrapper<>();
+//        updateWrapper.eq(MallUserAddress::getUserId, loginUser.getUserId()).set(MallUserAddress::getIsDefault, "0");
+//        update(updateWrapper);
         return removeBatchByIds(Arrays.asList(addressIds));
     }
 }
