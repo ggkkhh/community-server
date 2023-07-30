@@ -2,25 +2,18 @@ package com.roydon.business.epidemic.controller;
 
 import com.roydon.business.epidemic.domain.entity.EpidemicAccessRecord;
 import com.roydon.business.epidemic.service.IEpidemicAccessRecordService;
-import com.roydon.common.utils.poi.ExcelUtil;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.roydon.common.annotation.Log;
 import com.roydon.common.core.controller.BaseController;
 import com.roydon.common.core.domain.AjaxResult;
-import com.roydon.common.enums.BusinessType;
 import com.roydon.common.core.page.TableDataInfo;
+import com.roydon.common.enums.BusinessType;
+import com.roydon.common.utils.poi.ExcelUtil;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 出入社区人员记录Controller
@@ -70,7 +63,6 @@ public class EpidemicAccessRecordController extends BaseController {
     /**
      * 新增出入社区人员记录
      */
-    @PreAuthorize("@ss.hasPermi('epidemic:access:add')")
     @Log(title = "出入社区人员记录", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody EpidemicAccessRecord epidemicAccessRecord) {
