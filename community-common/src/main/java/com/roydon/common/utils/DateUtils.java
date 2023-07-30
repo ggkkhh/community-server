@@ -186,16 +186,12 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     }
 
     /**
-     * 获取7天前的0时
+     * 获取...天前的0时
      *
      * @return LocalDateTime
      */
-    public static LocalDateTime getTimeBefore7day() {
-        return LocalDateTime.now().minusDays(7).with(LocalTime.MIN);
-    }
-
-    public static void main(String[] args) {
-        System.out.println(getTimeBefore7day());
+    public static LocalDateTime getTimeBeforeDay(long days) {
+        return LocalDateTime.now().minusDays(days).with(LocalTime.MIN);
     }
 
 }
