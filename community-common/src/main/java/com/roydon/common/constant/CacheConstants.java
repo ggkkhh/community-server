@@ -69,5 +69,10 @@ public class CacheConstants {
      */
     public static final String APP_USER = "app:user:";
 
+    /**
+     * appNotice
+     */
+    public static final String APP_NOTICE_LIST = "app:notice:list";
+
 
 }

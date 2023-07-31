@@ -6,6 +6,7 @@ import com.roydon.business.oss.service.OssService;
 import com.roydon.business.oss.utils.OssUtil;
 import com.roydon.common.constant.Constants;
 import com.roydon.common.exception.file.InvalidExtensionException;
+import com.roydon.common.utils.SecurityUtils;
 import com.roydon.common.utils.file.FileUploadUtils;
 import com.roydon.common.utils.file.MimeTypeUtils;
 import org.springframework.stereotype.Service;
@@ -93,8 +94,8 @@ public class OssServiceImpl implements OssService {
         String fileName = file.getOriginalFilename();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         String datePath = sdf.format(new Date()); // 将日期转换为字符串
-        // 文件存储名称
-        String ossFileName = folder + datePath + "/" + fileName + UUID.randomUUID().toString().replaceAll("-", "") + "." + FileUploadUtils.getExtension(file);
+        // 文件存储名称：日期+username+uuid
+        String ossFileName = folder + datePath + "/" + SecurityUtils.getUsername() + "-" + UUID.randomUUID().toString().replaceAll("-", "") + "." + FileUploadUtils.getExtension(file);
         ossClient.putObject(BUCKET_NAME, ossFileName, inputStream);
         String url = Constants.HTTPS + BUCKET_NAME + "." + END_POINT + "/" + ossFileName;
         //关闭OSSClient

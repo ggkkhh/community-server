@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.roydon.app.domain.entity.AppNotice;
 import com.roydon.app.mapper.AppNoticeMapper;
 import com.roydon.app.service.IAppNoticeService;
+import com.roydon.common.constant.CacheConstants;
+import com.roydon.common.core.redis.RedisCache;
 import com.roydon.common.utils.DateUtils;
 import com.roydon.common.utils.StringUtil;
 import org.springframework.stereotype.Service;
@@ -21,8 +23,12 @@ import java.util.List;
  */
 @Service("appNoticeService")
 public class AppNoticeServiceImpl extends ServiceImpl<AppNoticeMapper, AppNotice> implements IAppNoticeService {
+
     @Resource
     private AppNoticeMapper appNoticeMapper;
+
+    @Resource
+    private RedisCache redisCache;
 
     /**
      * 查询app端图文轮播图公告
@@ -43,12 +49,21 @@ public class AppNoticeServiceImpl extends ServiceImpl<AppNoticeMapper, AppNotice
      */
     @Override
     public List<AppNotice> getAppNoticeList(AppNotice appNotice) {
-        LambdaQueryWrapper<AppNotice> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.like(StringUtil.isNotEmpty(appNotice.getNoticeTitle()), AppNotice::getNoticeTitle, appNotice.getNoticeTitle())
-                .eq(StringUtil.isNotEmpty(appNotice.getShowInApp()), AppNotice::getShowInApp, appNotice.getShowInApp())
-                .between(StringUtil.isNotEmpty(appNotice.getParams().get("beginTime")) || StringUtil.isNotEmpty(appNotice.getParams().get("endTime")), AppNotice::getCreateTime, appNotice.getParams().get("beginTime"), appNotice.getParams().get("endTime"))
-                .orderByDesc(AppNotice::getCreateTime);
-        return list(queryWrapper);
+        List<AppNotice> noticeList;
+        List<AppNotice> cacheList = redisCache.getCacheList(CacheConstants.APP_NOTICE_LIST);
+        if (StringUtil.isEmpty(cacheList)) {
+            // 缓存为空，就缓存
+            LambdaQueryWrapper<AppNotice> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.like(StringUtil.isNotEmpty(appNotice.getNoticeTitle()), AppNotice::getNoticeTitle, appNotice.getNoticeTitle())
+                    .eq(StringUtil.isNotEmpty(appNotice.getShowInApp()), AppNotice::getShowInApp, appNotice.getShowInApp())
+                    .between(StringUtil.isNotEmpty(appNotice.getParams().get("beginTime")) || StringUtil.isNotEmpty(appNotice.getParams().get("endTime")), AppNotice::getCreateTime, appNotice.getParams().get("beginTime"), appNotice.getParams().get("endTime"))
+                    .orderByDesc(AppNotice::getCreateTime);
+            noticeList = list(queryWrapper);
+            redisCache.setCacheList(CacheConstants.APP_NOTICE_LIST, noticeList);
+        } else {
+            return cacheList;
+        }
+        return noticeList;
     }
 
     /**
@@ -60,6 +75,7 @@ public class AppNoticeServiceImpl extends ServiceImpl<AppNoticeMapper, AppNotice
     @Override
     public int insertAppNotice(AppNotice appNotice) {
         appNotice.setCreateTime(DateUtils.getNowDate());
+        redisCache.deleteObject(CacheConstants.APP_NOTICE_LIST);
         return appNoticeMapper.insertAppNotice(appNotice);
     }
 
@@ -72,6 +88,7 @@ public class AppNoticeServiceImpl extends ServiceImpl<AppNoticeMapper, AppNotice
     @Override
     public int updateAppNotice(AppNotice appNotice) {
         appNotice.setUpdateTime(DateUtils.getNowDate());
+        redisCache.deleteObject(CacheConstants.APP_NOTICE_LIST);
         return appNoticeMapper.updateAppNotice(appNotice);
     }
 
@@ -79,6 +96,7 @@ public class AppNoticeServiceImpl extends ServiceImpl<AppNoticeMapper, AppNotice
     public boolean changeStatus(AppNotice appNotice) {
         LambdaUpdateWrapper<AppNotice> updateWrapper = new LambdaUpdateWrapper<>();
         updateWrapper.eq(AppNotice::getNoticeId, appNotice.getNoticeId()).set(AppNotice::getShowInApp, appNotice.getShowInApp());
+        redisCache.deleteObject(CacheConstants.APP_NOTICE_LIST);
         return update(updateWrapper);
     }
 
@@ -90,6 +108,7 @@ public class AppNoticeServiceImpl extends ServiceImpl<AppNoticeMapper, AppNotice
      */
     @Override
     public int deleteAppNoticeByNoticeIds(Long[] noticeIds) {
+        redisCache.deleteObject(CacheConstants.APP_NOTICE_LIST);
         return appNoticeMapper.deleteAppNoticeByNoticeIds(noticeIds);
     }
 
@@ -101,6 +120,7 @@ public class AppNoticeServiceImpl extends ServiceImpl<AppNoticeMapper, AppNotice
      */
     @Override
     public int deleteAppNoticeByNoticeId(Long noticeId) {
+        redisCache.deleteObject(CacheConstants.APP_NOTICE_LIST);
         return appNoticeMapper.deleteAppNoticeByNoticeId(noticeId);
     }
 

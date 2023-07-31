@@ -77,6 +77,7 @@ public class AppNoticeController extends BaseController {
     public AjaxResult changeStatus(@RequestBody  AppNotice appNotice) {
         return toAjax(appNoticeService.changeStatus(appNotice));
     }
+
     /**
      * 获取app端图文轮播图公告详细信息
      */
