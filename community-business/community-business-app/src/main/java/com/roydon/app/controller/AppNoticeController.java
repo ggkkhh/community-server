@@ -35,10 +35,23 @@ public class AppNoticeController extends BaseController {
     /**
      * 查询app端图文轮播图公告列表
      */
+    @ApiOperation("轮播图list")
+    @PreAuthorize("@ss.hasPermi('app:notice:list')")
     @GetMapping("/list")
     public TableDataInfo list(AppNotice appNotice) {
         startPage();
         List<AppNotice> list = appNoticeService.getAppNoticeList(appNotice);
+        return getDataTable(list);
+    }
+
+    /**
+     * app端图文轮播图公告列表
+     */
+    @ApiOperation("app轮播图list")
+    @GetMapping("/banner")
+    public TableDataInfo banner(AppNotice appNotice) {
+        startPage();
+        List<AppNotice> list = appNoticeService.getAppBanner(appNotice);
         return getDataTable(list);
     }
 
@@ -74,7 +87,7 @@ public class AppNoticeController extends BaseController {
     @Log(title = "公告管理", businessType = BusinessType.UPDATE)
     @PreAuthorize("@ss.hasPermi('app:notice:edit')")
     @PutMapping("/changeStatus")
-    public AjaxResult changeStatus(@RequestBody  AppNotice appNotice) {
+    public AjaxResult changeStatus(@RequestBody AppNotice appNotice) {
         return toAjax(appNoticeService.changeStatus(appNotice));
     }
 

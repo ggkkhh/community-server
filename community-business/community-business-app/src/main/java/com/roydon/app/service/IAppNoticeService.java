@@ -30,6 +30,14 @@ public interface IAppNoticeService extends IService<AppNotice> {
     List<AppNotice> getAppNoticeList(AppNotice appNotice);
 
     /**
+     * 查询app端图文轮播图公告列表
+     *
+     * @param appNotice app端图文轮播图公告
+     * @return app端图文轮播图公告集合
+     */
+    List<AppNotice> getAppBanner(AppNotice appNotice);
+
+    /**
      * 新增app端图文轮播图公告
      *
      * @param appNotice app端图文轮播图公告

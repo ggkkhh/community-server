@@ -49,15 +49,28 @@ public class AppNoticeServiceImpl extends ServiceImpl<AppNoticeMapper, AppNotice
      */
     @Override
     public List<AppNotice> getAppNoticeList(AppNotice appNotice) {
+        LambdaQueryWrapper<AppNotice> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.like(StringUtil.isNotEmpty(appNotice.getNoticeTitle()), AppNotice::getNoticeTitle, appNotice.getNoticeTitle())
+                .eq(StringUtil.isNotEmpty(appNotice.getShowInApp()), AppNotice::getShowInApp, appNotice.getShowInApp())
+                .between(StringUtil.isNotEmpty(appNotice.getParams().get("beginTime")) || StringUtil.isNotEmpty(appNotice.getParams().get("endTime")), AppNotice::getCreateTime, appNotice.getParams().get("beginTime"), appNotice.getParams().get("endTime"))
+                .orderByDesc(AppNotice::getCreateTime);
+        return list(queryWrapper);
+    }
+
+    /**
+     * app端图文轮播图公告列表
+     *
+     * @param appNotice app端图文轮播图公告
+     * @return app端图文轮播图公告
+     */
+    @Override
+    public List<AppNotice> getAppBanner(AppNotice appNotice) {
         List<AppNotice> noticeList;
         List<AppNotice> cacheList = redisCache.getCacheList(CacheConstants.APP_NOTICE_LIST);
         if (StringUtil.isEmpty(cacheList)) {
             // 缓存为空，就缓存
             LambdaQueryWrapper<AppNotice> queryWrapper = new LambdaQueryWrapper<>();
-            queryWrapper.like(StringUtil.isNotEmpty(appNotice.getNoticeTitle()), AppNotice::getNoticeTitle, appNotice.getNoticeTitle())
-                    .eq(StringUtil.isNotEmpty(appNotice.getShowInApp()), AppNotice::getShowInApp, appNotice.getShowInApp())
-                    .between(StringUtil.isNotEmpty(appNotice.getParams().get("beginTime")) || StringUtil.isNotEmpty(appNotice.getParams().get("endTime")), AppNotice::getCreateTime, appNotice.getParams().get("beginTime"), appNotice.getParams().get("endTime"))
-                    .orderByDesc(AppNotice::getCreateTime);
+            queryWrapper.eq(StringUtil.isNotEmpty(appNotice.getShowInApp()), AppNotice::getShowInApp, appNotice.getShowInApp()).orderByDesc(AppNotice::getCreateTime);
             noticeList = list(queryWrapper);
             redisCache.setCacheList(CacheConstants.APP_NOTICE_LIST, noticeList);
         } else {
