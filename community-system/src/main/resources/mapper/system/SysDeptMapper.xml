@@ -133,7 +133,7 @@
     <select id="getSysHouseAmount" resultType="java.lang.Integer">
         select count(1)
         from sys_dept d
-        where d.is_house = '1';
+        where d.is_house = '1'
     </select>
 
     <insert id="insertDept" parameterType="SysDept">
