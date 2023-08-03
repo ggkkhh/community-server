@@ -54,6 +54,7 @@
             <if test="placeStart != null  and placeStart != ''">and place_start = #{placeStart}</if>
             <if test="placeEnd != null  and placeEnd != ''">and place_end = #{placeEnd}</if>
         </where>
+        order by create_time desc
     </select>
 
     <select id="selectEpidemicAccessRecordByRecordId" parameterType="String" resultMap="EpidemicAccessRecordResult">
