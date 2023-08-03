@@ -15,8 +15,7 @@ import com.roydon.common.utils.http.HttpUtils;
 import com.roydon.framework.manager.AsyncManager;
 import com.roydon.framework.manager.factory.AsyncFactory;
 import com.roydon.system.service.ISysDictDataService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -29,10 +28,9 @@ import java.util.stream.Collectors;
  * @AUTHOR: roydon
  * @DATE: 2023/5/13
  **/
+@Slf4j
 @Service
 public class GetNewsService {
-
-    private static final Logger log = LoggerFactory.getLogger(GetNewsService.class);
 
     @Resource
     private NewsConfig newsConfig;
