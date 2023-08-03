@@ -14,10 +14,10 @@ import javax.annotation.Resource;
 @ConfigurationProperties(prefix = "oss.aliyun")
 public class AliyunOssProperties implements InitializingBean {
 
-    @Value("${aliyun.oss.file.endpoint}")
+    @Value("${aliyun.oss.endpoint}")
     private String endpoint;
 
-    @Value("${aliyun.oss.file.bucketname}")
+    @Value("${aliyun.oss.bucketname}")
     private String bucketName;
 
     @Resource

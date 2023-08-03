@@ -235,7 +235,7 @@
         <if test="age != null and age != ''">#{age},</if>
         <if test="password != null and password != ''">#{password},</if>
         <if test="status != null and status != ''">#{status},</if>
-        <if test="isTenant != null and isTenant != ''">#{is_tenant},</if>
+        <if test="isTenant != null and isTenant != ''">#{isTenant},</if>
         <if test="createBy != null and createBy != ''">#{createBy},</if>
         <if test="remark != null and remark != ''">#{remark},</if>
         sysdate()

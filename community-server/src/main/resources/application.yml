@@ -89,6 +89,12 @@ aliyun:
   sms:
     templateCode: SMS_460955023 # 可在aliyun控制台申请
   oss:
-    file:
-      endpoint: oss-cn-shanghai.aliyuncs.com
-      bucketname: community-server-oss
+    endpoint: oss-cn-shanghai.aliyuncs.com
+    bucketname: community-server-oss
+
+#密钥
+openai:
+  gpt:
+    model: text-davinci-003 #达芬奇模型
+    token: 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
+    timeout: 100000 #超时时间

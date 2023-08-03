@@ -16,6 +16,7 @@
     <modules>
         <module>community-component-generator</module>
         <module>community-component-quartz</module>
+        <module>community-component-openai</module>
     </modules>
 
     <properties>

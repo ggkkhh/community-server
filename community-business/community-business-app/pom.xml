@@ -12,14 +12,22 @@
     <artifactId>community-business-app</artifactId>
 
     <dependencies>
+        <!-- news -->
         <dependency>
             <groupId>com.roydon</groupId>
             <artifactId>community-business-news</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <!-- oss -->
         <dependency>
             <groupId>com.roydon</groupId>
             <artifactId>community-business-oss</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <!-- gpt -->
+        <dependency>
+            <groupId>com.roydon</groupId>
+            <artifactId>community-component-openai</artifactId>
             <version>1.0.0</version>
         </dependency>
     </dependencies>
