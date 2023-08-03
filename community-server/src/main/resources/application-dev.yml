@@ -4,7 +4,7 @@ community:
   version: 1.0.0
   copyrightYear: 2022
   demoEnabled: true # 实例演示开关
-  profile: /root/community/uploadPath # 文件路径 示例（ Windows配置D:/community/uploadPath，Linux配置 /root/community/uploadPath）
+  profile: /root/community/uploadPath # 文件路径 示例（ Windows配置D:/community/uploadPath，Linux配置 /community/uploadPath）
   addressEnabled: true # 获取ip地址开关
   captchaType: char # 验证码类型 math 数组计算 char 字符验证
 
@@ -63,6 +63,15 @@ token:
   secret: abcdefghijklmnopqrstuvwxyz # 令牌密钥
   expireTime: 1440 # 令牌有效期（默认1天）（单位：分钟）
 
+# MyBatis配置
+#mybatis:
+#  # 搜索指定包别名
+#  typeAliasesPackage: com.roydon.**.domain
+#  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+#  mapperLocations: classpath*:mapper/**/*Mapper.xml
+#  # 加载全局的配置文件
+#  configLocation: classpath:mybatis/mybatis-config.xml
+
 mybatis-plus:
   type-aliases-package: com.roydon.**.domain # 搜索指定包别名
   mapper-locations: classpath*:mapper/**/*Mapper.xml # 配置mapper的扫描，找到所有的mapper.xml映射文件
@@ -91,4 +100,12 @@ aliyun:
   oss:
     file:
       endpoint: oss-cn-shanghai.aliyuncs.com
+      #      keyid: ***
+      #      keysecret: ***
       bucketname: community-server-oss
+
+# roll
+#roll:
+#  baseUrl: https://www.mxnzp.com/api/news/
+#  appId: ***
+#  appSecret: ***

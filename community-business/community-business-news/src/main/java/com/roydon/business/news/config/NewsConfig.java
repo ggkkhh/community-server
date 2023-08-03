@@ -1,7 +1,11 @@
 package com.roydon.business.news.config;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.roydon.common.enums.SecretKeyEnum;
+import com.roydon.system.domain.SysSecret;
+import com.roydon.system.service.ISysSecretService;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 
 /**
  * NewsConfig
@@ -12,21 +16,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class NewsConfig {
 
-    @Value("${roll.appId}")
-    private String appid;
+    private static final String BASE_URL = "https://www.mxnzp.com/api/news/";
 
-    @Value("${roll.appSecret}")
-    private String appSecret;
-
-    @Value("${roll.baseUrl}")
-    private String baseUrl;
+    @Resource
+    private ISysSecretService sysSecretService;
 
     public String getNewsListUrl(String typeId, Integer page) {
-        return baseUrl + "list?typeId=" + typeId + "&page=" + page + "&app_id=" + appid + "&app_secret=" + appSecret;
+        SysSecret sysSecret = sysSecretService.selectOneBySecretKey(SecretKeyEnum.ROLL.getInfo());
+        return BASE_URL + "list?typeId=" + typeId + "&page=" + page + "&app_id=" + sysSecret.getKeyId() + "&app_secret=" + sysSecret.getKeySecret();
     }
 
     public String getNewsDetailsUrl(String newsId) {
-        return baseUrl + "details?newsId=" + newsId + "&app_id=" + appid + "&app_secret=" + appSecret;
+        SysSecret sysSecret = sysSecretService.selectOneBySecretKey(SecretKeyEnum.ROLL.getInfo());
+        return BASE_URL + "details?newsId=" + newsId + "&app_id=" + sysSecret.getKeyId() + "&app_secret=" + sysSecret.getKeySecret();
     }
 
 }
