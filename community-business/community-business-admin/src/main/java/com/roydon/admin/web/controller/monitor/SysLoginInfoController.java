@@ -72,4 +72,15 @@ public class SysLoginInfoController extends BaseController {
         passwordService.clearLoginRecordCache(userName);
         return success();
     }
+
+    /**
+     * 系统总访问量
+     *
+     * @return list
+     */
+    @GetMapping("/total")
+    public AjaxResult total() {
+        return AjaxResult.success(loginInfoService.totalRecord());
+    }
+
 }

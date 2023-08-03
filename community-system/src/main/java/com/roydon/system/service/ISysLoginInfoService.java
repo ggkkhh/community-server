@@ -1,7 +1,6 @@
 package com.roydon.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.roydon.system.domain.SysConfig;
 import com.roydon.system.domain.SysLoginInfo;
 
 import java.util.List;
@@ -37,4 +36,12 @@ public interface ISysLoginInfoService extends IService<SysLoginInfo> {
      * 清空系统登录日志
      */
     public void cleanLoginInfo();
+
+    /**
+     * 系统总访问量
+     *
+     * @return list
+     */
+    Long totalRecord();
+
 }

@@ -1,6 +1,8 @@
 package com.roydon.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.roydon.common.constant.Constants;
 import com.roydon.system.domain.SysLoginInfo;
 import com.roydon.system.mapper.SysLoginInfoMapper;
 import com.roydon.system.service.ISysLoginInfoService;
@@ -56,5 +58,18 @@ public class SysLoginInfoServiceImpl extends ServiceImpl<SysLoginInfoMapper, Sys
     @Override
     public void cleanLoginInfo() {
         loginInfoMapper.cleanLoginInfo();
+    }
+
+    /**
+     * 系统总访问量
+     *
+     * @return list
+     */
+    @Override
+    public Long totalRecord() {
+        // 查询登录成功的记录
+        LambdaQueryWrapper<SysLoginInfo> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysLoginInfo::getStatus, Constants.SUCCESS);
+        return count(queryWrapper);
     }
 }
