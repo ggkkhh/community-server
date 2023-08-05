@@ -3,7 +3,6 @@ package com.roydon.unit.controller;
 import com.roydon.common.annotation.Log;
 import com.roydon.common.constant.UserConstants;
 import com.roydon.common.core.domain.AjaxResult;
-import com.roydon.common.core.domain.entity.SysDept;
 import com.roydon.common.enums.BusinessType;
 import com.roydon.common.utils.SecurityUtils;
 import com.roydon.common.utils.StringUtils;
@@ -117,7 +116,6 @@ public class SysUnitController {
     private AjaxResult toAjaxResult(boolean b) {
         return b ? AjaxResult.success() : AjaxResult.error();
     }
-
 
 }
 
