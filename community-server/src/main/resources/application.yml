@@ -67,6 +67,9 @@ mybatis-plus:
   type-aliases-package: com.roydon.**.domain # 搜索指定包别名
   mapper-locations: classpath*:mapper/**/*Mapper.xml # 配置mapper的扫描，找到所有的mapper.xml映射文件
   config-location: classpath:mybatis/mybatis-config.xml # 加载全局的配置文件
+  global-config:
+    db-config:
+      id-type: auto # 设置id自增
 
 # PageHelper分页插件
 pagehelper:
