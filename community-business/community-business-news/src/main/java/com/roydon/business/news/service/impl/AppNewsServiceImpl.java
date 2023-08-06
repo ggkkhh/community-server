@@ -15,8 +15,7 @@ import com.roydon.common.utils.DateUtils;
 import com.roydon.common.utils.StringUtil;
 import com.roydon.common.utils.StringUtils;
 import com.roydon.common.utils.bean.BeanCopyUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -33,13 +32,15 @@ import java.util.stream.Collectors;
  * @description 针对表【app_news】的数据库操作Service实现
  * @createDate 2023-05-13 13:51:44
  */
+@Slf4j
 @Service
 public class AppNewsServiceImpl extends ServiceImpl<AppNewsMapper, AppNews> implements AppNewsService {
 
-    private static final Logger log = LoggerFactory.getLogger(AppNewsServiceImpl.class);
-
     @Resource
     private RedisCache redisCache;
+
+    @Resource
+    private AppNewsMapper appNewsMapper;
 
     @Async
     @PostConstruct
@@ -60,13 +61,21 @@ public class AppNewsServiceImpl extends ServiceImpl<AppNewsMapper, AppNews> impl
         appNews.setViewNum(redisCache.getCacheMapValue(CacheConstants.NEWS_VIEW_NUM_KEY, appNews.getNewsId()));
     }
 
+    private void getHotNewsViewNumFromRedis(HotNews hotNews) {
+        hotNews.setViewNum(redisCache.getCacheMapValue(CacheConstants.NEWS_VIEW_NUM_KEY, hotNews.getNewsId()));
+    }
+
     //=======================================================
 
     @Override
     public List<AppNews> getNewsList(AppNews appNews) {
-        LambdaQueryWrapper<AppNews> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.like(StringUtil.isNotEmpty(appNews.getNewsTitle()), AppNews::getNewsTitle, appNews.getNewsTitle()).like(StringUtil.isNotEmpty(appNews.getSource()), AppNews::getSource, appNews.getSource()).eq(StringUtil.isNotEmpty(appNews.getNewsType()), AppNews::getNewsType, appNews.getNewsType()).eq(StringUtil.isNotEmpty(appNews.getShowInApp()), AppNews::getShowInApp, appNews.getShowInApp()).between(StringUtil.isNotEmpty(appNews.getParams().get("beginTime")) || StringUtil.isNotEmpty(appNews.getParams().get("endTime")), AppNews::getPostTime, appNews.getParams().get("beginTime"), appNews.getParams().get("endTime")).orderByDesc(AppNews::getPostTime);
-        List<AppNews> appNewsList = list(queryWrapper);
+//        LambdaQueryWrapper<AppNews> queryWrapper = new LambdaQueryWrapper<>();
+//        queryWrapper.like(StringUtil.isNotEmpty(appNews.getNewsTitle()), AppNews::getNewsTitle, appNews.getNewsTitle()).like(StringUtil.isNotEmpty(appNews.getSource()), AppNews::getSource, appNews.getSource()).eq(StringUtil.isNotEmpty(appNews.getNewsType()), AppNews::getNewsType, appNews.getNewsType()).eq(StringUtil.isNotEmpty(appNews.getShowInApp()), AppNews::getShowInApp, appNews.getShowInApp())
+//                .between(StringUtil.isNotEmpty(appNews.getParams().get("beginTime")) || StringUtil.isNotEmpty(appNews.getParams()
+//                        .get("endTime")), AppNews::getPostTime, appNews.getParams()
+//                        .get("beginTime"), appNews.getParams().get("endTime")).orderByDesc(AppNews::getPostTime);
+//        List<AppNews> appNewsList = list(queryWrapper);
+        List<AppNews> appNewsList = appNewsMapper.selectAppNewsList(appNews);
         // 从redis读取新闻浏览量
         appNewsList.forEach(this::getNewsViewNumFromRedis);
         return appNewsList;
@@ -133,6 +142,8 @@ public class AppNewsServiceImpl extends ServiceImpl<AppNewsMapper, AppNews> impl
         // 若缓存不为空，直接查缓存
         List<HotNews> cacheHotNewsList = redisCache.getCacheList(CacheConstants.NEWS_HOT_NEWS);
         if (StringUtils.isNotEmpty(cacheHotNewsList)) {
+            // 从redis读取新闻浏览量
+            cacheHotNewsList.forEach(this::getHotNewsViewNumFromRedis);
             return cacheHotNewsList;
         } else {
             // 缓存为空，写入缓存再返回数据

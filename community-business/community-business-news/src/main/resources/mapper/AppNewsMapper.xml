@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.roydon.business.news.mapper.AppNewsMapper">
+
+    <resultMap type="AppNews" id="AppNewsResult">
+        <result property="newsId"    column="news_id"    />
+        <result property="newsTitle"    column="news_title"    />
+        <result property="coverImg"    column="cover_img"    />
+        <result property="source"    column="source"    />
+        <result property="newsType"    column="news_type"    />
+        <result property="thereNewsId"    column="there_news_id"    />
+        <result property="digest"    column="digest"    />
+        <result property="postTime"    column="post_time"    />
+        <result property="newsContent"    column="news_content"    />
+        <result property="contentImages"    column="content_images"    />
+        <result property="showInApp"    column="show_in_app"    />
+        <result property="showType"    column="show_type"    />
+        <result property="viewNum"    column="view_num"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="remark"    column="remark"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateBy"    column="update_by"    />
+    </resultMap>
+
+    <sql id="selectAppNewsVo">
+        select news_id,
+               news_title,
+               cover_img,
+               source,
+               news_type,
+               there_news_id,
+               digest,
+               post_time,
+               news_content,
+               content_images,
+               show_in_app,
+               show_type,
+               view_num,
+               del_flag,
+               remark,
+               create_time,
+               create_by,
+               update_time,
+               update_by
+        from app_news
+    </sql>
+
+    <select id="selectAppNewsList" parameterType="AppNews" resultMap="AppNewsResult">
+        <include refid="selectAppNewsVo"/>
+        <where>
+            <if test="newsTitle != null  and newsTitle != ''">
+                and news_title like concat('%', #{news_title}, '%')
+            </if>
+            <if test="source != null  and source != ''">
+                and source like concat('%', #{source}, '%')
+            </if>
+            <if test="newsType != null ">and news_type = #{newsType}</if>
+            <if test="showInApp != null  and showInApp != ''">and show_in_app = #{showInApp}</if>
+            <if test="showType != null  and showType != ''">and show_type = #{showType}</if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="selectAppNewsByNewsId" parameterType="String" resultMap="AppNewsResult">
+        <include refid="selectAppNewsVo"/>
+        where news_id = #{newsId}
+    </select>
+
+    <insert id="insertAppNews" parameterType="AppNews">
+        insert into app_news
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="newsId != null">news_id,</if>
+            <if test="newsTitle != null and newsTitle != ''">news_title,</if>
+            <if test="coverImg != null and coverImg != ''">cover_img,</if>
+            <if test="source != null">source,</if>
+            <if test="newsType != null">news_type,</if>
+            <if test="thereNewsId != null">there_news_id,</if>
+            <if test="digest != null">digest,</if>
+            <if test="postTime != null">post_time,</if>
+            <if test="newsContent != null">news_content,</if>
+            <if test="contentImages != null">content_images,</if>
+            <if test="showInApp != null">show_in_app,</if>
+            <if test="showType != null and showType != ''">show_type,</if>
+            <if test="viewNum != null">view_num,</if>
+            <if test="delFlag != null and delFlag != ''">del_flag,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="newsId != null">#{newsId},</if>
+            <if test="newsTitle != null and newsTitle != ''">#{newsTitle},</if>
+            <if test="coverImg != null and coverImg != ''">#{coverImg},</if>
+            <if test="source != null">#{source},</if>
+            <if test="newsType != null">#{newsType},</if>
+            <if test="thereNewsId != null">#{thereNewsId},</if>
+            <if test="digest != null">#{digest},</if>
+            <if test="postTime != null">#{postTime},</if>
+            <if test="newsContent != null">#{newsContent},</if>
+            <if test="contentImages != null">#{contentImages},</if>
+            <if test="showInApp != null">#{showInApp},</if>
+            <if test="showType != null and showType != ''">#{showType},</if>
+            <if test="viewNum != null">#{viewNum},</if>
+            <if test="delFlag != null and delFlag != ''">#{delFlag},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+        </trim>
+    </insert>
+
+    <update id="updateAppNews" parameterType="AppNews">
+        update app_news
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="newsTitle != null and newsTitle != ''">news_title = #{newsTitle},</if>
+            <if test="coverImg != null and coverImg != ''">cover_img = #{coverImg},</if>
+            <if test="source != null">source = #{source},</if>
+            <if test="newsType != null">news_type = #{newsType},</if>
+            <if test="thereNewsId != null">there_news_id = #{thereNewsId},</if>
+            <if test="digest != null">digest = #{digest},</if>
+            <if test="postTime != null">post_time = #{postTime},</if>
+            <if test="newsContent != null">news_content = #{newsContent},</if>
+            <if test="contentImages != null">content_images = #{contentImages},</if>
+            <if test="showInApp != null">show_in_app = #{showInApp},</if>
+            <if test="showType != null and showType != ''">show_type = #{showType},</if>
+            <if test="viewNum != null">view_num = #{viewNum},</if>
+            <if test="delFlag != null and delFlag != ''">del_flag = #{delFlag},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+        </trim>
+        where news_id = #{newsId}
+    </update>
+
+    <delete id="deleteAppNewsByNewsId" parameterType="String">
+        delete from app_news where news_id = #{newsId}
+    </delete>
+
+    <delete id="deleteAppNewsByNewsIds" parameterType="String">
+        delete from app_news where news_id in
+        <foreach item="newsId" collection="array" open="(" separator="," close=")">
+            #{newsId}
+        </foreach>
+    </delete>
+</mapper>

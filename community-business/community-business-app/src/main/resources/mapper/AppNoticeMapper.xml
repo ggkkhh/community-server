@@ -7,6 +7,7 @@
         <result property="noticeTitle" column="notice_title"/>
         <result property="noticeImgUrl" column="notice_img_url"/>
         <result property="showInApp" column="show_in_app"/>
+        <result property="orderNum" column="order_num"/>
         <result property="createBy" column="create_by"/>
         <result property="createTime" column="create_time"/>
         <result property="updateBy" column="update_by"/>
@@ -19,6 +20,7 @@
                notice_title,
                notice_img_url,
                show_in_app,
+               order_num,
                create_by,
                create_time,
                update_by,
@@ -30,10 +32,18 @@
     <select id="selectAppNoticeList" parameterType="AppNotice" resultMap="AppNoticeResult">
         <include refid="selectAppNoticeVo"/>
         <where>
-            <if test="noticeTitle != null  and noticeTitle != ''">and notice_title = #{noticeTitle}</if>
-            <if test="noticeImgUrl != null  and noticeImgUrl != ''">and notice_img_url = #{noticeImgUrl}</if>
+            <if test="noticeTitle != null  and noticeTitle != ''">
+                and notice_title like concat('%', #{notice_title}, '%')
+            </if>
             <if test="showInApp != null  and showInApp != ''">and show_in_app = #{showInApp}</if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
         </where>
+        order by show_in_app desc, order_num
     </select>
 
     <select id="selectAppNoticeByNoticeId" parameterType="Long" resultMap="AppNoticeResult">
@@ -47,6 +57,7 @@
             <if test="noticeTitle != null and noticeTitle != ''">notice_title,</if>
             <if test="noticeImgUrl != null and noticeImgUrl != ''">notice_img_url,</if>
             <if test="showInApp != null">show_in_app,</if>
+            <if test="orderNum != null">order_num,</if>
             <if test="createBy != null">create_by,</if>
             <if test="createTime != null">create_time,</if>
             <if test="updateBy != null">update_by,</if>
@@ -57,6 +68,7 @@
             <if test="noticeTitle != null and noticeTitle != ''">#{noticeTitle},</if>
             <if test="noticeImgUrl != null and noticeImgUrl != ''">#{noticeImgUrl},</if>
             <if test="showInApp != null">#{showInApp},</if>
+            <if test="orderNum != null">#{orderNum},</if>
             <if test="createBy != null">#{createBy},</if>
             <if test="createTime != null">#{createTime},</if>
             <if test="updateBy != null">#{updateBy},</if>
@@ -71,6 +83,7 @@
             <if test="noticeTitle != null and noticeTitle != ''">notice_title = #{noticeTitle},</if>
             <if test="noticeImgUrl != null and noticeImgUrl != ''">notice_img_url = #{noticeImgUrl},</if>
             <if test="showInApp != null">show_in_app = #{showInApp},</if>
+            <if test="orderNum != null">order_num = #{orderNum},</if>
             <if test="createBy != null">create_by = #{createBy},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
             <if test="updateBy != null">update_by = #{updateBy},</if>

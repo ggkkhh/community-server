@@ -8,6 +8,7 @@ import com.roydon.app.mapper.AppNoticeMapper;
 import com.roydon.app.service.IAppNoticeService;
 import com.roydon.common.constant.CacheConstants;
 import com.roydon.common.core.redis.RedisCache;
+import com.roydon.common.exception.ServiceException;
 import com.roydon.common.utils.DateUtils;
 import com.roydon.common.utils.StringUtil;
 import org.springframework.stereotype.Service;
@@ -49,12 +50,7 @@ public class AppNoticeServiceImpl extends ServiceImpl<AppNoticeMapper, AppNotice
      */
     @Override
     public List<AppNotice> getAppNoticeList(AppNotice appNotice) {
-        LambdaQueryWrapper<AppNotice> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.like(StringUtil.isNotEmpty(appNotice.getNoticeTitle()), AppNotice::getNoticeTitle, appNotice.getNoticeTitle())
-                .eq(StringUtil.isNotEmpty(appNotice.getShowInApp()), AppNotice::getShowInApp, appNotice.getShowInApp())
-                .between(StringUtil.isNotEmpty(appNotice.getParams().get("beginTime")) || StringUtil.isNotEmpty(appNotice.getParams().get("endTime")), AppNotice::getCreateTime, appNotice.getParams().get("beginTime"), appNotice.getParams().get("endTime"))
-                .orderByDesc(AppNotice::getCreateTime);
-        return list(queryWrapper);
+        return appNoticeMapper.selectAppNoticeList(appNotice);
     }
 
     /**
@@ -65,12 +61,15 @@ public class AppNoticeServiceImpl extends ServiceImpl<AppNoticeMapper, AppNotice
      */
     @Override
     public List<AppNotice> getAppBanner(AppNotice appNotice) {
+        if (StringUtil.isEmpty(appNotice.getShowInApp())) {
+            throw new ServiceException("请求参数错误");
+        }
         List<AppNotice> noticeList;
         List<AppNotice> cacheList = redisCache.getCacheList(CacheConstants.APP_NOTICE_LIST);
         if (StringUtil.isEmpty(cacheList)) {
             // 缓存为空，就缓存
             LambdaQueryWrapper<AppNotice> queryWrapper = new LambdaQueryWrapper<>();
-            queryWrapper.eq(StringUtil.isNotEmpty(appNotice.getShowInApp()), AppNotice::getShowInApp, appNotice.getShowInApp()).orderByDesc(AppNotice::getCreateTime);
+            queryWrapper.eq(StringUtil.isNotEmpty(appNotice.getShowInApp()), AppNotice::getShowInApp, appNotice.getShowInApp()).orderByDesc(AppNotice::getShowInApp).orderByAsc(AppNotice::getOrderNum);
             noticeList = list(queryWrapper);
             redisCache.setCacheList(CacheConstants.APP_NOTICE_LIST, noticeList);
         } else {

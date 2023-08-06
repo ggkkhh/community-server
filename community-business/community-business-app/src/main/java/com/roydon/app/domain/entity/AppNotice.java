@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.roydon.common.core.domain.BaseEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 
@@ -13,6 +14,7 @@ import java.io.Serializable;
  * @author roydon
  * @since 2023-06-13 22:10:43
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("app_notice")
 public class AppNotice extends BaseEntity implements Serializable {
@@ -34,6 +36,11 @@ public class AppNotice extends BaseEntity implements Serializable {
      * 状态（0关闭 1展示）
      */
     private String showInApp;
+
+    /**
+     * 显示顺序
+     */
+    private Integer orderNum;
 
 }
 
