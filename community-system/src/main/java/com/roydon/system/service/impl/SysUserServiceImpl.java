@@ -163,6 +163,20 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         return UserConstants.UNIQUE;
     }
 
+    @Override
+    public String checkNickNameUnique(SysUser user) {
+        LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysUser::getNickName, user.getNickName());
+        return StringUtils.isEmpty(this.list(queryWrapper)) ? UserConstants.UNIQUE : UserConstants.NOT_UNIQUE;
+    }
+
+    @Override
+    public String checkRealNameUnique(SysUser user) {
+        LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysUser::getRealName, user.getRealName());
+        return StringUtils.isEmpty(this.list(queryWrapper)) ? UserConstants.UNIQUE : UserConstants.NOT_UNIQUE;
+    }
+
     /**
      * 校验手机号码是否唯一
      *

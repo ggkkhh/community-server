@@ -74,6 +74,22 @@ public interface ISysUserService extends IService<SysUser> {
     String checkUserNameUnique(SysUser user);
 
     /**
+     * 校验用户昵称是否唯一
+     *
+     * @param user 用户信息
+     * @return 结果
+     */
+    String checkNickNameUnique(SysUser user);
+
+    /**
+     * 校验用户真实姓名是否唯一
+     *
+     * @param user 用户信息
+     * @return 结果
+     */
+    String checkRealNameUnique(SysUser user);
+
+    /**
      * 校验手机号码是否唯一
      *
      * @param user 用户信息
