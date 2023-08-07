@@ -53,7 +53,7 @@
         <include refid="selectAppNewsVo"/>
         <where>
             <if test="newsTitle != null  and newsTitle != ''">
-                and news_title like concat('%', #{news_title}, '%')
+                and news_title like concat('%', #{newsTitle}, '%')
             </if>
             <if test="source != null  and source != ''">
                 and source like concat('%', #{source}, '%')
@@ -62,10 +62,10 @@
             <if test="showInApp != null  and showInApp != ''">and show_in_app = #{showInApp}</if>
             <if test="showType != null  and showType != ''">and show_type = #{showType}</if>
             <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
-                AND date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+                AND date_format(post_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
             </if>
             <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
-                AND date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+                AND date_format(post_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
             </if>
         </where>
         order by create_time desc

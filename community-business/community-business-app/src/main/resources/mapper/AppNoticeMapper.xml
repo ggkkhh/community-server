@@ -33,7 +33,7 @@
         <include refid="selectAppNoticeVo"/>
         <where>
             <if test="noticeTitle != null  and noticeTitle != ''">
-                and notice_title like concat('%', #{notice_title}, '%')
+                and notice_title like concat('%', #{noticeTitle}, '%')
             </if>
             <if test="showInApp != null  and showInApp != ''">and show_in_app = #{showInApp}</if>
             <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
