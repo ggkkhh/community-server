@@ -72,17 +72,6 @@ public class AppNoticeController extends BaseController {
         return AjaxResult.error("上传图片异常，请联系管理员");
     }
 
-    /**
-     * 导出app端图文轮播图公告列表
-     */
-//    @PreAuthorize("@ss.hasPermi('system:notice:export')")
-//    @Log(title = "app端图文轮播图公告", businessType = BusinessType.EXPORT)
-//    @PostMapping("/export")
-//    public void export(HttpServletResponse response, AppNotice appNotice) {
-//        List<AppNotice> list = appNoticeService.selectAppNoticeList(appNotice);
-//        ExcelUtil<AppNotice> util = new ExcelUtil<AppNotice>(AppNotice.class);
-//        util.exportExcel(response, list, "app端图文轮播图公告数据");
-//    }
     @ApiOperation("公告状态")
     @Log(title = "公告管理", businessType = BusinessType.UPDATE)
     @PreAuthorize("@ss.hasPermi('app:notice:edit')")

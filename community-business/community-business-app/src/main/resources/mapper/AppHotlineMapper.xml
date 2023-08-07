@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.roydon.app.mapper.AppHotlineMapper">
+
+    <resultMap type="AppHotline" id="AppHotlineResult">
+        <result property="hotlineId" column="hotline_id"/>
+        <result property="leader" column="leader"/>
+        <result property="telephone" column="telephone"/>
+        <result property="status" column="status"/>
+        <result property="remark" column="remark"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectAppHotlineVo">
+        select hotline_id,
+               leader,
+               telephone,
+               status,
+               remark,
+               create_by,
+               create_time,
+               update_by,
+               update_time
+        from app_hotline
+    </sql>
+
+    <select id="selectAppHotlineList" parameterType="AppHotline" resultMap="AppHotlineResult">
+        <include refid="selectAppHotlineVo"/>
+        <where>
+            <if test="leader != null  and leader != ''">
+                and leader like concat('%', #{leader}, '%')
+            </if>
+            <if test="telephone != null  and telephone != ''">
+                and telephone like concat('%', #{telephone}, '%')
+            </if>
+            <if test="status != null  and status != ''">
+                and status = #{status}
+            </if>
+        </where>
+        order by status asc, update_time desc
+    </select>
+
+    <select id="selectAppHotlineByHotlineId" parameterType="Long" resultMap="AppHotlineResult">
+        <include refid="selectAppHotlineVo"/>
+        where hotline_id = #{hotlineId}
+    </select>
+
+    <insert id="insertAppHotline" parameterType="AppHotline" useGeneratedKeys="true" keyProperty="hotlineId">
+        insert into app_hotline
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="leader != null">leader,</if>
+            <if test="telephone != null">telephone,</if>
+            <if test="status != null">status,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="leader != null">#{leader},</if>
+            <if test="telephone != null">#{telephone},</if>
+            <if test="status != null">#{status},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateAppHotline" parameterType="AppHotline">
+        update app_hotline
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="leader != null">leader = #{leader},</if>
+            <if test="telephone != null">telephone = #{telephone},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where hotline_id = #{hotlineId}
+    </update>
+
+    <delete id="deleteAppHotlineByHotlineId" parameterType="Long">
+        delete
+        from app_hotline
+        where hotline_id = #{hotlineId}
+    </delete>
+
+    <delete id="deleteAppHotlineByHotlineIds" parameterType="String">
+        delete from app_hotline where hotline_id in
+        <foreach item="hotlineId" collection="array" open="(" separator="," close=")">
+            #{hotlineId}
+        </foreach>
+    </delete>
+</mapper>
