@@ -8,12 +8,15 @@ package com.roydon.business.oss.utils;
 public class OssUtil {
 
     //用户头像文件夹前缀
-    public static final String USER_AVATAR_FILE = "user-avatar/";
-    public static final String NOTICE_FILE = "notice-file/";
+    public static final String USER_AVATAR_FILE = "user-avatar/"; // 用户头像文件
+    public static final String NOTICE_FILE = "notice-file/"; // app公告文件
     public static final String COMMON_FILE = "common-file/";
-    public static final String GOODS_FILE = "goods-file/";
+    public static final String GOODS_FILE = "goods-file/"; // 商品文件
+    public static final String HEALTH_CODE_FILE = "health-code-file/"; // 健康码文件
+
     //用户头像文件前缀
     public static final String USER_AVATAR_PREFIX = "/user-avatar_";
+
     /**
      * 判断OSS服务文件上传时文件的contentType
      *
@@ -56,11 +59,12 @@ public class OssUtil {
 
     /**
      * 通过文件名判断并获取OSS服务文件上传时文件的contentFormat(文件格式)
-     * @author tony
+     *
      * @param fileName 文件名
      * @return 文件的格式代码
+     * @author tony
      */
-    public static  int getContentFormat(String fileName) {
+    public static int getContentFormat(String fileName) {
         String FilenameExtension = fileName.substring(fileName.lastIndexOf("."));
 
         if (FilenameExtension.equalsIgnoreCase(".jpeg") ||
@@ -69,17 +73,17 @@ public class OssUtil {
                 FilenameExtension.equalsIgnoreCase(".gif")) {
             return 1; // 图片
         }
-        if (FilenameExtension.equalsIgnoreCase(".html")||
+        if (FilenameExtension.equalsIgnoreCase(".html") ||
                 FilenameExtension.equalsIgnoreCase(".txt") ||
                 FilenameExtension.equalsIgnoreCase(".pptx") ||
                 FilenameExtension.equalsIgnoreCase(".ppt") ||
                 FilenameExtension.equalsIgnoreCase(".docx") ||
                 FilenameExtension.equalsIgnoreCase(".doc") ||
                 FilenameExtension.equalsIgnoreCase(".xla") ||
-                FilenameExtension.equalsIgnoreCase(".xlc")||
-                FilenameExtension.equalsIgnoreCase(".xlm")||
-                FilenameExtension.equalsIgnoreCase(".xls")||
-                FilenameExtension.equalsIgnoreCase(".xlt")||
+                FilenameExtension.equalsIgnoreCase(".xlc") ||
+                FilenameExtension.equalsIgnoreCase(".xlm") ||
+                FilenameExtension.equalsIgnoreCase(".xls") ||
+                FilenameExtension.equalsIgnoreCase(".xlt") ||
                 FilenameExtension.equalsIgnoreCase(".xlw") ||
                 FilenameExtension.equalsIgnoreCase(".xml") ||
                 FilenameExtension.equalsIgnoreCase(".pdf") ||
@@ -98,8 +102,6 @@ public class OssUtil {
         //其他
         return 6;
     }
-
-
 
 
 }

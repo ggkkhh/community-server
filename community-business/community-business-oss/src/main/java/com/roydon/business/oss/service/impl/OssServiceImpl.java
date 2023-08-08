@@ -5,13 +5,17 @@ import com.aliyun.oss.OSSClient;
 import com.roydon.business.oss.service.OssService;
 import com.roydon.business.oss.utils.OssUtil;
 import com.roydon.common.constant.Constants;
+import com.roydon.common.core.domain.entity.SysUser;
 import com.roydon.common.exception.file.InvalidExtensionException;
 import com.roydon.common.utils.SecurityUtils;
+import com.roydon.common.utils.StringUtils;
 import com.roydon.common.utils.file.FileUploadUtils;
 import com.roydon.common.utils.file.MimeTypeUtils;
+import com.roydon.system.service.ISysUserService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
@@ -28,6 +32,9 @@ import static com.roydon.business.oss.config.AliyunOssProperties.*;
  **/
 @Service
 public class OssServiceImpl implements OssService {
+
+    @Resource
+    private ISysUserService userService;
 
     @Override
     public String uploadFile(MultipartFile file) {
@@ -59,8 +66,14 @@ public class OssServiceImpl implements OssService {
     }
 
     @Override
-    public String uploadUserAvatar(String userName, MultipartFile file) {
-        return this.uploadFile(file, OssUtil.USER_AVATAR_FILE);
+    public String uploadUserAvatar(Long userId, String userName, MultipartFile file) {
+        String uploadFile = this.uploadFile(file, OssUtil.USER_AVATAR_FILE);
+        // 删除原来用户头像文件
+        if (StringUtils.isNotEmpty(uploadFile)) {
+            SysUser sysUser = userService.getById(userId);
+            this.deleteObject(sysUser.getAvatar());
+        }
+        return uploadFile;
     }
 
     @Override
@@ -91,9 +104,8 @@ public class OssServiceImpl implements OssService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        String fileName = file.getOriginalFilename();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-        String datePath = sdf.format(new Date()); // 将日期转换为字符串
+//        String fileName = file.getOriginalFilename();
+        String datePath = new SimpleDateFormat("yyyy/MM/dd").format(new Date()); // 将日期转换为字符串
         // 文件存储名称：日期+username+uuid
         String ossFileName = folder + datePath + "/" + SecurityUtils.getUsername() + "-" + UUID.randomUUID().toString().replaceAll("-", "") + "." + FileUploadUtils.getExtension(file);
         ossClient.putObject(BUCKET_NAME, ossFileName, inputStream);
@@ -101,6 +113,17 @@ public class OssServiceImpl implements OssService {
         //关闭OSSClient
         ossClient.shutdown();
         return url;
+    }
+
+    private void deleteObject(String url) {
+        OSS ossClient = new OSSClient(END_POINT, ACCESS_KEY_ID, ACCESS_KEY_SECRET);
+        String urlPrefix = "https://" + BUCKET_NAME + "." + END_POINT + "/";
+        System.out.println("urlPrefix==================" + urlPrefix);
+        System.out.println("url==================" + url);
+        String replace = url.replace(urlPrefix, "");
+        System.out.println("replace==================" + replace);
+        ossClient.deleteObject(BUCKET_NAME, replace);
+        ossClient.shutdown();
     }
 
 }
