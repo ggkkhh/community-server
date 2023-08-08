@@ -1,4 +1,4 @@
-package com.roydon.common.utils.qrcode;
+package com.roydon.qrcode.util;
 
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.StrUtil;
@@ -7,6 +7,7 @@ import com.google.zxing.EncodeHintType;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import com.roydon.qrcode.enums.ColorEnum;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,31 +24,35 @@ import java.util.HashMap;
 
 @Slf4j
 @UtilityClass
-public class QRCodeUtil {
+public class QRCodeUtils {
 
     /**
      * 默认宽度
      */
-    private static final Integer WIDTH = 140;
+    private static final Integer WIDTH = 160;
+
     /**
      * 默认高度
      */
-    private static final Integer HEIGHT = 140;
+    private static final Integer HEIGHT = 160;
 
     /**
      * LOGO 默认宽度
      */
-    private static final Integer LOGO_WIDTH = 22;
+    private static final Integer LOGO_WIDTH = 24;
+
     /**
      * LOGO 默认高度
      */
-    private static final Integer LOGO_HEIGHT = 22;
+    private static final Integer LOGO_HEIGHT = 24;
 
     /**
      * 图片格式
      */
     private static final String IMAGE_FORMAT = "png";
+
     private static final String CHARSET = "utf-8";
+
     /**
      * 原生转码前面没有 data:image/png;base64 这些字段，返回给前端是无法被解析
      */
@@ -59,8 +64,8 @@ public class QRCodeUtil {
      * @param content 内容
      * @return
      */
-    public String getBase64QRCode(String content) {
-        return getBase64Image(content, WIDTH, HEIGHT, null, null, null);
+    public String getBase64QRCode(String content, ColorEnum color) {
+        return getBase64Image(content, color, WIDTH, HEIGHT, null, null, null);
     }
 
     /**
@@ -71,7 +76,7 @@ public class QRCodeUtil {
      * @return
      */
     public String getBase64QRCode(String content, String logoUrl) {
-        return getBase64Image(content, WIDTH, HEIGHT, logoUrl, LOGO_WIDTH, LOGO_HEIGHT);
+        return getBase64Image(content, ColorEnum.BLACK, WIDTH, HEIGHT, logoUrl, LOGO_WIDTH, LOGO_HEIGHT);
     }
 
     /**
@@ -85,13 +90,24 @@ public class QRCodeUtil {
      * @param logoHeight logo 高度
      * @return
      */
-    public String getBase64QRCode(String content, Integer width, Integer height, String logoUrl, Integer logoWidth, Integer logoHeight) {
-        return getBase64Image(content, width, height, logoUrl, logoWidth, logoHeight);
-    }
+//    public String getBase64QRCode(String content, Integer width, Integer height, String logoUrl, Integer logoWidth, Integer logoHeight) {
+//        return getBase64Image(content, width, height, logoUrl, logoWidth, logoHeight);
+//    }
 
-    private String getBase64Image(String content, Integer width, Integer height, String logoUrl, Integer logoWidth, Integer logoHeight) {
+    /**
+     * 生成base64二维码
+     *
+     * @param content
+     * @param width
+     * @param height
+     * @param logoUrl
+     * @param logoWidth
+     * @param logoHeight
+     * @return
+     */
+    private String getBase64Image(String content, ColorEnum color, Integer width, Integer height, String logoUrl, Integer logoWidth, Integer logoHeight) {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
-        BufferedImage bufferedImage = crateQRCode(content, width, height, logoUrl, logoWidth, logoHeight);
+        BufferedImage bufferedImage = crateQRCode(content, color, width, height, logoUrl, logoWidth, logoHeight);
         try {
             ImageIO.write(bufferedImage, IMAGE_FORMAT, os);
         } catch (IOException e) {
@@ -112,7 +128,7 @@ public class QRCodeUtil {
      * @param logoHeight logo 高度
      * @return
      */
-    private BufferedImage crateQRCode(String content, Integer width, Integer height, String logoUrl, Integer logoWidth, Integer logoHeight) {
+    private BufferedImage crateQRCode(String content, ColorEnum color, Integer width, Integer height, String logoUrl, Integer logoWidth, Integer logoHeight) {
         if (StrUtil.isNotBlank(content)) {
             ServletOutputStream stream = null;
             HashMap<EncodeHintType, Comparable> hints = new HashMap<>(4);
@@ -128,7 +144,7 @@ public class QRCodeUtil {
                 BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
                 for (int x = 0; x < width; x++) {
                     for (int y = 0; y < height; y++) {
-                        bufferedImage.setRGB(x, y, bitMatrix.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
+                        bufferedImage.setRGB(x, y, bitMatrix.get(x, y) ? color.getHexCode() : 0xFFFFFFFF);
                     }
                 }
                 if (StrUtil.isNotBlank(logoUrl)) {
@@ -183,8 +199,8 @@ public class QRCodeUtil {
      * @param output  输出流
      * @throws IOException
      */
-    public void getQRCode(String content, OutputStream output) throws IOException {
-        BufferedImage image = crateQRCode(content, WIDTH, HEIGHT, null, null, null);
+    public void getQRCode(String content, ColorEnum color, OutputStream output) throws IOException {
+        BufferedImage image = crateQRCode(content, color, WIDTH, HEIGHT, null, null, null);
         ImageIO.write(image, IMAGE_FORMAT, output);
     }
 
@@ -196,8 +212,8 @@ public class QRCodeUtil {
      * @param output  输出流
      * @throws Exception
      */
-    public void getQRCode(String content, String logoUrl, OutputStream output) throws Exception {
-        BufferedImage image = crateQRCode(content, WIDTH, HEIGHT, logoUrl, LOGO_WIDTH, LOGO_HEIGHT);
+    public void getLogoQRCode(String content, String logoUrl, ColorEnum color, OutputStream output) throws Exception {
+        BufferedImage image = crateQRCode(content, color, WIDTH, HEIGHT, logoUrl, LOGO_WIDTH, LOGO_HEIGHT);
         ImageIO.write(image, IMAGE_FORMAT, output);
     }
 

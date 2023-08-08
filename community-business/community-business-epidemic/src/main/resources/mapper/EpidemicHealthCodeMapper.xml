@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.roydon.business.epidemic.mapper.EpidemicHealthCodeMapper">
+
+    <resultMap type="EpidemicHealthCode" id="EpidemicHealthCodeResult">
+        <result property="codeId" column="code_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
+        <result property="codeBase64" column="code_base64"/>
+        <result property="codeImage" column="code_image"/>
+        <result property="codeStatus" column="code_status"/>
+        <result property="remark" column="remark"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectEpidemicHealthCodeVo">
+        select code_id,
+               user_id,
+               user_name,
+               code_base64,
+               code_image,
+               code_status,
+               remark,
+               create_by,
+               create_time,
+               update_by,
+               update_time
+        from epidemic_health_code
+    </sql>
+
+    <select id="selectEpidemicHealthCodeList" parameterType="EpidemicHealthCode" resultMap="EpidemicHealthCodeResult">
+        <include refid="selectEpidemicHealthCodeVo"/>
+        <where>
+            <if test="userName != null  and userName != ''">and user_name like concat('%', #{userName}, '%')</if>
+            <if test="codeStatus != null  and codeStatus != ''">and code_status = #{codeStatus}</if>
+        </where>
+        order by code_status desc,update_time desc
+    </select>
+
+    <select id="selectEpidemicHealthCodeByCodeId" parameterType="Long" resultMap="EpidemicHealthCodeResult">
+        <include refid="selectEpidemicHealthCodeVo"/>
+        where code_id = #{codeId}
+    </select>
+
+    <insert id="insertEpidemicHealthCode" parameterType="EpidemicHealthCode" useGeneratedKeys="true"
+            keyProperty="codeId">
+        insert into epidemic_health_code
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="userName != null">user_name,</if>
+            <if test="codeBase64 != null">code_base64,</if>
+            <if test="codeImage != null">code_image,</if>
+            <if test="codeStatus != null">code_status,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="userName != null">#{userName},</if>
+            <if test="codeBase64 != null">#{codeBase64},</if>
+            <if test="codeImage != null">#{codeImage},</if>
+            <if test="codeStatus != null">#{codeStatus},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateEpidemicHealthCode" parameterType="EpidemicHealthCode">
+        update epidemic_health_code
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="userName != null">user_name = #{userName},</if>
+            <if test="codeBase64 != null">code_base64 = #{codeBase64},</if>
+            <if test="codeImage != null">code_image = #{codeImage},</if>
+            <if test="codeStatus != null">code_status = #{codeStatus},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where code_id = #{codeId}
+    </update>
+
+    <delete id="deleteEpidemicHealthCodeByCodeId" parameterType="Long">
+        delete
+        from epidemic_health_code
+        where code_id = #{codeId}
+    </delete>
+
+    <delete id="deleteEpidemicHealthCodeByCodeIds" parameterType="String">
+        delete from epidemic_health_code where code_id in
+        <foreach item="codeId" collection="array" open="(" separator="," close=")">
+            #{codeId}
+        </foreach>
+    </delete>
+</mapper>

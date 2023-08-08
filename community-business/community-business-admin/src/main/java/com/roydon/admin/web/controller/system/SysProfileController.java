@@ -2,7 +2,6 @@ package com.roydon.admin.web.controller.system;
 
 import com.roydon.business.oss.service.OssService;
 import com.roydon.common.annotation.Log;
-import com.roydon.common.config.CommunityConfig;
 import com.roydon.common.constant.UserConstants;
 import com.roydon.common.core.controller.BaseController;
 import com.roydon.common.core.domain.AjaxResult;
@@ -11,8 +10,6 @@ import com.roydon.common.core.domain.model.LoginUser;
 import com.roydon.common.enums.BusinessType;
 import com.roydon.common.utils.SecurityUtils;
 import com.roydon.common.utils.StringUtils;
-import com.roydon.common.utils.file.FileUploadUtils;
-import com.roydon.common.utils.file.MimeTypeUtils;
 import com.roydon.framework.web.service.TokenService;
 import com.roydon.system.service.ISysUserService;
 import io.swagger.annotations.Api;
@@ -121,8 +118,8 @@ public class SysProfileController extends BaseController {
     public AjaxResult avatar(@RequestParam("avatarfile") MultipartFile file) throws Exception {
         if (!file.isEmpty()) {
             LoginUser loginUser = getLoginUser();
-            // TODO 用户上传头像，上传oss之前请先删除原来用户头像文件
-            String avatar = ossService.uploadUserAvatar(loginUser.getUsername(), file);
+            // 用户上传头像，上传oss之前请先删除原来用户头像文件
+            String avatar = ossService.uploadUserAvatar(loginUser.getUserId(),loginUser.getUsername(), file);
 //            String avatar = FileUploadUtils.upload(CommunityConfig.getAvatarPath(), file, MimeTypeUtils.IMAGE_EXTENSION);
             if (userService.updateUserAvatar(loginUser.getUsername(), avatar)) {
                 AjaxResult ajax = AjaxResult.success();

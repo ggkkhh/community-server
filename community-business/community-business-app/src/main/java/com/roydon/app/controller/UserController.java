@@ -64,19 +64,23 @@ public class UserController extends BaseController {
         }
         // 检测姓名合法性
         if (StringUtils.isNotNull(user.getRealName())) {
-            if (user.getRealName().length() >= 5 && UserConstants.NOT_UNIQUE.equals(userService.checkRealNameUnique(user))) {
+            if (user.getRealName().length() >= 5) {
                 return AjaxResult.error("修改失败，姓名不合法");
             }
         }
         // 检测手机号合法性
-        if (StringUtils.isNotNull(user.getPhonenumber()) && PhoneUtils.isMobile(user.getPhonenumber()) && UserConstants.NOT_UNIQUE.equals(userService.checkPhoneUnique(user))) {
-            return AjaxResult.error("修改失败，账号已存在");
+        if (StringUtils.isNotNull(user.getPhonenumber())) {
+            if (UserConstants.NOT_UNIQUE.equals(userService.checkPhoneUnique(user))) {
+                return AjaxResult.error("修改失败，手机号已存在");
+            } else if (!PhoneUtils.isMobile(user.getPhonenumber())) {
+                return AjaxResult.error("修改失败，手机号不合法");
+            }
         }
         // 检测邮箱合法性
         if (StringUtils.isNotNull(user.getEmail())) {
             if (UserConstants.NOT_UNIQUE.equals(userService.checkEmailUnique(user))) {
                 return AjaxResult.error("修改失败，邮箱已存在");
-            } else if (EmailUtils.isValidEmail(user.getEmail())) {
+            } else if (!EmailUtils.isValidEmail(user.getEmail())) {
                 return AjaxResult.error("修改失败，邮箱格式错误");
             }
         }
