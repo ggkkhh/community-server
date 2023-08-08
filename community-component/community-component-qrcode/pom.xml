@@ -5,20 +5,29 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.roydon</groupId>
-        <artifactId>community-business</artifactId>
+        <artifactId>community-component</artifactId>
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>community-business-epidemic</artifactId>
+    <artifactId>community-component-qrcode</artifactId>
+
+    <description>
+        qrcode二维码生成
+    </description>
 
     <dependencies>
 
-        <!-- 二维码 -->
+        <!-- 二维码生成 -->
         <dependency>
-            <groupId>com.roydon</groupId>
-            <artifactId>community-component-qrcode</artifactId>
-            <version>1.0.0</version>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>javase</artifactId>
         </dependency>
 
     </dependencies>
+
 </project>
