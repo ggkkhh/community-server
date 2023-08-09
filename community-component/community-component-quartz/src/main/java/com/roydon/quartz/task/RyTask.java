@@ -26,8 +26,5 @@ public class RyTask {
     }
 
     public void ryNoParams() {
-//        NewsRespResult newsRespResult = getNewsService.getNewsRespResult();
-        getNewsService.getNewsList();
-//        System.out.println("newsRespResult = " + newsRespResult);
     }
 }

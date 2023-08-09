@@ -35,5 +35,11 @@
             <version>${community.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.roydon</groupId>
+            <artifactId>community-business-epidemic</artifactId>
+            <version>${community.version}</version>
+        </dependency>
+
     </dependencies>
 </project>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.roydon.business.epidemic.mapper.EpidemicIsolationRecordMapper">
+
+    <resultMap type="EpidemicIsolationRecord" id="EpidemicIsolationRecordResult">
+        <result property="recordId" column="record_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="username" column="username"/>
+        <result property="realName" column="real_name"/>
+        <result property="telephone" column="telephone"/>
+        <result property="isolationTime" column="isolation_time"/>
+        <result property="isolationFinishTime" column="isolation_finish_time"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="createBy" column="create_by"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="selectEpidemicIsolationRecordVo">
+        select record_id,
+               user_id,
+               username,
+               real_name,
+               telephone,
+               isolation_time,
+               isolation_finish_time,
+               del_flag,
+               create_time,
+               update_time,
+               create_by,
+               update_by,
+               remark
+        from epidemic_isolation_record
+    </sql>
+
+    <select id="selectEpidemicIsolationRecordList" parameterType="EpidemicIsolationRecord"
+            resultMap="EpidemicIsolationRecordResult">
+        <include refid="selectEpidemicIsolationRecordVo"/>
+        <where>
+            <if test="username != null  and username != ''">and username like concat('%', #{username}, '%')</if>
+            <if test="realName != null  and realName != ''">and real_name like concat('%', #{realName}, '%')</if>
+            <if test="telephone != null  and telephone != ''">and telephone like concat('%', #{telephone}, '%')</if>
+        </where>
+        order by isolation_time asc, create_time desc
+    </select>
+
+    <select id="selectEpidemicIsolationRecordByRecordId" parameterType="Long"
+            resultMap="EpidemicIsolationRecordResult">
+        <include refid="selectEpidemicIsolationRecordVo"/>
+        where record_id = #{recordId}
+    </select>
+
+    <insert id="insertEpidemicIsolationRecord" parameterType="EpidemicIsolationRecord">
+        insert into epidemic_isolation_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="recordId != null">record_id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="username != null">username,</if>
+            <if test="realName != null and realName != ''">real_name,</if>
+            <if test="telephone != null and telephone != ''">telephone,</if>
+            <if test="isolationTime != null">isolation_time,</if>
+            <if test="isolationFinishTime != null">isolation_finish_time,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="remark != null">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="recordId != null">#{recordId},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="username != null">#{username},</if>
+            <if test="realName != null and realName != ''">#{realName},</if>
+            <if test="telephone != null and telephone != ''">#{telephone},</if>
+            <if test="isolationTime != null">#{isolationTime},</if>
+            <if test="isolationFinishTime != null">#{isolationFinishTime},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+
+    <update id="updateEpidemicIsolationRecord" parameterType="EpidemicIsolationRecord">
+        update epidemic_isolation_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="username != null">username = #{username},</if>
+            <if test="realName != null and realName != ''">real_name = #{realName},</if>
+            <if test="telephone != null and telephone != ''">telephone = #{telephone},</if>
+            <if test="isolationTime != null">isolation_time = #{isolationTime},</if>
+            <if test="isolationFinishTime != null">isolation_finish_time = #{isolationFinishTime},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where record_id = #{recordId}
+    </update>
+
+    <delete id="deleteEpidemicIsolationRecordByRecordId" parameterType="Long">
+        delete
+        from epidemic_isolation_record
+        where record_id = #{recordId}
+    </delete>
+
+    <delete id="deleteEpidemicIsolationRecordByRecordIds" parameterType="Long">
+        delete from epidemic_isolation_record where record_id in
+        <foreach item="recordId" collection="array" open="(" separator="," close=")">
+            #{recordId}
+        </foreach>
+    </delete>
+</mapper>

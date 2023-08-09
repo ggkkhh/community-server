@@ -60,7 +60,7 @@ public class CacheConstants {
     public static final String NEWS_VIEW_NUM_KEY = "news:view_num";
 
     /**
-     * 新闻阅读量加一的业务key
+     * 热门新闻key
      */
     public static final String NEWS_HOT_NEWS = "news:hot_news";
 
@@ -73,6 +73,11 @@ public class CacheConstants {
      * appNotice
      */
     public static final String APP_NOTICE_LIST = "app:notice:list";
+
+    /**
+     * 隔离天数自减一的key
+     */
+    public static final String EPIDEMIC_ISOLATION_TIME = "epidemic:isolation:time";
 
 
 }

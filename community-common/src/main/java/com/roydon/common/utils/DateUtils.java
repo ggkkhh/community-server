@@ -194,4 +194,14 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         return LocalDateTime.now().minusDays(days).with(LocalTime.MIN);
     }
 
+    /**
+     * 获取...天前的0时
+     *
+     * @return LocalDateTime
+     */
+    public static LocalDateTime getTimeAfterDay(long days) {
+        return LocalDateTime.now().plusDays(days).with(LocalTime.MIN);
+    }
+
+
 }

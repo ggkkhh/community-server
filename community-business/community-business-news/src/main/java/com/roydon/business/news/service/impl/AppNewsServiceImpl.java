@@ -69,12 +69,6 @@ public class AppNewsServiceImpl extends ServiceImpl<AppNewsMapper, AppNews> impl
 
     @Override
     public List<AppNews> getNewsList(AppNews appNews) {
-//        LambdaQueryWrapper<AppNews> queryWrapper = new LambdaQueryWrapper<>();
-//        queryWrapper.like(StringUtil.isNotEmpty(appNews.getNewsTitle()), AppNews::getNewsTitle, appNews.getNewsTitle()).like(StringUtil.isNotEmpty(appNews.getSource()), AppNews::getSource, appNews.getSource()).eq(StringUtil.isNotEmpty(appNews.getNewsType()), AppNews::getNewsType, appNews.getNewsType()).eq(StringUtil.isNotEmpty(appNews.getShowInApp()), AppNews::getShowInApp, appNews.getShowInApp())
-//                .between(StringUtil.isNotEmpty(appNews.getParams().get("beginTime")) || StringUtil.isNotEmpty(appNews.getParams()
-//                        .get("endTime")), AppNews::getPostTime, appNews.getParams()
-//                        .get("beginTime"), appNews.getParams().get("endTime")).orderByDesc(AppNews::getPostTime);
-//        List<AppNews> appNewsList = list(queryWrapper);
         List<AppNews> appNewsList = appNewsMapper.selectAppNewsList(appNews);
         // 从redis读取新闻浏览量
         appNewsList.forEach(this::getNewsViewNumFromRedis);

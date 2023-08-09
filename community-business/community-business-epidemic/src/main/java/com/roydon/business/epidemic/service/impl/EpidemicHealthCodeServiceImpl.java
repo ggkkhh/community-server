@@ -3,6 +3,7 @@ package com.roydon.business.epidemic.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.roydon.business.epidemic.domain.entity.EpidemicHealthCode;
+import com.roydon.business.epidemic.enums.CodeStatusEnum;
 import com.roydon.business.epidemic.mapper.EpidemicHealthCodeMapper;
 import com.roydon.business.epidemic.service.IEpidemicHealthCodeService;
 import com.roydon.common.core.domain.entity.SysUser;
@@ -43,7 +44,7 @@ public class EpidemicHealthCodeServiceImpl extends ServiceImpl<EpidemicHealthCod
             return one;
         } else {
             // 数据表[不存在]该用户健康码，生成健康码
-            return genHealthCode(sysUser);
+            return genHealthCodeGreen(sysUser);
         }
     }
 
@@ -52,7 +53,7 @@ public class EpidemicHealthCodeServiceImpl extends ServiceImpl<EpidemicHealthCod
      *
      * @return base64 string
      */
-    private EpidemicHealthCode genHealthCode(SysUser sysUser) {
+    private EpidemicHealthCode genHealthCodeGreen(SysUser sysUser) {
         EpidemicHealthCode epidemicHealthCode = new EpidemicHealthCode();
         // 使用用户名userName生成绿码base64
         String base64QRCode = QRCodeUtils.getBase64QRCode(sysUser.getUserName(), ColorEnum.GREEN);
@@ -113,6 +114,14 @@ public class EpidemicHealthCodeServiceImpl extends ServiceImpl<EpidemicHealthCod
     @Override
     public int updateEpidemicHealthCode(EpidemicHealthCode epidemicHealthCode) {
         epidemicHealthCode.setUpdateTime(DateUtils.getNowDate());
+        // 获取更改的码状态
+        String codeStatus = epidemicHealthCode.getCodeStatus();
+        EpidemicHealthCode origin = getById(epidemicHealthCode.getCodeId());
+        if (!origin.getCodeStatus().equals(codeStatus)) {
+            // 健康码状态被改变，根据传入的状态生成新健康码
+            String base64QRCode = QRCodeUtils.getBase64QRCode(origin.getUserName(), ColorEnum.find(CodeStatusEnum.findByCode(codeStatus).getInfo()));
+            epidemicHealthCode.setCodeBase64(base64QRCode);
+        }
         return epidemicHealthCodeMapper.updateEpidemicHealthCode(epidemicHealthCode);
     }
 
