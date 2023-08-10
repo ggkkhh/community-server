@@ -20,5 +20,12 @@
             <version>1.0.0</version>
         </dependency>
 
+        <!-- 对象存储oss -->
+        <dependency>
+            <groupId>com.roydon</groupId>
+            <artifactId>community-business-oss</artifactId>
+            <version>${community.version}</version>
+        </dependency>
+
     </dependencies>
 </project>

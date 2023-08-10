@@ -87,6 +87,11 @@ public class OssServiceImpl implements OssService {
     }
 
     @Override
+    public String uploadInoculationAuditImgFile(MultipartFile file) {
+        return this.uploadFile(file, OssUtil.INOCULATION_AUDIT_FILE);
+    }
+
+    @Override
     public String uploadCommonFile(MultipartFile file) {
         return this.uploadFile(file, OssUtil.COMMON_FILE);
     }

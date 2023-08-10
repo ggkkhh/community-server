@@ -13,6 +13,7 @@ public class OssUtil {
     public static final String COMMON_FILE = "common-file/";
     public static final String GOODS_FILE = "goods-file/"; // 商品文件
     public static final String HEALTH_CODE_FILE = "health-code-file/"; // 健康码文件
+    public static final String INOCULATION_AUDIT_FILE = "inoculation-audit-file/"; // 疫苗接种审核文件
 
     //用户头像文件前缀
     public static final String USER_AVATAR_PREFIX = "/user-avatar_";
