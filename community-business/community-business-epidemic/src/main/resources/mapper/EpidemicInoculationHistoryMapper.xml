@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.roydon.business.epidemic.mapper.EpidemicInoculationAuditMapper">
+<mapper namespace="com.roydon.business.epidemic.mapper.EpidemicInoculationHistoryMapper">
 
-    <resultMap type="EpidemicInoculationAudit" id="EpidemicInoculationAuditResult">
-        <result property="auditId" column="audit_id"/>
+    <resultMap type="EpidemicInoculationHistory" id="EpidemicInoculationHistoryResult">
+        <result property="historyId" column="history_id"/>
         <result property="userId" column="user_id"/>
         <result property="username" column="username"/>
         <result property="realName" column="real_name"/>
         <result property="telephone" column="telephone"/>
         <result property="idCard" column="id_card"/>
-        <result property="auditImage" column="audit_image"/>
-        <result property="auditStatus" column="audit_status"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
         <result property="createBy" column="create_by"/>
@@ -18,53 +16,47 @@
         <result property="remark" column="remark"/>
     </resultMap>
 
-    <sql id="selectEpidemicInoculationAuditVo">
-        select audit_id,
+    <sql id="selectEpidemicInoculationHistoryVo">
+        select history_id,
                user_id,
                username,
                real_name,
                telephone,
                id_card,
-               audit_image,
-               audit_status,
                create_time,
                update_time,
                create_by,
                update_by,
                remark
-        from epidemic_inoculation_audit
+        from epidemic_inoculation_history
     </sql>
 
-    <select id="selectEpidemicInoculationAuditList" parameterType="EpidemicInoculationAudit"
-            resultMap="EpidemicInoculationAuditResult">
-        <include refid="selectEpidemicInoculationAuditVo"/>
+    <select id="selectEpidemicInoculationHistoryList" parameterType="EpidemicInoculationHistory"
+            resultMap="EpidemicInoculationHistoryResult">
+        <include refid="selectEpidemicInoculationHistoryVo"/>
         <where>
             <if test="username != null  and username != ''">and username like concat('%', #{username}, '%')</if>
             <if test="realName != null  and realName != ''">and real_name like concat('%', #{realName}, '%')</if>
             <if test="telephone != null  and telephone != ''">and telephone like concat('%', #{telephone}, '%')</if>
-            <if test="idCard != null  and idCard != ''">and id_card like concat('%', #{id_card}, '%')</if>
-            <if test="auditStatus != null  and auditStatus != ''">and audit_status = #{auditStatus}</if>
+            <if test="idCard != null  and idCard != ''">and id_card like concat('%', #{idCard}, '%')</if>
         </where>
-        order by create_time desc
     </select>
 
-    <select id="selectEpidemicInoculationAuditByAuditId" parameterType="Long"
-            resultMap="EpidemicInoculationAuditResult">
-        <include refid="selectEpidemicInoculationAuditVo"/>
-        where audit_id = #{auditId}
+    <select id="selectEpidemicInoculationHistoryByHistoryId" parameterType="Long"
+            resultMap="EpidemicInoculationHistoryResult">
+        <include refid="selectEpidemicInoculationHistoryVo"/>
+        where history_id = #{historyId}
     </select>
 
-    <insert id="insertEpidemicInoculationAudit" parameterType="EpidemicInoculationAudit" useGeneratedKeys="true"
-            keyProperty="auditId">
-        insert into epidemic_inoculation_audit
+    <insert id="insertEpidemicInoculationHistory" parameterType="EpidemicInoculationHistory" useGeneratedKeys="true"
+            keyProperty="historyId">
+        insert into epidemic_inoculation_history
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="userId != null">user_id,</if>
             <if test="username != null">username,</if>
             <if test="realName != null">real_name,</if>
             <if test="telephone != null and telephone != ''">telephone,</if>
             <if test="idCard != null and idCard != ''">id_card,</if>
-            <if test="auditImage != null and auditImage != ''">audit_image,</if>
-            <if test="auditStatus != null and auditStatus != ''">audit_status,</if>
             <if test="createTime != null">create_time,</if>
             <if test="updateTime != null">update_time,</if>
             <if test="createBy != null">create_by,</if>
@@ -77,8 +69,6 @@
             <if test="realName != null">#{realName},</if>
             <if test="telephone != null and telephone != ''">#{telephone},</if>
             <if test="idCard != null and idCard != ''">#{idCard},</if>
-            <if test="auditImage != null and auditImage != ''">#{auditImage},</if>
-            <if test="auditStatus != null and auditStatus != ''">#{auditStatus},</if>
             <if test="createTime != null">#{createTime},</if>
             <if test="updateTime != null">#{updateTime},</if>
             <if test="createBy != null">#{createBy},</if>
@@ -87,35 +77,33 @@
         </trim>
     </insert>
 
-    <update id="updateEpidemicInoculationAudit" parameterType="EpidemicInoculationAudit">
-        update epidemic_inoculation_audit
+    <update id="updateEpidemicInoculationHistory" parameterType="EpidemicInoculationHistory">
+        update epidemic_inoculation_history
         <trim prefix="SET" suffixOverrides=",">
             <if test="userId != null">user_id = #{userId},</if>
             <if test="username != null">username = #{username},</if>
             <if test="realName != null">real_name = #{realName},</if>
             <if test="telephone != null and telephone != ''">telephone = #{telephone},</if>
             <if test="idCard != null and idCard != ''">id_card = #{idCard},</if>
-            <if test="auditImage != null and auditImage != ''">audit_image = #{auditImage},</if>
-            <if test="auditStatus != null and auditStatus != ''">audit_status = #{auditStatus},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="createBy != null">create_by = #{createBy},</if>
             <if test="updateBy != null">update_by = #{updateBy},</if>
             <if test="remark != null">remark = #{remark},</if>
         </trim>
-        where audit_id = #{auditId}
+        where history_id = #{historyId}
     </update>
 
-    <delete id="deleteEpidemicInoculationAuditByAuditId" parameterType="Long">
+    <delete id="deleteEpidemicInoculationHistoryByHistoryId" parameterType="Long">
         delete
-        from epidemic_inoculation_audit
-        where audit_id = #{auditId}
+        from epidemic_inoculation_history
+        where history_id = #{historyId}
     </delete>
 
-    <delete id="deleteEpidemicInoculationAuditByAuditIds" parameterType="String">
-        delete from epidemic_inoculation_audit where audit_id in
-        <foreach item="auditId" collection="array" open="(" separator="," close=")">
-            #{auditId}
+    <delete id="deleteEpidemicInoculationHistoryByHistoryIds" parameterType="String">
+        delete from epidemic_inoculation_history where history_id in
+        <foreach item="historyId" collection="array" open="(" separator="," close=")">
+            #{historyId}
         </foreach>
     </delete>
 </mapper>

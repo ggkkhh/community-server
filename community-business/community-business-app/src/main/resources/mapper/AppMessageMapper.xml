@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.roydon.app.mapper.AppMessageMapper">
+
+    <resultMap type="AppMessage" id="AppMessageResult">
+        <result property="messageId" column="message_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="messageContent" column="message_content"/>
+        <result property="messageStatus" column="message_status"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createBy" column="create_by"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="remark" column="remark"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="selectAppMessageVo">
+        select message_id,
+               user_id,
+               message_content,
+               message_status,
+               create_time,
+               update_time,
+               update_time,
+               create_by,
+               create_by,
+               update_by,
+               update_by,
+               remark,
+               remark
+        from app_message
+    </sql>
+
+    <select id="selectAppMessageList" parameterType="AppMessage" resultMap="AppMessageResult">
+        <include refid="selectAppMessageVo"/>
+        <where>
+            <if test="userId != null ">and user_id = #{userId}</if>
+            <if test="messageContent != null  and messageContent != ''">and message_content = #{messageContent}</if>
+            <if test="messageStatus != null  and messageStatus != ''">and message_status = #{messageStatus}</if>
+        </where>
+    </select>
+
+    <select id="selectAppMessageByMessageId" parameterType="Long" resultMap="AppMessageResult">
+        <include refid="selectAppMessageVo"/>
+        where message_id = #{messageId}
+    </select>
+
+    <insert id="insertAppMessage" parameterType="AppMessage" useGeneratedKeys="true" keyProperty="messageId">
+        insert into app_message
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="messageContent != null">message_content,</if>
+            <if test="messageStatus != null and messageStatus != ''">message_status,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="remark != null">remark,</if>
+            <if test="remark != null">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="messageContent != null">#{messageContent},</if>
+            <if test="messageStatus != null and messageStatus != ''">#{messageStatus},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+
+    <update id="updateAppMessage" parameterType="AppMessage">
+        update app_message
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="messageContent != null">message_content = #{messageContent},</if>
+            <if test="messageStatus != null and messageStatus != ''">message_status = #{messageStatus},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where message_id = #{messageId}
+    </update>
+
+    <delete id="deleteAppMessageByMessageId" parameterType="Long">
+        delete
+        from app_message
+        where message_id = #{messageId}
+    </delete>
+
+    <delete id="deleteAppMessageByMessageIds" parameterType="String">
+        delete from app_message where message_id in
+        <foreach item="messageId" collection="array" open="(" separator="," close=")">
+            #{messageId}
+        </foreach>
+    </delete>
+</mapper>

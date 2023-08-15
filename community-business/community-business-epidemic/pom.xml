@@ -27,5 +27,12 @@
             <version>${community.version}</version>
         </dependency>
 
+        <!-- app -->
+        <dependency>
+            <groupId>com.roydon</groupId>
+            <artifactId>community-business-app</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
     </dependencies>
 </project>

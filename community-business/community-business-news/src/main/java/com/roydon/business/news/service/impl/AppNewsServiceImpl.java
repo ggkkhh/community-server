@@ -1,5 +1,6 @@
 package com.roydon.business.news.service.impl;
 
+import cn.hutool.core.util.BooleanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -16,6 +17,7 @@ import com.roydon.common.utils.StringUtil;
 import com.roydon.common.utils.StringUtils;
 import com.roydon.common.utils.bean.BeanCopyUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +27,12 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+
+import static com.roydon.common.constant.CacheConstants.*;
 
 /**
  * @author roydon
@@ -40,7 +47,12 @@ public class AppNewsServiceImpl extends ServiceImpl<AppNewsMapper, AppNews> impl
     private RedisCache redisCache;
 
     @Resource
+    private RedisTemplate redisTemplate;
+
+    @Resource
     private AppNewsMapper appNewsMapper;
+
+    private static final ExecutorService CACHE_REBUILD_EXECUTOR = Executors.newFixedThreadPool(10);
 
     @Async
     @PostConstruct
@@ -133,16 +145,50 @@ public class AppNewsServiceImpl extends ServiceImpl<AppNewsMapper, AppNews> impl
      */
     @Override
     public List<HotNews> getHotNews() {
+        // TODO 互斥锁解决缓存击穿
+        return getHotNewsWithMutex();
         // 若缓存不为空，直接查缓存
-        List<HotNews> cacheHotNewsList = redisCache.getCacheList(CacheConstants.NEWS_HOT_NEWS);
+//        List<HotNews> cacheHotNewsList = redisCache.getCacheList(NEWS_HOT_NEWS);
+//        if (StringUtils.isNotEmpty(cacheHotNewsList)) {
+//            // 从redis读取新闻浏览量
+//            cacheHotNewsList.forEach(this::getHotNewsViewNumFromRedis);
+//            return cacheHotNewsList;
+//        } else {
+//            // 缓存为空，写入缓存再返回数据
+//            return setHotNewsToCache();
+//        }
+    }
+
+    public List<HotNews> getHotNewsWithMutex() {
+        //从redis查询缓存
+        String key = NEWS_HOT_NEWS;
+        List<HotNews> cacheHotNewsList = redisCache.getCacheList(NEWS_HOT_NEWS);
         if (StringUtils.isNotEmpty(cacheHotNewsList)) {
-            // 从redis读取新闻浏览量
+            // 缓存存在就直接返回,从redis读取新闻浏览量
             cacheHotNewsList.forEach(this::getHotNewsViewNumFromRedis);
             return cacheHotNewsList;
-        } else {
-            // 缓存为空，写入缓存再返回数据
-            return setHotNewsToCache();
         }
+        // redis中不存在,实现缓存重建
+        // 1、获取互斥锁
+        String lockKey = NEWS_HOT_NEWS_LOCK_KEY;
+        List<HotNews> hotNewsList = null;
+        try {
+            boolean isLock = tryLock(lockKey);
+            // 2、判断是否获取成功
+            if (!isLock) {//获取锁失败
+                // 3、失败，休眠小时间后重试查询操作
+                Thread.sleep(30);
+                return getHotNewsWithMutex();
+            }
+            // 4、成功，查询数据库,存入redis
+            hotNewsList = setHotNewsToCache();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } finally {
+            // 释放互斥锁
+            unLock(lockKey);
+        }
+        return hotNewsList;
     }
 
     /**
@@ -153,12 +199,11 @@ public class AppNewsServiceImpl extends ServiceImpl<AppNewsMapper, AppNews> impl
     @Override
     public List<HotNews> setHotNewsToCache() {
         log.info("热点新闻写入缓存==>");
-        if (StringUtils.isNotEmpty(redisCache.getCacheList(CacheConstants.NEWS_HOT_NEWS))) {
-            redisCache.deleteObject(CacheConstants.NEWS_HOT_NEWS);
+        if (StringUtils.isNotEmpty(redisCache.getCacheList(NEWS_HOT_NEWS))) {
+            redisCache.deleteObject(NEWS_HOT_NEWS);
         }
         // 筛选最近两天的数据
         LambdaQueryWrapper<AppNews> queryWrapper = new LambdaQueryWrapper<>();
-//        queryWrapper.select(AppNews::getNewsId);
         queryWrapper.between(AppNews::getPostTime, DateUtils.getTimeBeforeDay(2L), LocalDateTime.now());
         // 按照浏览量降序
         queryWrapper.orderByDesc(AppNews::getViewNum);
@@ -167,12 +212,25 @@ public class AppNewsServiceImpl extends ServiceImpl<AppNewsMapper, AppNews> impl
         List<AppNews> newsList = newsPage.getRecords();
         // AppNews转为HotNews存入redis
         List<HotNews> hotNewsList = BeanCopyUtils.copyBeanList(newsList, HotNews.class);
-        redisCache.setCacheList(CacheConstants.NEWS_HOT_NEWS, hotNewsList);
+        redisCache.setCacheList(NEWS_HOT_NEWS, hotNewsList);
+        // 30分钟过期
+        redisCache.expire(NEWS_HOT_NEWS, NEWS_HOT_NEWS_TTL, TimeUnit.MINUTES);
         List<String> hotNewsIds = newsList.stream().map(AppNews::getNewsId).collect(Collectors.toList());
         log.info("==>hotNewsIds：{}", hotNewsIds);
         log.info("<==热点新闻写入缓存结束");
         return hotNewsList;
     }
+
+
+    private boolean tryLock(String key) {
+        Boolean flag = redisTemplate.opsForValue().setIfAbsent(key, "1", CACHE_BUILD_LOCK_TTL, TimeUnit.SECONDS);
+        return BooleanUtil.isTrue(flag);
+    }
+
+    private void unLock(String key) {
+        redisTemplate.delete(key);
+    }
+
 }
 
 

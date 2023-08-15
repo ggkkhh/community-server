@@ -1,20 +1,19 @@
-package com.roydon.business.epidemic.enums;
+package com.roydon.app.enums;
 
 /**
  * @author roydon
- * @date 2023-08-10 20:52【星期四】
+ * @date 2023-08-15 20:20【星期二】
  * @description com.roydon.business.epidemic.enums
- * <p> 审核状态 </p>
- * 0待审核1审核通过2审核不通过
+ * <p> 消息状态0未读1已读 </p>
  **/
-public enum AuditStatusEnum {
+public enum MessageStatusEnum {
 
-    WAITING("0", "待审核"), PASS("1", "审核通过"), NOT_PASS("2", "审核不通过");
+    NOT_READ("0", "未读"), READ("1", "已读");
 
     private final String code;
     private final String info;
 
-    AuditStatusEnum(String code, String info) {
+    MessageStatusEnum(String code, String info) {
         this.code = code;
         this.info = info;
     }
@@ -27,8 +26,8 @@ public enum AuditStatusEnum {
         return info;
     }
 
-    public static AuditStatusEnum findByCode(String code) {
-        for (AuditStatusEnum value : AuditStatusEnum.values()) {
+    public static MessageStatusEnum findByCode(String code) {
+        for (MessageStatusEnum value : MessageStatusEnum.values()) {
             if (code.equals(value.getCode())) {
                 return value;
             }

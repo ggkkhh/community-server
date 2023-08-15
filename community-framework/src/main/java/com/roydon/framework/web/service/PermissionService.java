@@ -29,6 +29,10 @@ public class PermissionService {
 
     private static final String PERMISSION_DELIMETER = ",";
 
+    public boolean hasAny() {
+        return true;
+    }
+
     /**
      * 验证用户是否具备某权限
      *

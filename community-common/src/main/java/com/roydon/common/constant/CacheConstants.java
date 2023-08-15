@@ -63,6 +63,13 @@ public class CacheConstants {
      * 热门新闻key
      */
     public static final String NEWS_HOT_NEWS = "news:hot_news";
+    public static final Long NEWS_HOT_NEWS_TTL = 30L; // 过期时间30分钟
+    public static final String NEWS_HOT_NEWS_LOCK_KEY = "news:hot_news:lock";
+
+    /**
+     * 缓存建立互斥锁
+     */
+    public static final Long CACHE_BUILD_LOCK_TTL = 10L;
 
     /**
      * app_user
