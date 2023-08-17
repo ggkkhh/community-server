@@ -3,9 +3,11 @@ package com.roydon.system.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.roydon.common.annotation.DataScope;
+import com.roydon.common.constant.CacheConstants;
 import com.roydon.common.constant.UserConstants;
 import com.roydon.common.core.domain.entity.SysRole;
 import com.roydon.common.core.domain.entity.SysUser;
+import com.roydon.common.core.redis.RedisCache;
 import com.roydon.common.enums.UserStatus;
 import com.roydon.common.exception.ServiceException;
 import com.roydon.common.utils.SecurityUtils;
@@ -57,6 +59,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Resource
     protected Validator validator;
+
+    @Resource
+    private RedisCache redisCache;
 
     /**
      * 根据条件分页查询用户列表，加密敏感字段
@@ -290,6 +295,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         userPostMapper.deleteUserPostByUserId(userId);
         // 新增用户与岗位管理
         insertUserPost(user);
+        // 删除缓存
+        redisCache.deleteObject(CacheConstants.APP_USER + user.getUserId());
         return userMapper.updateUser(user);
     }
 
@@ -440,6 +447,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         for (Long userId : userIds) {
             checkUserAllowed(new SysUser(userId));
             checkUserDataScope(userId);
+            // 删除缓存
+            redisCache.deleteObject(CacheConstants.APP_USER + userId);
         }
         // 删除用户与角色关联
         userRoleMapper.deleteUserRole(userIds);

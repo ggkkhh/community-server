@@ -4,8 +4,10 @@ import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClient;
 import com.roydon.business.oss.service.OssService;
 import com.roydon.business.oss.utils.OssUtil;
+import com.roydon.common.constant.CacheConstants;
 import com.roydon.common.constant.Constants;
 import com.roydon.common.core.domain.entity.SysUser;
+import com.roydon.common.core.redis.RedisCache;
 import com.roydon.common.exception.file.InvalidExtensionException;
 import com.roydon.common.utils.SecurityUtils;
 import com.roydon.common.utils.StringUtils;
@@ -35,6 +37,9 @@ public class OssServiceImpl implements OssService {
 
     @Resource
     private ISysUserService userService;
+
+    @Resource
+    private RedisCache redisCache;
 
     @Override
     public String uploadFile(MultipartFile file) {
@@ -71,7 +76,10 @@ public class OssServiceImpl implements OssService {
         // 删除原来用户头像文件
         if (StringUtils.isNotEmpty(uploadFile)) {
             SysUser sysUser = userService.getById(userId);
-            this.deleteObject(sysUser.getAvatar());
+            if (StringUtils.isNotEmpty(sysUser.getAvatar())) {
+                this.deleteObject(sysUser.getAvatar());
+            }
+            redisCache.deleteObject(CacheConstants.APP_USER + userId);
         }
         return uploadFile;
     }

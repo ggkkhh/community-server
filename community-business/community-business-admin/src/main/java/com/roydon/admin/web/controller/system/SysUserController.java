@@ -8,6 +8,7 @@ import com.roydon.common.core.domain.entity.SysDept;
 import com.roydon.common.core.domain.entity.SysRole;
 import com.roydon.common.core.domain.entity.SysUser;
 import com.roydon.common.core.page.TableDataInfo;
+import com.roydon.common.core.redis.RedisCache;
 import com.roydon.common.enums.BusinessType;
 import com.roydon.common.utils.SecurityUtils;
 import com.roydon.common.utils.StringUtils;
@@ -52,6 +53,9 @@ public class SysUserController extends BaseController {
 
     @Resource
     private ISysPostService postService;
+
+    @Resource
+    private RedisCache redisCache;
 
     /**
      * 获取用户列表

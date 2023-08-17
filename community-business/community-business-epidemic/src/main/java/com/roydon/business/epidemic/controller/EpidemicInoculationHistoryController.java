@@ -53,7 +53,9 @@ public class EpidemicInoculationHistoryController extends BaseController {
             if (StringUtil.isEmpty(audit)) {
                 AjaxResult.success("还未上报接种记录");
             }
-            if (audit.getAuditStatus().equals(AuditStatusEnum.NOT_PASS.getCode())) {
+            if (audit.getAuditStatus().equals(AuditStatusEnum.WAITING.getCode())) {
+                AjaxResult.success("您上报的记录正在审核，请稍后");
+            } else if (audit.getAuditStatus().equals(AuditStatusEnum.NOT_PASS.getCode())) {
                 AjaxResult.success("您上报的记录未审核通过，请重试");
             }
         }

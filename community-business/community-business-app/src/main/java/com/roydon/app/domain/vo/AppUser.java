@@ -5,6 +5,7 @@ import com.roydon.common.core.domain.BaseEntity;
 import com.roydon.common.core.domain.entity.SysDept;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
@@ -15,6 +16,7 @@ import java.util.Date;
  * @author roydon
  * @date 2023-07-18【星期二】
  **/
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class AppUser extends BaseEntity {
     private static final long serialVersionUID = 1L;

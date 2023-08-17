@@ -41,6 +41,7 @@ public class AppMessageServiceImpl extends ServiceImpl<AppMessageMapper, AppMess
     @Override
     public IPage<AppMessage> queryPage(AppMessagePageDTO appMessagePageDTO) {
         LambdaQueryWrapper<AppMessage> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(AppMessage::getUserId, SecurityUtils.getUserId());
         queryWrapper.orderByDesc(AppMessage::getUpdateTime, AppMessage::getCreateTime);
         return page(new Page<>(appMessagePageDTO.getPageNum(), appMessagePageDTO.getPageSize()), queryWrapper);
     }

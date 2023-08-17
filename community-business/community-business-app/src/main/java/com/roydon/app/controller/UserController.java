@@ -2,15 +2,14 @@ package com.roydon.app.controller;
 
 import com.roydon.app.domain.vo.AppUser;
 import com.roydon.common.annotation.Log;
+import com.roydon.common.constant.CacheConstants;
 import com.roydon.common.constant.UserConstants;
 import com.roydon.common.core.controller.BaseController;
 import com.roydon.common.core.domain.AjaxResult;
 import com.roydon.common.core.domain.entity.SysUser;
+import com.roydon.common.core.redis.RedisCache;
 import com.roydon.common.enums.BusinessType;
-import com.roydon.common.utils.EmailUtils;
-import com.roydon.common.utils.PhoneUtils;
-import com.roydon.common.utils.SecurityUtils;
-import com.roydon.common.utils.StringUtils;
+import com.roydon.common.utils.*;
 import com.roydon.common.utils.bean.BeanCopyUtils;
 import com.roydon.system.service.ISysUserService;
 import io.swagger.annotations.Api;
@@ -33,6 +32,9 @@ public class UserController extends BaseController {
     @Resource
     private ISysUserService userService;
 
+    @Resource
+    private RedisCache redisCache;
+
     /**
      * 获取用户信息返回给APP端
      *
@@ -40,9 +42,18 @@ public class UserController extends BaseController {
      */
     @GetMapping("/info")
     public AjaxResult getInfo() {
-        SysUser sysUser = SecurityUtils.getLoginUser().getUser();
-        AppUser appUser = BeanCopyUtils.copyBean(userService.selectUserById(sysUser.getUserId()), AppUser.class);
-        return AjaxResult.success(appUser);
+        AppUser appUserCache = redisCache.getCacheObject(CacheConstants.APP_USER + SecurityUtils.getLoginUser().getUser().getUserId());
+        if (StringUtil.isNotEmpty(appUserCache)) {
+            // 命中缓存直接返回
+            return AjaxResult.success(appUserCache);
+        } else {
+            SysUser sysUser = SecurityUtils.getLoginUser().getUser();
+            AppUser appUser = BeanCopyUtils.copyBean(userService.selectUserById(sysUser.getUserId()), AppUser.class);
+            // 设置缓存
+            String key = CacheConstants.APP_USER + appUser.getUserId();
+            redisCache.setCacheObject(key, appUser);
+            return AjaxResult.success(appUser);
+        }
     }
 
     /**
@@ -85,6 +96,7 @@ public class UserController extends BaseController {
             }
         }
         user.setUpdateBy(getUsername());
+        redisCache.deleteObject(CacheConstants.APP_USER + sysUser.getUserId());
         return toAjax(userService.updateById(user));
     }
 
