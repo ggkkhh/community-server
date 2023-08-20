@@ -58,6 +58,7 @@ public class CacheConstants {
      * 新闻阅读量加一的业务key
      */
     public static final String NEWS_VIEW_NUM_KEY = "news:view_num";
+    public static final Long NEWS_VIEW_NUM_KEY_TTL = 30L;
 
     /**
      * 热门新闻key

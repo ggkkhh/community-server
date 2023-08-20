@@ -36,13 +36,16 @@ public class IsolationRecordTask {
         // 获取redis中的浏览量
         Map<String, Integer> isolationMap = redisCache.getCacheMap(CacheConstants.EPIDEMIC_ISOLATION_TIME);
         List<EpidemicIsolationRecord> recordList = isolationMap.entrySet().stream().map(entry -> {
-            EpidemicIsolationRecord an = new EpidemicIsolationRecord();
-            an.setRecordId(Long.parseLong(entry.getKey()));
-            // redis中自减一
-            epidemicIsolationRecordService.decreaseIsolationTime(Long.parseLong(entry.getKey()));
-            Integer isolationTime = entry.getValue();
-            an.setIsolationTime(--isolationTime);
-            return an;
+            if (entry.getValue() > 0) {
+                EpidemicIsolationRecord an = new EpidemicIsolationRecord();
+                an.setRecordId(Long.parseLong(entry.getKey()));
+                // redis中自减一
+                epidemicIsolationRecordService.decreaseIsolationTime(Long.parseLong(entry.getKey()));
+                Integer isolationTime = entry.getValue();
+                an.setIsolationTime(--isolationTime);
+                return an;
+            }
+            return null;
         }).collect(Collectors.toList());
         // 更新数据库
         epidemicIsolationRecordService.updateBatchById(recordList);

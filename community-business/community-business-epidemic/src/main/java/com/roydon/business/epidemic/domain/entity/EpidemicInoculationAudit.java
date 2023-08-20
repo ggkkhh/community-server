@@ -1,5 +1,6 @@
 package com.roydon.business.epidemic.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.roydon.common.annotation.Excel;
 import com.roydon.common.core.domain.BaseEntity;
@@ -21,6 +22,7 @@ public class EpidemicInoculationAudit extends BaseEntity {
     /**
      * id
      */
+    @TableId("audit_id")
     private Long auditId;
 
     /**
