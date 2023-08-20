@@ -18,13 +18,12 @@ import com.roydon.common.utils.StringUtils;
 import com.roydon.common.utils.bean.BeanCopyUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -54,29 +53,44 @@ public class AppNewsServiceImpl extends ServiceImpl<AppNewsMapper, AppNews> impl
 
     private static final ExecutorService CACHE_REBUILD_EXECUTOR = Executors.newFixedThreadPool(10);
 
-    @Async
-    @PostConstruct
-    public void init() {
-        // TODO 如果爬取新闻事件被触发，也要调用此方法重新将新数据写入缓存
-        // TODO 优化根据索引--两个字段
-        log.info("新闻浏览量写入缓存开始==>");
-        LambdaQueryWrapper<AppNews> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.select(AppNews::getNewsId, AppNews::getViewNum);
-        List<AppNews> appNewsList = list(queryWrapper);
-        Map<String, Integer> newsViewMap = appNewsList.stream().collect(Collectors.toMap(AppNews::getNewsId, AppNews::getViewNum));
-        redisCache.setCacheMap(CacheConstants.NEWS_VIEW_NUM_KEY, newsViewMap);
-        log.info("<==新闻浏览量写入缓存成功");
-    }
+//    @Async
+//    @PostConstruct
+//    public void init() {
+//        // TODO 如果爬取新闻事件被触发，也要调用此方法重新将新数据写入缓存
+//        // TODO 优化根据索引--两个字段
+//        log.info("新闻浏览量写入缓存开始==>");
+//        LambdaQueryWrapper<AppNews> queryWrapper = new LambdaQueryWrapper<>();
+//        queryWrapper.select(AppNews::getNewsId, AppNews::getViewNum);
+//        List<AppNews> appNewsList = list(queryWrapper);
+//        Map<String, Integer> newsViewMap = appNewsList.stream().collect(Collectors.toMap(AppNews::getNewsId, AppNews::getViewNum));
+//        redisCache.setCacheMap(NEWS_VIEW_NUM_KEY, newsViewMap);
+//        redisCache.expire(NEWS_VIEW_NUM_KEY, NEWS_VIEW_NUM_KEY_TTL, TimeUnit.MINUTES);// 30分钟过期
+//        log.info("<==新闻浏览量写入缓存成功");
+//    }
 
     //=============================私有方法区=================
     private void getNewsViewNumFromRedis(AppNews appNews) {
-        appNews.setViewNum(redisCache.getCacheMapValue(CacheConstants.NEWS_VIEW_NUM_KEY, appNews.getNewsId()));
+        Integer viewNum = redisCache.getCacheMapValue(NEWS_VIEW_NUM_KEY, appNews.getNewsId());
+        if (viewNum != null) {
+            appNews.setViewNum(viewNum);
+        }
+
     }
 
     private void getHotNewsViewNumFromRedis(HotNews hotNews) {
-        hotNews.setViewNum(redisCache.getCacheMapValue(CacheConstants.NEWS_VIEW_NUM_KEY, hotNews.getNewsId()));
+        hotNews.setViewNum(redisCache.getCacheMapValue(NEWS_VIEW_NUM_KEY, hotNews.getNewsId()));
     }
 
+    /**
+     * 把一条新闻的浏览量缓存
+     */
+    private void setViewNumToCache(AppNews appNews) {
+        Map<String, Integer> viewNumMap = new HashMap<>();
+        viewNumMap.put(appNews.getNewsId(), appNews.getViewNum());
+        redisCache.setCacheMap(NEWS_VIEW_NUM_KEY, viewNumMap);
+        // 30分钟过期
+        redisCache.expire(NEWS_VIEW_NUM_KEY, NEWS_VIEW_NUM_KEY_TTL, TimeUnit.MINUTES);
+    }
     //=======================================================
 
     @Override
@@ -93,6 +107,7 @@ public class AppNewsServiceImpl extends ServiceImpl<AppNewsMapper, AppNews> impl
         queryWrapper.eq(StringUtil.isNotEmpty(newsId), AppNews::getNewsId, newsId);
         AppNews one = getOne(queryWrapper);
         this.getNewsViewNumFromRedis(one);
+        setViewNumToCache(one);
         return one;
     }
 

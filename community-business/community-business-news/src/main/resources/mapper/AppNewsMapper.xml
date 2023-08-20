@@ -68,7 +68,7 @@
                 AND date_format(post_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
             </if>
         </where>
-        order by create_time desc
+        order by post_time desc
     </select>
 
     <select id="selectAppNewsByNewsId" parameterType="String" resultMap="AppNewsResult">
