@@ -27,7 +27,7 @@ public class EpidemicIsolationPolicy extends BaseEntity {
     /**
      * 隔离天数
      */
-    private Long isolationDay;
+    private Integer isolationDay;
 
 
 }

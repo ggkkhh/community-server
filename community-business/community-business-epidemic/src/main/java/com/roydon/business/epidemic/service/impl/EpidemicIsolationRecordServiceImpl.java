@@ -90,7 +90,6 @@ public class EpidemicIsolationRecordServiceImpl extends ServiceImpl<EpidemicIsol
      * 新增隔离记录
      *
      * @param epidemicIsolationRecord 隔离记录
-     * @return 结果
      */
     @Override
     public void insertEpidemicIsolationRecord(EpidemicIsolationRecord epidemicIsolationRecord) {
