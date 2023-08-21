@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.roydon.business.epidemic.mapper.EpidemicIsolationPolicyMapper">
+
+    <resultMap type="EpidemicIsolationPolicy" id="EpidemicIsolationPolicyResult">
+        <result property="policyId" column="policy_id"/>
+        <result property="isolationDay" column="isolation_day"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="createBy" column="create_by"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="selectEpidemicIsolationPolicyVo">
+        select policy_id, isolation_day, create_time, update_time, create_by, update_by, remark
+        from epidemic_isolation_policy
+    </sql>
+
+    <select id="selectEpidemicIsolationPolicyList" parameterType="EpidemicIsolationPolicy"
+            resultMap="EpidemicIsolationPolicyResult">
+        <include refid="selectEpidemicIsolationPolicyVo"/>
+        <where>
+            <if test="isolationDay != null ">and isolation_day = #{isolationDay}</if>
+        </where>
+    </select>
+
+    <select id="selectEpidemicIsolationPolicyByPolicyId" parameterType="Long" resultMap="EpidemicIsolationPolicyResult">
+        <include refid="selectEpidemicIsolationPolicyVo"/>
+        where policy_id = #{policyId}
+    </select>
+
+    <insert id="insertEpidemicIsolationPolicy" parameterType="EpidemicIsolationPolicy" useGeneratedKeys="true"
+            keyProperty="policyId">
+        insert into epidemic_isolation_policy
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="isolationDay != null">isolation_day,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="remark != null">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="isolationDay != null">#{isolationDay},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+
+    <update id="updateEpidemicIsolationPolicy" parameterType="EpidemicIsolationPolicy">
+        update epidemic_isolation_policy
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="isolationDay != null">isolation_day = #{isolationDay},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where policy_id = #{policyId}
+    </update>
+
+    <delete id="deleteEpidemicIsolationPolicyByPolicyId" parameterType="Long">
+        delete
+        from epidemic_isolation_policy
+        where policy_id = #{policyId}
+    </delete>
+
+    <delete id="deleteEpidemicIsolationPolicyByPolicyIds" parameterType="String">
+        delete from epidemic_isolation_policy where policy_id in
+        <foreach item="policyId" collection="array" open="(" separator="," close=")">
+            #{policyId}
+        </foreach>
+    </delete>
+</mapper>

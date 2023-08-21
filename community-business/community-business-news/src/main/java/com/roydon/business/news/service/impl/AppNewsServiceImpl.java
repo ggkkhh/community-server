@@ -19,6 +19,7 @@ import com.roydon.common.utils.bean.BeanCopyUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
@@ -78,7 +79,10 @@ public class AppNewsServiceImpl extends ServiceImpl<AppNewsMapper, AppNews> impl
     }
 
     private void getHotNewsViewNumFromRedis(HotNews hotNews) {
-        hotNews.setViewNum(redisCache.getCacheMapValue(NEWS_VIEW_NUM_KEY, hotNews.getNewsId()));
+        Integer viewNum = redisCache.getCacheMapValue(NEWS_VIEW_NUM_KEY, hotNews.getNewsId());
+        if (viewNum != null) {
+            hotNews.setViewNum(viewNum);
+        }
     }
 
     /**
@@ -125,16 +129,10 @@ public class AppNewsServiceImpl extends ServiceImpl<AppNewsMapper, AppNews> impl
         return update(updateWrapper);
     }
 
+    @Transactional
     @Override
     public boolean removeNewsByIds(String[] newsIds) {
-        boolean b = removeBatchByIds(Arrays.asList(newsIds));
-        if (b) {
-            //删除redis缓存
-            for (String newsId : newsIds) {
-                redisCache.deleteCacheMapValue(CacheConstants.NEWS_VIEW_NUM_KEY, newsId);
-            }
-        }
-        return b;
+        return removeBatchByIds(Arrays.asList(newsIds));
     }
 
     @Override
@@ -160,22 +158,12 @@ public class AppNewsServiceImpl extends ServiceImpl<AppNewsMapper, AppNews> impl
      */
     @Override
     public List<HotNews> getHotNews() {
-        // TODO 互斥锁解决缓存击穿
+        // 互斥锁解决缓存击穿
         return getHotNewsWithMutex();
-        // 若缓存不为空，直接查缓存
-//        List<HotNews> cacheHotNewsList = redisCache.getCacheList(NEWS_HOT_NEWS);
-//        if (StringUtils.isNotEmpty(cacheHotNewsList)) {
-//            // 从redis读取新闻浏览量
-//            cacheHotNewsList.forEach(this::getHotNewsViewNumFromRedis);
-//            return cacheHotNewsList;
-//        } else {
-//            // 缓存为空，写入缓存再返回数据
-//            return setHotNewsToCache();
-//        }
     }
 
     public List<HotNews> getHotNewsWithMutex() {
-        //从redis查询缓存
+        // 从redis查询缓存
         String key = NEWS_HOT_NEWS;
         List<HotNews> cacheHotNewsList = redisCache.getCacheList(NEWS_HOT_NEWS);
         if (StringUtils.isNotEmpty(cacheHotNewsList)) {
@@ -192,7 +180,7 @@ public class AppNewsServiceImpl extends ServiceImpl<AppNewsMapper, AppNews> impl
             // 2、判断是否获取成功
             if (!isLock) {//获取锁失败
                 // 3、失败，休眠小时间后重试查询操作
-                Thread.sleep(30);
+                Thread.sleep(10);
                 return getHotNewsWithMutex();
             }
             // 4、成功，查询数据库,存入redis

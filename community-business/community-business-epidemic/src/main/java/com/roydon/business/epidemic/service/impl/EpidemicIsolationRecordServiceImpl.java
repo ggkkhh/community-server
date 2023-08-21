@@ -49,11 +49,10 @@ public class EpidemicIsolationRecordServiceImpl extends ServiceImpl<EpidemicIsol
     @Async
     @PostConstruct
     public void init() {
-        // TODO 如果爬取新闻事件被触发，也要调用此方法重新将新数据写入缓存
-        // TODO 优化根据索引--两个字段
         log.info("隔离记录隔离天数写入缓存开始==>");
         LambdaQueryWrapper<EpidemicIsolationRecord> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.select(EpidemicIsolationRecord::getRecordId, EpidemicIsolationRecord::getIsolationTime);
+        queryWrapper.gt(EpidemicIsolationRecord::getIsolationTime, 0);
         List<EpidemicIsolationRecord> recordList = list(queryWrapper);
         Map<String, Integer> recordMap = new HashMap<>();
         recordList.forEach(r -> {
