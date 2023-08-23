@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -91,6 +92,7 @@ public class EpidemicIsolationRecordServiceImpl extends ServiceImpl<EpidemicIsol
      *
      * @param epidemicIsolationRecord 隔离记录
      */
+    @Transactional
     @Override
     public void insertEpidemicIsolationRecord(EpidemicIsolationRecord epidemicIsolationRecord) {
         epidemicIsolationRecord.setCreateTime(DateUtils.getNowDate());
@@ -113,7 +115,6 @@ public class EpidemicIsolationRecordServiceImpl extends ServiceImpl<EpidemicIsol
         LocalDateTime localDateTime = LocalDateTime.now().plusDays(epidemicIsolationRecord.getIsolationTime());
         ZonedDateTime zdt = localDateTime.atZone(ZoneId.systemDefault());
         epidemicIsolationRecord.setIsolationFinishTime(Date.from(zdt.toInstant()));
-//        int i = epidemicIsolationRecordMapper.insertEpidemicIsolationRecord(epidemicIsolationRecord);
         saveOrUpdate(epidemicIsolationRecord);
         // 添加到redis
         Map<String, Integer> map = new HashMap<>();
