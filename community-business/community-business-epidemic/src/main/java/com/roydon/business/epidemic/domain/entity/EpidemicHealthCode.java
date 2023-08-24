@@ -53,7 +53,7 @@ public class EpidemicHealthCode extends BaseEntity {
     /**
      * 健康码状态（0绿；1黄；2红）
      */
-    @Excel(name = "健康码状态", readConverterExp = "0绿；1黄；2红")
+    @Excel(name = "健康码状态", readConverterExp = "0=绿,1=黄,2=红")
     private String codeStatus;
 
 

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.roydon.system.mapper.SysFeedbackMapper">
+
+    <resultMap type="SysFeedback" id="SysFeedbackResult">
+        <result property="feedbackId" column="feedback_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="username" column="username"/>
+        <result property="telephone" column="telephone"/>
+        <result property="feedbackPlatform" column="feedback_platform"/>
+        <result property="feedbackImage" column="feedback_image"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="createBy" column="create_by"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="selectSysFeedbackVo">
+        select feedback_id,
+               user_id,
+               username,
+               telephone,
+               feedback_platform,
+               feedback_image,
+               create_time,
+               update_time,
+               create_by,
+               update_by,
+               remark
+        from sys_feedback
+    </sql>
+
+    <select id="selectSysFeedbackList" parameterType="SysFeedback" resultMap="SysFeedbackResult">
+        <include refid="selectSysFeedbackVo"/>
+        <where>
+            <if test="username != null  and username != ''">and username like concat('%', #{username}, '%')</if>
+            <if test="telephone != null  and telephone != ''">and telephone like concat('%', #{telephone}, '%')</if>
+            <if test="feedbackPlatform != null  and feedbackPlatform != ''">and feedback_platform =
+                #{feedbackPlatform}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="selectSysFeedbackByFeedbackId" parameterType="Long" resultMap="SysFeedbackResult">
+        <include refid="selectSysFeedbackVo"/>
+        where feedback_id = #{feedbackId}
+    </select>
+
+    <insert id="insertSysFeedback" parameterType="SysFeedback" useGeneratedKeys="true" keyProperty="feedbackId">
+        insert into sys_feedback
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="username != null">username,</if>
+            <if test="telephone != null and telephone != ''">telephone,</if>
+            <if test="feedbackPlatform != null">feedback_platform,</if>
+            <if test="feedbackImage != null and feedbackImage != ''">feedback_image,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="remark != null">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="username != null">#{username},</if>
+            <if test="telephone != null and telephone != ''">#{telephone},</if>
+            <if test="feedbackPlatform != null">#{feedbackPlatform},</if>
+            <if test="feedbackImage != null and feedbackImage != ''">#{feedbackImage},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+
+    <update id="updateSysFeedback" parameterType="SysFeedback">
+        update sys_feedback
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="username != null">username = #{username},</if>
+            <if test="telephone != null and telephone != ''">telephone = #{telephone},</if>
+            <if test="feedbackPlatform != null">feedback_platform = #{feedbackPlatform},</if>
+            <if test="feedbackImage != null and feedbackImage != ''">feedback_image = #{feedbackImage},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where feedback_id = #{feedbackId}
+    </update>
+
+    <delete id="deleteSysFeedbackByFeedbackId" parameterType="Long">
+        delete
+        from sys_feedback
+        where feedback_id = #{feedbackId}
+    </delete>
+
+    <delete id="deleteSysFeedbackByFeedbackIds" parameterType="String">
+        delete from sys_feedback where feedback_id in
+        <foreach item="feedbackId" collection="array" open="(" separator="," close=")">
+            #{feedbackId}
+        </foreach>
+    </delete>
+</mapper>

@@ -98,6 +98,7 @@ public class EpidemicAccessRecordServiceImpl extends ServiceImpl<EpidemicAccessR
             EpidemicIsolationPolicy policy = epidemicIsolationPolicyService.getById(1);
             Integer isolationDay = policy.getIsolationDay();
             record.setIsolationTime(isolationDay);
+            record.setRemainingIsolationTime(isolationDay);
             // 设置隔离结束时间：当前时间 + 隔离政策天数
             LocalDateTime localDateTime = LocalDateTime.now().plusDays(policy.getIsolationDay());
             ZonedDateTime zdt = localDateTime.atZone(ZoneId.systemDefault());

@@ -52,14 +52,14 @@ public class EpidemicIsolationRecordServiceImpl extends ServiceImpl<EpidemicIsol
     public void init() {
         log.info("隔离记录隔离天数写入缓存开始==>");
         LambdaQueryWrapper<EpidemicIsolationRecord> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.select(EpidemicIsolationRecord::getRecordId, EpidemicIsolationRecord::getIsolationTime);
-        queryWrapper.gt(EpidemicIsolationRecord::getIsolationTime, 0);
+        queryWrapper.select(EpidemicIsolationRecord::getRecordId, EpidemicIsolationRecord::getRemainingIsolationTime);
+        queryWrapper.gt(EpidemicIsolationRecord::getRemainingIsolationTime, 0);
         List<EpidemicIsolationRecord> recordList = list(queryWrapper);
         Map<String, Integer> recordMap = new HashMap<>();
         recordList.forEach(r -> {
             Long recordId = r.getRecordId();
-            Integer isolationTime = r.getIsolationTime();
-            recordMap.put(recordId.toString(), isolationTime);
+            Integer remainingIsolationTime = r.getRemainingIsolationTime();
+            recordMap.put(recordId.toString(), remainingIsolationTime);
         });
         redisCache.setCacheMap(CacheConstants.EPIDEMIC_ISOLATION_TIME, recordMap);
         log.info("<==隔离记录隔离天数写入缓存成功");
@@ -111,6 +111,7 @@ public class EpidemicIsolationRecordServiceImpl extends ServiceImpl<EpidemicIsol
         SysUser oneUser = userService.getOne(queryWrapper);
         epidemicIsolationRecord.setUserId(oneUser.getUserId());
         epidemicIsolationRecord.setUsername(oneUser.getUserName());
+        epidemicIsolationRecord.setRemainingIsolationTime(epidemicIsolationRecord.getIsolationTime());
         // 设置隔离结束时间：当前时间+隔离时间
         LocalDateTime localDateTime = LocalDateTime.now().plusDays(epidemicIsolationRecord.getIsolationTime());
         ZonedDateTime zdt = localDateTime.atZone(ZoneId.systemDefault());

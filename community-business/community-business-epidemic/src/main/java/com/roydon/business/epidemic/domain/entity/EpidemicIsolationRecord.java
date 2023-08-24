@@ -53,10 +53,16 @@ public class EpidemicIsolationRecord extends BaseEntity {
     private String telephone;
 
     /**
-     * 隔离时长（单位天）
+     * 隔离天数（单位天）
      */
-    @Excel(name = "隔离时长", readConverterExp = "单位=天")
+    @Excel(name = "隔离天数")
     private Integer isolationTime;
+
+    /**
+     * 剩余隔离天数
+     */
+    @Excel(name = "剩余隔离天数")
+    private Integer remainingIsolationTime;
 
     /**
      * 隔离结束时间

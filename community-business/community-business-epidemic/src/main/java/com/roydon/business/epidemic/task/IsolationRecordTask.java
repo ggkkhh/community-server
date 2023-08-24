@@ -42,13 +42,13 @@ public class IsolationRecordTask {
                 an.setRecordId(Long.parseLong(entry.getKey()));
                 // redis中自减一
                 epidemicIsolationRecordService.decreaseIsolationTime(Long.parseLong(entry.getKey()));
-                Integer isolationTime = entry.getValue();
-                an.setIsolationTime(--isolationTime);
+                Integer remainingIsolationTime = entry.getValue();
+                an.setRemainingIsolationTime(--remainingIsolationTime);
             } else {
                 // 小于等于0删除缓存
                 redisCache.deleteCacheMapValue(CacheConstants.EPIDEMIC_ISOLATION_TIME, entry.getKey());
                 an.setRecordId(Long.parseLong(entry.getKey()));
-                an.setIsolationTime(entry.getValue());
+                an.setRemainingIsolationTime(entry.getValue());
             }
             return an;
         }).collect(Collectors.toList());

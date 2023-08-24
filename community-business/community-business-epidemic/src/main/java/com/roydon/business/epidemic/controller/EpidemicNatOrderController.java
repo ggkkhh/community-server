@@ -32,7 +32,7 @@ public class EpidemicNatOrderController extends BaseController {
      * app端一键预约核酸检测
      *
      * @param epidemicNatOrder nat实体
-     * @return
+     * @return AjaxResult
      */
     @PostMapping("/quick")
     public AjaxResult quickOrder(@RequestBody EpidemicNatOrder epidemicNatOrder) {

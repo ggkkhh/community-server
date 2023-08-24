@@ -9,6 +9,7 @@
         <result property="realName" column="real_name"/>
         <result property="telephone" column="telephone"/>
         <result property="isolationTime" column="isolation_time"/>
+        <result property="remainingIsolationTime" column="remaining_isolation_time"/>
         <result property="isolationFinishTime" column="isolation_finish_time"/>
         <result property="delFlag" column="del_flag"/>
         <result property="createTime" column="create_time"/>
@@ -25,6 +26,7 @@
                real_name,
                telephone,
                isolation_time,
+               remaining_isolation_time,
                isolation_finish_time,
                del_flag,
                create_time,
@@ -43,7 +45,7 @@
             <if test="realName != null  and realName != ''">and real_name like concat('%', #{realName}, '%')</if>
             <if test="telephone != null  and telephone != ''">and telephone like concat('%', #{telephone}, '%')</if>
         </where>
-        order by isolation_time asc, create_time desc
+        order by isolation_finish_time asc
     </select>
 
     <select id="selectEpidemicIsolationRecordByRecordId" parameterType="Long"
@@ -61,6 +63,7 @@
             <if test="realName != null and realName != ''">real_name,</if>
             <if test="telephone != null and telephone != ''">telephone,</if>
             <if test="isolationTime != null">isolation_time,</if>
+            <if test="remainingIsolationTime != null">remaining_isolation_time,</if>
             <if test="isolationFinishTime != null">isolation_finish_time,</if>
             <if test="delFlag != null">del_flag,</if>
             <if test="createTime != null">create_time,</if>
@@ -76,6 +79,7 @@
             <if test="realName != null and realName != ''">#{realName},</if>
             <if test="telephone != null and telephone != ''">#{telephone},</if>
             <if test="isolationTime != null">#{isolationTime},</if>
+            <if test="remainingIsolationTime != null">#{remainingIsolationTime},</if>
             <if test="isolationFinishTime != null">#{isolationFinishTime},</if>
             <if test="delFlag != null">#{delFlag},</if>
             <if test="createTime != null">#{createTime},</if>
@@ -94,6 +98,7 @@
             <if test="realName != null and realName != ''">real_name = #{realName},</if>
             <if test="telephone != null and telephone != ''">telephone = #{telephone},</if>
             <if test="isolationTime != null">isolation_time = #{isolationTime},</if>
+            <if test="remainingIsolationTime != null">remaining_isolation_time = #{remainingIsolationTime},</if>
             <if test="isolationFinishTime != null">isolation_finish_time = #{isolationFinishTime},</if>
             <if test="delFlag != null">del_flag = #{delFlag},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
