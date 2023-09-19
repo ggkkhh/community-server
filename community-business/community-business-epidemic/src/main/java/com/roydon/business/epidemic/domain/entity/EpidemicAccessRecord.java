@@ -1,5 +1,6 @@
 package com.roydon.business.epidemic.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.roydon.common.annotation.Excel;
@@ -17,7 +18,7 @@ import lombok.Data;
 public class EpidemicAccessRecord extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
-    @TableId("record_id")
+    @TableId(value = "record_id",type = IdType.ASSIGN_ID)
     private String recordId;
 
     /**

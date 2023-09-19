@@ -55,7 +55,7 @@ public class SmsTemplateServiceImpl extends ServiceImpl<SmsTemplateMapper, SmsTe
     @Override
     public int insertSmsTemplate(SmsTemplate smsTemplate) {
         smsTemplate.setCreateTime(DateUtils.getNowDate());
-        smsTemplate.setTemplateId(IdGenerator.generatorId());
+        smsTemplate.setTemplateId(IdGenerator.generatorShortId());
         return smsTemplateMapper.insertSmsTemplate(smsTemplate);
     }
 

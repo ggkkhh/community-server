@@ -19,6 +19,8 @@ import com.roydon.framework.manager.factory.AsyncFactory;
 import com.roydon.framework.security.context.AuthenticationContextHolder;
 import com.roydon.system.service.ISysConfigService;
 import com.roydon.system.service.ISysUserService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -31,6 +33,7 @@ import javax.annotation.Resource;
 /**
  * 登录校验方法
  */
+@Slf4j
 @Service
 public class SysLoginService {
     @Resource
@@ -50,6 +53,9 @@ public class SysLoginService {
 
     @Resource
     private RedisTemplate<String, String> redisTemplate;
+
+    @Resource
+    private RabbitTemplate rabbitTemplate;
 
     /**
      * 登录验证
@@ -90,6 +96,9 @@ public class SysLoginService {
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         // 记录登录信息，修改用户表，添加登录IP、登录时间
         recordLoginInfo(loginUser.getUserId());
+        String exchangeName = "TestDirectExchange";
+        rabbitTemplate.convertAndSend(exchangeName, "TestDirectRouting", "登录成功");
+        log.info("登录成功");
         // 生成token
         return tokenService.createToken(loginUser);
     }

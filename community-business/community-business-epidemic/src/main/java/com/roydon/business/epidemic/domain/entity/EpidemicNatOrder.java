@@ -1,5 +1,6 @@
 package com.roydon.business.epidemic.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -23,7 +24,7 @@ public class EpidemicNatOrder extends BaseEntity {
     private static final long serialVersionUID=1L;
 
     /** 预约id */
-    @TableId("order_id")
+    @TableId(value = "order_id",type = IdType.AUTO)
     private Long orderId;
 
     /** 用户id */

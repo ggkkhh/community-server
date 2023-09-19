@@ -10,6 +10,7 @@ public class IdUtils {
     public static void main(String[] args) {
         System.out.println("simpleUUID() = " + simpleUUID());
     }
+
     /**
      * 获取随机UUID
      *
@@ -17,6 +18,15 @@ public class IdUtils {
      */
     public static String randomUUID() {
         return UUID.randomUUID().toString();
+    }
+
+    /**
+     * 获取随机UUID，默认32位，只截取前八位
+     *
+     * @return 随机UUID
+     */
+    public static String shortUUID() {
+        return UUID.randomUUID().toString().split("-")[0];
     }
 
     /**

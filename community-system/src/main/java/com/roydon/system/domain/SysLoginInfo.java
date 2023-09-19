@@ -1,5 +1,6 @@
 package com.roydon.system.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -19,7 +20,7 @@ public class SysLoginInfo extends BaseEntity {
     /**
      * ID
      */
-    @TableId("info_id")
+    @TableId(value = "info_id",type = IdType.AUTO)
     @Excel(name = "序号", cellType = ColumnType.NUMERIC)
     private Long infoId;
 

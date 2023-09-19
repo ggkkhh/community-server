@@ -1,5 +1,6 @@
 package com.roydon.quartz.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.roydon.common.annotation.Excel;
 import com.roydon.common.core.domain.BaseEntity;
@@ -22,7 +23,7 @@ public class SysJobLog extends BaseEntity {
      * ID
      */
     @Excel(name = "日志序号")
-    @TableId("job_log_id")
+    @TableId(value = "job_log_id",type = IdType.AUTO)
     private Long jobLogId;
 
     /**

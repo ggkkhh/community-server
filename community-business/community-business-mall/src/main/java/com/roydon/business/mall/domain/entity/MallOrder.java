@@ -1,9 +1,6 @@
 package com.roydon.business.mall.domain.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
@@ -21,7 +18,7 @@ import java.util.Date;
 public class MallOrder implements Serializable {
     private static final long serialVersionUID = -21599664428036113L;
 
-    @TableId("order_id")
+    @TableId(value = "order_id", type = IdType.ASSIGN_ID)
     private String orderId;
 
     private Long userId;

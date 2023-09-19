@@ -1,5 +1,6 @@
 package com.roydon.system.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -19,7 +20,7 @@ public class SysOperLog extends BaseEntity {
     /**
      * 日志主键
      */
-    @TableId("oper_id")
+    @TableId(value = "oper_id",type = IdType.AUTO)
     @Excel(name = "操作序号", cellType = ColumnType.NUMERIC)
     private Long operId;
 

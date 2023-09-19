@@ -1,11 +1,11 @@
 package com.roydon.unit.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -21,7 +21,7 @@ public class SysUnit implements Serializable {
     /**
      * id
      */
-    @TableId("unit_id")
+    @TableId(value = "unit_id",type = IdType.AUTO)
     private Long unitId;
     /**
      * 父id

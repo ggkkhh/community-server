@@ -1,5 +1,6 @@
 package com.roydon.system.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.roydon.common.annotation.Excel;
@@ -22,7 +23,7 @@ public class SysSecret extends BaseEntity {
     /**
      * 密钥主键
      */
-    @TableId("secret_id")
+    @TableId(value = "secret_id",type = IdType.AUTO)
     private Long secretId;
 
     /**

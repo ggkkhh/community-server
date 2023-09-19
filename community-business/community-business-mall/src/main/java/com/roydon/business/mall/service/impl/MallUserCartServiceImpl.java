@@ -58,7 +58,7 @@ public class MallUserCartServiceImpl extends ServiceImpl<MallUserCartMapper, Mal
     @Override
     public MallUserCart insert(MallUserCart mallUserCart) {
         LoginUser loginUser = SecurityUtils.getLoginUser();
-        mallUserCart.setCartId(IdGenerator.generatorId());
+        mallUserCart.setCartId(IdGenerator.generatorShortId());
         mallUserCart.setUserId(loginUser.getUserId());
         mallUserCart.setGoodsId(mallUserCart.getGoodsId());
         // TODO 根据goodsId查询，有数据再新增

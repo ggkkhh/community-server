@@ -1,5 +1,6 @@
 package com.roydon.business.epidemic.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.roydon.common.core.domain.BaseEntity;
@@ -21,7 +22,7 @@ public class EpidemicIsolationPolicy extends BaseEntity {
     /**
      * id
      */
-    @TableId("policy_id")
+    @TableId(value = "policy_id",type = IdType.AUTO)
     private Long policyId;
 
     /**

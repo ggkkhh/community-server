@@ -1,5 +1,6 @@
 package com.roydon.app.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.roydon.common.annotation.Excel;
@@ -22,7 +23,7 @@ public class AppMessage extends BaseEntity {
     /**
      * id
      */
-    @TableId("message_id")
+    @TableId(value = "message_id",type = IdType.AUTO)
     private Long messageId;
 
     /**

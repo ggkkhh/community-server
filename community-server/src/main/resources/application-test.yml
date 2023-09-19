@@ -4,7 +4,7 @@ community:
   version: 1.0.0
   copyrightYear: 2022
   demoEnabled: true # 实例演示开关
-  profile: /root/community/uploadPath # 文件路径 示例（ Windows配置D:/community/uploadPath，Linux配置 /root/community/uploadPath）
+  profile: /root/community/uploadPath # 文件路径 示例（ Windows配置D:/community/uploadPath，Linux配置 /community/uploadPath）
   addressEnabled: true # 获取ip地址开关
   captchaType: char # 验证码类型 math 数组计算 char 字符验证
 
@@ -19,10 +19,6 @@ server:
       max: 800 # tomcat最大线程数，默认为200
       min-spare: 100 # Tomcat启动初始化的线程数，默认值10
 
-logging:
-  level:
-    com.roydon: debug
-    org.springframework: warn
 
 # 用户配置
 user:
@@ -56,12 +52,11 @@ spring:
         max-idle: 8 # 连接池中的最大空闲连接
         max-active: 8 # 连接池的最大数据库连接数
         max-wait: -1ms # #连接池最大阻塞等待时间（使用负值表示没有限制）
-  rabbitmq:
-    host: 106.14.105.101
-    port: 5672
-    username: roydon
-    password: qwer1234
-    virtual-host: /
+
+logging:
+  level:
+    com.roydon: debug
+    org.springframework: warn
 
 # token配置
 token:
@@ -73,9 +68,6 @@ mybatis-plus:
   type-aliases-package: com.roydon.**.domain # 搜索指定包别名
   mapper-locations: classpath*:mapper/**/*Mapper.xml # 配置mapper的扫描，找到所有的mapper.xml映射文件
   config-location: classpath:mybatis/mybatis-config.xml # 加载全局的配置文件
-#  global-config:
-#    db-config:
-#      id-type: auto # 设置id自增
 
 # PageHelper分页插件
 pagehelper:
@@ -98,12 +90,6 @@ aliyun:
   sms:
     templateCode: SMS_460955023 # 可在aliyun控制台申请
   oss:
-    endpoint: oss-cn-shanghai.aliyuncs.com
-    bucketname: community-server-oss
-
-#密钥
-openai:
-  gpt:
-    model: text-davinci-003 #达芬奇模型
-    token: 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
-    timeout: 100000 #超时时间
+    file:
+      endpoint: oss-cn-shanghai.aliyuncs.com
+      bucketname: community-server-oss

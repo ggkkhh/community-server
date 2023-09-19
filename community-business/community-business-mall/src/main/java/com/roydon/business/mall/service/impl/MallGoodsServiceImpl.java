@@ -66,7 +66,7 @@ public class MallGoodsServiceImpl extends ServiceImpl<MallGoodsMapper, MallGoods
     @Override
     public MallGoods insert(MallGoods mallGoods) {
         LoginUser loginUser = SecurityUtils.getLoginUser();
-        mallGoods.setGoodsId(IdGenerator.generatorId());
+        mallGoods.setGoodsId(IdGenerator.generatorShortId());
         mallGoods.setUserId(loginUser.getUserId());
         mallGoods.setDeptId(loginUser.getDeptId());
         mallGoods.setCreateTime(new Date());

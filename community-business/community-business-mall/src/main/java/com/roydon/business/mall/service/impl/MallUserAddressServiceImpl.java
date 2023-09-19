@@ -60,7 +60,7 @@ public class MallUserAddressServiceImpl extends ServiceImpl<MallUserAddressMappe
     @Override
     public MallUserAddress insert(MallUserAddress mallUserAddress) {
         LoginUser loginUser = SecurityUtils.getLoginUser();
-        mallUserAddress.setAddressId(IdGenerator.generatorId());
+        mallUserAddress.setAddressId(IdGenerator.generatorShortId());
         mallUserAddress.setUserId(loginUser.getUserId());
         mallUserAddress.setCommunityId(loginUser.getDeptId());
         mallUserAddress.setCreateTime(new Date());

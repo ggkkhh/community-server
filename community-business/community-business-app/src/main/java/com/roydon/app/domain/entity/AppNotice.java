@@ -1,5 +1,6 @@
 package com.roydon.app.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.roydon.common.core.domain.BaseEntity;
@@ -22,7 +23,7 @@ public class AppNotice extends BaseEntity implements Serializable {
     /**
      * 公告ID
      */
-    @TableId("notice_id")
+    @TableId(value = "notice_id",type = IdType.AUTO)
     private Integer noticeId;
     /**
      * 标题

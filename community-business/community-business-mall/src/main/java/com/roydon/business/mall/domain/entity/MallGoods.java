@@ -1,9 +1,6 @@
 package com.roydon.business.mall.domain.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
@@ -23,7 +20,7 @@ public class MallGoods implements Serializable {
     /**
      * 商品id
      */
-    @TableId("goods_id")
+    @TableId(value = "goods_id",type = IdType.ASSIGN_ID)
     private String goodsId;
     /**
      * 标题

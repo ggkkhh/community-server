@@ -44,6 +44,7 @@
         <jwt.version>0.9.1</jwt.version>
         <hutool.version>5.8.11</hutool.version>
         <google.zxing.version>3.3.3</google.zxing.version>
+<!--        <amqp.version>3.3.3</amqp.version>-->
     </properties>
 
     <!-- 依赖声明 -->
