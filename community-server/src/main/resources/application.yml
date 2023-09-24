@@ -1,12 +1,4 @@
-# 项目相关配置
-community:
-  name: community # 名称
-  version: 1.0.0
-  copyrightYear: 2022
-  demoEnabled: true # 实例演示开关
-  profile: /root/community/uploadPath # 文件路径 示例（ Windows配置D:/community/uploadPath，Linux配置 /root/community/uploadPath）
-  addressEnabled: true # 获取ip地址开关
-  captchaType: char # 验证码类型 math 数组计算 char 字符验证
+
 
 server:
   port: 8088
@@ -19,36 +11,76 @@ server:
       max: 800 # tomcat最大线程数，默认为200
       min-spare: 100 # Tomcat启动初始化的线程数，默认值10
 
-logging:
-  level:
-    com.roydon: debug
-    org.springframework: warn
-
-# 用户配置
-user:
-  password:
-    maxRetryCount: 5 # 密码最大错误次数
-    lockTime: 1 # 密码锁定时间（默认1分钟）
-
 # Spring配置
 spring:
   messages:
     basename: i18n/messages # 国际化资源文件路径
     encoding: UTF-8
   profiles:
-    active: druid
+    active: pro
   servlet:
     multipart:
-      max-file-size: 10MB # 单个文件大小
-      max-request-size: 20MB # 设置总上传的文件大小
+      max-file-size: ${spring.servlet.multipart.max-file-size} # 单个文件大小
+      max-request-size: ${spring.servlet.multipart.max-request-size} # 设置总上传的文件大小
   devtools:
     restart:
       enabled: true # 热部署开关
+  datasource: # 数据源配置
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    druid:
+      master: # 主库数据源
+        url: jdbc:mysql://${spring.datasource.druid.master.host}/${spring.datasource.druid.master.database}?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+        username: ${spring.datasource.druid.master.username}
+        password: ${spring.datasource.druid.master.password}
+      slave: # 从库数据源
+        enabled: false # 从数据源开关/默认关闭
+        url:
+        username:
+        password:
+      # 初始连接数
+      initialSize: 10
+      # 最小连接池数量
+      minIdle: 20
+      # 最大连接池数量
+      maxActive: 50
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      # 配置一个连接在池中最大生存的时间，单位是毫秒
+      maxEvictableIdleTimeMillis: 900000
+      # 配置检测连接是否有效
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      webStatFilter:
+        enabled: true
+      statViewServlet:
+        enabled: true
+        # 设置白名单，不填则允许所有访问
+        allow:
+        url-pattern: /druid/*
+        # 控制台管理用户名和密码
+        login-username: ${spring.datasource.druid.master.username}
+        login-password: ${spring.datasource.druid.master.password}
+      filter:
+        stat:
+          enabled: true
+          log-slow-sql: true # 慢SQL记录
+          slow-sql-millis: 1000
+          merge-sql: true
+        wall:
+          config:
+            multi-statement-allow: true
   redis:
-    host: r-uf673npd2sfuujqlaipd.redis.rds.aliyuncs.com
-    port: 6379
-    database: 0
-    password: roydon#Redis
+    host: ${spring.redis.host}
+    port: ${spring.redis.port}
+    password: ${spring.redis.password}
+    database: ${spring.redis.database}
     timeout: 10s
     lettuce:
       pool:
@@ -57,17 +89,28 @@ spring:
         max-active: 8 # 连接池的最大数据库连接数
         max-wait: -1ms # #连接池最大阻塞等待时间（使用负值表示没有限制）
   rabbitmq:
-    host: 106.14.105.101
-    port: 5672
-    username: roydon
-    password: qwer1234
-    virtual-host: /
+    host: ${spring.rabbitmq.host}
+    port: ${spring.rabbitmq.port}
+    username: ${spring.rabbitmq.username}
+    password: ${spring.rabbitmq.password}
+    virtual-host: ${spring.rabbitmq.virtual-host}
+
+logging:
+  level:
+    com.roydon: debug
+    org.springframework: warn
+
+# 用户配置
+#user:
+#  password:
+#    maxRetryCount: 5 # 密码最大错误次数
+#    lockTime: 1 # 密码锁定时间（默认1分钟）
 
 # token配置
-token:
-  header: Authorization # 令牌自定义标识
-  secret: abcdefghijklmnopqrstuvwxyz # 令牌密钥
-  expireTime: 1440 # 令牌有效期（默认1天）（单位：分钟）
+#token:
+#  header: Authorization # 令牌自定义标识
+#  secret: abcdefghijklmnopqrstuvwxyz # 令牌密钥
+#  expireTime: 1440 # 令牌有效期（默认1天）（单位：分钟）
 
 mybatis-plus:
   type-aliases-package: com.roydon.**.domain # 搜索指定包别名
@@ -93,17 +136,3 @@ xss:
   excludes: /system/notice # 排除链接（多个用逗号分隔）
   urlPatterns: /system/*,/monitor/*,/tool/* # 匹配链接
 
-# aliyun配置
-aliyun:
-  sms:
-    templateCode: SMS_460955023 # 可在aliyun控制台申请
-  oss:
-    endpoint: oss-cn-shanghai.aliyuncs.com
-    bucketname: community-server-oss
-
-#密钥
-openai:
-  gpt:
-    model: text-davinci-003 #达芬奇模型
-    token: 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
-    timeout: 100000 #超时时间

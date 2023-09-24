@@ -4,92 +4,53 @@ community:
   version: 1.0.0
   copyrightYear: 2022
   demoEnabled: true # 实例演示开关
-  profile: /root/community/uploadPath # 文件路径 示例（ Windows配置D:/community/uploadPath，Linux配置 /community/uploadPath）
+  profile: /root/community/uploadPath # 文件路径 （ Windows配置D:/community/uploadPath，Linux配置 /root/community/uploadPath）
   addressEnabled: true # 获取ip地址开关
   captchaType: char # 验证码类型 math 数组计算 char 字符验证
 
-server:
-  port: 8088
-  servlet:
-    context-path: / # 应用的访问路径
-  tomcat:
-    uri-encoding: UTF-8
-    accept-count: 1000 # 连接数满后的排队数，默认为100
-    threads:
-      max: 800 # tomcat最大线程数，默认为200
-      min-spare: 100 # Tomcat启动初始化的线程数，默认值10
-
-
-# 用户配置
-user:
-  password:
-    maxRetryCount: 5 # 密码最大错误次数
-    lockTime: 1 # 密码锁定时间（默认1分钟）
-
-# Spring配置
 spring:
-  messages:
-    basename: i18n/messages # 国际化资源文件路径
-    encoding: UTF-8
-  profiles:
-    active: druid
   servlet:
     multipart:
       max-file-size: 10MB # 单个文件大小
       max-request-size: 20MB # 设置总上传的文件大小
-  devtools:
-    restart:
-      enabled: true # 热部署开关
+  datasource:
+    druid:
+      master:
+        host: 106.14.105.101:3306
+        database: community-server
+        username: roydon
+        password: roydon#Mysql
   redis:
-    host: r-uf673npd2sfuujqlaipd.redis.rds.aliyuncs.com
+    host: 8.132.211.245 # r-uf673npd2sfuujqlaipd.redis.rds.aliyuncs.com
     port: 6379
-    database: 0
     password: roydon#Redis
-    timeout: 10s
-    lettuce:
-      pool:
-        min-idle: 0 # 连接池中的最小空闲连接
-        max-idle: 8 # 连接池中的最大空闲连接
-        max-active: 8 # 连接池的最大数据库连接数
-        max-wait: -1ms # #连接池最大阻塞等待时间（使用负值表示没有限制）
+    database: 0
+  rabbitmq:
+    host: 106.14.105.101
+    port: 5672
+    username: roydon
+    password: qwer1234
+    virtual-host: /
 
-logging:
-  level:
-    com.roydon: debug
-    org.springframework: warn
-
-# token配置
 token:
   header: Authorization # 令牌自定义标识
   secret: abcdefghijklmnopqrstuvwxyz # 令牌密钥
   expireTime: 1440 # 令牌有效期（默认1天）（单位：分钟）
 
-mybatis-plus:
-  type-aliases-package: com.roydon.**.domain # 搜索指定包别名
-  mapper-locations: classpath*:mapper/**/*Mapper.xml # 配置mapper的扫描，找到所有的mapper.xml映射文件
-  config-location: classpath:mybatis/mybatis-config.xml # 加载全局的配置文件
+user:
+  password:
+    maxRetryCount: 5 # 密码最大错误次数
+    lockTime: 1 # 密码锁定时间（默认1分钟）
 
-# PageHelper分页插件
-pagehelper:
-  helperDialect: mysql
-  supportMethodsArguments: true
-  params: count=countSql
-
-swagger:
-  enabled: true
-  pathMapping: /dev-api # 请求前缀
-
-# 防止XSS攻击
-xss:
-  enabled: true
-  excludes: /system/notice # 排除链接（多个用逗号分隔）
-  urlPatterns: /system/*,/monitor/*,/tool/* # 匹配链接
-
-# aliyun配置
-aliyun:
+aliyun: # aliyun配置
   sms:
     templateCode: SMS_460955023 # 可在aliyun控制台申请
   oss:
-    file:
-      endpoint: oss-cn-shanghai.aliyuncs.com
-      bucketname: community-server-oss
+    endpoint: oss-cn-shanghai.aliyuncs.com
+    bucketname: community-server-oss
+
+openai: # openai密钥
+  gpt:
+    model: text-davinci-003 #达芬奇模型
+    token: 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
+    timeout: 100000 #超时时间
