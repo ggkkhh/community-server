@@ -1,5 +1,3 @@
-
-
 server:
   port: 8088
   servlet:
@@ -11,8 +9,7 @@ server:
       max: 800 # tomcat最大线程数，默认为200
       min-spare: 100 # Tomcat启动初始化的线程数，默认值10
 
-# Spring配置
-spring:
+spring: # Spring配置
   messages:
     basename: i18n/messages # 国际化资源文件路径
     encoding: UTF-8
@@ -38,22 +35,14 @@ spring:
         url:
         username:
         password:
-      # 初始连接数
-      initialSize: 10
-      # 最小连接池数量
-      minIdle: 20
-      # 最大连接池数量
-      maxActive: 50
-      # 配置获取连接等待超时的时间
-      maxWait: 60000
-      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
-      timeBetweenEvictionRunsMillis: 60000
-      # 配置一个连接在池中最小生存的时间，单位是毫秒
-      minEvictableIdleTimeMillis: 300000
-      # 配置一个连接在池中最大生存的时间，单位是毫秒
-      maxEvictableIdleTimeMillis: 900000
-      # 配置检测连接是否有效
-      validationQuery: SELECT 1 FROM DUAL
+      initialSize: 10 # 初始连接数
+      minIdle: 20 # 最小连接池数量
+      maxActive: 50 # 最大连接池数量
+      maxWait: 60000 # 配置获取连接等待超时的时间
+      timeBetweenEvictionRunsMillis: 60000 # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      minEvictableIdleTimeMillis: 300000 # 配置一个连接在池中最小生存的时间，单位是毫秒
+      maxEvictableIdleTimeMillis: 900000 # 配置一个连接在池中最大生存的时间，单位是毫秒
+      validationQuery: SELECT 1 FROM DUAL  # 配置检测连接是否有效
       testWhileIdle: true
       testOnBorrow: false
       testOnReturn: false
@@ -61,11 +50,9 @@ spring:
         enabled: true
       statViewServlet:
         enabled: true
-        # 设置白名单，不填则允许所有访问
-        allow:
+        allow:  # 设置白名单，不填则允许所有访问
         url-pattern: /druid/*
-        # 控制台管理用户名和密码
-        login-username: ${spring.datasource.druid.master.username}
+        login-username: ${spring.datasource.druid.master.username} # 控制台管理用户名和密码
         login-password: ${spring.datasource.druid.master.password}
       filter:
         stat:
@@ -88,29 +75,11 @@ spring:
         max-idle: 8 # 连接池中的最大空闲连接
         max-active: 8 # 连接池的最大数据库连接数
         max-wait: -1ms # #连接池最大阻塞等待时间（使用负值表示没有限制）
-  rabbitmq:
-    host: ${spring.rabbitmq.host}
-    port: ${spring.rabbitmq.port}
-    username: ${spring.rabbitmq.username}
-    password: ${spring.rabbitmq.password}
-    virtual-host: ${spring.rabbitmq.virtual-host}
 
 logging:
   level:
     com.roydon: debug
     org.springframework: warn
-
-# 用户配置
-#user:
-#  password:
-#    maxRetryCount: 5 # 密码最大错误次数
-#    lockTime: 1 # 密码锁定时间（默认1分钟）
-
-# token配置
-#token:
-#  header: Authorization # 令牌自定义标识
-#  secret: abcdefghijklmnopqrstuvwxyz # 令牌密钥
-#  expireTime: 1440 # 令牌有效期（默认1天）（单位：分钟）
 
 mybatis-plus:
   type-aliases-package: com.roydon.**.domain # 搜索指定包别名

@@ -1,6 +1,6 @@
 # 项目相关配置
 community:
-  name: community # 名称
+  name: community
   version: 1.0.0
   copyrightYear: 2022
   demoEnabled: true # 实例演示开关
