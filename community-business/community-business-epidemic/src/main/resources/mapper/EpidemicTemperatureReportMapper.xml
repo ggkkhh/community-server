@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.roydon.business.epidemic.mapper.EpidemicTemperatureReportMapper">
+
+    <resultMap type="EpidemicTemperatureReport" id="EpidemicTemperatureReportResult">
+        <result property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="realName" column="real_name"/>
+        <result property="telephone" column="telephone"/>
+        <result property="idCard" column="id_card"/>
+        <result property="temperature" column="temperature"/>
+        <result property="remark" column="remark"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectEpidemicTemperatureReportVo">
+        select id,
+               username,
+               real_name,
+               telephone,
+               id_card,
+               temperature,
+               remark,
+               create_by,
+               create_time,
+               update_by,
+               update_time
+        from epidemic_temperature_report
+    </sql>
+
+    <select id="selectEpidemicTemperatureReportList" parameterType="EpidemicTemperatureReport"
+            resultMap="EpidemicTemperatureReportResult">
+        <include refid="selectEpidemicTemperatureReportVo"/>
+        <where>
+            <if test="username != null  and username != ''">and username like concat('%', #{username}, '%')</if>
+            <if test="realName != null  and realName != ''">and real_name like concat('%', #{realName}, '%')</if>
+            <if test="telephone != null  and telephone != ''">and telephone like concat('%', #{telephone}, '%')</if>
+            <if test="idCard != null  and idCard != ''">and id_card like concat('%', #{idCard}, '%')</if>
+        </where>
+    </select>
+
+    <select id="selectEpidemicTemperatureReportById" parameterType="Long" resultMap="EpidemicTemperatureReportResult">
+        <include refid="selectEpidemicTemperatureReportVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertEpidemicTemperatureReport" parameterType="EpidemicTemperatureReport" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into epidemic_temperature_report
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null">username,</if>
+            <if test="realName != null">real_name,</if>
+            <if test="telephone != null">telephone,</if>
+            <if test="idCard != null">id_card,</if>
+            <if test="temperature != null">temperature,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="username != null">#{username},</if>
+            <if test="realName != null">#{realName},</if>
+            <if test="telephone != null">#{telephone},</if>
+            <if test="idCard != null">#{idCard},</if>
+            <if test="temperature != null">#{temperature},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateEpidemicTemperatureReport" parameterType="EpidemicTemperatureReport">
+        update epidemic_temperature_report
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="username != null">username = #{username},</if>
+            <if test="realName != null">real_name = #{realName},</if>
+            <if test="telephone != null">telephone = #{telephone},</if>
+            <if test="idCard != null">id_card = #{idCard},</if>
+            <if test="temperature != null">temperature = #{idCard},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEpidemicTemperatureReportById" parameterType="Long">
+        delete
+        from epidemic_temperature_report
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteEpidemicTemperatureReportByIds" parameterType="String">
+        delete from epidemic_temperature_report where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
