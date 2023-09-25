@@ -6,7 +6,6 @@ import com.roydon.business.news.domain.AppNews;
 import com.roydon.business.news.enums.NewsType;
 import com.roydon.business.news.model.*;
 import com.roydon.business.news.service.AppNewsService;
-import com.roydon.common.constant.CacheConstants;
 import com.roydon.common.constant.Constants;
 import com.roydon.common.core.domain.entity.SysDictData;
 import com.roydon.common.core.redis.RedisCache;
@@ -50,14 +49,14 @@ public class GetNewsService {
         typeIdList.forEach(t -> {
             log.warn("开始获取新闻类型为[{}]的新闻！", t);
             try {
-                Thread.sleep(2000L);
+                Thread.sleep(1500L);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
             // 爬取5页数据
             for (int page = 1; page < 6; page++) {
                 try {
-                    Thread.sleep(2000L);
+                    Thread.sleep(1500L);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -79,7 +78,7 @@ public class GetNewsService {
                         return;
                     }
                     try {
-                        Thread.sleep(2000L);
+                        Thread.sleep(1500L);
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
@@ -122,7 +121,7 @@ public class GetNewsService {
                     // 批量添加到数据库
                     appNewsService.saveOrUpdate(an);
                     // 插入数据成功将浏览量写入redis
-                    redisCache.setCacheMapValue(CacheConstants.NEWS_VIEW_NUM_KEY, an.getNewsId(), an.getViewNum());
+//                    redisCache.setCacheMapValue(CacheConstants.NEWS_VIEW_NUM_KEY, an.getNewsId(), an.getViewNum());
                     log.info("插入或更新新闻数据成功！");
                 });
             }
