@@ -39,7 +39,14 @@
             <if test="realName != null  and realName != ''">and real_name like concat('%', #{realName}, '%')</if>
             <if test="telephone != null  and telephone != ''">and telephone like concat('%', #{telephone}, '%')</if>
             <if test="idCard != null  and idCard != ''">and id_card like concat('%', #{idCard}, '%')</if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
         </where>
+        order by create_time desc
     </select>
 
     <select id="selectEpidemicTemperatureReportById" parameterType="Long" resultMap="EpidemicTemperatureReportResult">
@@ -83,7 +90,7 @@
             <if test="realName != null">real_name = #{realName},</if>
             <if test="telephone != null">telephone = #{telephone},</if>
             <if test="idCard != null">id_card = #{idCard},</if>
-            <if test="temperature != null">temperature = #{idCard},</if>
+            <if test="temperature != null">temperature = #{temperature},</if>
             <if test="remark != null">remark = #{remark},</if>
             <if test="createBy != null">create_by = #{createBy},</if>
             <if test="createTime != null">create_time = #{createTime},</if>

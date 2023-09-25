@@ -53,7 +53,7 @@ public class EpidemicTemperatureReport extends BaseEntity {
     /**
      * 体温
      */
-    @Excel(name = "体温")
+    @Excel(name = "体温（℃）", suffix = "℃")
     private String temperature;
 
 }
