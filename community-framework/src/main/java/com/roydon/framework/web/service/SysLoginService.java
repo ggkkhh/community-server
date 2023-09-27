@@ -96,8 +96,7 @@ public class SysLoginService {
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         // 记录登录信息，修改用户表，添加登录IP、登录时间
         recordLoginInfo(loginUser.getUserId());
-        String exchangeName = "TestDirectExchange";
-        rabbitTemplate.convertAndSend(exchangeName, "TestDirectRouting", "登录成功");
+//        rabbitTemplate.convertAndSend(DirectRabbitConfig.DIRECT_EXCHANGE_NAME, DirectRabbitConfig.DIRECT_ROUTING_NAME, "登录成功");
         log.info("登录成功");
         // 生成token
         return tokenService.createToken(loginUser);
