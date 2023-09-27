@@ -85,6 +85,12 @@ mybatis-plus:
   type-aliases-package: com.roydon.**.domain # 搜索指定包别名
   mapper-locations: classpath*:mapper/**/*Mapper.xml # 配置mapper的扫描，找到所有的mapper.xml映射文件
   config-location: classpath:mybatis/mybatis-config.xml # 加载全局的配置文件
+#  configuration:
+#    cache-enabled: true
+#    lazy-loading-enabled: true
+#    use-generated-keys: true
+#    default-executor-type: simple
+#    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
 #  global-config:
 #    db-config:
 #      id-type: auto # 设置id自增
