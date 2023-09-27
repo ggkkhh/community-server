@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 /**
  * 短信登录校验器
  */
-//@Component
 public class SmsAuthenticationProvider implements AuthenticationProvider {
 
     private UserDetailsService userDetailsService;
