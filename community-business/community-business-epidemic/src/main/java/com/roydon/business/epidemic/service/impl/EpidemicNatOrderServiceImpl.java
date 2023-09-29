@@ -1,14 +1,18 @@
 package com.roydon.business.epidemic.service.impl;
 
-import cn.hutool.core.util.IdcardUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.roydon.business.epidemic.domain.dto.EpidemicNatOrderPageDTO;
 import com.roydon.business.epidemic.domain.entity.EpidemicNatOrder;
 import com.roydon.business.epidemic.enums.natOrderStatusEnum;
 import com.roydon.business.epidemic.mapper.EpidemicNatOrderMapper;
 import com.roydon.business.epidemic.service.IEpidemicNatOrderService;
-import com.roydon.common.exception.ServiceException;
+import com.roydon.common.core.domain.entity.SysUser;
 import com.roydon.common.utils.DateUtils;
-import com.roydon.common.utils.PhoneUtils;
+import com.roydon.common.utils.SecurityUtils;
+import com.roydon.system.service.ISysUserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,6 +29,26 @@ public class EpidemicNatOrderServiceImpl extends ServiceImpl<EpidemicNatOrderMap
 
     @Resource
     private EpidemicNatOrderMapper epidemicNatOrderMapper;
+
+    @Resource
+    private ISysUserService sysUserService;
+
+    /**
+     * 分页查询我的预约记录
+     *
+     * @param pageDTO
+     * @return
+     */
+    @Override
+    public IPage<EpidemicNatOrder> queryPageForMine(EpidemicNatOrderPageDTO pageDTO) {
+        String username = SecurityUtils.getUsername();
+        SysUser sysUser = sysUserService.selectUserByUserName(username);
+        LambdaQueryWrapper<EpidemicNatOrder> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(EpidemicNatOrder::getTelephone, sysUser.getPhonenumber());
+        queryWrapper.eq(EpidemicNatOrder::getIdCard, sysUser.getIdCard());
+        queryWrapper.orderByDesc(EpidemicNatOrder::getOrderTime);
+        return page(new Page<>(pageDTO.getPageNum(), pageDTO.getPageSize()), queryWrapper);
+    }
 
     /**
      * 查询预约核酸检测NAT
@@ -59,12 +83,6 @@ public class EpidemicNatOrderServiceImpl extends ServiceImpl<EpidemicNatOrderMap
         epidemicNatOrder.setCreateTime(DateUtils.getNowDate());
         epidemicNatOrder.setOrderTime(DateUtils.getNowDate());
         epidemicNatOrder.setOrderStatus(natOrderStatusEnum.BEGIN.getCode());
-        if (!PhoneUtils.isMobile(epidemicNatOrder.getTelephone())) {
-            throw new ServiceException("请输入正确的手机号");
-        }
-        if (!IdcardUtil.isValidCard(epidemicNatOrder.getIdCard())) {
-            throw new ServiceException("请输入正确的身份证号");
-        }
         return epidemicNatOrderMapper.insertEpidemicNatOrder(epidemicNatOrder);
     }
 

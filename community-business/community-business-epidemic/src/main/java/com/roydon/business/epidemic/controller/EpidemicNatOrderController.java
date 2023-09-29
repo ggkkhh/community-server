@@ -1,5 +1,9 @@
 package com.roydon.business.epidemic.controller;
 
+import cn.hutool.core.util.IdcardUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.roydon.business.epidemic.domain.dto.EpidemicNatOrderPageDTO;
 import com.roydon.business.epidemic.domain.entity.EpidemicNatOrder;
 import com.roydon.business.epidemic.service.IEpidemicNatOrderService;
 import com.roydon.common.annotation.Log;
@@ -7,6 +11,9 @@ import com.roydon.common.core.controller.BaseController;
 import com.roydon.common.core.domain.AjaxResult;
 import com.roydon.common.core.page.TableDataInfo;
 import com.roydon.common.enums.BusinessType;
+import com.roydon.common.utils.DateUtils;
+import com.roydon.common.utils.PhoneUtils;
+import com.roydon.common.utils.StringUtils;
 import com.roydon.common.utils.poi.ExcelUtil;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +35,12 @@ public class EpidemicNatOrderController extends BaseController {
     @Resource
     private IEpidemicNatOrderService epidemicNatOrderService;
 
+    @PostMapping("/mine_history")
+    public AjaxResult myOrderRecord(@RequestBody EpidemicNatOrderPageDTO pageDTO) {
+        IPage<EpidemicNatOrder> natOrderIPage = epidemicNatOrderService.queryPageForMine(pageDTO);
+        return AjaxResult.genTableData(natOrderIPage.getRecords(), natOrderIPage.getTotal());
+    }
+
     /**
      * app端一键预约核酸检测
      *
@@ -36,6 +49,23 @@ public class EpidemicNatOrderController extends BaseController {
      */
     @PostMapping("/quick")
     public AjaxResult quickOrder(@RequestBody EpidemicNatOrder epidemicNatOrder) {
+        String telephone = epidemicNatOrder.getTelephone();
+        String idCard = epidemicNatOrder.getIdCard();
+        if (!PhoneUtils.isMobile(telephone)) {
+            return AjaxResult.error("请输入正确的手机号");
+        }
+        if (!IdcardUtil.isValidCard(idCard)) {
+            return AjaxResult.error("请输入正确的身份证号");
+        }
+        // 一天只许预约一次
+        LambdaQueryWrapper<EpidemicNatOrder> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(EpidemicNatOrder::getTelephone, telephone);
+        queryWrapper.eq(EpidemicNatOrder::getIdCard, idCard);
+        queryWrapper.between(EpidemicNatOrder::getOrderTime, DateUtils.getStartOfDay(), DateUtils.getStartOfNextDay());
+        List<EpidemicNatOrder> historyList = epidemicNatOrderService.list(queryWrapper);
+        if (StringUtils.isNotEmpty(historyList)) {
+            return AjaxResult.error("今日已预约，明日再来~");
+        }
         return toAjax(epidemicNatOrderService.insertEpidemicNatOrder(epidemicNatOrder));
     }
 
@@ -74,10 +104,27 @@ public class EpidemicNatOrderController extends BaseController {
     /**
      * 新增预约核酸检测NAT
      */
-    @PreAuthorize("@ss.hasPermi('nat:order:add')")
+//    @PreAuthorize("@ss.hasPermi('nat:order:add')")
     @Log(title = "预约核酸检测NAT", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody EpidemicNatOrder epidemicNatOrder) {
+        String telephone = epidemicNatOrder.getTelephone();
+        String idCard = epidemicNatOrder.getIdCard();
+        if (!PhoneUtils.isMobile(telephone)) {
+            return AjaxResult.error("请输入正确的手机号");
+        }
+        if (!IdcardUtil.isValidCard(idCard)) {
+            return AjaxResult.error("请输入正确的身份证号");
+        }
+        // 一天只许预约一次
+        LambdaQueryWrapper<EpidemicNatOrder> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(EpidemicNatOrder::getTelephone, telephone);
+        queryWrapper.eq(EpidemicNatOrder::getIdCard, idCard);
+        queryWrapper.between(EpidemicNatOrder::getOrderTime, DateUtils.getStartOfDay(), DateUtils.getStartOfNextDay());
+        List<EpidemicNatOrder> historyList = epidemicNatOrderService.list(queryWrapper);
+        if (StringUtils.isNotEmpty(historyList)) {
+            return AjaxResult.error("今日已预约，明日再来~");
+        }
         return toAjax(epidemicNatOrderService.insertEpidemicNatOrder(epidemicNatOrder));
     }
 

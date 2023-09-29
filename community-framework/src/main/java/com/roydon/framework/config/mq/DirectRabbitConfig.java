@@ -1,9 +1,6 @@
 package com.roydon.framework.config.mq;
 
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.DirectExchange;
-import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -28,6 +25,9 @@ public class DirectRabbitConfig {
         // autoDelete:是否自动删除，当没有生产者或者消费者使用此队列，该队列会自动删除。
         //   return new Queue("TestDirectQueue",true,true,false);
 
+        QueueBuilder.durable(DIRECT_QUEUE_NAME).ttl(10000) //超时时间
+                .deadLetterExchange("dl.direct") //超时后进入死信交换机dl.direct
+                .build();
         //一般设置一下队列的持久化就好,其余两个就是默认false
         return new Queue(DIRECT_QUEUE_NAME, true, false, false);
     }
