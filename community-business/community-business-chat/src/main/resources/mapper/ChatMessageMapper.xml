@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.roydon.business.chat.mapper.ChatMessageMapper">
 
-    <resultMap type="ChatMessageDTO" id="ChatMessageResult">
+    <resultMap type="ChatMessage" id="ChatMessageResult">
         <result property="messageId" column="message_id"/>
         <result property="sender" column="sender"/>
         <result property="senderImage" column="sender_image"/>
@@ -14,7 +12,7 @@
         <result property="createTime" column="create_time"/>
     </resultMap>
 
-    <insert id="insertChatMessage" parameterType="ChatMessageDTO" useGeneratedKeys="true" keyProperty="messageId">
+    <insert id="insertChatMessage" parameterType="ChatMessage" useGeneratedKeys="true" keyProperty="messageId">
         insert into chat_message
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="sender != null and sender != ''">sender,</if>
