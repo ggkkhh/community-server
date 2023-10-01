@@ -1,5 +1,6 @@
 package com.roydon.quartz.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.roydon.common.annotation.Excel;
@@ -26,7 +27,7 @@ public class SysJob extends BaseEntity {
      * 任务ID
      */
     @Excel(name = "任务序号", cellType = Excel.ColumnType.NUMERIC)
-    @TableId("job_id")
+    @TableId(value = "job_id",type = IdType.AUTO)
     private Long jobId;
 
     /**

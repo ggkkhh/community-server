@@ -1,5 +1,6 @@
 package com.roydon.business.epidemic.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -23,7 +24,7 @@ public class EpidemicNatOrder extends BaseEntity {
     private static final long serialVersionUID=1L;
 
     /** 预约id */
-    @TableId("order_id")
+    @TableId(value = "order_id",type = IdType.AUTO)
     private Long orderId;
 
     /** 用户id */
@@ -47,8 +48,8 @@ public class EpidemicNatOrder extends BaseEntity {
     private String idCard;
 
     /** 预约时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "预约时间", width = 30, dateFormat = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "预约时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
     private Date orderTime;
 
     /** 预约状态(0已预约，1已完成，2已取消) */

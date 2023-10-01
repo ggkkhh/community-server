@@ -1,4 +1,10 @@
 ######################################################################
+# 主动声明禁止上传文件
+/community-server/src/main/resources/application-dev.yml
+/community-server/src/main/resources/application-pro.yml
+/community-server/src/main/resources/application-test.yml
+
+######################################################################
 # Build Tools
 
 .gradle

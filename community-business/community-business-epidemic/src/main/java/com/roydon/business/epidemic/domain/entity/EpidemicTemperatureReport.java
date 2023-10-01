@@ -9,33 +9,27 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 疫苗接种审核对象 epidemic_inoculation_audit
+ * 体温上报对象 epidemic_temperature_report
  *
  * @author roydon
- * @date 2023-08-10
+ * @date 2023-09-25
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@TableName("epidemic_inoculation_audit")
-public class EpidemicInoculationAudit extends BaseEntity {
+@TableName("epidemic_temperature_report")
+public class EpidemicTemperatureReport extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
      * id
      */
-    @TableId(value = "audit_id",type = IdType.AUTO)
-    private Long auditId;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
 
     /**
-     * 用户id
+     * 用户名
      */
-    @Excel(name = "用户id")
-    private Long userId;
-
-    /**
-     * 用户账号
-     */
-    @Excel(name = "用户账号")
+    @Excel(name = "用户名")
     private String username;
 
     /**
@@ -57,16 +51,9 @@ public class EpidemicInoculationAudit extends BaseEntity {
     private String idCard;
 
     /**
-     * 待审核图片
+     * 体温
      */
-    @Excel(name = "待审核图片")
-    private String auditImage;
-
-    /**
-     * 审核状态(0待审核1审核通过2审核不通过)
-     */
-    @Excel(name = "审核状态(0待审核1审核通过2审核不通过)")
-    private String auditStatus;
-
+    @Excel(name = "体温（℃）", suffix = "℃")
+    private String temperature;
 
 }

@@ -1,5 +1,6 @@
 package com.roydon.system.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -22,7 +23,7 @@ public class SysPost extends BaseEntity {
     /**
      * 岗位序号
      */
-    @TableId("post_id")
+    @TableId(value = "post_id",type = IdType.AUTO)
     @Excel(name = "岗位序号", cellType = ColumnType.NUMERIC)
     private Long postId;
 

@@ -3,12 +3,9 @@ package com.roydon.system.service.impl;
 import java.util.List;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.roydon.common.core.domain.entity.SysUser;
 import com.roydon.system.domain.SysOperLog;
 import com.roydon.system.mapper.SysOperLogMapper;
-import com.roydon.system.mapper.SysUserMapper;
 import com.roydon.system.service.ISysOperLogService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

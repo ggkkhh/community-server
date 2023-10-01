@@ -85,7 +85,7 @@ public class EpidemicAccessRecordServiceImpl extends ServiceImpl<EpidemicAccessR
         epidemicAccessRecord.setUsername(user.getUserName());
         epidemicAccessRecord.setCreateTime(DateUtils.getNowDate());
         epidemicAccessRecord.setCreateBy(SecurityUtils.getUsername());
-        epidemicAccessRecord.setRecordId(IdGenerator.generatorId());
+        epidemicAccessRecord.setRecordId(IdGenerator.generatorShortId());
         // 如果是进入社区，添加隔离记录
         if (epidemicAccessRecord.getAccessType().equals(AccessTypeEnum.IN.getCode())) {
             EpidemicIsolationRecord record = new EpidemicIsolationRecord();

@@ -1,5 +1,6 @@
 package com.roydon.system.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.roydon.common.annotation.Excel;
@@ -22,7 +23,7 @@ public class SysFeedback extends BaseEntity {
     /**
      * 反馈id
      */
-    @TableId("feedback_id")
+    @TableId(value = "feedback_id",type = IdType.AUTO)
     private Long feedbackId;
 
     /**

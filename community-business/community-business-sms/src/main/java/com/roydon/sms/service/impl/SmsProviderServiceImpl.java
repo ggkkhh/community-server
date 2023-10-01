@@ -56,7 +56,7 @@ public class SmsProviderServiceImpl extends ServiceImpl<SmsProviderMapper, SmsPr
     @Override
     public int insertSmsProvider(SmsProvider smsProvider) {
         smsProvider.setCreateTime(DateUtils.getNowDate());
-        smsProvider.setProviderId(IdGenerator.generatorId());
+        smsProvider.setProviderId(IdGenerator.generatorShortId());
         return smsProviderMapper.insertSmsProvider(smsProvider);
     }
 

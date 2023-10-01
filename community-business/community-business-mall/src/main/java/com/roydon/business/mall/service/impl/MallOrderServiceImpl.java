@@ -116,7 +116,7 @@ public class MallOrderServiceImpl extends ServiceImpl<MallOrderMapper, MallOrder
     public MallOrder createOrder(MallOrderCreateDTO mallOrderCreateDTO) {
         LoginUser loginUser = SecurityUtils.getLoginUser();
         MallOrder mallOrder = new MallOrder();
-        mallOrder.setOrderId(IdGenerator.generatorId());
+        mallOrder.setOrderId(IdGenerator.generatorShortId());
         mallOrder.setUserId(loginUser.getUserId());
         mallOrder.setUserName(loginUser.getUsername());
         mallOrder.setAddressId(mallOrderCreateDTO.getAddressId());
@@ -133,7 +133,7 @@ public class MallOrderServiceImpl extends ServiceImpl<MallOrderMapper, MallOrder
             totalPrice.updateAndGet(v -> v + price);
             // 订单关联订单商品
             MallOrderGoods mallOrderGoods = new MallOrderGoods();
-            mallOrderGoods.setId(IdGenerator.generatorId());
+            mallOrderGoods.setId(IdGenerator.generatorShortId());
             mallOrderGoods.setOrderId(mallOrder.getOrderId());
             mallOrderGoods.setGoodsId(goods.getGoodsId());
             mallOrderGoods.setPrice(goods.getGoodsPrice());

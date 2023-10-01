@@ -1,5 +1,6 @@
 package com.roydon.business.epidemic.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -25,7 +26,7 @@ public class EpidemicIsolationRecord extends BaseEntity {
     /**
      * id
      */
-    @TableId("record_id")
+    @TableId(value = "record_id",type = IdType.AUTO)
     private Long recordId;
 
     /**

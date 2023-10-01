@@ -1,5 +1,6 @@
 package com.roydon.common.core.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.roydon.common.annotation.Excel;
@@ -22,7 +23,7 @@ public class SysDictType extends BaseEntity {
     /**
      * 字典主键
      */
-    @TableId("dict_id")
+    @TableId(value = "dict_id",type = IdType.AUTO)
     @Excel(name = "字典主键", cellType = ColumnType.NUMERIC)
     private Long dictId;
 

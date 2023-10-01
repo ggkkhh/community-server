@@ -1,5 +1,6 @@
 package com.roydon.business.mall.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -18,7 +19,7 @@ import java.util.Date;
 public class MallUserAddress implements Serializable {
     private static final long serialVersionUID = 187079772473647163L;
 
-    @TableId("address_id")
+    @TableId(value = "address_id",type = IdType.ASSIGN_ID)
     private String addressId;
     /**
      * 用户id

@@ -1,6 +1,8 @@
 package com.roydon.business.epidemic.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.roydon.business.epidemic.domain.dto.EpidemicNatOrderPageDTO;
 import com.roydon.business.epidemic.domain.entity.EpidemicNatOrder;
 
 import java.util.List;
@@ -12,6 +14,15 @@ import java.util.List;
  * @date 2023-08-23
  */
 public interface IEpidemicNatOrderService extends IService<EpidemicNatOrder> {
+
+    /**
+     * 分页查询我的预约记录
+     *
+     * @param pageDTO
+     * @return
+     */
+    IPage<EpidemicNatOrder> queryPageForMine(EpidemicNatOrderPageDTO pageDTO);
+
     /**
      * 查询预约核酸检测NAT
      *

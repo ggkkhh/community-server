@@ -1,5 +1,6 @@
 package com.roydon.business.epidemic.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.roydon.common.annotation.Excel;
@@ -22,7 +23,7 @@ public class EpidemicInoculationHistory extends BaseEntity {
     /**
      * 记录id
      */
-    @TableId("history_id")
+    @TableId(value = "history_id",type = IdType.AUTO)
     private Long historyId;
 
     /**

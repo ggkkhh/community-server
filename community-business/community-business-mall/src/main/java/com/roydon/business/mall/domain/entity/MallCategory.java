@@ -1,5 +1,6 @@
 package com.roydon.business.mall.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.roydon.common.annotation.Excel;
@@ -22,7 +23,7 @@ public class MallCategory extends BaseEntity {
     /**
      * 分类id
      */
-    @TableId("category_id")
+    @TableId(value = "category_id",type = IdType.ASSIGN_ID)
     private Long categoryId;
 
     /**

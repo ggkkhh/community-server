@@ -1,5 +1,6 @@
 package com.roydon.common.core.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -22,7 +23,7 @@ public class SysDept extends BaseEntity {
     /**
      * ID
      */
-    @TableId("dept_id")
+    @TableId(value = "dept_id",type = IdType.AUTO)
     private Long deptId;
 
     /**

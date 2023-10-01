@@ -1,5 +1,6 @@
 package com.roydon.common.core.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.roydon.common.core.domain.BaseEntity;
@@ -22,7 +23,7 @@ public class SysMenu extends BaseEntity {
     /**
      * 菜单ID
      */
-    @TableId("menu_id")
+    @TableId(value = "menu_id",type = IdType.AUTO)
     private Long menuId;
 
     /**

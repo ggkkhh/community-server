@@ -12,8 +12,13 @@ public class TaskCenterUtil {
     public static Integer MAX_MESSAGE_SIZE = 100;
     public static Long KEEP_ALIVE_TIME = 60L;
 
-    private ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(CORE_POOL_SIZE, MAX_NUM_POOL_SIZE, KEEP_ALIVE_TIME,
-            TimeUnit.SECONDS, new LinkedBlockingQueue<>(MAX_MESSAGE_SIZE), new ThreadPoolExecutor.CallerRunsPolicy());
+    private ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(
+            CORE_POOL_SIZE,
+            MAX_NUM_POOL_SIZE,
+            KEEP_ALIVE_TIME,
+            TimeUnit.SECONDS,
+            new LinkedBlockingQueue<>(MAX_MESSAGE_SIZE),
+            new ThreadPoolExecutor.CallerRunsPolicy());
 
 
     private TaskCenterUtil() {
