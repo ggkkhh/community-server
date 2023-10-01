@@ -21,6 +21,13 @@
 
     <dependencies>
 
+        <!-- chat -->
+        <dependency>
+            <groupId>com.roydon</groupId>
+            <artifactId>community-business-chat</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
         <!-- 疫情防控 -->
         <dependency>
             <groupId>com.roydon</groupId>

@@ -22,6 +22,7 @@
         <module>community-business-unit</module>
         <module>community-business-sms</module>
         <module>community-business-epidemic</module>
+        <module>community-business-chat</module>
     </modules>
 
     <properties>
