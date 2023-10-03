@@ -7,6 +7,7 @@ import com.roydon.common.core.controller.BaseController;
 import com.roydon.common.core.domain.AjaxResult;
 import com.roydon.common.core.page.TableDataInfo;
 import com.roydon.common.enums.BusinessType;
+import com.roydon.common.utils.SecurityUtils;
 import com.roydon.common.utils.poi.ExcelUtil;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,15 @@ public class EpidemicIsolationRecordController extends BaseController {
 
     @Resource
     private IEpidemicIsolationRecordService epidemicIsolationRecordService;
+
+    /**
+     * 我的隔离记录一条
+     */
+    @GetMapping("/unfinished_record")
+    public AjaxResult myIsolationRecord() {
+        EpidemicIsolationRecord unfinishedRecord = epidemicIsolationRecordService.getUnfinishedRecord(SecurityUtils.getLoginUser().getUser().getPhonenumber());
+        return AjaxResult.success(unfinishedRecord);
+    }
 
     /**
      * 查询隔离记录列表

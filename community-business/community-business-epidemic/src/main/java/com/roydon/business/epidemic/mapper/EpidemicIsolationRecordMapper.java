@@ -19,7 +19,7 @@ public interface EpidemicIsolationRecordMapper extends BaseMapper<EpidemicIsolat
      * @param recordId 隔离记录主键
      * @return 隔离记录
      */
-     EpidemicIsolationRecord selectEpidemicIsolationRecordByRecordId(Long recordId);
+    EpidemicIsolationRecord selectEpidemicIsolationRecordByRecordId(Long recordId);
 
     /**
      * 查询隔离记录列表
@@ -60,4 +60,11 @@ public interface EpidemicIsolationRecordMapper extends BaseMapper<EpidemicIsolat
      * @return 结果
      */
     int deleteEpidemicIsolationRecordByRecordIds(Long[] recordIds);
+
+    /**
+     * 查询一条未完成的记录
+     *
+     * @param telephone
+     */
+    EpidemicIsolationRecord selUnfinishedRecord(String telephone);
 }

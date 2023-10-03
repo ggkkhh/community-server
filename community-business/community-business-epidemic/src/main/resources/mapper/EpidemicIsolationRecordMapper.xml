@@ -54,6 +54,13 @@
         where record_id = #{recordId}
     </select>
 
+    <select id="selUnfinishedRecord" parameterType="String"
+            resultMap="EpidemicIsolationRecordResult">
+        <include refid="selectEpidemicIsolationRecordVo"/>
+        where telephone = #{telephone}
+        and remaining_isolation_time > 0
+    </select>
+
     <insert id="insertEpidemicIsolationRecord" parameterType="EpidemicIsolationRecord">
         insert into epidemic_isolation_record
         <trim prefix="(" suffix=")" suffixOverrides=",">

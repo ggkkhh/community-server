@@ -67,4 +67,8 @@ public interface IEpidemicIsolationRecordService extends IService<EpidemicIsolat
      */
     void decreaseIsolationTime(Long recordId);
 
+    /**
+     * 获取一条未完成的记录，可能为空
+     */
+    EpidemicIsolationRecord getUnfinishedRecord(String telephone);
 }

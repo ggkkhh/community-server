@@ -175,4 +175,14 @@ public class EpidemicIsolationRecordServiceImpl extends ServiceImpl<EpidemicIsol
         redisCache.deleteCacheMapValue(CacheConstants.EPIDEMIC_ISOLATION_TIME, recordId.toString());
         return epidemicIsolationRecordMapper.deleteEpidemicIsolationRecordByRecordId(recordId);
     }
+
+    /**
+     * 获取一条未完成的记录，可能为空
+     *
+     * @param telephone
+     */
+    @Override
+    public EpidemicIsolationRecord getUnfinishedRecord( String telephone) {
+        return epidemicIsolationRecordMapper.selUnfinishedRecord(telephone);
+    }
 }

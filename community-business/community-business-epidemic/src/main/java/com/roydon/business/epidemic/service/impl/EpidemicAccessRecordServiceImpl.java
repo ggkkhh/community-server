@@ -14,6 +14,7 @@ import com.roydon.common.core.domain.entity.SysUser;
 import com.roydon.common.core.redis.RedisCache;
 import com.roydon.common.utils.DateUtils;
 import com.roydon.common.utils.SecurityUtils;
+import com.roydon.common.utils.StringUtil;
 import com.roydon.common.utils.uniqueid.IdGenerator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -99,6 +100,12 @@ public class EpidemicAccessRecordServiceImpl extends ServiceImpl<EpidemicAccessR
             Integer isolationDay = policy.getIsolationDay();
             record.setIsolationTime(isolationDay);
             record.setRemainingIsolationTime(isolationDay);
+            // 判断是否有未完成的隔离记录
+            EpidemicIsolationRecord unfinishedRecord = epidemicIsolationRecordService.getUnfinishedRecord(epidemicAccessRecord.getTelephone());
+            if (!StringUtil.isEmpty(unfinishedRecord)) {
+                // 有未完成的隔离记录，那么直接删除
+                epidemicIsolationRecordService.deleteEpidemicIsolationRecordByRecordId(unfinishedRecord.getRecordId());
+            }
             // 设置隔离结束时间：当前时间 + 隔离政策天数
             LocalDateTime localDateTime = LocalDateTime.now().plusDays(policy.getIsolationDay());
             ZonedDateTime zdt = localDateTime.atZone(ZoneId.systemDefault());
