@@ -1,12 +1,17 @@
 package com.roydon.business.epidemic.enums;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 /**
  * @author roydon
  * @date 2023-08-23 11:47【星期三】
  * @description com.roydon.business.epidemic.enums
  * <p> 核酸预约状态 </p>
  **/
-public enum natOrderStatusEnum {
+@Getter
+@AllArgsConstructor
+public enum NatOrderStatusEnum {
 
     BEGIN("0", "已预约"),
     FINISH("1", "已完成"),
@@ -16,21 +21,8 @@ public enum natOrderStatusEnum {
     private final String code;
     private final String info;
 
-    natOrderStatusEnum(String code, String info) {
-        this.code = code;
-        this.info = info;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public String getInfo() {
-        return info;
-    }
-
-    public static natOrderStatusEnum findByCode(String code) {
-        for (natOrderStatusEnum value : natOrderStatusEnum.values()) {
+    public static NatOrderStatusEnum findByCode(String code) {
+        for (NatOrderStatusEnum value : NatOrderStatusEnum.values()) {
             if (code.equals(value.getCode())) {
                 return value;
             }

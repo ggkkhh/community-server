@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.roydon.business.epidemic.domain.dto.EpidemicNatOrderPageDTO;
 import com.roydon.business.epidemic.domain.entity.EpidemicNatOrder;
-import com.roydon.business.epidemic.enums.natOrderStatusEnum;
+import com.roydon.business.epidemic.enums.NatOrderStatusEnum;
 import com.roydon.business.epidemic.mapper.EpidemicNatOrderMapper;
 import com.roydon.business.epidemic.service.IEpidemicNatOrderService;
 import com.roydon.common.core.domain.entity.SysUser;
@@ -82,7 +82,7 @@ public class EpidemicNatOrderServiceImpl extends ServiceImpl<EpidemicNatOrderMap
     public int insertEpidemicNatOrder(EpidemicNatOrder epidemicNatOrder) {
         epidemicNatOrder.setCreateTime(DateUtils.getNowDate());
         epidemicNatOrder.setOrderTime(DateUtils.getNowDate());
-        epidemicNatOrder.setOrderStatus(natOrderStatusEnum.BEGIN.getCode());
+        epidemicNatOrder.setOrderStatus(NatOrderStatusEnum.BEGIN.getCode());
         return epidemicNatOrderMapper.insertEpidemicNatOrder(epidemicNatOrder);
     }
 
