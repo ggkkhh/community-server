@@ -1,6 +1,8 @@
 package com.roydon.business.epidemic.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.roydon.business.epidemic.domain.dto.EpidemicAccessRecordPageDTO;
 import com.roydon.business.epidemic.domain.entity.EpidemicAccessRecord;
 
 import java.util.List;
@@ -59,4 +61,12 @@ public interface IEpidemicAccessRecordService extends IService<EpidemicAccessRec
      * @return 结果
      */
     int deleteEpidemicAccessRecordByRecordId(String recordId);
+
+    /**
+     * 分页我的出入社区记录
+     *
+     * @param pageDTO 分页参数
+     * @return IPage分页对象
+     */
+    IPage<EpidemicAccessRecord> getMyRecordListIPage(EpidemicAccessRecordPageDTO pageDTO);
 }

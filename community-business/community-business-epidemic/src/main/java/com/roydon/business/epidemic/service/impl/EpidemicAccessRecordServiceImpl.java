@@ -1,10 +1,15 @@
 package com.roydon.business.epidemic.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.roydon.business.epidemic.domain.dto.EpidemicAccessRecordPageDTO;
 import com.roydon.business.epidemic.domain.entity.EpidemicAccessRecord;
 import com.roydon.business.epidemic.domain.entity.EpidemicIsolationPolicy;
 import com.roydon.business.epidemic.domain.entity.EpidemicIsolationRecord;
 import com.roydon.business.epidemic.enums.AccessTypeEnum;
+import com.roydon.business.epidemic.enums.ReportTypeEnum;
 import com.roydon.business.epidemic.mapper.EpidemicAccessRecordMapper;
 import com.roydon.business.epidemic.service.IEpidemicAccessRecordService;
 import com.roydon.business.epidemic.service.IEpidemicIsolationPolicyService;
@@ -50,6 +55,20 @@ public class EpidemicAccessRecordServiceImpl extends ServiceImpl<EpidemicAccessR
     private RedisCache redisCache;
 
     /**
+     * 分页我的出入社区记录
+     *
+     * @param pageDTO 分页参数
+     * @return IPage分页对象
+     */
+    @Override
+    public IPage<EpidemicAccessRecord> getMyRecordListIPage(EpidemicAccessRecordPageDTO pageDTO) {
+        LambdaQueryWrapper<EpidemicAccessRecord> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(EpidemicAccessRecord::getUserId, SecurityUtils.getUserId());
+        // TODO 后端管理端录入时无userId字段，需要另外传入参数
+        return this.page(new Page<>(pageDTO.getPageNum(), pageDTO.getPageSize()), queryWrapper);
+    }
+
+    /**
      * 查询出入社区人员记录
      *
      * @param recordId 出入社区人员记录主键
@@ -82,11 +101,19 @@ public class EpidemicAccessRecordServiceImpl extends ServiceImpl<EpidemicAccessR
     public int insertEpidemicAccessRecord(EpidemicAccessRecord epidemicAccessRecord) {
         SysUser user = SecurityUtils.getLoginUser().getUser();
         // 设置报备账号
-        epidemicAccessRecord.setUserId(user.getUserId());
-        epidemicAccessRecord.setUsername(user.getUserName());
+        epidemicAccessRecord.setRecordId(IdGenerator.generatorShortId());
+        // 判断报备类型
+        if (epidemicAccessRecord.getReportType().equals(ReportTypeEnum.ADMIN.getCode())) {
+            // 管理端录入
+            epidemicAccessRecord.setUserId(null);
+            epidemicAccessRecord.setUsername(null);
+        } else if (epidemicAccessRecord.getReportType().equals(ReportTypeEnum.USER.getCode())) {
+            // 用户手动录入
+            epidemicAccessRecord.setUserId(user.getUserId());
+            epidemicAccessRecord.setUsername(user.getUserName());
+        }
         epidemicAccessRecord.setCreateTime(DateUtils.getNowDate());
         epidemicAccessRecord.setCreateBy(SecurityUtils.getUsername());
-        epidemicAccessRecord.setRecordId(IdGenerator.generatorShortId());
         // 如果是进入社区，添加隔离记录
         if (epidemicAccessRecord.getAccessType().equals(AccessTypeEnum.IN.getCode())) {
             EpidemicIsolationRecord record = new EpidemicIsolationRecord();

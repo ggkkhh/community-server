@@ -1,5 +1,7 @@
 package com.roydon.business.epidemic.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.roydon.business.epidemic.domain.dto.EpidemicAccessRecordPageDTO;
 import com.roydon.business.epidemic.domain.entity.EpidemicAccessRecord;
 import com.roydon.business.epidemic.service.IEpidemicAccessRecordService;
 import com.roydon.common.annotation.Log;
@@ -27,6 +29,15 @@ public class EpidemicAccessRecordController extends BaseController {
 
     @Resource
     private IEpidemicAccessRecordService epidemicAccessRecordService;
+
+    /**
+     * 我的出入社区报备记录
+     */
+    @PostMapping("/my_record")
+    public AjaxResult myRecord(@RequestBody EpidemicAccessRecordPageDTO pageDTO) {
+        IPage<EpidemicAccessRecord> iPage = epidemicAccessRecordService.getMyRecordListIPage(pageDTO);
+        return AjaxResult.genTableData(iPage.getRecords(), iPage.getTotal());
+    }
 
     /**
      * 查询出入社区人员记录列表
