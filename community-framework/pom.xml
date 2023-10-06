@@ -72,6 +72,13 @@
             <artifactId>community-system</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.roydon</groupId>
+            <artifactId>community-component-qrcode</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
+        </dependency>
+
     </dependencies>
 
 </project>
