@@ -46,6 +46,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @Service
 public class SysLoginService {
+
     @Resource
     private TokenService tokenService;
 
@@ -249,7 +250,7 @@ public class SysLoginService {
     public QRCodeVO createLoginQRCode() {
         // 创建登录二维码(base64格式)
         String randomUUID = IdUtils.randomUUID();
-        String base64QRCode = QRCodeUtils.getBase64QRCode("http://127.0.0.1:8088/qr_login/uuid=" + randomUUID, ColorEnum.BLACK);
+        String base64QRCode = QRCodeUtils.getBase64QRCode("http://106.14.105.101:8088/qr_login/uuid=" + randomUUID, ColorEnum.BLACK);
         String redisKey = QRCodeLoginConstants.LOGIN_QRCODE_KEY + randomUUID;
         // 链接缓存到redis
         LoginTicket loginTicket = new LoginTicket();
@@ -307,6 +308,13 @@ public class SysLoginService {
         return SecurityUtils.getLoginUser().getUser().getAvatar();
     }
 
+    /**
+     * 移动端确认登陆
+     *
+     * @param uuid
+     * @return
+     * @throws LoginException
+     */
     public String confirmLogin(String uuid) throws LoginException {
         String redisKey = QRCodeLoginConstants.LOGIN_QRCODE_KEY + uuid;
         String jsonStr = redisTemplate.opsForValue().get(redisKey);
@@ -314,36 +322,9 @@ public class SysLoginService {
         if (StringUtil.isEmpty(loginTicket)) {
             throw new LoginException("二维码已过期");
         }
-        String telephone = SecurityUtils.getLoginUser().getUser().getPhonenumber();
-        // 用户验证
-        Authentication authentication;
-        // 用户验证
-        try {
-            SmsAuthenticationToken authenticationToken = new SmsAuthenticationToken(telephone);
-            AuthenticationContextHolder.setContext(authenticationToken);
-            // 该方法会去调用 SmsUserDetailsService.loadUserByUsername
-            authentication = authenticationManager.authenticate(authenticationToken);
-        } catch (Exception e) {
-            if (e instanceof BadCredentialsException) {
-                // 异步记录日志
-                AsyncManager.me().execute(AsyncFactory.recordLogininfor(telephone, Constants.LOGIN_FAIL, MessageUtils.message("user.smsLogin.error")));
-                throw new UserPasswordNotMatchException();
-            } else {
-                AsyncManager.me().execute(AsyncFactory.recordLogininfor(telephone, Constants.LOGIN_FAIL, e.getMessage()));
-                throw new ServiceException(e.getMessage());
-            }
-        } finally {
-            AuthenticationContextHolder.clearContext();
-        }
-        AsyncManager.me().execute(AsyncFactory.recordLogininfor(telephone, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success")));
-
-        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
-        // 记录登录信息，修改用户表，添加登录IP、登录时间
-        recordLoginInfo(loginUser.getUserId());
         // 状态修改为已登录
         loginTicket.setStatus(LoginQRCodeStatus.CONFIRMED.getCode());
-        redisTemplate.opsForValue().set(redisKey, JSONObject.toJSONString(loginTicket));
-        // 生成token
-        return tokenService.createToken(loginUser);
+        redisTemplate.opsForValue().set(redisKey, JSONObject.toJSONString(loginTicket), QRCodeLoginConstants.LOGIN_QRCODE_CONFIRM_EXPIRE, TimeUnit.SECONDS);
+        return LoginQRCodeStatus.CONFIRMED.getCode();
     }
 }

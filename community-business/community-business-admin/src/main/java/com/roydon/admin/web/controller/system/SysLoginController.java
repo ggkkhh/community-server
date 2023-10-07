@@ -8,19 +8,31 @@ import com.roydon.common.core.domain.AjaxResult;
 import com.roydon.common.core.domain.entity.SysMenu;
 import com.roydon.common.core.domain.entity.SysUser;
 import com.roydon.common.core.domain.model.LoginBody;
+import com.roydon.common.core.domain.model.LoginUser;
 import com.roydon.common.enums.LoginQRCodeStatus;
+import com.roydon.common.exception.ServiceException;
+import com.roydon.common.exception.user.UserPasswordNotMatchException;
+import com.roydon.common.utils.MessageUtils;
 import com.roydon.common.utils.SecurityUtils;
 import com.roydon.common.utils.StringUtil;
+import com.roydon.framework.config.smsconfig.SmsAuthenticationToken;
+import com.roydon.framework.manager.AsyncManager;
+import com.roydon.framework.manager.factory.AsyncFactory;
+import com.roydon.framework.security.context.AuthenticationContextHolder;
 import com.roydon.framework.web.domain.dto.LoginTicket;
 import com.roydon.framework.web.domain.vo.QRCodeVO;
 import com.roydon.framework.web.service.SysLoginService;
 import com.roydon.framework.web.service.SysPermissionService;
+import com.roydon.framework.web.service.TokenService;
 import com.roydon.system.service.ISysMenuService;
 import com.roydon.system.service.ISysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -44,6 +56,18 @@ public class SysLoginController {
 
     @Resource
     private SysPermissionService permissionService;
+
+    @Resource
+    private RedisTemplate<String, String> redisTemplate;
+
+    @Resource
+    private ISysUserService userService;
+
+    @Resource
+    private AuthenticationManager authenticationManager;
+
+    @Resource
+    private TokenService tokenService;
 
     /**
      * 登录方法
@@ -82,6 +106,7 @@ public class SysLoginController {
      *
      * @return 用户信息
      */
+    @ApiOperation("获取用户信息")
     @GetMapping("getInfo")
     public AjaxResult getInfo() {
         SysUser user = SecurityUtils.getLoginUser().getUser();
@@ -101,6 +126,7 @@ public class SysLoginController {
      *
      * @return 路由信息
      */
+    @ApiOperation("获取路由信息")
     @GetMapping("getRouters")
     public AjaxResult getRouters() {
         Long userId = SecurityUtils.getUserId();
@@ -111,30 +137,22 @@ public class SysLoginController {
     /**
      * 获取登录二维码
      */
+    @ApiOperation("获取登录二维码")
     @GetMapping("getLoginQRCode")
     public AjaxResult getLoginQRCode() {
         QRCodeVO loginQRCode = loginService.createLoginQRCode();
         return AjaxResult.success(loginQRCode);
     }
 
-    @Resource
-    private RedisTemplate<String, String> redisTemplate;
-
-    @Resource
-    private ISysUserService userService;
-
     /**
      * 获取二维码状态
-     *
-     * @param uuid
-     * @param currentStatus
-     * @return
-     * @throws InterruptedException
      */
+    @ApiOperation("获取登录二维码状态")
     @GetMapping("getLoginQrCodeStatus")
     public AjaxResult getQrCodeStatus(@RequestParam String uuid, @RequestParam String currentStatus) throws LoginException {
 //        String status = loginService.getLoginQrCodeStatus(uuid, currentStatus);
         AjaxResult ajaxResult = AjaxResult.success();
+        String token = null;
         String jsonStr = redisTemplate.opsForValue().get(QRCodeLoginConstants.LOGIN_QRCODE_KEY + uuid);
         LoginTicket loginTicket = JSONObject.parseObject(jsonStr, LoginTicket.class);
         if (StringUtil.isEmpty(loginTicket)) {
@@ -146,20 +164,64 @@ public class SysLoginController {
             SysUser sysUser = userService.selectUserById(userId);
             ajaxResult.put("avatar", sysUser.getAvatar());
         }
+        if (loginTicket.getStatus().equals(LoginQRCodeStatus.CONFIRMED.getCode())) {
+            // 已确认登陆
+            Long userId = loginTicket.getUserId();
+            SysUser sysUser = userService.selectUserById(userId);
+            String telephone = sysUser.getPhonenumber();
+            // 用户验证
+            Authentication authentication;
+            // 用户验证
+            try {
+                SmsAuthenticationToken authenticationToken = new SmsAuthenticationToken(telephone);
+                AuthenticationContextHolder.setContext(authenticationToken);
+                // 该方法会去调用 SmsUserDetailsService.loadUserByUsername
+                authentication = authenticationManager.authenticate(authenticationToken);
+            } catch (Exception e) {
+                if (e instanceof BadCredentialsException) {
+                    // 异步记录日志
+                    AsyncManager.me().execute(AsyncFactory.recordLogininfor(telephone, Constants.LOGIN_FAIL, MessageUtils.message("user.smsLogin.error")));
+                    throw new UserPasswordNotMatchException();
+                } else {
+                    AsyncManager.me().execute(AsyncFactory.recordLogininfor(telephone, Constants.LOGIN_FAIL, e.getMessage()));
+                    throw new ServiceException(e.getMessage());
+                }
+            } finally {
+                AuthenticationContextHolder.clearContext();
+            }
+            AsyncManager.me().execute(AsyncFactory.recordLogininfor(telephone, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success")));
+
+            LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+            // 记录登录信息，修改用户表，添加登录IP、登录时间
+            loginService.recordLoginInfo(loginUser.getUserId());
+            // 生成token
+            token = tokenService.createToken(loginUser);
+        }
         ajaxResult.put("status", loginTicket.getStatus());
+        if (token != null) {
+            ajaxResult.put("token", token);
+        }
         return ajaxResult;
     }
 
+    /**
+     * 扫码
+     */
+    @ApiOperation("移动端扫码")
     @GetMapping("scan")
     public AjaxResult scanQrCodeImg(@RequestParam String uuid) {
         String state = loginService.scanQrCode(uuid);
         return AjaxResult.success(state);
     }
 
+    /**
+     * 确认登陆
+     */
+    @ApiOperation("移动端确认登录")
     @GetMapping("confirm")
     public AjaxResult confirmLogin(@RequestParam String uuid) throws LoginException {
-        String token = loginService.confirmLogin(uuid);
-        return AjaxResult.success().put(Constants.TOKEN, token);
+        String state = loginService.confirmLogin(uuid);
+        return AjaxResult.success(state);
     }
 
 }
