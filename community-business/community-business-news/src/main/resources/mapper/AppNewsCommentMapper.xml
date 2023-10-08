@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.roydon.business.news.mapper.AppNewsCommentMapper">
+
+    <resultMap type="com.roydon.business.news.domain.entity.AppNewsComment" id="AppNewsCommentMap">
+        <result property="commentId" column="comment_id" jdbcType="INTEGER"/>
+        <result property="newsId" column="news_id" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="parentId" column="parent_id" jdbcType="INTEGER"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete
+        from app_news_comment
+        where comment_id = #{commentId}
+    </delete>
+
+</mapper>
+
