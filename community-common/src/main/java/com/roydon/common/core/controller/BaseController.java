@@ -2,12 +2,12 @@ package com.roydon.common.core.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.roydon.common.constant.HttpStatus;
 import com.roydon.common.core.domain.AjaxResult;
 import com.roydon.common.core.domain.model.LoginUser;
 import com.roydon.common.core.page.PageDomain;
 import com.roydon.common.core.page.TableDataInfo;
 import com.roydon.common.core.page.TableSupport;
-import com.roydon.common.constant.HttpStatus;
 import com.roydon.common.utils.DateUtils;
 import com.roydon.common.utils.PageUtils;
 import com.roydon.common.utils.SecurityUtils;
@@ -27,6 +27,31 @@ import java.util.List;
  */
 public class BaseController {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    /**
+     * 演示模式
+     */
+//    @ModelAttribute
+//    public void init(HttpServletRequest httpServletRequest, HttpServletResponse response) throws IOException {
+//        String url = ServletUtils.getRequest().getRequestURI();
+//
+//        // 需要拦截的url
+//        if (StringUtils.isNotEmpty(url) && (url.indexOf("/genCode") >= 0 || url.indexOf("/export") >= 0)) {
+//            throw new DemoModeException();
+//        }
+//
+//        // 需要放开的url
+//        if (StringUtils.isNotEmpty(url) && (url.contains("/demo") || url.contains("/tool/gen"))) {
+//            return;
+//        }
+//
+//        // 增删改 请求
+//        if ("DELETE".equals(httpServletRequest.getMethod())
+//                || "POST".equals(httpServletRequest.getMethod())
+//                || "PUT".equals(httpServletRequest.getMethod())) {
+//            throw new DemoModeException();
+//        }
+//    }
 
     /**
      * 将前台传递过来的日期格式的字符串，自动转化为Date类型

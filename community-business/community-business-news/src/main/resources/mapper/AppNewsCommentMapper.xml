@@ -7,6 +7,7 @@
         <result property="newsId" column="news_id" jdbcType="VARCHAR"/>
         <result property="userId" column="user_id" jdbcType="INTEGER"/>
         <result property="parentId" column="parent_id" jdbcType="INTEGER"/>
+        <result property="originId" column="origin_id" jdbcType="INTEGER"/>
         <result property="content" column="content" jdbcType="VARCHAR"/>
         <result property="status" column="status" jdbcType="VARCHAR"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>

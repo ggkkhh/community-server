@@ -37,6 +37,10 @@ public class AppNewsComment implements Serializable {
      */
     private Long parentId;
     /**
+     * 根id
+     */
+    private Long originId;
+    /**
      * 评论内容
      */
     private String content;
