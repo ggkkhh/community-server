@@ -57,6 +57,46 @@ public class AppNewsCommentController {
     }
 
     /**
+     * 分页查询新闻评论集合树
+     */
+    @PostMapping("/tree")
+    public AjaxResult queryTree(@RequestBody AppNewsCommentDTO pageDTO) {
+        String newsId = pageDTO.getNewsId();
+        if (StringUtil.isEmpty(newsId)) {
+            AjaxResult.success();
+        }
+        IPage<AppNewsComment> iPage = this.appNewsCommentService.getRootListByNewsId(pageDTO);
+        List<AppNewsComment> rootRecords = iPage.getRecords();
+        List<AppNewsCommentVO> voList = new ArrayList<>();
+        rootRecords.forEach(r -> {
+            // 获取用户详情
+            AppNewsCommentVO appNewsCommentVO = BeanCopyUtils.copyBean(r, AppNewsCommentVO.class);
+            Long userId = r.getUserId();
+            SysUser user = userService.getById(userId);
+            appNewsCommentVO.setNickName(user.getNickName());
+            appNewsCommentVO.setAvatar(user.getAvatar());
+            Long commentId = r.getCommentId();
+            List<AppNewsComment> children = this.appNewsCommentService.getChildren(commentId);
+            List<AppNewsCommentVO> childrenVOS = BeanCopyUtils.copyBeanList(children, AppNewsCommentVO.class);
+            childrenVOS.forEach(c -> {
+                SysUser cUser = userService.getById(c.getUserId());
+                c.setNickName(cUser.getNickName());
+                c.setAvatar(cUser.getAvatar());
+                if (!c.getParentId().equals(commentId)) {
+                    // 回复了回复
+                    AppNewsComment byId = this.appNewsCommentService.getById(c.getParentId());
+                    c.setReplayUserId(byId.getUserId());
+                    SysUser byUser = userService.getById(byId.getUserId());
+                    c.setReplayUserNickName(byUser.getNickName());
+                }
+            });
+            appNewsCommentVO.setChildren(childrenVOS);
+            voList.add(appNewsCommentVO);
+        });
+        return AjaxResult.genTableData(voList, iPage.getTotal());
+    }
+
+    /**
      * 新增数据
      *
      * @param appNewsComment 实体
@@ -67,9 +107,9 @@ public class AppNewsCommentController {
         return AjaxResult.success(this.appNewsCommentService.insert(appNewsComment));
     }
 
-    @PostMapping("apply")
-    public AjaxResult apply(@RequestBody AppNewsComment appNewsComment) {
-        return AjaxResult.success(this.appNewsCommentService.apply(appNewsComment));
+    @PostMapping("replay")
+    public AjaxResult replay(@RequestBody AppNewsComment appNewsComment) {
+        return AjaxResult.success(this.appNewsCommentService.replay(appNewsComment));
     }
 
     /**
