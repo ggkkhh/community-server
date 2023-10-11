@@ -11,7 +11,9 @@ import com.roydon.business.mall.domain.entity.MallGoods;
 import com.roydon.business.mall.domain.entity.MallOrder;
 import com.roydon.business.mall.domain.entity.MallOrderGoods;
 import com.roydon.business.mall.domain.entity.MallUserCart;
+import com.roydon.business.mall.enums.OrderStatusEnums;
 import com.roydon.business.mall.mapper.MallOrderMapper;
+import com.roydon.business.mall.mq.config.OrderDelayedMessageConfig;
 import com.roydon.business.mall.service.IMallGoodsService;
 import com.roydon.business.mall.service.IMallOrderGoodsService;
 import com.roydon.business.mall.service.IMallOrderService;
@@ -20,6 +22,8 @@ import com.roydon.common.core.domain.model.LoginUser;
 import com.roydon.common.utils.SecurityUtils;
 import com.roydon.common.utils.StringUtil;
 import com.roydon.common.utils.uniqueid.IdGenerator;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +40,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * @author roydon
  * @since 2023-05-18 23:14:11
  */
+@Slf4j
 @Service("mallOrderService")
 public class MallOrderServiceImpl extends ServiceImpl<MallOrderMapper, MallOrder> implements IMallOrderService {
 
@@ -50,6 +55,9 @@ public class MallOrderServiceImpl extends ServiceImpl<MallOrderMapper, MallOrder
 
     @Resource
     private IMallOrderGoodsService mallOrderGoodsService;
+
+    @Resource
+    private RabbitTemplate rabbitTemplate;
 
     /**
      * 通过ID查询单条数据
@@ -89,7 +97,13 @@ public class MallOrderServiceImpl extends ServiceImpl<MallOrderMapper, MallOrder
         LambdaQueryWrapper<MallOrder> queryWrapper = new LambdaQueryWrapper<>();
         Long userId = SecurityUtils.getUserId();
         queryWrapper.eq(MallOrder::getUserId, userId);
-        queryWrapper.eq(MallOrder::getDelFlag, "0");
+        String delFlag = mallOrderDTO.getDelFlag();
+        if (StringUtil.isEmpty(delFlag)) {
+            delFlag = OrderStatusEnums.DELETED.getCode();
+            queryWrapper.ne(MallOrder::getDelFlag, delFlag);
+        } else {
+            queryWrapper.eq(MallOrder::getDelFlag, delFlag);
+        }
         queryWrapper.orderByDesc(MallOrder::getCreateTime);
         return page(new Page<>(mallOrderDTO.getPageNum(), mallOrderDTO.getPageSize()), queryWrapper);
     }
@@ -108,8 +122,6 @@ public class MallOrderServiceImpl extends ServiceImpl<MallOrderMapper, MallOrder
 
     /**
      * 创建订单
-     *
-     * @param mallOrderCreateDTO
      */
     @Override
     @Transactional
@@ -153,6 +165,16 @@ public class MallOrderServiceImpl extends ServiceImpl<MallOrderMapper, MallOrder
         // 订单商品新增
         mallOrderGoodsService.saveBatch(mallOrderGoodsList);
         this.save(mallOrder);
+        // TODO 创建订单过后将订单插入死信交换机，设置10分钟过期时间判断是否支付，未支付则取消订单
+        // 1.创建消息
+        String orderId = mallOrder.getOrderId();
+        // 2.发送消息，利用消息后置处理器添加消息头
+        rabbitTemplate.convertAndSend(OrderDelayedMessageConfig.DELAYED_EXCHANGE, OrderDelayedMessageConfig.ROUTING_KEY, orderId, message -> {
+            // 添加延迟消息属性，设置10分钟 10*60
+            message.getMessageProperties().setDelay(10 * 60000);
+//                message.getMessageProperties().setDelay(10000);
+            return message;
+        });
         return mallOrder;
     }
 
@@ -163,9 +185,8 @@ public class MallOrderServiceImpl extends ServiceImpl<MallOrderMapper, MallOrder
      * @return 实例对象
      */
     @Override
-    public MallOrder update(MallOrder mallOrder) {
-        update(mallOrder);
-        return this.queryById(mallOrder.getOrderId());
+    public boolean updateOrder(MallOrder mallOrder) {
+        return update(mallOrder, null);
     }
 
     /**
@@ -193,7 +214,7 @@ public class MallOrderServiceImpl extends ServiceImpl<MallOrderMapper, MallOrder
             orderIdList.forEach(o -> {
                 // 删除mall_order表
                 LambdaUpdateWrapper<MallOrder> updateWrapper = new LambdaUpdateWrapper<>();
-                updateWrapper.eq(MallOrder::getOrderId, o).set(MallOrder::getDelFlag, "2");
+                updateWrapper.eq(MallOrder::getOrderId, o).set(MallOrder::getDelFlag, OrderStatusEnums.DELETED.getCode());
                 update(updateWrapper);
                 // 删除mall_order_goods表
                 LambdaUpdateWrapper<MallOrderGoods> orderGoodsLambdaUpdateWrapper = new LambdaUpdateWrapper<>();
@@ -206,4 +227,10 @@ public class MallOrderServiceImpl extends ServiceImpl<MallOrderMapper, MallOrder
         return true;
     }
 
+    @Override
+    public boolean cancelOrder(String orderId) {
+        LambdaUpdateWrapper<MallOrder> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(MallOrder::getOrderId, orderId).set(MallOrder::getDelFlag, OrderStatusEnums.CANCELED.getCode());
+        return update(updateWrapper);
+    }
 }

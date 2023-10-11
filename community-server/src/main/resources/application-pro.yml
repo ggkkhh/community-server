@@ -28,9 +28,26 @@ spring:
   rabbitmq:
     host: 106.14.105.101
     port: 5672
-    username: roydon
-    password: qwer1234
-    virtual-host: /
+    username: community
+    password: community#Rabbit
+    virtual-host: /community
+    connection-timeout: 5s # 连接超时时间
+    template:
+      retry:
+        enabled: true # 超时重试
+        initial-interval: 1000ms # 失败后的初始等待时间
+        multiplier: 1
+        max-attempts: 3
+    listener:
+      simple:
+        prefetch: 1 #能者多劳，但可能消息堆积
+        acknowledge-mode: auto
+        retry:
+          enabled: true # 开启消费者失败重试
+          initial-interval: 1000ms # 初识的失败等待时长为1秒
+          multiplier: 1 # 失败的等待时长倍数，下次等待时长 = multiplier * last-interval
+          max-attempts: 3 # 最大重试次数
+          stateless: true # true无状态；false有状态。如果业务中包含事务，这里改为false
 
 token:
   header: Authorization # 令牌自定义标识

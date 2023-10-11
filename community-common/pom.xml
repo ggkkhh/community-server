@@ -29,6 +29,12 @@
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
 
+        <!-- jackson消息转换器，防止乱码 -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+        </dependency>
+
         <!-- SpringWeb模块 -->
         <dependency>
             <groupId>org.springframework</groupId>

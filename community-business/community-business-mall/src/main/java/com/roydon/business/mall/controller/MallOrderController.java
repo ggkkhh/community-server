@@ -125,7 +125,7 @@ public class MallOrderController extends BaseController {
      */
     @PutMapping
     public AjaxResult edit(MallOrder mallOrder) {
-        return AjaxResult.success(this.mallOrderService.update(mallOrder));
+        return AjaxResult.success(this.mallOrderService.updateOrder(mallOrder));
     }
 
     /**

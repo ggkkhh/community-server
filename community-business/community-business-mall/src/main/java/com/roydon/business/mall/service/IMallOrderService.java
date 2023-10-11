@@ -59,7 +59,7 @@ public interface IMallOrderService extends IService<MallOrder> {
      * @param mallOrder 实例对象
      * @return 实例对象
      */
-    MallOrder update(MallOrder mallOrder);
+    boolean updateOrder(MallOrder mallOrder);
 
     /**
      * 通过主键删除数据
@@ -76,5 +76,7 @@ public interface IMallOrderService extends IService<MallOrder> {
      * @return
      */
     boolean removeOrderByIds(String[] orderIds);
+
+    boolean cancelOrder(String orderId);
 
 }

@@ -43,7 +43,7 @@ public class MallOrder implements Serializable {
      */
     private String payOrderId;
     /**
-     * 删除标志（0代表存在 2代表删除）
+     * 删除标志（0代表存在 1代表订单取消 2代表删除）
      */
     private String delFlag;
 

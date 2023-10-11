@@ -3,6 +3,7 @@ package com.roydon.business.mall.domain.dto;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.roydon.business.mall.domain.entity.MallOrder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * MallOrderDTO
@@ -10,6 +11,7 @@ import lombok.Data;
  * @AUTHOR: roydon
  * @DATE: 2023/5/21
  **/
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class MallOrderDTO extends MallOrder {
 
