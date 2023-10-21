@@ -2,56 +2,66 @@ package com.roydon.common.core.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.roydon.common.config.CommunityConfig;
 import com.roydon.common.constant.HttpStatus;
 import com.roydon.common.core.domain.AjaxResult;
 import com.roydon.common.core.domain.model.LoginUser;
 import com.roydon.common.core.page.PageDomain;
 import com.roydon.common.core.page.TableDataInfo;
 import com.roydon.common.core.page.TableSupport;
-import com.roydon.common.utils.DateUtils;
-import com.roydon.common.utils.PageUtils;
-import com.roydon.common.utils.SecurityUtils;
-import com.roydon.common.utils.StringUtils;
+import com.roydon.common.exception.DemoModeException;
+import com.roydon.common.utils.*;
 import com.roydon.common.utils.sql.SqlUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.beans.PropertyEditorSupport;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
 /**
  * web层通用数据处理
  */
+@Component
 public class BaseController {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Resource
+    private CommunityConfig config;
 
     /**
      * 演示模式
      */
-//    @ModelAttribute
-//    public void init(HttpServletRequest httpServletRequest, HttpServletResponse response) throws IOException {
-//        String url = ServletUtils.getRequest().getRequestURI();
-//
-//        // 需要拦截的url
-//        if (StringUtils.isNotEmpty(url) && (url.indexOf("/genCode") >= 0 || url.indexOf("/export") >= 0)) {
-//            throw new DemoModeException();
-//        }
-//
-//        // 需要放开的url
-//        if (StringUtils.isNotEmpty(url) && (url.contains("/demo") || url.contains("/tool/gen"))) {
-//            return;
-//        }
-//
-//        // 增删改 请求
-//        if ("DELETE".equals(httpServletRequest.getMethod())
-//                || "POST".equals(httpServletRequest.getMethod())
-//                || "PUT".equals(httpServletRequest.getMethod())) {
-//            throw new DemoModeException();
-//        }
-//    }
+    @ModelAttribute
+    public void init(HttpServletRequest httpServletRequest, HttpServletResponse response) throws IOException {
+        String url = ServletUtils.getRequest().getRequestURI();
+        if (config.isDemoEnabled()) {
+            // 需要拦截的url
+            if (StringUtils.isNotEmpty(url) && (url.indexOf("/genCode") >= 0 || url.indexOf("/export") >= 0)) {
+                throw new DemoModeException();
+            }
+
+            // 需要放开的url
+            if (StringUtils.isNotEmpty(url) && (url.contains("/demo") || url.contains("/tool/gen"))) {
+                return;
+            }
+
+            // 增删改 请求
+            if ("DELETE".equals(httpServletRequest.getMethod())
+                    || "POST".equals(httpServletRequest.getMethod())
+                    || "PUT".equals(httpServletRequest.getMethod())) {
+                throw new DemoModeException();
+            }
+        }
+    }
 
     /**
      * 将前台传递过来的日期格式的字符串，自动转化为Date类型
