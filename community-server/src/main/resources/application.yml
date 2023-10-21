@@ -14,7 +14,7 @@ spring: # Spring配置
     basename: i18n/messages # 国际化资源文件路径
     encoding: UTF-8
   profiles:
-    active: pro
+    active: local
   servlet:
     multipart:
       max-file-size: ${spring.servlet.multipart.max-file-size} # 单个文件大小
